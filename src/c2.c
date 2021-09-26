@@ -33,10 +33,11 @@ N(კალაპოტის_და) {
 }
 N(კალაპოტის_არა) {}
 N(აწყაროსგულგული) {
-  A10(წყაროს_ან, წყაროს_და, წყაროს_არა, 3, 6, 9, σ[-1].c, 7,0, აგულგული) O;
+  A10(წყაროს_ან, წყაროს_და, წყაროს_არა, 3, 6, 9, σ[-1].c, 7, 1, აგულგული) O;
 }
 N(აკალაპოტი) {
-  A10(კალაპოტის_ან, კალაპოტის_და, კალაპოტის_არა, 3, 9, 6, σ[-1].c, 7,0, აგულგული)
+  A10(კალაპოტის_ან, კალაპოტის_და, კალაპოტის_არა, 3, 9, 6, σ[-1].c, 7, 1,
+      აგულგული)
   O;
 }
 N(წყარო_კალაპოტის_ციკლის_მაგალითი) {
@@ -65,15 +66,12 @@ N(os_აფურცელი) {
 }
 N(os_აგულგული) {
   R(unsigned long, pc);
-  ((void)pc);
-  p_t *lx = σ[1].v;
-  p_t *nσ = &lx[ISPAGE(lx) ? 506 : 512];
-  long pages = (((unsigned long)σ >> 12) - ((unsigned long)nσ >> 12));
-  if (pages < 0)
-    return C(, 2);
-  nσ = &nσ[pages / 3 * 512];
-  long nρ = 0;
   R(unsigned long, wc);
+  p_t *lx = σ[1].v;
+  p_t *nσ = &lx[(ISPAGE(lx) ? 506 : 512) + pc * 512];
+  if (σ < nσ)
+    return A2(wc, pc) C(, 2);
+  long nρ = 0;
   while (wc--)
     nσ[--nρ].v = ο[--α].v;
   nσ[0].q = nρ, nσ[1].v = lx, nσ[2].v = σ;
@@ -114,11 +112,11 @@ static int shemdegi_rigis_nomeri() {
   return 0;
 }
 N(os_წერტილი) {
-  int nomeri = shemdegi_rigis_nomeri();
-  if (nomeri == 0)
-    return C(, 2);
   R(p_t *, nσ);
   R(p_t *, nο);
+  int nomeri = shemdegi_rigis_nomeri();
+  if (nomeri == 0)
+    return A2(nο, nσ) C(, 2);
   rigis_elementebi[nomeri].ο = nο, rigis_elementebi[nomeri].σ = nσ;
   QUEUE_INSERT_TAIL(&rigis_tavi, &rigis_elementebi[nomeri].q);
   C(, 1);
@@ -147,7 +145,8 @@ N(os_ოპკოდით_გადამრთველი) {
   opcode_map[opcode](T());
 }
 int main() {
-//  (5 + ((sizeof(void*) - (5 % sizeof(void*))) % sizeof(void*))) / sizeof(void*);
+  //  (5 + ((sizeof(void*) - (5 % sizeof(void*))) % sizeof(void*))) /
+  //  sizeof(void*);
   init_rigi();
   // |.b..........|............|.e..........|............
   void *b = malloc(100 << 12);
