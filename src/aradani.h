@@ -29,8 +29,9 @@ typedef struct p_s {
     unsigned long Q;
   };
 } p_t;
-typedef void (*n_t)(p_t *, long, long, p_t *);
-#define N(n) void n(p_t *ο, long α, long ρ, p_t *σ)
+#define OARS p_t *ο, long α, long ρ, p_t *σ
+typedef void (*n_t)(OARS);
+#define N(n) void n(OARS)
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v;
 #define Rpith(n)                                                               \
@@ -103,5 +104,5 @@ ${a.slice(0,i).map(v=>`A(${v})`).join('')}`) .slice(2) .join('\n')
   A(b)                                                                         \
   A(c)                                                                         \
   A(d)                                                                         \
-  A(e) A(f) A(g) A(h) A(i) A(j) A(k) A(l) A(m) A(n) A(o) A(p) A(q) A(r) A(s)   \
-      A(t)
+  A(e)                                                                         \
+  A(f) A(g) A(h) A(i) A(j) A(k) A(l) A(m) A(n) A(o) A(p) A(q) A(r) A(s) A(t)

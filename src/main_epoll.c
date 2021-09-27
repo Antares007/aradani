@@ -25,19 +25,18 @@ N(კალაპოტის_ან) { // R(p_t *, s);
 N(კალაპოტის_და) {}
 N(კალაპოტის_არა) {}
 N(კალაპოტი) {
-  A7(კალაპოტის_ან, კალაპოტის_და, კალაპოტის_არა, σ[-1].c, 4, 3, აგულგული) O;
+  A8(კალაპოტის_ან, კალაპოტის_და, კალაპოტის_არა, 'kala', σ[-1].c, 5, 3, აგულგული)
+  O;
 }
 N(შეაერთე) {
-  R(void *, sink);
-  R(void *, source);
+  R(p_t *, sink);
+  R(p_t *, source);
   A10(source, sink, ან_გადასვლა, აფურცელი, 2, ამოწერე, დაა, source, წერტილი,
       დაა)
   O;
 }
-// A7(net_სოკეტი, ლოკალ7000, და, მიაბი, და, მოუსმინე, და)
 N(main2) {
-  C(, 1);
-  A6(ნეტსერვერი, კალაპოტი, შეაერთე, 7000, მოუსმინე, დაა) O;
+  A9(ნეტსერვერი, კალაპოტი, და, შეაერთე, და, ლოკალ7000, და, მოუსმინე, და) O;
 }
 
 #include <arpa/inet.h>
@@ -62,31 +61,14 @@ void bzero(void *, unsigned long);
 long epoll_fd;
 struct epoll_event events[MAX_EVENT_NUMBER];
 
-/* Set file descriptor to non-congested  */
 int SetNonblocking(int fd) {
   int old_option = fcntl(fd, F_GETFL);
   int new_option = old_option | O_NONBLOCK;
   fcntl(fd, F_SETFL, new_option);
   return old_option;
 }
+void AddFd(int epoll_fd, int fd, bool enable_et) {}
 
-/* Register EPOLLIN on file descriptor FD into the epoll kernel event table
- * indicated by epoll_fd, and the parameter enable_et specifies whether et mode
- * is enabled for FD */
-void AddFd(int epoll_fd, int fd, bool enable_et) {
-  struct epoll_event event;
-  event.data.fd = fd;
-  event.events = EPOLLIN; // Registering the fd is readable
-  if (enable_et) {
-    event.events |= EPOLLET;
-  }
-
-  epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd,
-            &event); // Register the fd with the epoll kernel event table
-  SetNonblocking(fd);
-}
-
-/* ET Work mode features: efficient but potentially dangerous */
 void et_process(struct epoll_event *events, int number, int epoll_fd,
                 int listen_fd) {
   char buf[BUFFER_SIZE];
@@ -190,11 +172,16 @@ int main0(int argc, char *argv[]) {
   close(listen_fd);
   return 0;
 }
+#define Rs(T, n) T n = (void *)&ο[α -= wordCountOf(n)];
+#define As(T, n)                                                               \
+  T n = (void *)&ο[α];                                                         \
+  α += wordCountOf(n)
 
 N(net_მიაბი) {
-  struct sockaddr_in *address = (void *)&ο[α -= wordCountOf(*address)];
+  Rs(struct sockaddr_in, *address);
   R(p_t *, s);
-  long ret = bind(s[-2].d, (struct sockaddr *)address, sizeof(*address));
+  long sockfd = s[-2].d;
+  long ret = bind(sockfd, (struct sockaddr *)address, sizeof(*address));
   if (ret == -1)
     return printf("fail to bind socket!\n"), C(, 2);
   A(s) C(, 1);
@@ -202,29 +189,43 @@ N(net_მიაბი) {
 N(net_მისამართი) {
   R(long, port);
   R(char *, ip);
-  struct sockaddr_in *address = (void *)&ο[α];
-  α += wordCountOf(*address);
+  As(struct sockaddr_in, *address);
+  if (&σ[ρ] < &ο[α])
+    return C(, 2);
   bzero(address, sizeof(*address));
   address->sin_family = AF_INET;
   inet_pton(AF_INET, ip, &address->sin_addr);
   address->sin_port = htons(port);
   C(, 1);
 }
-N(net_მოუსმინე) {
-  R(long, listen_fd);
+N(net_ეპოლშიდაამატე) {
+  R(p_t *, s);
+  long listen_fd = s[-2].q;
+  struct epoll_event event;
+  event.data.fd = listen_fd;
+  event.data.ptr = s;
+  event.events = EPOLLIN;
+  event.events |= EPOLLET;
+  epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_fd, &event);
+  SetNonblocking(listen_fd);
+  A(s) C(, 1);
+}
+N(net_მოუსმინე_next) {
+  R(p_t *, s);
+  long listen_fd = s[-2].q;
   long ret = listen(listen_fd, 5);
-  if (ret == -1) {
-    printf("fail to listen socket!\n");
-    C(, 2);
-  }
-  A(listen_fd) C(, 1);
+  if (ret == -1)
+    return printf("fail to listen socket!\n"), C(, 2);
+  A(s) C(, 1);
+}
+N(net_მოუსმინე) {
+  A5(net_მიაბი, net_მოუსმინე_next, და, net_ეპოლშიდაამატე, და)
+  O;
 }
 N(net_შემდეგი) {
   int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
-  if (ret < 0) {
-    printf("epoll failure!\n");
-    C(, 2);
-  }
+  if (ret < 0)
+    return printf("epoll failure!\n"), C(, 2);
   C(, 1);
 }
 N(sss) {
@@ -233,16 +234,18 @@ N(sss) {
   A7(აფურცელი, wc, ამოწერე, დაა, pith, წერტილი, დაა)
   O;
 }
-N(net_სოკეტისგულგული_ან) { A4(σ, ან_გადასვლა, 2, sss) O; }
-N(net_სოკეტისგულგული_და) {}
-N(net_სოკეტისგულგული_არა) {}
+N(net_სოკეტისგულგული_ან) {
+  printf("net_სოკეტისგულგული_ან\n"), A4(σ, ან_გადასვლა, 2, sss) O;
+}
+N(net_სოკეტისგულგული_და) { printf("net_სოკეტისგულგული_და\n"); }
+N(net_სოკეტისგულგული_არა) { printf("net_სოკეტისგულგული_არა\n"); }
 
 N(net_სოკეტისგულგული) {
   long listen_fd = socket(PF_INET, SOCK_STREAM, 0);
   if (listen_fd < 0)
     return C(, 2);
-  A8(net_სოკეტისგულგული_ან, net_სოკეტისგულგული_და, net_სოკეტისგულგული_არა,
-     listen_fd, σ[-1].c, 5, 4, აგულგული)
+  A9(net_სოკეტისგულგული_ან, net_სოკეტისგულგული_და, net_სოკეტისგულგული_არა,
+     'sock', listen_fd, σ[-1].c, 6, 4, აგულგული)
   O;
 }
 N(net_ოპკოდის_გადამყვანი) {
@@ -250,11 +253,11 @@ N(net_ოპკოდის_გადამყვანი) {
   if (opcode == 4)
     A4(net_შემდეგი, opcode, σ[-2].c, დაა) O;
   else if (opcode == 5)
-    A4(net_მოუსმინე, opcode, σ[-2].c, დაა) O;
+    net_მოუსმინე(T());
   else if (opcode == 6)
-    A4(net_მისამართი, opcode, σ[-2].c, დაა) O;
+    net_მისამართი(T());
   else if (opcode == 7)
-    A4(net_სოკეტისგულგული, opcode, σ[-2].c, დაა) O;
+    net_სოკეტისგულგული(T());
   else
     A2(opcode, σ[-2].c) O;
 }
@@ -262,8 +265,8 @@ N(net_გულგული_ან) { printf("net_გულგული_ან\n
 N(net_გულგული_და) { printf("net_გულგული_და\n"), შემდეგი(T()); }
 N(net_გულგული_არა) { printf("net_გულგული_არა\n"), შემდეგი(T()); }
 N(net_გულგული) {
-  A8(net_გულგული_ან, net_გულგული_და, net_გულგული_არა, σ[-1].c,
-     net_ოპკოდის_გადამყვანი, 5, 96, აგულგული)
+  A9(net_გულგული_ან, net_გულგული_და, net_გულგული_არა, 'net', σ[-1].c,
+     net_ოპკოდის_გადამყვანი, 6, 96, აგულგული)
   O;
 }
 N(main1) {
