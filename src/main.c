@@ -18,7 +18,7 @@ N(os_აგულგული) {
   R(unsigned long, wc);
   p_t *lx = σ[1].v;
   p_t *nσ = &lx[(ISPAGE(lx) ? 506 : 512) + pc * 512];
-  if (σ < nσ)
+  if (σ <= nσ)
     return A2(wc, pc) C(, 2);
   long nρ = 0;
   while (wc--)
@@ -94,9 +94,10 @@ N(os_ოპკოდით_გადამრთველი) {
   opcode_map[opcode](T());
 }
 N(main1);
+N(os_არა) { printf("os_არა\n"), os_შემდეგი(T()); }
+N(os_და) { printf("os_და\n"), os_შემდეგი(T()); }
+N(os_ან) { printf("os_ან\n"), os_შემდეგი(T()); }
 int main() {
-  //  (5 + ((sizeof(void*) - (5 % sizeof(void*))) % sizeof(void*))) /
-  //  sizeof(void*);
   init_rigi();
   // |.b..........|............|.e..........|............
   void *b = malloc(100 << 12);
@@ -114,12 +115,12 @@ int main() {
   ο[-3].Q = 0, ο[-2].v = σ, ο[-1].Q = 0;
 
   σ[--ρ].c = os_ოპკოდით_გადამრთველი;
-  σ[--ρ].c = os_შემდეგი;
-  σ[--ρ].c = os_შემდეგი;
-  σ[--ρ].c = os_შემდეგი;
+  σ[--ρ].c = os_არა;
+  σ[--ρ].c = os_და;
+  σ[--ρ].c = os_ან;
   σ[0].q = ρ, σ[1].v = ο, σ[2].v = 0;
 
   main1(ο, α, ρ, σ);
-    
+
   free(b);
 }
