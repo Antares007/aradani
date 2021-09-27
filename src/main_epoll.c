@@ -6,79 +6,42 @@ N(ამოწერე) { A(2) σ[-1].c(T()); }
 N(წერტილი) { A(3) σ[-1].c(T()); }
 N(შემდეგი) { A(4) σ[-1].c(T()); }
 
+N(მოუსმინე) { A(5) σ[-1].c(T());}
+N(მისამართი) {A(6) σ[-1].c(T());}
+
 N(ან_გადასვლა) { C(, 0); }
 N(და_გადასვლა) { C(, 1); }
+
 #include <arpa/inet.h>
 #define WC(T)                                                                  \
   (sizeof(T) +                                                                 \
    ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /       \
       sizeof(void *)
-void bzero(void *, unsigned long);
-N(მისამართი) {
-  R(long, port);
-  R(char *, ip);
-  struct sockaddr_in *address = (void *)&ο[α];
-  α += WC(*address);
-  bzero(address, sizeof(*address));
-  address->sin_family = AF_INET;
-  inet_pton(AF_INET, ip, &address->sin_addr);
-  address->sin_port = htons(port);
-  C(, 1);
-}
-N(სოკეტი) {
-  long listen_fd = socket(PF_INET, SOCK_STREAM, 0);
-  if (listen_fd < 0)
-    C(, 2);
-  A(listen_fd) C(, 1);
-}
-N(მიაბი) {
-  struct sockaddr_in *address = (void *)&ο[α -= WC(*address)];
-  R(long, listen_fd);
-  long ret = bind(listen_fd, (struct sockaddr *)address, sizeof(*address));
-  if (ret == -1) {
-    printf("fail to bind socket!\n");
-    C(, 2);
-  }
-  A(listen_fd) C(, 1);
-}
-N(მოუსმინე) {
-  R(long, listen_fd);
-  long ret = listen(listen_fd, 5);
-  if (ret == -1) {
-    printf("fail to listen socket!\n");
-    C(, 2);
-  }
-  A(listen_fd) C(, 1);
-}
-N(დაამატე) {}
-// xxxx = სოკეტი "127.0.0.1" 7000 მისამართი დააა მიაბი და 5 მოუსმინე დაა AddFd
-// და. წინამხარე სოკეტი "127.0.0.1" 7000 მისამართი დააა მიაბი და 5 მოუსმინე დაა
-// დაამატე და.
 /*
 require("net").createServer((s) => s.on("data", (d) =>
 s.write(d))).listen(8000);
 */
 N(ლოკალ7000) { A3("127.0.0.1", 7000, მისამართი) O; }
-N(ნეტსერვერი);
+N(ნეტსერვერი) {}
 
-N(კალაპოტის_ან){
-  R(p_t*, s);
-
+N(კალაპოტის_ან) { // R(p_t *, s);
 }
-N(კალაპოტის_და);
-N(კალაპოტის_არა);
+N(კალაპოტის_და) {}
+N(კალაპოტის_არა) {}
 N(კალაპოტი) {
   A7(კალაპოტის_ან, კალაპოტის_და, კალაპოტის_არა, σ[-1].c, 4, 3, აგულგული) O;
 }
 N(შეაერთე) {
   R(void *, sink);
   R(void *, source);
-  A10(source, sink, ან_გადასვლა, აფურცელი, 2, ამოწერე, დაა, source, წერტილი, დაა) O;
+  A10(source, sink, ან_გადასვლა, აფურცელი, 2, ამოწერე, დაა, source, წერტილი,
+      დაა)
+  O;
 }
-// A7(სოკეტი, ლოკალ7000, და, მიაბი, და, მოუსმინე, და)
+// A7(net_სოკეტი, ლოკალ7000, და, მიაბი, და, მოუსმინე, და)
 N(main2) {
-  R(long, epoll_fd);
-  A7(epoll_fd, ნეტსერვერი, კალაპოტი, შეაერთე, 7000, მოუსმინე, დაა) O;
+  C(, 1);
+  A6(ნეტსერვერი, კალაპოტი, შეაერთე, 7000, მოუსმინე, დაა) O;
 }
 
 #include <arpa/inet.h>
@@ -227,34 +190,80 @@ int main0(int argc, char *argv[]) {
   close(listen_fd);
   return 0;
 }
-N(shemdegi) {
-  R(unsigned long, opcode);
-  if (opcode == 4) {
+void bzero(void *, unsigned long);
+long epoll_fd;
+N(net_მისამართი) {
+  R(long, port);
+  R(char *, ip);
+  struct sockaddr_in *address = (void *)&ο[α];
+  α += WC(*address);
+  bzero(address, sizeof(*address));
+  address->sin_family = AF_INET;
+  inet_pton(AF_INET, ip, &address->sin_addr);
+  address->sin_port = htons(port);
+  C(, 1);
+}
+N(net_სოკეტი) {
+  long listen_fd = socket(PF_INET, SOCK_STREAM, 0);
+  if (listen_fd < 0)
+    C(, 2);
+  A(listen_fd) C(, 1);
+}
+N(net_მიაბი) {
+  struct sockaddr_in *address = (void *)&ο[α -= WC(*address)];
+  R(long, listen_fd);
+  long ret = bind(listen_fd, (struct sockaddr *)address, sizeof(*address));
+  if (ret == -1) {
+    printf("fail to bind socket!\n");
+    C(, 2);
   }
-  A2(opcode, σ[-2].c) O;
+  A(listen_fd) C(, 1);
+}
+N(net_მოუსმინე) {
+  R(long, listen_fd);
+  long ret = listen(listen_fd, 5);
+  if (ret == -1) {
+    printf("fail to listen socket!\n");
+    C(, 2);
+  }
+  A(listen_fd) C(, 1);
+}
+N(net_შემდეგი) {
+  int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
+  if (ret < 0) {
+    printf("epoll failure!\n");
+    C(, 2);
+  }
+  C(,1);
+}
+N(net_სოკეტისგულგული) {}
+N(net_ოპკოდის_გადამყვანი) {
+  R(unsigned long, opcode);
+  if (opcode == 4)
+    A4(net_შემდეგი, opcode, σ[-2].c, დაა) O;
+  else if (opcode == 5)
+    A4(net_სოკეტისგულგული, opcode, σ[-2].c, დაა) O;
+  else
+    A2(opcode, σ[-2].c) O;
+}
+N(net_გულგული_ან) { printf("net_გულგული_ან\n"), შემდეგი(T()); }
+N(net_გულგული_და) { printf("net_გულგული_და\n"), შემდეგი(T()); }
+N(net_გულგული_არა) { printf("net_გულგული_არა\n"), შემდეგი(T()); }
+N(net_გულგული) {
+  A8(net_გულგული_ან, net_გულგული_და, net_გულგული_არა, σ[-1].c,
+     net_ოპკოდის_გადამყვანი, 5, 96, აგულგული)
+  O;
+}
+N(main1) {
+  epoll_fd = epoll_create(5); // Event table size 5
+  if (epoll_fd == -1)
+    return C(, 2);
+  A9(main2, აფურცელი,  1, ამოწერე, დაა, net_გულგული, და, წერტილი, და)
+  O;
 }
 N(sss) {
   R(unsigned long, wc);
   R(void *, pith);
   A7(აფურცელი, wc, ამოწერე, დაა, pith, წერტილი, დაა)
-  O;
-}
-N(აეპოლი) {
-  long epoll_fd = epoll_create(5); // Event table size 5
-  if (epoll_fd == -1)
-    C(, 2);
-  A(epoll_fd) C(, 1);
-}
-N(ქსელისგულგული_ან) { printf("ქსელისგულგული_ან\n"), შემდეგი(T()); }
-N(ქსელისგულგული_და) { printf("ქსელისგულგული_და\n"), შემდეგი(T()); }
-N(ქსელისგულგული_არა) { printf("ქსელისგულგული_არა\n"), შემდეგი(T()); }
-N(ქსელისგულგული) {
-  A10(ქსელისგულგული_ან, ქსელისგულგული_და, ქსელისგულგული_არა, 3, 6, σ[-1].c,
-      shemdegi, 7, 96, აგულგული)
-  O;
-}
-N(main1) {
-  A11(აეპოლი, main2, აფურცელი, დაა, 2, ამოწერე, დაა, ქსელისგულგული, და, წერტილი,
-      და)
   O;
 }
