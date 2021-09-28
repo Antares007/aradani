@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #define ISPAGE(lx)                                                             \
   ((unsigned long)lx & (unsigned long)0xFFF) == 3 * sizeof(void *)
-N(os_აფურცელი) {
+static N(os_აფურცელი) {
   p_t *lx = σ[1].v;
   p_t *nο = (void *)(((unsigned long)lx | ((unsigned long)0xFFF)) + 1);
   nο += 3;
@@ -13,7 +13,7 @@ N(os_აფურცელი) {
   lx[ISPAGE(lx) ? -2 : 2].v = nο, σ[1].v = nο;
   A(nο) C(, 1);
 }
-N(os_აგულგული) {
+static N(os_აგულგული) {
   R(unsigned long, pc);
   R(unsigned long, wc);
   p_t *lx = σ[1].v;
@@ -27,7 +27,7 @@ N(os_აგულგული) {
   lx[ISPAGE(lx) ? -2 : 2].v = nσ, σ[1].v = nσ;
   A(nσ) C(, 1);
 }
-N(os_ამოწერე) {
+static N(os_ამოწერე) {
   R(unsigned long, wc);
   R(p_t *, pο);
   long pα = (pο[-1].q = pο[-1].q + wc);
@@ -60,7 +60,7 @@ static int shemdegi_rigis_nomeri() {
       return last = i, i;
   return 0;
 }
-N(os_წერტილი) {
+static N(os_წერტილი) {
   R(p_t *, nσ);
   R(p_t *, nο);
   int nomeri = shemdegi_rigis_nomeri();
@@ -70,7 +70,7 @@ N(os_წერტილი) {
   QUEUE_INSERT_TAIL(&rigis_tavi, &rigis_elementebi[nomeri].q);
   C(, 1);
 }
-N(os_შემდეგი) {
+static N(os_შემდეგი) {
   ο[-1].Q = α;
   if (α == 0 && ο[-3].v != 0) {
     p_t *l = ο[-3].v, *r = ο[-2].v;
@@ -87,16 +87,16 @@ N(os_შემდეგი) {
     eο[eα - 1].c(eο, eα - 1, eρ, eσ);
   }
 }
-n_t opcode_map[] = {os_აფურცელი, os_აგულგული, os_ამოწერე, os_წერტილი,
+static n_t opcode_map[] = {os_აფურცელი, os_აგულგული, os_ამოწერე, os_წერტილი,
                     os_შემდეგი};
-N(os_ოპკოდით_გადამრთველი) {
+static N(os_ოპკოდით_გადამრთველი) {
   R(unsigned long, opcode);
   opcode_map[opcode](T());
 }
 N(main1);
-N(os_არა) { printf("os_არა\n"), os_შემდეგი(T()); }
-N(os_და) { printf("os_და\n"), os_შემდეგი(T()); }
-N(os_ან) { printf("os_ან\n"), os_შემდეგი(T()); }
+static N(os_არა) { printf("os_არა\n"), os_შემდეგი(T()); }
+static N(os_და) { printf("os_და\n"), os_შემდეგი(T()); }
+static N(os_ან) { printf("os_ან\n"), os_შემდეგი(T()); }
 int main() {
   init_rigi();
   // |.b..........|............|.e..........|............
