@@ -73,6 +73,7 @@ void bzero(void *, unsigned long);
 static long epoll_fd;
 static n_t os_შემდეგი;
 static struct epoll_event events[MAX_EVENT_NUMBER];
+static p_t *net_σ;
 
 int SetNonblocking(int fd) {
   int old_option = fcntl(fd, F_GETFL);
@@ -106,17 +107,17 @@ N(net_მისამართი) {
   address->sin_port = htons(port);
   C(, 1);
 }
+static long listeningSockets[1024] = {0};
 N(net_ეპოლშიდაამატე) {
   R(p_t *, s);
-  // long listen_fd = s[-2].q;
-  // struct epoll_event event;
-  // event.data.fd = listen_fd;
-  // event.data.ptr = s;
-  // event.events = EPOLLIN;
-  // event.events |= EPOLLET;
-  // epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_fd, &event);
-  // SetNonblocking(listen_fd);
-  A(s) C(, 1);
+  long listen_fd = s[-2].q;
+  struct epoll_event event;
+  event.data.ptr = s;
+  event.events = EPOLLIN;
+  event.events |= EPOLLET;
+  epoll_ctl(epoll_fd, EPOLL_CTL_ADD, listen_fd, &event);
+  SetNonblocking(listen_fd);
+  C(, 1);
 }
 N(net_მოუსმინე_next) {
   R(p_t *, s);
@@ -124,6 +125,7 @@ N(net_მოუსმინე_next) {
   long ret = listen(listen_fd, 5);
   if (ret == -1)
     return printf("fail to listen socket!\n"), C(, 2);
+  listeningSockets[listen_fd] = 1;
   A(s) C(, 1);
 }
 N(net_მოუსმინე) {
@@ -133,7 +135,7 @@ N(net_მოუსმინე) {
 N(net_კლიენტისგულგული_ან) {
   R(p_t *, s);
   ((void)s);
-  printf("net_კლიენტისგულგული_ან\n"), A4(σ, ან_გადასვლა, 2, sss) O;
+  printf("net_კლიენტისგულგული_ან\n"), A5(σ, ან_გადასვლა, s, 2, sss) O;
 }
 N(net_კლიენტისგულგული_და) { printf("net_კლიენტისგულგული_და\n"); }
 N(net_კლიენტისგულგული_არა) { printf("net_კლიენტისგულგული_არა\n"); }
@@ -144,28 +146,37 @@ N(net_კლიენტისგულგული) {
      'scli', listen_fd, σ[-1].c, 6, 10, აგულგული)
   O;
 }
-N(nnn) { printf("nnn\n"); }
-N(net_შემდეგი) {
+N(net_შემდეგი);
+N(nnn) {
+  A11(net_შემდეგი, აფურცელი, 1, ამოწერე, დაა, net_σ, წერტილი, დაა, 4,
+      os_შემდეგი, დაა)
+  O;
+}
+N(გაუგზავნე) {
   R(p_t *, s);
-  long listen_fd = s[-2].q;
+  R(p_t *, k);
+  A10(k, აფურცელი, 2, ამოწერე, დაა, s, წერტილი, დაა, net_შემდეგი, და) O;
+}
+N(net_შემდეგი) {
   int number = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, 1000);
   if (number < 0)
     return printf("epoll failure!\n"), C(, 2);
   if (number == 0) {
-    A(4) os_შემდეგი(T());
+    nnn(T());
   } else {
     char buf[BUFFER_SIZE];
     int i;
     for (i = 0; i < number; i++) {
-      int sockfd = events[i].data.fd;
       p_t *s = events[i].data.ptr;
-      if (sockfd == listen_fd) {
+      int sockfd = s[-2].q;
+      if (listeningSockets[sockfd]) {
         struct sockaddr_in client_address;
         socklen_t client_addrlength = sizeof(client_address);
-        long connfd = accept(listen_fd, (struct sockaddr *)&client_address,
+        long connfd = accept(sockfd, (struct sockaddr *)&client_address,
                              &client_addrlength);
-        A6(connfd, net_კლიენტისგულგული, net_ეპოლშიდაამატე, და, nnn, და)
-        O; // Use et mode
+        A9(connfd, net_კლიენტისგულგული, s, გაუგზავნე, დაა, net_ეპოლშიდაამატე,
+           და, nnn, და)
+        O;
       } else if (events[i].events & EPOLLIN) {
         /* This code will not be triggered repeatedly, so we cycle through the
          * data to make sure that all the data in the socket read cache is read
@@ -204,12 +215,14 @@ N(net_შემდეგი) {
 N(sss) {
   R(unsigned long, wc);
   R(void *, pith);
-  A7(აფურცელი, wc, ამოწერე, დაა, pith, წერტილი, დაა)
+  A9(აფურცელი, wc, ამოწერე, დაა, pith, წერტილი, დაა, net_შემდეგი, და)
   O;
 }
 N(net_სოკეტისგულგული_ან) {
   R(p_t *, s)
-  printf("net_სოკეტისგულგული_ან\n"), A5(σ, ან_გადასვლა, 2, s, sss) O;
+  printf("net_სოკეტისგულგული_ან\n");
+  σ[-3].v = s;
+  A5(σ, ან_გადასვლა, s, 2, sss) O;
 }
 N(net_სოკეტისგულგული_და) { printf("net_სოკეტისგულგული_და\n"); }
 N(net_სოკეტისგულგული_არა) { printf("net_სოკეტისგულგული_არა\n"); }
@@ -218,14 +231,14 @@ N(net_სოკეტისგულგული) {
   long listen_fd = socket(PF_INET, SOCK_STREAM, 0);
   if (listen_fd < 0)
     return C(, 2);
-  A9(net_სოკეტისგულგული_ან, net_სოკეტისგულგული_და, net_სოკეტისგულგული_არა,
-     'sock', listen_fd, σ[-1].c, 6, 10, აგულგული)
+  A10(net_სოკეტისგულგული_ან, net_სოკეტისგულგული_და, net_სოკეტისგულგული_არა,
+      'sock', 0, listen_fd, σ[-1].c, 7, 10, აგულგული)
   O;
 }
 N(net_ოპკოდის_გადამყვანი) {
   R(unsigned long, opcode);
   if (opcode == 4)
-    A4(net_შემდეგი, opcode, σ[-2].c, დაა) O;
+    net_შემდეგი(T());
   else if (opcode == 5)
     net_მოუსმინე(T());
   else if (opcode == 6)
@@ -249,11 +262,15 @@ N(net_გულგული) {
      net_ოპკოდის_გადამყვანი, 5, 96, აგულგული)
   O;
 }
+N(main1_next) {
+  net_σ = σ;
+  main2(T());
+}
 N(main1) {
   epoll_fd = epoll_create(5); // Event table size 5
   os_შემდეგი = σ[-1].c;
   if (epoll_fd == -1)
     return C(, 2);
-  A9(main2, აფურცელი, 1, ამოწერე, დაა, net_გულგული, და, წერტილი, და)
+  A9(main1_next, აფურცელი, 1, ამოწერე, დაა, net_გულგული, და, წერტილი, და)
   O;
 }
