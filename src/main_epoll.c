@@ -13,7 +13,6 @@ N(ნეტსერვერი) { A(7) σ[-1].c(T()); }
 N(ან_გადასვლა) { C(, 0); }
 N(და_გადასვლა) { C(, 1); }
 
-#include <arpa/inet.h>
 /*
 require("net").createServer((s) => s.on("data", (d) =>
 s.write(d))).listen(8000);
@@ -223,7 +222,7 @@ N(net_მოუსმინე) {
   O;
 }
 N(net_შემდეგი) {
-  int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
+  int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, 1000);
   if (ret < 0)
     return printf("epoll failure!\n"), C(, 2);
   C(, 1);
@@ -234,9 +233,7 @@ N(sss) {
   A7(აფურცელი, wc, ამოწერე, დაა, pith, წერტილი, დაა)
   O;
 }
-N(net_სოკეტისგულგული_ან) {
-  printf("net_სოკეტისგულგული_ან\n"), A4(σ, ან_გადასვლა, 2, sss) O;
-}
+N(net_სოკეტისგულგული_ან) { printf("net_სოკეტისგულგული_ან\n"), A4(σ, ან_გადასვლა, 2, sss) O; }
 N(net_სოკეტისგულგული_და) { printf("net_სოკეტისგულგული_და\n"); }
 N(net_სოკეტისგულგული_არა) { printf("net_სოკეტისგულგული_არა\n"); }
 
