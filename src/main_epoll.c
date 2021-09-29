@@ -237,26 +237,22 @@ N(net_სოკეტისგულგული) {
 }
 N(net_ოპკოდის_გადამყვანი) {
   R(unsigned long, opcode);
-  if (opcode == 4)
-    net_შემდეგი(T());
-  else if (opcode == 5)
-    net_მოუსმინე(T());
-  else if (opcode == 6)
-    net_მისამართი(T());
-  else if (opcode == 7)
-    net_სოკეტისგულგული(T());
-  else
-    A2(opcode, os_შემდეგი) O;
+  switch (opcode) {
+  case 4:
+    return net_შემდეგი(T());
+  case 5:
+    return net_მოუსმინე(T());
+  case 6:
+    return net_მისამართი(T());
+  case 7:
+    return net_სოკეტისგულგული(T());
+  default:
+    return A2(opcode, os_შემდეგი) O;
+  }
 }
-N(net_გულგული_ან) {
-  printf("net_გულგული_ან\n");
-  net_შემდეგი(T());
-}
-N(net_გულგული_და) {
-  printf("net_გულგული_და\n");
-  net_შემდეგი(T());
-}
-N(net_გულგული_არა) { printf("net_გულგული_არა\n"); }
+N(net_გულგული_ან) { net_შემდეგი(T()); }
+N(net_გულგული_და) { net_შემდეგი(T()); }
+N(net_გულგული_არა) {}
 N(net_გულგული) {
   A8(net_გულგული_ან, net_გულგული_და, net_გულგული_არა, 'net',
      net_ოპკოდის_გადამყვანი, 5, 96, აგულგული)
