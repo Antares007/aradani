@@ -12,16 +12,16 @@ src/main: src/main.c src/aradani.o
 src/main_%: src/main_%.o src/aradani.o 
 	${CC} src/main.c $^ -o $@ ${CFLAGS}
 
-%.bin: %.binp
+%.oars: %.binp
 	head -c -1 $^ > $@
 %.binp: %.elf
 	${OBJCOPY} -O binary -j .text.* -j .text -j .data $^ $@
-%.elf: %.oars
+%.elf: %.oO3freestanding
 	${LD} -T arsi.ld $^ -o $@
-%.oars: %.c
+%.oO3freestanding: %.c
 	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3
 
-%.arsi: %.bin src/bolo.bin
+%.arsi: %.oars src/bolo.bin
 	cat $^ > $@
 
 clean:

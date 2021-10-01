@@ -1,14 +1,30 @@
-#include "arsi.h"
 #include "aradani.h"
 
-Imports(წერტილი);
+void tail() __attribute__((section(".text.end")));
+N(tail) {}
 
-N(fun1) { A('fun1') C(, 1); }
-N(fun2) { A('fun2') C(, 1); }
-N(fun3) { A('fun3') C(, 1); }
+N(წერტილი) { σ[-3].c(T()); }
+N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
+N(და_გადასვლა) { σ[ρ + 1].c(T()); }
 
-// clang-format off
-Exports(fun1, L)And(L,
-        fun2, L)End(L,
-        fun3);
-// clang-format on
+N(გამარჯობა) {
+  R(p_t *, kσ);
+  if (σ[-1].v != kσ) { // გამარჯობა
+    σ[-2].v = kσ;
+    A5(σ, ან_გადასვლა, σ[-1].v, 2, წერტილი) O;
+  } else { // გაგიმარჯოს
+    A5(σ, ან_გადასვლა, σ[-2].v, 2, წერტილი) O;
+  }
+}
+
+N(შემდეგი) { A5(σ, და_გადასვლა, σ[-1].v, 2, წერტილი) O; }
+
+N(ჩიხი) {}
+
+void head() __attribute__((section(".text.begin")));
+N(head) {
+  R(n_t, გულგული);
+  R(n_t, წერტილი);
+  A5(გამარჯობა, შემდეგი, ჩიხი, წერტილი, 0)
+  A3(წერტილი, გულგული, tail) A3(6, გულგული, დაა) O;
+}
