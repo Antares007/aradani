@@ -32,11 +32,6 @@ typedef struct p_s {
 #define OARS p_t *ο, long α, long ρ, p_t *σ
 typedef void (*n_t)(OARS);
 #define N(n) void n(OARS)
-#define Oars(b)                                                                \
-  void b() __attribute__((section(".text.begin")));                            \
-  static void tail() __attribute__((section(".text.end")));                    \
-  N(tail) {}                                                                   \
-  N(b)
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v;
 #define Rpith(n)                                                               \
@@ -57,6 +52,9 @@ N(da);
 N(daa);
 N(daaa);
 N(aradani);
+
+#define ან an
+N(an);
 /*
 console.log(
   Array(21).fill()

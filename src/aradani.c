@@ -84,3 +84,21 @@ N(aradani) {
   n_t sgadasabmeli = ο[--α].c;
   sgadasabmeli(T());
 }
+static N(an_an) {
+  ρ += 3;
+  n_t n = σ[ρ++].c;
+  n(T());
+}
+static N(an_da) {
+  ρ += 4;
+  C(, 1);
+}
+N(an) {
+  n_t araarkhi = σ[ρ + 2].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = araarkhi;
+  σ[--ρ].c = an_da;
+  σ[--ρ].c = an_an;
+  n_t n = ο[--α].c;
+  n(T());
+}

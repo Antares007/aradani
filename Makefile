@@ -6,6 +6,7 @@ OBJCOPY=objcopy
 src/os: src/mmap.o
 src/c2: src/c2.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS}
+src/main: src/main.c src/aradani.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 src/main_%: src/main_%.o src/aradani.o 
@@ -20,6 +21,8 @@ src/main_%: src/main_%.o src/aradani.o
 %.oars: %.c
 	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3
 
+%.arsi: %.bin src/bolo.bin
+	cat $^ > $@
 
 clean:
 	git clean -xdf
