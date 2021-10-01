@@ -30,9 +30,12 @@ N(k2) {}
 void end() {
   printf("end!\n");
 }
+void onerror() {
+  printf("error!\n");
+}
 void pith(char *name, void *add, void *next) {
   printf("%s %p\n", name, add);
-  ((b_t)next)(pith, end);
+  ((b_t)next)(pith, end, onerror);
 }
 int main(int argc, char *argv[]) {
   // if (argc < 2) {
@@ -41,7 +44,7 @@ int main(int argc, char *argv[]) {
   //}
   unsigned long size;
   b_t arsi = mapfile("src/arsi.arsi", &size);
-  arsi(pith, end);
+  arsi(pith, end, onerror);
   printf("done %p %ld\n", arsi, size);
   return 0;
 }
