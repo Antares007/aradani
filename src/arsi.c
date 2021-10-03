@@ -1,5 +1,10 @@
 #include "aradani.h"
-
+int cmp(const char *s1, const char *s2) {
+  while (*s1 == *s2++)
+    if (*s1++ == 0)
+      return (0);
+  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
+}
 void tail() __attribute__((section(".text.end")));
 N(tail) {}
 n_t წერტილი;
@@ -7,7 +12,6 @@ n_t წერტილი;
 N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
 N(და_გადასვლა) { σ[ρ + 1].c(T()); }
 N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
-
 n_t სიტყვა;
 n_t სიტყვა2;
 char *names[] = {"სიტყვა"};
@@ -27,7 +31,7 @@ N(შემდეგი) {
 N(ჩიხი) {
   if (α)
     A4(არა_გადასვლა, σ[-2].v, 1, წერტილი) O;
-  else{
+  else {
     for (long i = 0; i < sizeof(names) / sizeof(*names); i++)
       if (((n_t *)&o)[i] == 0)
         return A5(names[i], არა_გადასვლა, σ[-2].v, 2, წერტილი) O;
@@ -37,10 +41,12 @@ N(ჩიხი) {
 
 void head() __attribute__((section(".text.begin")));
 N(head) {
-  R(n_t, წერტილი_);
-  R(n_t, იმპორტექპორტი_);
-  წერტილი = წერტილი_;
-  A4(შემდეგი, ჩიხი, tail, იმპორტექპორტი_) O;
+  volatile n_t t = tail;
+  t(T());
+  //R(n_t, წერტილი_);
+  //R(n_t, იმპორტექპორტი_);
+  //წერტილი = წერტილი_;
+  //A4(შემდეგი, ჩიხი, tail, იმპორტექპორტი_) O;
 }
 
 // N(გამარჯობა) {
