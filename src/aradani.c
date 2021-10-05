@@ -59,6 +59,30 @@ N(daaa) {
   n_t n = ο[--α].c;
   n(T());
 }
+static N(daaaa_an) {
+  ρ += 7;
+  C(, 0);
+}
+static N(daaaa_da) {
+  ρ += 3;
+  ο[α++].v = σ[ρ++].v;
+  ο[α++].v = σ[ρ++].v;
+  ο[α++].v = σ[ρ++].v;
+  n_t n = σ[ρ++].c;
+  n(T());
+}
+N(daaaa) {
+  n_t araarkhi = σ[ρ + 2].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = araarkhi;
+  σ[--ρ].c = daaaa_da;
+  σ[--ρ].c = daaaa_an;
+  n_t n = ο[--α].c;
+  n(T());
+}
 static N(aradani_ara) {
   ρ += 6;
   n_t n = σ[ρ - 3].c;

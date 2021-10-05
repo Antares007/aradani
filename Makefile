@@ -1,6 +1,6 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-std=c99 -Wall -Wno-multichar
+CFLAGS+=-std=c99 -Wall -Wno-multichar -Wno-unused-value
 OBJCOPY=objcopy
 
 src/os: src/mmap.o src/aradani.o
@@ -17,12 +17,13 @@ src/main_%: src/main_%.o src/aradani.o
 %.oars: %.binp
 	head -c -1 $^ > $@
 %.binp: %.elf
-	${OBJCOPY} -O binary -j .text.* -j .text -j .data $^ $@
+	${OBJCOPY} -O binary -j .rodata -j .text.* -j .text -j .data $^ $@
 %.elf: %.oO3freestanding
 	${LD} -T arsi.ld $^ -o $@
 %.oO3freestanding: %.c
-	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3
-
+	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3 -fno-stack-clash-protection -fno-stack-protector
+src/arsi2.arsi: src/arsi2.oars src/arsi.oars src/jmp.bin
+	cat $^ > $@
 %.arsi: %.oars src/jmp.bin
 	cat $^ > $@
 

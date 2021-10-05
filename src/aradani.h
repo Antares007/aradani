@@ -47,16 +47,18 @@ typedef void (*n_t)(OARS);
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)a,
 #define wordCountOf(T)                                                         \
-  (sizeof(T) +                                                                 \
-   ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /       \
-      sizeof(void *)
+  ((sizeof(T) +                                                                \
+    ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
+   sizeof(void *))
 #define და da
 #define დაა daa
 #define დააა daaa
+#define დაააა daaaa
 #define არადანი aradani
 N(da);
 N(daa);
 N(daaa);
+N(daaaa);
 N(aradani);
 
 #define ან an
