@@ -3,7 +3,7 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar -Wno-unused-value
 OBJCOPY=objcopy
 
-src/os: src/mmap.o src/aradani.o
+src/os: src/mmap.o src/aradani.o src/os_expimp.o src/os_wordump.o
 src/c2: src/c2.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS}
 src/main: src/main.c src/aradani.o

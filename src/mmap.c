@@ -25,4 +25,3 @@ void *mapfile(const char *filename, size_t *size) {
   close(fd);
   return addr;
 }
-
