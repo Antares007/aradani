@@ -37,4 +37,6 @@
       nαmes[i] = (void *)((unsigned long)&head + ((unsigned long *)nαmes)[i]); \
     for (long i = 0; i < sizeof(νames) / sizeof(*νames); i++)                  \
       νames[i] = (void *)((unsigned long)&head + ((unsigned long *)νames)[i]); \
+    for (long i = 0; i < sizeof(νars) / sizeof(*νars); i++)                    \
+      νars[i] = (void *)((unsigned long)&head + ((unsigned long *)νars)[i]);   \
   }

@@ -19,7 +19,7 @@ void *mapfile(const char *filename, size_t *size) {
   if (size)
     *size = sb.st_size;
   void *addr =
-      mmap((void *)0x0000777777777000, sb.st_size,
+      mmap((void *)0x0000777777700000, sb.st_size,
            PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_FIXED, fd, 0);
 
   close(fd);

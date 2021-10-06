@@ -5,30 +5,43 @@
 #include <stdio.h>
 #include <string.h>
 
-static N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
-static N(და_გადასვლა) { σ[ρ + 1].c(T()); }
-static N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
-
-static N(kal0) { printf("kal0\n"); }
-static N(kal1) {
-  printf("kal1\n");
-  α = 0;
-  os_შემდეგი(T());
-}
-static N(kal2) {
-  if (α)
-    printf("error\n");
-  else
-    printf("next\n");
-}
-static N(კალაპოტი) { A6(kal0, kal1, kal2, 0, 3, os_აგულგული) O; }
-
 int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
     if (*s1++ == 0)
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
+
+static N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
+static N(და_გადასვლა) { σ[ρ + 1].c(T()); }
+static N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
+
+static N(kal0) {
+  printf("kal0\n");
+  os_შემდეგი(T());
+}
+
+static n_t მთავარი;
+static N(kal1) {
+  printf("kal1\n");
+  R(Q_t, exportsCount);
+  R(n_t *, exports);
+  R(char **, exportedNames);
+  for (long i = 0; i < exportsCount; i++)
+    if (cmp("მთავარი", exportedNames[i])==0)
+      მთავარი = exports[i];
+  os_შემდეგი(T());
+}
+static N(kal2) {
+  if (α)
+    printf("error\n");
+  else {
+    printf("next\n");
+    მთავარი(T());
+  }
+}
+static N(კალაპოტი) { A6(kal0, kal1, kal2, 0, 3, os_აგულგული) O; }
+
 struct impexp {
   n_t *imports, *exports;
   long isize, esize;
@@ -51,7 +64,7 @@ N(იმპორტექსპორტის_და) {
   R(Q_t, exportsCount);
   R(n_t *, exports);
   R(char **, exportedNames);
-  printf("იმპორტექსპორტის_და %s %p %ld\n", exportedNames[1], exports[0],
+  printf("იმპორტექსპორტის_და %s %p %ld\n", exportedNames[0], exports[1],
          exportsCount);
   struct impexp *s = S(, impexp);
   for (long i = 0; i < s->isize; i++)
@@ -112,9 +125,6 @@ N(იმპორტექსპორტი) {
   O;
 }
 static N(imports) { A3(0, 0, 0) C(, 1); }
-char *νames[] = {"os_წერტილი", "os_აგულგული", "os_შემდეგი"};
-n_t νars[] = {os_წერტილი, os_აგულგული, os_შემდეგი};
-static N(exports) { A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(, 1); }
 static N(არაწყაროს_ან) {
   printf("არაწყაროს_ან\n");
   R(p_t *, kσ);
@@ -124,12 +134,15 @@ static N(არაწყარო) {
   --α;
   A6(არაწყაროს_ან, 0, 0, 0, 3, os_აგულგული) O;
 }
-N(ღრმაარსი) {
-  R(n_t, cb);
-  A4(imports, exports, არაწყარო, cb) O;
-}
 N(არსი) {
   R(n_t, arsi);
   A8(კალაპოტი, ან_გადასვლა, იმპორტექსპორტი, arsi, დააა, 2, os_წერტილი, დაა)
   O;
+}
+char *νames[] = {"os_წერტილი", "os_აგულგული", "os_შემდეგი"};
+n_t νars[] = {os_წერტილი, os_აგულგული, os_შემდეგი};
+static N(exports) { A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(, 1); }
+N(ღრმაარსი) {
+  R(n_t, cb);
+  A4(imports, exports, არაწყარო, cb) O;
 }

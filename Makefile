@@ -28,5 +28,5 @@ src/arsi2.arsi: src/arsi2.oars src/arsi.oars src/jmp.bin
 	cat $^ > $@
 
 clean:
-	git clean -xdf
+	rm -f src/*.bin src/*.oars src/*.o
 .PHONY: clean 
