@@ -15,8 +15,7 @@ typedef struct {
   p_t *ο;
   p_t *σ;
 } rigis_elementi_t;
-#define MAX_RIGIS_ELEMENTI 1024
-rigis_elementi_t rigis_elementebi[MAX_RIGIS_ELEMENTI];
+rigis_elementi_t rigis_elementebi[1024];
 
 N(os_აფურცელი) {
   p_t *lx = σ[1].v;
@@ -32,7 +31,7 @@ N(os_აგულგული) {
   R(Q_t, pc);
   R(Q_t, wc);
   p_t *lx = σ[1].v;
-  p_t *nσ = &lx[(ISPAGE(lx) ? 502 : 512) + pc * 512];
+  p_t *nσ = &lx[(ISPAGE(lx) ? 504 : 512) + pc * 512];
   if (σ <= nσ)
     return A2(wc, pc) C(, 2);
 
@@ -42,7 +41,6 @@ N(os_აგულგული) {
   nσ[--nρ].c = ο[--α].c;
 
   QUEUE_INIT((QUEUE *)&nσ[3]);
-  QUEUE_INIT((QUEUE *)&nσ[5]);
   nσ[0].q = nρ, nσ[1].v = lx, nσ[2].v = σ;
   lx[ISPAGE(lx) ? -2 : 2].v = nσ, σ[1].v = nσ;
   A(nσ) C(, 1);
@@ -65,6 +63,8 @@ N(os_რიგშიჩააყენე) {
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &rigis_elementebi[nomeri].q);
   C(, 1);
 }
+p_t *stack[1024];
+long sp = 0;
 static void next_(p_t *σ) {
   QUEUE *q;
   if ((QUEUE *)&σ[3] != (q = QUEUE_NEXT((QUEUE *)&σ[3]))) {
@@ -73,15 +73,12 @@ static void next_(p_t *σ) {
     e->q[0] = 0;
     p_t *eο = e->ο, *eσ = e->σ;
     long eα = eο[-1].q, eρ = eσ[0].q;
-    int nomeri = shemdegi_rigis_nomeri();
-    rigis_elementebi[nomeri].σ = σ;
-    QUEUE_INSERT_TAIL((QUEUE *)&eσ[5], &rigis_elementebi[nomeri].q);
+    if (σ != eσ)
+      stack[sp++] = σ;
+    assert(sp <= sizeof(stack) / sizeof(void *));
     eο[eα - 1].c(eο, eα - 1, eρ, eσ);
-  } else if ((QUEUE *)&σ[5] != (q = QUEUE_NEXT((QUEUE *)&σ[5]))) {
-    QUEUE_REMOVE(q);
-    rigis_elementi_t *e = (void *)q;
-    e->q[0] = 0;
-    next_(e->σ);
+  } else if (sp > 0) {
+    next_(stack[--sp]);
   } else
     printf("end\n");
 }
@@ -98,13 +95,19 @@ N(os_შემდეგი) {
 static N(os_წერტილი_next) {
   R(Q_t, wc);
   R(void *, pith);
-  A7(os_აფურცელი, wc, os_ამოწერე, დაა, pith, os_რიგშიჩააყენე, დაა) O;
+  if (wc == α)
+    ο[-1].Q = α, A3(ο, pith, os_რიგშიჩააყენე) O;
+  else
+    A7(os_აფურცელი, wc, os_ამოწერე, დაა, pith, os_რიგშიჩააყენე, დაა) O;
 }
 N(os_წერტილი) {
   // A4("os_წერტილი", loog, os_წერტილი_next, და) O;
   os_წერტილი_next(T());
 }
-static N(os_არა) { printf("os_არა\n"); }
+static N(os_არა) {
+  printf("os_არა\n");
+  os_შემდეგი(T());
+}
 static N(os_და) {
   printf("os_და\n");
   os_შემდეგი(T());
@@ -113,7 +116,16 @@ static N(os_ან) {
   printf("os_ან\n");
   os_შემდეგი(T());
 }
-N(test);
+static N(test);
+static N(test2) {
+  printf("test2\n");
+  A(test) A3(σ, 1, os_წერტილი) O;
+}
+static N(test) {
+  printf("test\n");
+  A(test2) A3(σ, 1, os_წერტილი) O;
+}
+
 int main() {
   init_rigi();
   // |.b..........|............|.e..........|............
@@ -122,7 +134,7 @@ int main() {
   p_t *ο = (void *)((Q_t)b | ((Q_t)0xFFF)) + 1,
       *σ = (void *)((Q_t)e & ~((Q_t)0xFFF));
 
-  ο += 3, σ -= 7;
+  ο += 3, σ -= 5;
   long α = 0, ρ = 0;
 
   ο[-3].Q = 0, ο[-2].v = σ, ο[-1].Q = 0;
@@ -132,30 +144,27 @@ int main() {
   σ[--ρ].c = os_ან;
 
   QUEUE_INIT((QUEUE *)&σ[3]);
-  QUEUE_INIT((QUEUE *)&σ[5]);
   σ[0].q = ρ, σ[1].v = ο, σ[2].v = 0;
 
   // if (argc < 2) {
-  //  printf("%s filenameToRun\n", argv[0]);
-  //  return -1;
-  // }
+  // printf("%s filenameToRun\n", argv[0]);
+  // return -1;
+  //}
   unsigned long size;
   n_t arsi = mapfile("src/arsi2.arsi", &size);
   *(void **)((char *)arsi + size - 10) = ღრმაარსი;
   A2(arsi, არსი) O;
-  test(T());
+  // test(T());
   free(b);
 }
-N(test) { printf("hey\n"); }
-
 static void init_rigi() {
-  for (int i = 0; i < MAX_RIGIS_ELEMENTI; i++)
+  for (int i = 0; i < sizeof(rigis_elementebi) / sizeof(*rigis_elementebi); i++)
     rigis_elementebi[i].q[0] = 0;
 }
 static int shemdegi_rigis_nomeri() {
   static int last = 0;
-  int i;
-  for (i = last + 1; i < MAX_RIGIS_ELEMENTI; i++)
+  int i = last + 1;
+  for (; i < sizeof(rigis_elementebi) / sizeof(*rigis_elementebi); i++)
     if (rigis_elementebi[i].q[0] == 0)
       return last = i, i;
   for (i = 1; i < last; i++)

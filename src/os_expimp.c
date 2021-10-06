@@ -1,5 +1,5 @@
 #include "aradani.h"
-#include "arsi.h"
+//#include "arsi.h"
 #include "os.h"
 #include <assert.h>
 #include <stdio.h>
@@ -12,9 +12,15 @@ static N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
 static N(kal0) { printf("kal0\n"); }
 static N(kal1) {
   printf("kal1\n");
+  α = 0;
   os_შემდეგი(T());
 }
-static N(kal2) { printf("kal2\n"); }
+static N(kal2) {
+  if (α)
+    printf("error\n");
+  else
+    printf("next\n");
+}
 static N(კალაპოტი) { A6(kal0, kal1, kal2, 0, 3, os_აგულგული) O; }
 
 int cmp(const char *s1, const char *s2) {
@@ -106,7 +112,9 @@ N(იმპორტექსპორტი) {
   O;
 }
 static N(imports) { A3(0, 0, 0) C(, 1); }
-Exports(os_წერტილი, os_აგულგული, os_შემდეგი);
+char *νames[] = {"os_წერტილი", "os_აგულგული", "os_შემდეგი"};
+n_t νars[] = {os_წერტილი, os_აგულგული, os_შემდეგი};
+static N(exports) { A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(, 1); }
 static N(არაწყაროს_ან) {
   printf("არაწყაროს_ან\n");
   R(p_t *, kσ);
