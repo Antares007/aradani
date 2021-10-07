@@ -148,8 +148,8 @@ N(არსი) {
   O;
 }
 N(wordump);
-char *νames[] = {"os_წერტილი", "os_აგულგული", "os_შემდეგი", "wordump"};
-n_t νars[] = {os_წერტილი, os_აგულგული, os_შემდეგი, wordump};
+char *νames[] = {"os_წერტილი", "os_აგულგული", "os_შემდეგი", "wordump", "და"};
+n_t νars[] = {os_წერტილი, os_აგულგული, os_შემდეგი, wordump, და};
 static N(imports) { A3(0, 0, 0) C(, 1); }
 static N(exports) { A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(, 1); }
 N(ღრმაარსი) {
