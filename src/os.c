@@ -151,7 +151,7 @@ int main() {
   // return -1;
   //}
   unsigned long size;
-  n_t arsi = mapfile("src/arsi2.arsi", &size);
+  n_t arsi = mapfile("src/arsi01.arsi", &size);
   *(void **)((char *)arsi + size - 10) = ღრმაარსი;
   A2(arsi, არსი) O;
   // test(T());
