@@ -83,7 +83,7 @@ static void next_(p_t *σ) {
     printf("end\n");
 }
 N(os_შემდეგი) {
-  printf("os\n");
+  //printf("os\n");
   ο[-1].Q = α;
   if (α == 0 && ο[-3].v != 0) {
     p_t *l = ο[-3].v, *r = ο[-2].v;
@@ -109,23 +109,13 @@ static N(os_არა) {
   os_შემდეგი(T());
 }
 static N(os_და) {
-  printf("os_და\n");
+  //printf("os_და\n");
   os_შემდეგი(T());
 }
 static N(os_ან) {
-  printf("os_ან\n");
+  //printf("os_ან\n");
   os_შემდეგი(T());
 }
-static N(test);
-static N(test2) {
-  printf("test2\n");
-  A(test) A3(σ, 1, os_წერტილი) O;
-}
-static N(test) {
-  printf("test\n");
-  A(test2) A3(σ, 1, os_წერტილი) O;
-}
-
 int main(int argc, char **argv) {
   init_rigi();
   // |.b..........|............|.e..........|............
