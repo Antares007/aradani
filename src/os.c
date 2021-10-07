@@ -126,7 +126,7 @@ static N(test) {
   A(test2) A3(σ, 1, os_წერტილი) O;
 }
 
-int main() {
+int main(int argc, char **argv) {
   init_rigi();
   // |.b..........|............|.e..........|............
   void *b = malloc(100 << 12);
@@ -146,12 +146,11 @@ int main() {
   QUEUE_INIT((QUEUE *)&σ[3]);
   σ[0].q = ρ, σ[1].v = ο, σ[2].v = 0;
 
-  // if (argc < 2) {
-  // printf("%s filenameToRun\n", argv[0]);
-  // return -1;
-  //}
+  if (argc < 2)
+    printf("%s filenameToRun\n", argv[0]);
+
   unsigned long size;
-  n_t arsi = mapfile("src/arsi01.arsi", &size);
+  n_t arsi = mapfile(argc < 2 ? "src/arsi01.arsi" : argv[1], &size);
   *(void **)((char *)arsi + size - 10) = ღრმაარსი;
   A2(arsi, არსი) O;
   // test(T());
