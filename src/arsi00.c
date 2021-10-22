@@ -53,9 +53,10 @@ N(qsort_next) {
 }
 N(qsort) { A3(o.wordump, qsort_next, o.და) O; }
 N(მთავარი) {
-  void *b = &ο[α];
-  long e;
-  A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
-  A7(0, 8, b, e, qsort, o.wordump, o.და) O;
+  //void *b = &ο[α];
+  //long e;
+  //A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
+  //A7(0, 8, b, e, qsort, o.wordump, o.და) O;
+  C(,1);
 }
 Exports(მთავარი, ან_გადასვლა);

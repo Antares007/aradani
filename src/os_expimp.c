@@ -1,5 +1,4 @@
 #include "aradani.h"
-//#include "arsi.h"
 #include "os.h"
 #include <assert.h>
 #include <stdio.h>
@@ -12,7 +11,9 @@ int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 
-static N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
+static N(ან_გადასვლა) {//
+  σ[ρ + 0].c(T());
+}
 static N(და_გადასვლა) { σ[ρ + 1].c(T()); }
 static N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
 

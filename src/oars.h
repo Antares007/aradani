@@ -24,7 +24,7 @@
 #pragma once
 typedef struct p_s {
   union {
-    void (*c)(struct p_s *, long, long, struct p_s *);
+    void (*c)(struct p_s *, unsigned long, long, struct p_s *);
     void *v;
     char b;
     short w;
@@ -36,7 +36,7 @@ typedef struct p_s {
     unsigned long Q;
   };
 } p_t;
-#define OARS p_t *ο, long α, long ρ, p_t *σ
+#define OARS p_t *ο, unsigned long α, long ρ, p_t *σ
 typedef void (*n_t)(OARS);
 #define N(n) void n(OARS)
 #define T(n) n##ο, n##α, n##ρ, n##σ
@@ -49,9 +49,22 @@ typedef void (*n_t)(OARS);
 #define A(a) ο[α++].v = (void *)a,
 
 typedef unsigned long Q_t;
+typedef long q_t;
 typedef unsigned int W_t;
 #define X A2(os_შემდეგი, და) O
 #define S(ns, n) ((struct n *)&ns##σ[-wordCountOf(struct n)])
+#define Noars(AN, DA, ARA, WC, WS, NAME)                                       \
+  p_t *NAME##ο = malloc(((WC) + (WS)) * sizeof(void *)),                       \
+      *NAME##σ = NAME##ο + (WC) + (WS)-5;                                      \
+  unsigned long NAME##α = 0;                                                   \
+  long NAME##ρ = -(WS);                                                        \
+  NAME##σ[--NAME##ρ].c = ARA;                                                  \
+  NAME##σ[--NAME##ρ].c = DA;                                                   \
+  NAME##σ[--NAME##ρ].c = AN;                                                   \
+  NAME##σ[0].v = NAME##ο;                                                      \
+  NAME##σ[1].Q = NAME##α;                                                      \
+  NAME##σ[2].q = NAME##ρ;                                                      \
+  QUEUE_INIT((QUEUE *)&NAME##σ[3])
 
 #define wordCountOf(T)                                                         \
   ((sizeof(T) +                                                                \
