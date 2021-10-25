@@ -50,11 +50,14 @@ N(os_queue) { // TODO: reorder args
     C(, 2);
   queue_papers[qpno].σ = nσ;
   queue_papers[qpno].α = 0;
+  // TODO: use table lookup here
   while (queue_papers[qpno].α < wc)
     queue_papers[qpno].ο[queue_papers[qpno].α++].v = ο[--α].v;
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
   C(, 1);
 }
+// TODO: hide implementation details! as an including c file?
+// TODO: simplify lookup function signature type
 typedef Q_t (*amocere_t)(p_t *, p_t *, Q_t, Q_t);
 static Q_t amocere0(p_t *pο, p_t *ο, Q_t pα, Q_t α) { return pα; }
 static Q_t amocere1(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
@@ -127,6 +130,7 @@ N(os_next) {
   pο[pα - 1].c(pο, pα - 1, pρ, pσ);
 }
 static N(os_არა) { printf("os_არა\n"); }
+// TODO: remove os_next calls by extending meaning of dOt
 static N(os_და) {
   printf("os_და\n");
   os_next(T());
@@ -145,7 +149,8 @@ N(so0) {
 N(so1) {
   R(p_t *, oσ);
   R(Q_t, c);
-  printf("so1 %ld\n", c);
+  if (c % 100000000 == 0)
+    printf("so1 %ld\n", c);
   A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;
 }
 N(so2) { printf("so2\n"); }
@@ -158,7 +163,8 @@ N(si0) {
 N(si1) {
   R(p_t *, oσ);
   R(Q_t, c);
-  printf("si1 %ld\n", c);
+  if (c % 100000000 == 1)
+    printf("si1 %ld\n", c);
   A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;
 }
 N(si2) { printf("si2\n"); }
