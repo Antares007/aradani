@@ -51,11 +51,11 @@ typedef void (*n_t)(OARS);
 typedef unsigned long Q_t;
 typedef long q_t;
 typedef unsigned int W_t;
-#define X A2(os_შემდეგი, და) O
-#define S(ns, n) ((struct n *)&ns##σ[-wordCountOf(struct n)])
+#define X A2(os_next, და) O
+#define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
 #define Noars(AN, DA, ARA, WC, WS, NAME)                                       \
-  p_t *NAME##ο = malloc(((WC) + (WS)) * sizeof(void *)),                       \
-      *NAME##σ = NAME##ο + (WC) + (WS)-5;                                      \
+  p_t *NAME##ο = malloc(((WC) + (WS) + 5 + 3) * sizeof(void *)),               \
+      *NAME##σ = NAME##ο + (WC) + (WS) + 3;                                    \
   unsigned long NAME##α = 0;                                                   \
   long NAME##ρ = -(WS);                                                        \
   NAME##σ[--NAME##ρ].c = ARA;                                                  \
