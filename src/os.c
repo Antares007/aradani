@@ -8,7 +8,7 @@
 N(os_new) {
   R(Q_t, ws);
   R(Q_t, wc);
-  Noars(ο[--α].c, ο[--α].c, ο[--α].c, wc, ws, n);
+  Noars(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws );
   A(nσ) C(, 1);
 }
 N(os_delete) {
@@ -101,7 +101,7 @@ N(si2) { printf("si2\n"); }
 N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
 int main(int argc, char **argv) {
   init_queue();
-  Noars(os_ან, os_და, os_არა, 0x1000, 0, );
+  Noars(, os_ან, os_და, os_არა, 0x1000, 0);
   printf("aa\n");
   A8(0, si, ang, so, daa, 3, os_queue, დაა) O;
   // if (argc < 2)

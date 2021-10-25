@@ -53,7 +53,7 @@ typedef long q_t;
 typedef unsigned int W_t;
 #define X A2(os_next, და) O
 #define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
-#define Noars(AN, DA, ARA, WC, WS, NAME)                                       \
+#define Noars(NAME, AN, DA, ARA, WC, WS)                                       \
   p_t *NAME##ο = malloc(((WC) + (WS) + 5 + 3) * sizeof(void *)),               \
       *NAME##σ = NAME##ο + (WC) + (WS) + 3;                                    \
   unsigned long NAME##α = 0;                                                   \
