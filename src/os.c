@@ -91,19 +91,19 @@ static N(os_ან) {
 }
 N(ang) { C(, 0); }
 N(dag) { C(, 1); }
-N(so0) { printf("so0\n"); R(p_t*, oσ); A7(σ, ang, oσ, 2, os_queue, os_next, da) O;}
-N(so1) { printf("so1\n"); R(p_t*, oσ); A7(σ, dag, oσ, 2, os_queue, os_next, da) O;}
+N(so0) { R(p_t*, oσ); printf("so0\n"); A7(σ, ang, oσ, 3, os_queue, os_next, da) O;}
+N(so1) { R(p_t*, oσ); R(Q_t, c); printf("so1 %ld\n", c); A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;}
 N(so2) { printf("so2\n"); }
 N(so) { A6(so0, so1, so2, 64, 0, os_new) O; }
-N(si0) { printf("si0\n"); R(p_t*, oσ); A7(σ, dag, oσ, 2, os_queue, os_next, da) O;}
-N(si1) { printf("si1\n"); R(p_t*, oσ); A7(σ, dag, oσ, 2, os_queue, os_next, da) O;}
+N(si0) { R(p_t*, oσ); printf("si0\n"); A7(σ, dag, oσ, 3, os_queue, os_next, da) O;}
+N(si1) { R(p_t*, oσ); R(Q_t, c); printf("si1 %ld\n", c); A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;}
 N(si2) { printf("si2\n"); }
 N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
 int main(int argc, char **argv) {
   init_queue();
   Noars(os_ან, os_და, os_არა, 0x1000, 0, );
   printf("aa\n");
-  A7(si, ang, so, daa, 2, os_queue, დაა) O;
+  A8(0, si, ang, so, daa, 3, os_queue, დაა) O;
   // if (argc < 2)
   //  printf("%s filenameToRun\n", argv[0]);
   // unsigned long size;
