@@ -55,6 +55,47 @@ N(os_queue) { // TODO: reorder args
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
   C(, 1);
 }
+typedef Q_t (*amocere_t)(p_t *, p_t *, Q_t, Q_t);
+static Q_t amocere0(p_t *pο, p_t *ο, Q_t pα, Q_t α) { return pα; }
+static Q_t amocere1(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
+static Q_t amocere2(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
+static Q_t amocere3(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
+static Q_t amocere4(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
+static Q_t amocere5(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
+static Q_t amocere6(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  pο[pα++].v = ο[--α].v;
+  return pα;
+}
 N(os_next) {
   // TODO: assert α zero
   σ[1].Q = α;
@@ -79,8 +120,10 @@ N(os_next) {
   p_t *pσ = p->σ, *pο = pσ[0].v;
   Q_t pα = pσ[1].Q;
   q_t pρ = pσ[2].q;
-  while (p->α)
-    pο[pα++].v = p->ο[--p->α].v;
+  // TODO: restrict params. add asserts required
+  static amocere_t tablelookup[7] = {amocere0, amocere1, amocere2, amocere3,
+                                     amocere4, amocere5, amocere6};
+  pα = tablelookup[p->α](pο, p->ο, pα, p->α);
   pο[pα - 1].c(pο, pα - 1, pρ, pσ);
 }
 static N(os_არა) { printf("os_არა\n"); }
@@ -94,12 +137,30 @@ static N(os_ან) {
 }
 N(ang) { C(, 0); }
 N(dag) { C(, 1); }
-N(so0) { R(p_t*, oσ); printf("so0\n"); A7(σ, ang, oσ, 3, os_queue, os_next, da) O;}
-N(so1) { R(p_t*, oσ); R(Q_t, c); printf("so1 %ld\n", c); A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;}
+N(so0) {
+  R(p_t *, oσ);
+  printf("so0\n");
+  A7(σ, ang, oσ, 3, os_queue, os_next, da) O;
+}
+N(so1) {
+  R(p_t *, oσ);
+  R(Q_t, c);
+  printf("so1 %ld\n", c);
+  A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;
+}
 N(so2) { printf("so2\n"); }
 N(so) { A6(so0, so1, so2, 64, 0, os_new) O; }
-N(si0) { R(p_t*, oσ); printf("si0\n"); A7(σ, dag, oσ, 3, os_queue, os_next, da) O;}
-N(si1) { R(p_t*, oσ); R(Q_t, c); printf("si1 %ld\n", c); A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;}
+N(si0) {
+  R(p_t *, oσ);
+  printf("si0\n");
+  A7(σ, dag, oσ, 3, os_queue, os_next, da) O;
+}
+N(si1) {
+  R(p_t *, oσ);
+  R(Q_t, c);
+  printf("si1 %ld\n", c);
+  A8(c + 1, σ, dag, oσ, 3, os_queue, os_next, da) O;
+}
 N(si2) { printf("si2\n"); }
 N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
 int main(int argc, char **argv) {
