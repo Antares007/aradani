@@ -8,7 +8,7 @@
 N(os_new) {
   R(Q_t, ws);
   R(Q_t, wc);
-  Noars(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws );
+  Noars(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
   A(nσ) C(, 1);
 }
 N(os_delete) {
@@ -33,14 +33,16 @@ Q_t next_queue_paper() {
   static Q_t last = 0;
   Q_t i = last + 1;
   for (; i < sizeof(queue_papers) / sizeof(*queue_papers); i++)
+    // TODO: try replace if with assert here
     if (queue_papers[i].q[0] == 0)
       return last = i, i;
   for (i = 1; i < last; i++)
+    // TODO: try replace if with assert here
     if (queue_papers[i].q[0] == 0)
       return last = i, i;
   return 0;
 }
-N(os_queue) {
+N(os_queue) { // TODO: reorder args
   R(Q_t, wc);
   R(p_t *, nσ);
   Q_t qpno;
@@ -54,6 +56,7 @@ N(os_queue) {
   C(, 1);
 }
 N(os_next) {
+  // TODO: assert α zero
   σ[1].Q = α;
   QUEUE *q;
   if ((QUEUE *)&σ[3] == (q = QUEUE_NEXT((QUEUE *)&σ[3]))) {

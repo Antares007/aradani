@@ -44,6 +44,7 @@ typedef void (*n_t)(OARS);
 #define Rpith(n)                                                               \
   p_t *n##σ = ο[--α].v;                                                        \
   long n##ρ = n##σ[0].q
+// TODO: remove n
 #define C(n, r) n##σ[n##ρ + r].c(ο, α, n##ρ, n##σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)a,
