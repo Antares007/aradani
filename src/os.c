@@ -87,8 +87,7 @@ static Q_t amocere6(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
   return pα;
 }
 N(os_next) {
-  // TODO: assert α zero
-  σ[1].Q = α;
+  assert(α == 0);
   QUEUE *q;
   if ((QUEUE *)&σ[3] == (q = QUEUE_NEXT((QUEUE *)&σ[3]))) {
     if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
