@@ -29,25 +29,12 @@ void init_queue() {
   for (Q_t i = 0; i < sizeof(queue_papers) / sizeof(*queue_papers); i++)
     queue_papers[i].q[0] = 0;
 }
-Q_t next_queue_paper() {
-  static Q_t last = 0;
-  Q_t i = last + 1;
-  for (; i < sizeof(queue_papers) / sizeof(*queue_papers); i++)
-    // TODO: try replace if with assert here
-    if (queue_papers[i].q[0] == 0)
-      return last = i, i;
-  for (i = 1; i < last; i++)
-    // TODO: try replace if with assert here
-    if (queue_papers[i].q[0] == 0)
-      return last = i, i;
-  return 0;
-}
 N(os_queue) { // TODO: reorder args
   R(Q_t, wc);
   R(p_t *, nσ);
-  Q_t qpno;
-  if ((qpno = next_queue_paper()) == 0)
-    C(2);
+  static unsigned short qpno = 0;
+  qpno++, qpno %= 1024;
+  assert(queue_papers[qpno].q[0] == 0);
   queue_papers[qpno].σ = nσ;
   queue_papers[qpno].α = 0;
   // TODO: use table lookup here
