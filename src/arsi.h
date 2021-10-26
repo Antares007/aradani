@@ -25,12 +25,12 @@
     ArgsToNar(__VA_ARGS__)                                                     \
   };                                                                           \
   struct ο_s o = {};                                                           \
-  static N(imports) { A3(nαmes, &o, (sizeof(nαmes) / sizeof(*nαmes))) C(, 1); }
+  static N(imports) { A3(nαmes, &o, (sizeof(nαmes) / sizeof(*nαmes))) C(1); }
 #define Exports(...)                                                           \
   char *νames[] = {ArgsToStr(__VA_ARGS__)};                                    \
   n_t νars[] = {ArgsToNar2(__VA_ARGS__)};                                      \
   static N(exports) {                                                          \
-    A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(, 1);                  \
+    A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(1);                    \
   }                                                                            \
   static void adjustaddresses() {                                              \
     for (long i = 0; i < sizeof(nαmes) / sizeof(*nαmes); i++)                  \

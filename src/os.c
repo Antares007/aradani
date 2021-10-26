@@ -9,12 +9,12 @@ N(os_new) {
   R(Q_t, ws);
   R(Q_t, wc);
   Noars(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
-  A(nσ) C(, 1);
+  A(nσ) C(1);
 }
 N(os_delete) {
   R(p_t *, nσ);
   free(nσ[0].v);
-  C(, 1);
+  C(1);
 }
 typedef struct {
   QUEUE q;
@@ -47,14 +47,14 @@ N(os_queue) { // TODO: reorder args
   R(p_t *, nσ);
   Q_t qpno;
   if ((qpno = next_queue_paper()) == 0)
-    C(, 2);
+    C(2);
   queue_papers[qpno].σ = nσ;
   queue_papers[qpno].α = 0;
   // TODO: use table lookup here
   while (queue_papers[qpno].α < wc)
     queue_papers[qpno].ο[queue_papers[qpno].α++].v = ο[--α].v;
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
-  C(, 1);
+  C(1);
 }
 // TODO: hide implementation details! as an including c file?
 // TODO: simplify lookup function signature type
@@ -139,8 +139,8 @@ static N(os_ან) {
   printf("os_ან\n");
   os_next(T());
 }
-N(ang) { C(, 0); }
-N(dag) { C(, 1); }
+N(ang) { C(0); }
+N(dag) { C(1); }
 N(so0) {
   R(p_t *, oσ);
   printf("so0\n");

@@ -1,7 +1,7 @@
 #include "aradani.h"
 static N(da_an) {
   ρ += 4;
-  C(, 0);
+  C(0);
 }
 static N(da_da) {
   ρ += 3;
@@ -19,7 +19,7 @@ N(da) {
 }
 static N(daa_an) {
   ρ += 5;
-  C(, 0);
+  C(0);
 }
 static N(daa_da) {
   ρ += 3;
@@ -39,7 +39,7 @@ N(daa) {
 }
 static N(daaa_an) {
   ρ += 6;
-  C(, 0);
+  C(0);
 }
 static N(daaa_da) {
   ρ += 3;
@@ -61,7 +61,7 @@ N(daaa) {
 }
 static N(daaaa_an) {
   ρ += 7;
-  C(, 0);
+  C(0);
 }
 static N(daaaa_da) {
   ρ += 3;
@@ -115,7 +115,7 @@ static N(an_an) {
 }
 static N(an_da) {
   ρ += 4;
-  C(, 1);
+  C(1);
 }
 N(an) {
   n_t araarkhi = σ[ρ + 2].c;

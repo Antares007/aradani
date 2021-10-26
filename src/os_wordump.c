@@ -16,7 +16,7 @@ N(wordump) {
       printf("\n");
     i++;
   }
-  C(, 1);
+  C(1);
 }
 N(loog) {
   R(char *, s);
