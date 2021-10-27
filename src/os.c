@@ -29,6 +29,40 @@ void init_queue() {
   for (Q_t i = 0; i < sizeof(queue_papers) / sizeof(*queue_papers); i++)
     queue_papers[i].q[0] = 0;
 }
+// TODO: hide implementation details! as an including c file?
+typedef void (*memcopy_t)(p_t *, p_t *);
+static void memcopy0(p_t *pο, p_t *ο) {}
+static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
+static void memcopy2(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+}
+static void memcopy3(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+  pο[2].v = ο[2].v;
+}
+static void memcopy4(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+  pο[2].v = ο[2].v;
+  pο[3].v = ο[3].v;
+}
+static void memcopy5(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+  pο[2].v = ο[2].v;
+  pο[3].v = ο[3].v;
+  pο[4].v = ο[4].v;
+}
+static void memcopy6(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+  pο[2].v = ο[2].v;
+  pο[3].v = ο[3].v;
+  pο[4].v = ο[4].v;
+  pο[5].v = ο[5].v;
+}
 N(os_queue) { // TODO: reorder args
   R(Q_t, wc);
   R(p_t *, nσ);
@@ -37,54 +71,11 @@ N(os_queue) { // TODO: reorder args
   assert(queue_papers[qpno].q[0] == 0);
   queue_papers[qpno].σ = nσ;
   queue_papers[qpno].α = 0;
-  // TODO: use table lookup here
-  while (queue_papers[qpno].α < wc)
-    queue_papers[qpno].ο[queue_papers[qpno].α++].v = ο[--α].v;
+  static memcopy_t tablelookup[7] = {memcopy0, memcopy1, memcopy2, memcopy3,
+                                     memcopy4, memcopy5, memcopy6};
+  tablelookup[wc](queue_papers[qpno].ο, &ο[α -= (queue_papers[qpno].α = wc)]);
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
   C(1);
-}
-// TODO: hide implementation details! as an including c file?
-// TODO: simplify lookup function signature type
-typedef Q_t (*amocere_t)(p_t *, p_t *, Q_t, Q_t);
-static Q_t amocere0(p_t *pο, p_t *ο, Q_t pα, Q_t α) { return pα; }
-static Q_t amocere1(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  return pα;
-}
-static Q_t amocere2(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  return pα;
-}
-static Q_t amocere3(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  return pα;
-}
-static Q_t amocere4(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  return pα;
-}
-static Q_t amocere5(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  return pα;
-}
-static Q_t amocere6(p_t *pο, p_t *ο, Q_t pα, Q_t α) {
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  pο[pα++].v = ο[--α].v;
-  return pα;
 }
 N(os_next) {
   assert(α == 0);
@@ -107,12 +98,12 @@ N(os_next) {
   queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
   p->q[0] = 0;
   p_t *pσ = p->σ, *pο = pσ[0].v;
-  Q_t pα = pσ[1].Q;
+  Q_t pα = p->α;
   q_t pρ = pσ[2].q;
   // TODO: restrict params. add asserts required
-  static amocere_t tablelookup[7] = {amocere0, amocere1, amocere2, amocere3,
-                                     amocere4, amocere5, amocere6};
-  pα = tablelookup[p->α](pο, p->ο, pα, p->α);
+  static memcopy_t tablelookup[7] = {memcopy0, memcopy1, memcopy2, memcopy3,
+                                     memcopy4, memcopy5, memcopy6};
+  tablelookup[pα](pο, p->ο);
   pο[pα - 1].c(pο, pα - 1, pρ, pσ);
 }
 static N(os_არა) { printf("os_არა\n"); }
