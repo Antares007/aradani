@@ -24,6 +24,7 @@ static void memcopy3(p_t *, p_t *);
 static void memcopy4(p_t *, p_t *);
 static void memcopy5(p_t *, p_t *);
 static void memcopy6(p_t *, p_t *);
+static void memcopy7(p_t *, p_t *);
 
 static N(os_queue_wc) {
   R(Q_t, wc);
@@ -33,8 +34,8 @@ static N(os_queue_wc) {
   assert(queue_papers[qpno].q[0] == 0);
   queue_papers[qpno].σ = nσ;
   queue_papers[qpno].α = 0;
-  static memcopy_t tablelookup[7] = {0,        memcopy1, memcopy2, memcopy3,
-                                     memcopy4, memcopy5, memcopy6};
+  static memcopy_t tablelookup[8] = {0,        memcopy1, memcopy2, memcopy3,
+                                     memcopy4, memcopy5, memcopy6, memcopy7};
   tablelookup[wc](queue_papers[qpno].ο, &ο[α -= (queue_papers[qpno].α = wc)]);
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
   C(1);
@@ -45,6 +46,7 @@ N(os_queueee) { A(3) os_queue_wc(T()); }
 N(os_queueeee) { A(4) os_queue_wc(T()); }
 N(os_queueeeee) { A(5) os_queue_wc(T()); }
 N(os_queueeeeee) { A(6) os_queue_wc(T()); }
+N(os_queueeeeeee) { A(7) os_queue_wc(T()); }
 N(os_next) {
   assert(α == 0);
   QUEUE *q;
@@ -68,8 +70,8 @@ N(os_next) {
   p_t *pσ = p->σ, *pο = pσ[0].v;
   Q_t pα = p->α;
   q_t pρ = pσ[2].q;
-  static memcopy_t tablelookup[7] = {0,        memcopy1, memcopy2, memcopy3,
-                                     memcopy4, memcopy5, memcopy6};
+  static memcopy_t tablelookup[8] = {0,        memcopy1, memcopy2, memcopy3,
+                                     memcopy4, memcopy5, memcopy6, memcopy7};
   tablelookup[pα](pο, p->ο);
   pο[pα - 1].c(pο, pα - 1, pρ, pσ);
 }
@@ -103,4 +105,13 @@ static void memcopy6(p_t *pο, p_t *ο) {
   pο[3].v = ο[3].v;
   pο[4].v = ο[4].v;
   pο[5].v = ο[5].v;
+}
+static void memcopy7(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+  pο[1].v = ο[1].v;
+  pο[2].v = ο[2].v;
+  pο[3].v = ο[3].v;
+  pο[4].v = ο[4].v;
+  pο[5].v = ο[5].v;
+  pο[6].v = ο[6].v;
 }
