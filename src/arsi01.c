@@ -1,10 +1,14 @@
 #include "arsi.h"
-Imports(ან_გადასვლა, მთავარი);
+struct {
+  n_t next, mtavari;
+} o;
 
-N(ან_გადასვლა) { o.ან_გადასვლა(T()); }
-N(და_გადასვლა) { σ[ρ + 1].c(T()); }
-N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
+// clang-format off
+I(got,
+"os_next", o.next,            L)I(L,
+"მთავარი", o.mtavari, imports);
+N(mmain) { A(6) o.mtavari(T()); }
 
-N(მთავარი) { A(2) o.მთავარი(T()); }
-
-Exports(მთავარი);
+E(got,
+"მთავარი",  mmain, exports);
+// clang-format on

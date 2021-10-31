@@ -1,139 +1,176 @@
 #include "aradani.h"
 #include "os.h"
+#include "os_queue.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-int cmp(const char *s1, const char *s2) {
+static int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
     if (*s1++ == 0)
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 
-static N(ან_გადასვლა) { //
-  σ[ρ + 0].c(T());
-}
-static N(და_გადასვლა) { σ[ρ + 1].c(T()); }
-static N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
+static N(gor) { σ[ρ + 0].c(T()); }
+static N(god) { σ[ρ + 1].c(T()); }
+static N(got) { σ[ρ + 2].c(T()); }
 
-static N(kal0) {
-  // printf("kal0\n");
-  os_next(T());
-}
+static N(os_ie_sink_or) { assert(0); }
 
 static n_t მთავარი;
-static N(kal1) {
-  printf("kal1\n");
-  R(Q_t, exportsCount);
-  R(n_t *, exports);
-  R(char **, exportedNames);
-  for (long i = 0; i < exportsCount; i++)
-    if (cmp("მთავარი", exportedNames[i]) == 0)
-      მთავარი = exports[i];
-  os_next(T());
+static N(nextf) {
+  R(n_t, export);
+  R(n_t, address);
+  R(char *, name);
+  if (cmp(name, "მთავარი") == 0)
+    მთავარი = address, C(1);
+  else
+    A4(export, god, nextf, arada) O;
 }
-static N(kal2) {
+N(ara);
+N(arada);
+static N(os_ie_sink_and) {
+  R(n_t, export);
+  A3(export, nextf, da) X;
+}
+static N(os_ie_sink_not) {
   if (α)
     printf("erroraaa\n");
   else {
     printf("next\n");
-    p_t *cσ = σ[-1].v;
-    მთავარი(ο, α, cσ[0].q, cσ);
+    p_t *oσ = σ[-1].v;
+    მთავარი(oσ[0].v, 0, oσ[2].q, oσ);
   }
 }
-static N(setσ) {
-  R(p_t *, sσ);
-  sσ[-1].v = σ, A(sσ) C(1);
+Nd(set) {
+  R(p_t *, oσ);
+  oσ[-1].v = σ;
+  A(oσ) C(1);
 }
-static N(კალაპოტი) { A8(kal0, kal1, kal2, 128, 1, os_new, setσ, და) O; }
+static N(os_ie_sink) {
+  A8(os_ie_sink_or, os_ie_sink_and, os_ie_sink_not, 128, 1, os_new, set, da) O;
+}
 
 struct impexp {
-  n_t *imports, *exports;
-  long isize, esize;
+  n_t import, export;
   p_t *uσ, *dσ;
-  char **inames, **enames;
+  int done;
 };
-N(იმპორტექსპორტის_ან) {
-  // printf("იმპორტექსპორტის_ან\n");
+N(impexp_or_ray) {
+  printf("%s\n", __func__);
   struct impexp *s = S(impexp, σ);
-  R(p_t *, kσ);
-  if (s->uσ == kσ) { // გაგიმარჯოს
-    A5(σ, ან_გადასვლა, s->dσ, 2, os_queue) X;
-  } else { // გამარჯობა
-    assert(s->dσ == 0);
-    s->dσ = kσ;
-    A5(σ, ან_გადასვლა, s->uσ, 2, os_queue) X;
+  R(p_t *, oσ);
+  s->dσ = oσ;
+  A5(σ, gor, s->uσ, 2, os_queue) X;
+}
+N(retreat3) {
+  printf("%s\n", __func__);
+  α -= 3;
+  C(1);
+}
+static N(impexp_and_ray_next) {
+  printf("%s\n", __func__);
+  R(n_t, import);
+  R(n_t *, importaddress);
+  R(char *, imprtname);
+  R(n_t, export);
+  R(n_t, exportaddress);
+  R(char *, exportname);
+  int r = cmp(exportname, imprtname);
+  if (r < 0) {
+    printf("<\n");
+    A7(exportname, exportaddress, export, import, retreat3, impexp_and_ray_next,
+       arada)
+    O;
+  } else if (r == 0) {
+    printf("==\n");
+    *importaddress = exportaddress;
+    A7(exportname, exportaddress, export, import, retreat3, impexp_and_ray_next,
+       arada)
+    O;
+  } else {
+    printf(">\n");
+    A8(export, imprtname, importaddress, import, impexp_and_ray_next, daaaa,
+       god, ara)
+    O;
   }
 }
-N(იმპორტექსპორტის_და) {
-  R(Q_t, exportsCount);
-  R(n_t *, exports);
-  R(char **, exportedNames);
-  // printf("იმპორტექსპორტის_და %s %p %ld\n", exportedNames[0], exports[1],
-  // exportsCount);
+N(impexp_and_ray) {
+  printf("%s\n", __func__);
   struct impexp *s = S(impexp, σ);
-  for (long i = 0; i < s->isize; i++)
-    for (long e = 0; e < exportsCount; e++)
-      if (s->isize && cmp(s->inames[i], exportedNames[e]) == 0)
-        s->imports[i] = exports[e];
-  A7(exportedNames, exports, exportsCount, და_გადასვლა, s->dσ, 4, os_queue) X;
+  R(n_t, export);
+  A7(export, s->import, da, impexp_and_ray_next, da, retreat3, ara) X;
 }
-N(იმპორტექსპორტის_არა) {
-  // printf("იმპორტექსპორტის_არა\n");
+N(impexp_not_ray_next) {
+  printf("%s\n", __func__);
+  R(n_t, import);
+  R(n_t *, address);
+  R(char *, name);
+  if (*address)
+    A4(import, god, impexp_not_ray_next, arada) O;
+  else
+    A(name) C(2);
+}
+N(os_ie_not_next2) {
+  printf("%s\n", __func__);
+  struct impexp *s = S(impexp, σ);
+  A5(s->export, god, s->dσ, 2, os_queue) X;
+}
+N(sendend) {
+  printf("%s\n", __func__);
+  struct impexp *s = S(impexp, σ);
+  A4(got, s->dσ, 1, os_queue) O;
+}
+N(sendexport) {
+  printf("%s\n", __func__);
+  struct impexp *s = S(impexp, σ);
+  A7(s->export, god, s->dσ, 2, os_queue, sendend, da) O;
+}
+N(senderror) {
+  printf("%s\n", __func__);
+  struct impexp *s = S(impexp, σ);
+  Q_t a = α + 1;
+  A4(got, s->dσ, a, os_queue) O;
+}
+N(impexp_not_ray) {
+  printf("%s\n", __func__);
   struct impexp *s = S(impexp, σ);
   if (α) {
-    long a = α + 1;
-    A4(არა_გადასვლა, s->dσ, a, os_queue) X;
-  } else {
-    for (long i = 0; i < s->isize; i++)
-      if (s->imports[i] == 0)
-        return A5(s->inames[i], არა_გადასვლა, s->dσ, 2, os_queue) X;
-    if (s->esize) {
-      A7(s->enames, s->exports, s->esize, და_გადასვლა, s->dσ, 4, os_queue)
-      A5(არა_გადასვლა, s->dσ, 1, os_queue, დაააა)
-      A2(os_next, და) O;
-    } else
-      A4(არა_გადასვლა, s->dσ, 1, os_queue) X;
-  }
+    Q_t a = α + 1;
+    A4(got, s->dσ, a, os_queue) X;
+  } else
+    A7(s->import, god, impexp_not_ray_next, arada, senderror, sendexport, arada)
+  X;
 }
-static N(იმპორტექსპორტისგულგული) {
-  A6(იმპორტექსპორტის_ან, იმპორტექსპორტის_და, იმპორტექსპორტის_არა, 128,
+static N(impexp_pith) {
+  A6(impexp_or_ray, impexp_and_ray, impexp_not_ray, 128,
      wordCountOf(struct impexp), os_new)
   O;
 }
-static N(uσ_set) {
+static N(os_ie_setσ) {
+  printf("os_ie_setσ\n");
   R(p_t *, sσ);
-  struct impexp *s = S(impexp, sσ);
-  memset(s, 0, sizeof(*s));
-  R(Q_t, ec);
-  R(n_t *, exports);
-  R(char **, enames);
-  R(Q_t, ic);
-  R(n_t *, imports);
-  R(char **, inames);
   R(p_t *, uσ);
-  s->exports = exports;
-  s->enames = enames;
-  s->esize = ec;
-  s->imports = imports;
-  s->inames = inames;
-  s->isize = ic;
+  R(n_t, export);
+  R(n_t, import);
+  struct impexp *s = S(impexp, sσ);
+  s->export = export;
+  s->import = import;
   s->uσ = uσ;
+  s->done = 0;
   A(sσ) C(1);
 }
-N(იმპორტექსპორტი) {
+N(os_ie) {
   R(n_t, tail);
-  R(n_t, exports);
-  R(n_t, imports);
-  A10(იმპორტექსპორტი, tail, imports, და, exports, და, იმპორტექსპორტისგულგული,
-      და, uσ_set, და)
-  O;
+  R(n_t, export);
+  R(n_t, import);
+  A8(import, export, os_ie, tail, impexp_pith, da, os_ie_setσ, da) O;
 }
+
 static N(არაწყაროს_ან) {
-  // printf("არაწყაროს_ან\n");
   R(p_t *, kσ);
-  A4(არა_გადასვლა, kσ, 1, os_queue) X;
+  A4(got, kσ, 1, os_queue) X;
 }
 static N(არაწყარო) {
   --α;
@@ -141,15 +178,24 @@ static N(არაწყარო) {
 }
 N(არსი) {
   R(n_t, arsi);
-  A8(კალაპოტი, ან_გადასვლა, იმპორტექსპორტი, arsi, დააა, 2, os_queue, დაა)
+  A8(os_ie_sink, gor, os_ie, arsi, დააა, 2, os_queue, დაა)
   O;
 }
 N(wordump);
-char *νames[] = {"os_next", "os_new", "os_queue", "wordump", "და"};
-n_t νars[] = {os_next, os_new, os_queue, wordump, და};
-static N(imports) { A3(0, 0, 0) C(1); }
-static N(exports) { A3(νames, νars, (sizeof(νames) / sizeof(*νames))) C(1); }
+#define CAT_(a, b) a##b
+#define CAT(a, b) CAT_(a, b)
+#define L CAT(e, __LINE__)
+#define E(t, name, addr, n)                                                    \
+  N(n) { A3(name, addr, t) C(1); }
+// clang-format off
+E(got,
+"os_delete",  os_delete,         L)E(L,
+"os_new"   ,  os_new   ,         L)E(L,
+"os_next"  ,  os_next  ,         L)E(L,
+"os_queue" ,  os_queue ,         L)E(L,
+"wordump"  ,  wordump  ,   export);
+// clang-format on
 N(ღრმაარსი) {
-  R(n_t, cb);
-  A4(imports, exports, არაწყარო, cb) O;
+  R(n_t, impexp);
+  A4(got, export, არაწყარო, impexp) O;
 }

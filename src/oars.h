@@ -38,7 +38,17 @@ typedef struct p_s {
 } p_t;
 #define OARS p_t *ο, unsigned long α, long ρ, p_t *σ
 typedef void (*n_t)(OARS);
+#define CAT_(a, b) a##b
+#define CAT(a, b) CAT_(a, b)
+
 #define N(n) void n(OARS)
+#define Nd(n)                                                                  \
+  N(CAT(n, ___));                                                              \
+  N(n) {                                                                       \
+    printf("%s\n", __FUNCTION__);                                              \
+    CAT(n, ___)(T());                                                          \
+  }                                                                            \
+  N(CAT(n, ___))
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v;
 #define Rpith(n)                                                               \

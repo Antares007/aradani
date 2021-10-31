@@ -10,6 +10,8 @@ N(daa);
 N(daaa);
 N(daaaa);
 N(aradani);
+N(arada);
+N(ara);
 
 #define ან an
 N(an);

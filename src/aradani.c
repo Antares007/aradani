@@ -126,3 +126,47 @@ N(an) {
   n_t n = ο[--α].c;
   n(T());
 }
+static N(ara_an) {
+  ρ += 4;
+  C(0);
+}
+static N(ara_da) {
+  ρ += 4;
+  C(1);
+}
+static N(ara_ara) {
+  ρ += 3;
+  n_t n = σ[ρ++].c;
+  n(T());
+}
+N(ara) {
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = ara_ara;
+  σ[--ρ].c = ara_da;
+  σ[--ρ].c = ara_an;
+  n_t n = ο[--α].c;
+  n(T());
+}
+static N(arada_an) {
+  ρ += 5;
+  C(0);
+}
+static N(arada_da) {
+  ρ += 5;
+  n_t n = σ[ρ - 1].c;
+  n(T());
+}
+static N(arada_ara) {
+  ρ += 5;
+  n_t n = σ[ρ - 2].c;
+  n(T());
+}
+N(arada) {
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = ο[--α].c;
+  σ[--ρ].c = arada_ara;
+  σ[--ρ].c = arada_da;
+  σ[--ρ].c = arada_an;
+  n_t n = ο[--α].c;
+  n(T());
+}

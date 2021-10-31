@@ -26,7 +26,7 @@ static void memcopy5(p_t *, p_t *);
 static void memcopy6(p_t *, p_t *);
 static void memcopy7(p_t *, p_t *);
 
-N(os_queue) {
+Nd(os_queue) {
   R(Q_t, wc);
   R(p_t *, nσ);
   static unsigned short qpno = 0;
@@ -40,7 +40,7 @@ N(os_queue) {
   QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
   C(1);
 }
-N(os_next) {
+Nd(os_next) {
   assert(α == 0);
   QUEUE *q;
   if ((QUEUE *)&σ[3] == (q = QUEUE_NEXT((QUEUE *)&σ[3]))) {

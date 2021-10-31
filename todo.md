@@ -3,6 +3,10 @@ patreon page
 githab page
 presentation video
 epoll socket / tcp stack
-http parsert
+http parser
 http server demo program
+renames
 implement openparen closeparen  
+use tdd
+
+- arsi

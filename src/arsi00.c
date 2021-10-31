@@ -1,18 +1,21 @@
-#include "oars.h"
-void tail() __attribute__((section(".text.end")));
-N(tail) {}
-
-struct {
-  n_t next;
+#include "arsi.h"
+struct { n_t next, sdkfj, aldjk, askdj;
 } o;
-N(imports) { A2(&o, "os_next") C(1); }
+
+// clang-format off
+I(got,
+"os_next", o.next,        L)I(L,
+"os_next", o.next,        L)I(L,
+"os_next", o.aldjk, imports);
 
 N(mmain) { A(9) C(1); }
+N(s1) { A('s1') C(1);}
+N(s2) { A('s2') C(1);}
+N(s3) { A('s3') C(1);}
 
-N(exports) { A2(mmain, "მთავარი") A2(mmain, "mmain") C(1); }
-
-void head() __attribute__((section(".text.begin")));
-N(head) {
-  R(n_t, cb);
-  A4(imports, exports, tail, cb) O;
-}
+E(got,
+"os_next",       s3,          L)E(L,
+"s1",       s1,          L)E(L,
+"s2",       s2,          L)E(L,
+"მთავარი",  mmain, exports);
+// clang-format on
