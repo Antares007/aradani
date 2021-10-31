@@ -1,5 +1,6 @@
 #include "arsi.h"
-struct { n_t next, sdkfj, aldjk, askdj;
+struct {
+  n_t next, sdkfj, aldjk, askdj;
 } o;
 
 // clang-format off

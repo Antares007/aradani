@@ -1,9 +1,9 @@
-#include "os.h"
 #include "os_exports.h"
+#include "aradani.h"
+#include "os.h"
+#include "os_debugger.h"
 #include "os_queue.h"
 #include "os_wordump.h"
-#include "os_debugger.h"
-#include "aradani.h"
 
 #define L CAT(e, __LINE__)
 #define E(t, name, addr, n)                                                    \
