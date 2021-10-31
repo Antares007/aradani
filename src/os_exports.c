@@ -9,11 +9,21 @@
 #define E(t, name, addr, n)                                                    \
   N(n) { A3(name, addr, t) C(1); }
 static N(got) { σ[ρ + 2].c(T()); }
+static N(god) { σ[ρ + 1].c(T()); }
+static N(gor) { σ[ρ + 0].c(T()); }
 
 // clang-format off
 E(got,
+"an"       , an,                 L)E(L,
+"ara"      , ara,                L)E(L,
+"arada"    , arada,              L)E(L,
 "da"       , da,                 L)E(L,
+"daaaa"    , daaaa,              L)E(L,
 "drop"     , drop,               L)E(L,
+"god"      , god,                L)E(L,
+"gor"      , gor,                L)E(L,
+"gor"      , gor,                L)E(L,
+"got"      , got,                L)E(L,
 "loog"     , loog,               L)E(L,
 "os_delete", os_delete,          L)E(L,
 "os_new"   , os_new,             L)E(L,
