@@ -17,12 +17,11 @@ Nd(os_delete) {
   C(1);
 }
 static Nd(os_არა) {}
-// TODO: remove os_next calls by extending meaning of dOt
 N(wordump);
 N(αzero) { α = 0, C(1); }
 static Nd(os_და) {
   if (α)
-    A3(wordump, αzero, da) X;
+    A5(wordump, αzero, da, os_next, da) O;
   else
     os_next(T());
 }

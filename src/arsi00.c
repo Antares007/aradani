@@ -14,8 +14,8 @@ N(s2) { A('s2') C(1);}
 N(s3) { A('s3') C(1);}
 
 E(got,
-"os_next",       s3,          L)E(L,
-"s1",       s1,          L)E(L,
+"os_next",  s3,          L)E(L,
+"pause",    s1,          L)E(L,
 "s2",       s2,          L)E(L,
 "მთავარი",  mmain, exports);
 // clang-format on

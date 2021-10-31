@@ -2,11 +2,12 @@ share
 patreon page
 githab page
 presentation video
-epoll socket / tcp stack
-http parser
 http server demo program
-renames
+http parser
+epoll socket / tcp stack
 implement openparen closeparen  
+renames/cleanup
 use tdd
-
-- arsi
+remove osnext calls from os rays by extending meaning of dOt
+debugger
+arsis gascoreba
