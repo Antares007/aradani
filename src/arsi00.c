@@ -33,31 +33,31 @@ static int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 static N(do_import_next) {
-  R(n_t, import);
-  R(n_t *, importaddress);
-  R(char *, imprtname);
   R(n_t, export);
   R(n_t, exportaddress);
   R(char *, exportname);
+  R(n_t, import);
+  R(n_t *, importaddress);
+  R(char *, imprtname);
   int r = cmp(exportname, imprtname);
   if (r <= 0) {
     if (r == 0)
       *importaddress = exportaddress;
-    A8(exportname, exportaddress, export, import, do_import_next, da, r3,an)
+    A8(import, exportname, exportaddress, export, do_import_next, daaaa, god,
+       an)
     O;
   } else {
-    A8(export, imprtname, importaddress, import, do_import_next, daaaa, god, an)
-    O;
+    A8(imprtname, importaddress, import, export, do_import_next, da, r3, an) O;
   }
 }
 N(do_import) {
-  R(n_t, import);
   R(n_t, export);
-  A7(export, import, da, do_import_next, da, r3, an) O;
+  R(n_t, import);
+  A7(import, export, da, do_import_next, da, r3, an) O;
 }
 N(puta) { A3(a[0], a[1], a[2]) C(1); }
 N(mmain) {
-  A5(te, ti, do_import, puta, da) O;
+  A5(ti, te, do_import, puta, da) O;
   //  A(puta) O;
 }
 

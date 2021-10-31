@@ -10,7 +10,9 @@ static N(got) { C(2); }
   N(n) { A3(name, addr, t) C(1); }
 #define I(t, name, addr, n)                                                    \
   N(n) { A3(name, &addr, t) C(1); }
-#define IN(t, name, n) n_t name;I(t, #name, name, n)
+#define IN(t, name, n)                                                         \
+  n_t name;                                                                    \
+  I(t, #name, name, n)
 void head() __attribute__((section(".text.begin")));
 N(imports);
 N(exports);
