@@ -1,5 +1,6 @@
 #include "aradani.h"
 #include "os.h"
+#include "os_exports.h"
 #include "os_queue.h"
 #include <assert.h>
 #include <stdio.h>
@@ -181,21 +182,7 @@ N(არსი) {
   A8(os_ie_sink, gor, os_ie, arsi, დააა, 2, os_queue, დაა)
   O;
 }
-N(wordump);
-#define CAT_(a, b) a##b
-#define CAT(a, b) CAT_(a, b)
-#define L CAT(e, __LINE__)
-#define E(t, name, addr, n)                                                    \
-  N(n) { A3(name, addr, t) C(1); }
-// clang-format off
-E(got,
-"os_delete",  os_delete,         L)E(L,
-"os_new"   ,  os_new   ,         L)E(L,
-"os_next"  ,  os_next  ,         L)E(L,
-"os_queue" ,  os_queue ,         L)E(L,
-"wordump"  ,  wordump  ,   export);
-// clang-format on
 N(ღრმაარსი) {
   R(n_t, impexp);
-  A4(got, export, არაწყარო, impexp) O;
+  A4(got, os_exports, არაწყარო, impexp) O;
 }
