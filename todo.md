@@ -10,4 +10,5 @@ renames/cleanup
 use tdd
 remove osnext calls from os rays by extending meaning of dOt
 debugger
+simplify aradani iplementetaion
 .arsis redefine

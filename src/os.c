@@ -34,6 +34,19 @@ N(nn) {
   printf("N %s %p\n", name, addd);
   A3(export, nn, da) O;
 }
+int cmp(const char *s1, const char *s2);
+N(run) {
+  R(n_t, export);
+  R(n_t, addd);
+  R(char *, name);
+  R(char *, mame);
+  printf("N %s %p\n", name, addd);
+  if (cmp(mame, name) == 0) {
+    A(addd) O;
+  } else {
+    A4(mame, export, run, da) O;
+  }
+}
 N(os_impexp);
 int main(int argc, char **argv) {
   os_init_queue();
@@ -45,5 +58,5 @@ int main(int argc, char **argv) {
   unsigned long size;
   n_t arsi = mapfile(argc < 2 ? "src/arsi00.arsi" : argv[1], &size);
   *(void **)((char *)arsi + size - 10) = stab;
-  A5(os_impexp, arsi, nn, da, daa) O;
+  A6("მთავარი", os_impexp, arsi, run, da, daa) O;
 }
