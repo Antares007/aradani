@@ -81,6 +81,15 @@ typedef unsigned int W_t;
   ((sizeof(T) +                                                                \
     ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
    sizeof(void *))
+#define L CAT(e, __LINE__)
+#define E(t, name, addr, n)                                                    \
+  N(n) { A3(name, addr, t) C(1); }
+#define I(t, name, addr, n)                                                    \
+  N(n) { A3(name, &addr, t) C(1); }
+#define IN(t, name, n)                                                         \
+  n_t name;                                                                    \
+  I(t, #name, name, n)
+#define EN(t, name, n) E(t, #name, name, n)
 /*
 console.log(
   Array(21).fill()

@@ -5,10 +5,6 @@
 #include "os_queue.h"
 #include "os_wordump.h"
 
-#define L CAT(e, __LINE__)
-#define E(t, name, addr, n)                                                    \
-  N(n) { A3(name, addr, t) C(1); }
-#define EN(t, name, n) E(t, #name, name, n)
 static N(got) { σ[ρ + 2].c(T()); }
 static N(god) { σ[ρ + 1].c(T()); }
 static N(gor) { σ[ρ + 0].c(T()); }
