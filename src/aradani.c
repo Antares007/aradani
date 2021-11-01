@@ -1,103 +1,45 @@
 #include "aradani.h"
-static N(da_an) {
-  ρ += 4;
-  C(0);
-}
-static N(da_da) {
-  ρ += 3;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
-N(da) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = da_da;
-  σ[--ρ].c = da_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(daa_an) {
-  ρ += 5;
-  C(0);
-}
-static N(daa_da) {
-  ρ += 3;
-  ο[α++].v = σ[ρ++].v;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
-N(daa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = daa_da;
-  σ[--ρ].c = daa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(daaa_an) {
-  ρ += 6;
-  C(0);
-}
-static N(daaa_da) {
-  ρ += 3;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
-N(daaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = daaa_da;
-  σ[--ρ].c = daaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(daaaa_an) {
-  ρ += 7;
-  C(0);
-}
-static N(daaaa_da) {
-  ρ += 3;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
-N(daaaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = daaaa_da;
-  σ[--ρ].c = daaaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(aradani_ara) {
-  ρ += 6;
-  n_t n = σ[ρ - 3].c;
-  n(T());
-}
-static N(aradani_da) {
-  ρ += 6;
-  n_t n = σ[ρ - 2].c;
-  n(T());
-}
-static N(aradani_an) {
-  ρ += 6;
-  n_t n = σ[ρ - 1].c;
-  n(T());
-}
+#define D ρ += 1,
+#define D2 ρ += 2,
+#define D3 ρ += 3,
+#define D4 ρ += 4,
+#define D5 ρ += 5,
+#define D6 ρ += 6,
+#define D7 ρ += 7,
+#define P ο[α++].v = σ[ρ++].v,
+#define P2 P P
+#define P3 P2 P
+#define P4 P3 P
+#define P5 P4 P
+#define P6 P5 P
+#define P7 P6 P
+#define U σ[--ρ].c = ο[--α].c,
+#define U2 U U
+#define U3 U2 U
+#define U4 U3 U
+#define U5 U4 U
+#define U6 U5 U
+#define U7 U6 U
+#define CONJ(NT, DA, AN)                                                       \
+  n_t araarkhi = σ[ρ + 2].c;                                                   \
+  NT σ[--ρ].c = araarkhi, σ[--ρ].c = DA, σ[--ρ].c = AN,
+
+static N(D3_D_C0) { D3 D C(0); }
+static N(D3_P_O) { D3 P O; }
+N(da) { CONJ(U, D3_P_O, D3_D_C0) O; }
+static N(D3_D2_C0) { D3 D2 C(0); }
+static N(D3_P2_O) { D3 P2 O; }
+N(daa) { CONJ(U2, D3_P2_O, D3_D2_C0) O; }
+static N(D3_D3_C0) { D3 D3 C(0); }
+static N(D3_P3_O) { D3 P3 O; }
+N(daaa) { CONJ(U3, D3_P3_O, D3_D3_C0) O; }
+static N(D3_D4_C0) { D3 D4 C(0); }
+static N(D3_P4_O) { D3 P4 O; }
+N(daaaa) { CONJ(U4, D3_P4_O, D3_D4_C0) O; }
+
+static N(aradani_ara) { D3 P D D O; }
+static N(aradani_da) { D3 D P D O; }
+static N(aradani_an) { D3 D D P O; }
 N(aradani) {
   σ[--ρ].c = ο[--α].c; // an
   σ[--ρ].c = ο[--α].c; // da
@@ -105,40 +47,14 @@ N(aradani) {
   σ[--ρ].c = aradani_ara;
   σ[--ρ].c = aradani_da;
   σ[--ρ].c = aradani_an;
-  n_t sgadasabmeli = ο[--α].c;
-  sgadasabmeli(T());
+  O;
 }
-static N(an_an) {
-  ρ += 3;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
-static N(an_da) {
-  ρ += 4;
-  C(1);
-}
-N(an) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = an_da;
-  σ[--ρ].c = an_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(ara_an) {
-  ρ += 4;
-  C(0);
-}
-static N(ara_da) {
-  ρ += 4;
-  C(1);
-}
-static N(ara_ara) {
-  ρ += 3;
-  n_t n = σ[ρ++].c;
-  n(T());
-}
+static N(D3_D_C1) { D3 D C(1); }
+N(an) { CONJ(U, D3_D_C1, D3_P_O) O; }
+
+static N(ara_an) { D4 C(0); }
+static N(ara_da) { D4 C(1); }
+static N(ara_ara) { D3 P O; }
 N(ara) {
   σ[--ρ].c = ο[--α].c;
   σ[--ρ].c = ara_ara;
@@ -147,161 +63,30 @@ N(ara) {
   n_t n = ο[--α].c;
   n(T());
 }
-static N(arada_an) {
-  ρ += 5;
-  C(0);
-}
-static N(arada_da) {
-  ρ += 5;
-  n_t n = σ[ρ - 1].c;
-  n(T());
-}
-static N(arada_ara) {
-  ρ += 5;
-  n_t n = σ[ρ - 2].c;
-  n(T());
-}
+static N(arada_an) { D5 C(0); }
+static N(arada_da) { D3 D P O; }
+static N(arada_ara) { D3 P D O; }
 N(arada) {
   σ[--ρ].c = ο[--α].c;
   σ[--ρ].c = ο[--α].c;
   σ[--ρ].c = arada_ara;
   σ[--ρ].c = arada_da;
   σ[--ρ].c = arada_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(anda_an) {
-  ρ += 5;
-  n_t n = σ[ρ - 2].c;
-  n(T());
-}
-static N(anda_da) {
-  ρ += 5;
-  n_t n = σ[ρ - 1].c;
-  n(T());
-}
-N(anda) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = anda_da;
-  σ[--ρ].c = anda_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(andaaa_an) {
-  ρ += 7;
-  n_t n = σ[ρ - 4].c;
-  n(T());
-}
-static N(andaaa_da) {
-  ρ += 4;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
   O;
 }
-N(andaaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = andaaa_da;
-  σ[--ρ].c = andaaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(andaaaaa_an) {
-  ρ += 9;
-  n_t n = σ[ρ - 6].c;
-  n(T());
-}
-static N(andaaaaa_da) {
-  ρ += 4;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  O;
-}
-N(andaaaaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = andaaaaa_da;
-  σ[--ρ].c = andaaaaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(andaaaaaa_an) {
-  ρ += 10;
-  n_t n = σ[ρ - 7].c;
-  n(T());
-}
-static N(andaaaaaa_da) {
-  ρ += 4;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  O;
-}
-N(andaaaaaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = andaaaaaa_da;
-  σ[--ρ].c = andaaaaaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
-static N(anndaaaaaa_an) {
-  ρ += 3;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ρ += 6;
-  O;
-}
-static N(anndaaaaaa_da) {
-  ρ += 5;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  ο[α++].v = σ[ρ++].v;
-  O;
-}
-N(anndaaaaaa) {
-  n_t araarkhi = σ[ρ + 2].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = araarkhi;
-  σ[--ρ].c = anndaaaaaa_da;
-  σ[--ρ].c = anndaaaaaa_an;
-  n_t n = ο[--α].c;
-  n(T());
-}
+static N(D3_P_D_O) { D3 P D3 O; }
+static N(D3_D_P_O) { D3 D P3 O; }
+N(anda) { CONJ(U U, D3_D_P_O, D3_P_D_O) O; }
+static N(D3_P_D3_O) { D3 P D3 O; }
+static N(D3_D_P3_O) { D3 D P3 O; }
+N(andaaa) { CONJ(U3 U, D3_D_P3_O, D3_P_D3_O) O; }
+static N(D3_P_D5_O) { D3 P D5 O; }
+static N(D3_D_P5_O) { D3 D P5 O; }
+N(andaaaaa) { CONJ(U5 U, D3_D_P5_O, D3_P_D5_O) O; }
+static N(D3_P_D6_O) { D3 P D6 O; }
+static N(D3_D_P6_O) { D3 D P6 O; }
+N(andaaaaaa) { CONJ(U6 U, D3_D_P6_O, D3_P_D6_O) O; }
+
+static N(D3_P2_D6_O) { D3 P2 D6 O; }
+static N(D3_D2_P6_O) { D3 D2 P6 O; }
+N(anndaaaaaa) { CONJ(U6 U2, D3_D2_P6_O, D3_P2_D6_O) O; }
