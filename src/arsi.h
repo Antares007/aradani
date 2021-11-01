@@ -7,7 +7,7 @@ void head() __attribute__((section(".text.begin")));
 N(tail) {}
 static N(gor) { C(0); }
 n_t Tail;
-N(setail) {
+N(σeτail) {
   R(n_t, addr);
   Tail = addr;
   A(addr) C(1);
@@ -20,5 +20,5 @@ N(head) {
   if (Tail)
     A(export) C(1);
   else
-    A5(import, export, tail, setail, impexp) O;
+    A5(import, export, tail, σeτail, impexp) O;
 }

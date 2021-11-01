@@ -15,4 +15,3 @@ N(mmain) { A(9) C(1); }
 E(Tail,
 "aaaaa",    mmain,      L)E(L,
 "მთავარი",  mmain, export);
-// clang-format on

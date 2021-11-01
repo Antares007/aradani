@@ -2,6 +2,7 @@
 // clang-format off
 IN(gor,
 an,           L)IN(L,
+andaaa,       L)IN(L,
 ara,          L)IN(L,
 arada,        L)IN(L,
 da,           L)IN(L,
@@ -63,8 +64,9 @@ N(მთავარი) {
   // A7(0, 8, b, e, qsort, o.wordump, o.და) O;
   C(1);
 }
+
 // clang-format off
-E(Tail,
-"qsort",    qsort,        L)E(L,
-"მთავარი",  მთავარი, export);
-// clang-format on
+EN(Tail,
+qsort,        L)EN(L,
+wordump,      L)EN(L,
+მთავარი, export);
