@@ -8,27 +8,30 @@
 #define L CAT(e, __LINE__)
 #define E(t, name, addr, n)                                                    \
   N(n) { A3(name, addr, t) C(1); }
+#define EN(t, name, n) E(t, #name, name, n)
 static N(got) { σ[ρ + 2].c(T()); }
 static N(god) { σ[ρ + 1].c(T()); }
 static N(gor) { σ[ρ + 0].c(T()); }
-
 // clang-format off
-E(got,
-"an"       , an,                 L)E(L,
-"ara"      , ara,                L)E(L,
-"arada"    , arada,              L)E(L,
-"da"       , da,                 L)E(L,
-"daaaa"    , daaaa,              L)E(L,
-"drop"     , drop,               L)E(L,
-"god"      , god,                L)E(L,
-"gor"      , gor,                L)E(L,
-"got"      , got,                L)E(L,
-"loog"     , loog,               L)E(L,
-"os_delete", os_delete,          L)E(L,
-"os_new"   , os_new,             L)E(L,
-"os_next"  , os_next,            L)E(L,
-"os_queue" , os_queue,           L)E(L,
-"pause"    , pause,              L)E(L,
-"stdinla"  , stdinla,            L)E(L,
-"wordump"  , wordump,   os_exports);
+EN(got,
+an,                 L)EN(L,
+andaaa,             L)EN(L,
+andaaaaa,           L)EN(L,
+anndaaaaaa,         L)EN(L,
+ara,                L)EN(L,
+arada,              L)EN(L,
+da,                 L)EN(L,
+daaaa,              L)EN(L,
+drop,               L)EN(L,
+god,                L)EN(L,
+gor,                L)EN(L,
+got,                L)EN(L,
+loog,               L)EN(L,
+os_delete,          L)EN(L,
+os_new,             L)EN(L,
+os_next,            L)EN(L,
+os_queue,           L)EN(L,
+pause,              L)EN(L,
+stdinla,            L)EN(L,
+wordump,   os_exports);
 // clang-format on

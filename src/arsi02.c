@@ -1,9 +1,13 @@
 #include "arsi.h"
-Imports(os_next, wordump, და);
-
-N(ან_გადასვლა) { σ[ρ + 0].c(T()); }
-N(და_გადასვლა) { σ[ρ + 1].c(T()); }
-N(არა_გადასვლა) { σ[ρ + 2].c(T()); }
+// clang-format off
+IN(gor,
+an,           L)IN(L,
+ara,          L)IN(L,
+arada,        L)IN(L,
+da,           L)IN(L,
+os_next,      L)IN(L,
+wordump, import);
+// clang-format on
 
 int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
@@ -49,14 +53,18 @@ N(qsort_next) {
     } else
       A3(a, e, qsort) O;
   } else
-    C(, 1);
+    C(1);
 }
-N(qsort) { A3(o.wordump, qsort_next, o.და) O; }
+N(qsort) { A3(wordump, qsort_next, da) O; }
 N(მთავარი) {
   // void *b = &ο[α];
   // long e;
   // A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
   // A7(0, 8, b, e, qsort, o.wordump, o.და) O;
-  o.wordump(T());
+  C(1);
 }
-Exports(მთავარი, ან_გადასვლა);
+// clang-format off
+E(Tail,
+"qsort",    qsort,        L)E(L,
+"მთავარი",  მთავარი, export);
+// clang-format on

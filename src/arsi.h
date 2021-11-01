@@ -12,6 +12,7 @@ N(export);
 #define IN(t, name, n)                                                         \
   n_t name;                                                                    \
   I(t, #name, name, n)
+#define EN(t, name, n) E(t, #name, name, n)
 void tail() __attribute__((section(".text.end")));
 void head() __attribute__((section(".text.begin")));
 N(tail) {}

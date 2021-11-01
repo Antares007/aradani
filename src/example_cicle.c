@@ -1,6 +1,6 @@
 #include "aradani.h"
-#include "os_queue.h"
 #include "os.h"
+#include "os_queue.h"
 #include <stdio.h>
 static N(gor) { C(0); }
 static N(god) { C(1); }
@@ -32,6 +32,4 @@ static N(si1) {
 }
 static N(si2) { printf("si2\n"); }
 static N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
-N(example_cicle) {
-  A8(0, si, gor, so, daa, 3, os_queue, დაა) O;
-}
+N(example_cicle) { A8(0, si, gor, so, daa, 3, os_queue, დაა) O; }
