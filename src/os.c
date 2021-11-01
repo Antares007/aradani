@@ -7,7 +7,7 @@
 Nd(os_new) {
   R(Q_t, ws);
   R(Q_t, wc);
-  Noars(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
+  OarS(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
   A(nσ) C(1);
 }
 Nd(os_delete) {
@@ -37,7 +37,7 @@ N(nn) {
 N(os_impexp);
 int main(int argc, char **argv) {
   os_init_queue();
-  Noars(, os_ან, os_და, os_არა, 0x1000, 0);
+  OarS(, os_ან, os_და, os_არა, 0x1000, 0);
   if (argc < 2)
     printf("%s filenameToRun\n", argv[0]);
   else
