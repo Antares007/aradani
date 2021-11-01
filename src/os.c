@@ -1,6 +1,5 @@
 #include "aradani.h"
 #include "mmap.h"
-#include "os_expimp.h"
 #include "os_queue.h"
 #include <assert.h>
 #include <stdio.h>
@@ -69,7 +68,7 @@ N(impexp_nn) {
   R(n_t, import);
   R(n_t *, iaddr);
   R(const char *, iname);
-  printf("%s %s\n", iname, ename);
+  // printf("%s %s\n", iname, ename);
   if (cmp(iname, ename) == 0) {
     *iaddr = eaddr;
     A6(import, god, export, impexp_nn, da, andaaa) O;

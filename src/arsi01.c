@@ -2,7 +2,7 @@
 // clang-format off
 IN(gor,
 an,           L)IN(L,
-araa,         L)IN(L,
+ara,          L)IN(L,
 arada,        L)IN(L,
 os_next,      L)IN(L,
 wordump, import);
