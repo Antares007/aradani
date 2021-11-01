@@ -24,35 +24,28 @@ static N(impexp_or_ray) {
   s->dσ = oσ;
   A5(σ, gor, s->uσ, 2, os_queue) X;
 }
-static N(retreat3) {
+static N(r3) {
   printf("%s\n", __func__);
   α -= 3;
   C(1);
 }
 static N(impexp_and_ray_next) {
   printf("%s\n", __func__);
-  R(n_t, import);
-  R(n_t *, importaddress);
-  R(char *, imprtname);
   R(n_t, export);
   R(n_t, exportaddress);
   R(char *, exportname);
+  R(n_t, import);
+  R(n_t *, importaddress);
+  R(char *, imprtname);
   int r = cmp(exportname, imprtname);
-  if (r < 0) {
-    printf("<\n");
-    A7(exportname, exportaddress, export, import, retreat3, impexp_and_ray_next,
-       arada)
-    O;
-  } else if (r == 0) {
-    printf("==\n");
-    *importaddress = exportaddress;
-    A7(exportname, exportaddress, export, import, retreat3, impexp_and_ray_next,
-       arada)
+  if (r <= 0) {
+    if (r == 0)
+      *importaddress = exportaddress;
+    A8(import, exportname, exportaddress, export, impexp_and_ray_next, daaaa,
+       god, an)
     O;
   } else {
-    printf(">\n");
-    A8(export, imprtname, importaddress, import, impexp_and_ray_next, daaaa,
-       god, ara)
+    A7(imprtname, importaddress, import, export, r3, impexp_and_ray_next, anda)
     O;
   }
 }
@@ -60,7 +53,13 @@ static N(impexp_and_ray) {
   printf("%s\n", __func__);
   struct impexp *s = S(impexp, σ);
   R(n_t, export);
-  A7(export, s->import, da, impexp_and_ray_next, da, retreat3, ara) X;
+  A6(s->import, export, da, god, impexp_and_ray_next, anda) X;
+}
+static N(senderror) {
+  printf("%s\n", __func__);
+  struct impexp *s = S(impexp, σ);
+  Q_t a = α + 1;
+  A4(got, s->dσ, a, os_queue) O;
 }
 static N(impexp_not_ray_next) {
   printf("%s\n", __func__);
@@ -68,7 +67,7 @@ static N(impexp_not_ray_next) {
   R(n_t *, address);
   R(char *, name);
   if (*address)
-    A4(import, god, impexp_not_ray_next, arada) O;
+    A4(import, god, impexp_not_ray_next, anda) O;
   else
     A(name) C(2);
 }
@@ -77,16 +76,10 @@ static N(sendend) {
   struct impexp *s = S(impexp, σ);
   A4(got, s->dσ, 1, os_queue) O;
 }
-static N(sendexport) {
+static N(send_export_and_end) {
   printf("%s\n", __func__);
   struct impexp *s = S(impexp, σ);
   A7(s->export, god, s->dσ, 2, os_queue, sendend, da) O;
-}
-static N(senderror) {
-  printf("%s\n", __func__);
-  struct impexp *s = S(impexp, σ);
-  Q_t a = α + 1;
-  A4(got, s->dσ, a, os_queue) O;
 }
 static N(impexp_not_ray) {
   printf("%s\n", __func__);
@@ -95,7 +88,8 @@ static N(impexp_not_ray) {
     Q_t a = α + 1;
     A4(got, s->dσ, a, os_queue) X;
   } else
-    A7(s->import, god, impexp_not_ray_next, arada, senderror, sendexport, arada)
+    A6(s->import, send_export_and_end, impexp_not_ray_next, anda, senderror,
+       ara)
   X;
 }
 static N(impexp_pith) {

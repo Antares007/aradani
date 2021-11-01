@@ -1,19 +1,18 @@
 #include "arsi.h"
-struct {
-  n_t next, mtavari, pause;
-} o;
-n_t da;
 // clang-format off
-I(got,
-"os_next", o.next,            L)I(L,
-"pause",   o.pause,            L)I(L,
-"მთავარი", o.mtavari, imports);
+IN(gor,
+an,           L)IN(L,
+araa,         L)IN(L,
+arada,        L)IN(L,
+os_next,      L)IN(L,
+wordump, import);
+// clang-format on
 
-N(mmain) { 
-  //A4(6, o.pause, o.mtavari, da) O;
-  o.mtavari(T());
-  }
+N(s2) { A(7) C(1); }
+N(mmain) { A(9) C(1); }
 
-E(got,
-"მთავარი",  mmain, exports);
+// clang-format off
+E(Tail,
+"aaaaa",    mmain,      L)E(L,
+"მთავარი",  mmain, export);
 // clang-format on

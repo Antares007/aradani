@@ -28,7 +28,7 @@ static N(nextf) {
   if (cmp(name, "მთავარი") == 0)
     მთავარი = address, C(1);
   else
-    A4(export, god, nextf, arada) O;
+    A4(export, god, nextf, anda) O;
 }
 static N(os_ie_sink_and) {
   R(n_t, export);
@@ -67,5 +67,5 @@ N(არსი) {
 }
 N(ღრმაარსი) {
   R(n_t, impexp);
-  A4(got, os_exports, არაწყარო, impexp) O;
+  A4(gor, os_exports, არაწყარო, impexp) O;
 }

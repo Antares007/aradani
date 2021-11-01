@@ -11,6 +11,11 @@ N(daaa);
 N(daaaa);
 N(aradani);
 N(arada);
+N(anda);
+N(andaaa);
+N(andaaaaa);
+N(andaaaaaa);
+N(anndaaaaaa);
 N(ara);
 
 #define ან an

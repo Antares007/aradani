@@ -1,8 +1,7 @@
 #pragma once
 #include "oars.h"
-void tail() __attribute__((section(".text.end")));
-N(tail) {}
-static N(got) { C(2); }
+N(import);
+N(export);
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
 #define L CAT(e, __LINE__)
@@ -13,11 +12,23 @@ static N(got) { C(2); }
 #define IN(t, name, n)                                                         \
   n_t name;                                                                    \
   I(t, #name, name, n)
+void tail() __attribute__((section(".text.end")));
 void head() __attribute__((section(".text.begin")));
-N(imports);
-N(exports);
+N(tail) {}
+static N(gor) { C(0); }
+n_t Tail;
+N(setail) {
+  R(n_t, addr);
+  Tail = addr;
+  A(addr) C(1);
+}
 N(head) {
-  ((void)got);
+  ((void)gor), ((void)Tail);
+
   R(n_t, impexp);
-  A4(imports, exports, tail, impexp) O;
+
+  if (Tail)
+    A(export) C(1);
+  else
+    A5(import, export, tail, setail, impexp) O;
 }
