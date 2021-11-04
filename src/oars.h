@@ -65,7 +65,7 @@ typedef unsigned int W_t;
 #define X A2(os_next, და) O
 #define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
 #define OarS(NAME, AN, DA, ARA, WC, WS)                                        \
-  p_t *NAME##ο = malloc(((WC) + (WS) + 5 + 3) * sizeof(void *)),               \
+  p_t *NAME##ο = malloc(((WC) + (WS) + 3 + 3) * sizeof(void *)),               \
       *NAME##σ = NAME##ο + (WC) + (WS) + 3;                                    \
   unsigned long NAME##α = 0;                                                   \
   long NAME##ρ = -(WS);                                                        \
@@ -74,8 +74,7 @@ typedef unsigned int W_t;
   NAME##σ[--NAME##ρ].c = AN;                                                   \
   NAME##σ[0].v = NAME##ο;                                                      \
   NAME##σ[1].Q = NAME##α;                                                      \
-  NAME##σ[2].q = NAME##ρ;                                                      \
-  QUEUE_INIT((QUEUE *)&NAME##σ[3])
+  NAME##σ[2].q = NAME##ρ
 
 #define wordCountOf(T)                                                         \
   ((sizeof(T) +                                                                \

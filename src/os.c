@@ -128,12 +128,11 @@ int main(int argc, char **argv) {
     printf("%s filenameToRun\n", argv[0]);
   else
     printf("%s\n", argv[1]);
-  //example_cicle(T());
-  //return 0;
   unsigned long size;
   n_t arsi = mapfile(argc < 2 ? "src/arsi00.arsi" : argv[1], &size);
   *(void **)((char *)arsi + size - 10) = stab;
   A6("მთავარი", os_impexp, arsi, run, da, daa) O;
+  //α = 0, example_cicle(T());
 }
 
 static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
