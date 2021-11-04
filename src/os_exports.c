@@ -2,7 +2,6 @@
 #include "aradani.h"
 #include "os.h"
 #include "os_debugger.h"
-#include "os_queue.h"
 #include "os_wordump.h"
 
 static N(got) { σ[ρ + 2].c(T()); }

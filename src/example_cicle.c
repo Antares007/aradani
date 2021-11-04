@@ -1,6 +1,5 @@
 #include "aradani.h"
 #include "os.h"
-#include "os_queue.h"
 #include <stdio.h>
 static N(gor) { C(0); }
 static N(god) { C(1); }
