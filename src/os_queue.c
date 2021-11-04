@@ -1,6 +1,7 @@
 #include "os_queue.h"
 #include <assert.h>
 #include <stdio.h>
+#include <sys/epoll.h>
 typedef struct {
   QUEUE q;
   Q_t α;
@@ -9,10 +10,12 @@ typedef struct {
 } queue_paper_t;
 
 queue_paper_t queue_papers[1024];
-QUEUE main_queue;
-
+QUEUE main_queue, temp_queue;
+int epoll_fd;
 void os_init_queue() {
+  epoll_fd = epoll_create(5);
   QUEUE_INIT(&main_queue);
+  QUEUE_INIT(&temp_queue);
   for (Q_t i = 0; i < sizeof(queue_papers) / sizeof(*queue_papers); i++)
     queue_papers[i].q[0] = 0;
 }
@@ -37,36 +40,35 @@ N(os_queue) {
   static memcopy_t tablelookup[8] = {0,        memcopy1, memcopy2, memcopy3,
                                      memcopy4, memcopy5, memcopy6, memcopy7};
   tablelookup[wc](queue_papers[qpno].ο, &ο[α -= (queue_papers[qpno].α = wc)]);
-  QUEUE_INSERT_TAIL((QUEUE *)&σ[3], &queue_papers[qpno].q);
+  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
   C(1);
 }
 N(os_next) {
   assert(α == 0);
   QUEUE *q;
-  if ((QUEUE *)&σ[3] == (q = QUEUE_NEXT((QUEUE *)&σ[3]))) {
-    if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
-      return (printf("the end!\n"), (void)0);
-    else
-      QUEUE_REMOVE(q);
-  } else {
-    QUEUE *qn;
-    if ((QUEUE *)&σ[3] != (qn = QUEUE_NEXT(q))) {
-      QUEUE_PREV(qn) = QUEUE_PREV(&main_queue);
-      QUEUE_PREV_NEXT(&main_queue) = qn;
-      QUEUE_PREV(&main_queue) = QUEUE_PREV((QUEUE *)&σ[3]);
-      QUEUE_PREV_NEXT((QUEUE *)&σ[3]) = &main_queue;
-    }
-    QUEUE_INIT((QUEUE *)&σ[3]);
+  if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {
+    QUEUE_PREV(q) = QUEUE_PREV(&main_queue);
+    QUEUE_PREV_NEXT(&temp_queue) = &main_queue;
+    QUEUE_PREV_NEXT(&main_queue) = q;
+    QUEUE_PREV(&main_queue) = QUEUE_PREV(&temp_queue);
+    QUEUE_INIT(&temp_queue);
   }
-  queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
-  p->q[0] = 0;
-  p_t *pσ = p->σ, *pο = pσ[0].v;
-  Q_t pα = p->α;
-  q_t pρ = pσ[2].q;
-  static memcopy_t tablelookup[8] = {0,        memcopy1, memcopy2, memcopy3,
-                                     memcopy4, memcopy5, memcopy6, memcopy7};
-  tablelookup[pα](pο, p->ο);
-  pο[pα - 1].c(pο, pα - 1, pρ, pσ);
+  if (&main_queue == (q = QUEUE_NEXT(&main_queue))) {
+    return (printf("the end!\n"), (void)0);
+    // TODO: wait -1
+  } else {
+    // TODO: wait 0
+    QUEUE_REMOVE(q);
+    queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
+    p->q[0] = 0;
+    p_t *pσ = p->σ, *pο = pσ[0].v;
+    Q_t pα = p->α;
+    q_t pρ = pσ[2].q;
+    static memcopy_t tablelookup[8] = {0,        memcopy1, memcopy2, memcopy3,
+                                       memcopy4, memcopy5, memcopy6, memcopy7};
+    tablelookup[pα](pο, p->ο);
+    pο[pα - 1].c(pο, pα - 1, pρ, pσ);
+  }
 }
 static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
 static void memcopy2(p_t *pο, p_t *ο) {
