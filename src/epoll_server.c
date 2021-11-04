@@ -126,18 +126,13 @@ void et_process(struct epoll_event *events, int number, int epoll_fd,
   }
 }
 
-int main(int argc, char *argv[]) {
-  if (argc <= 2) {
-    printf("usage:  ip_address + port_number\n");
-    return -1;
-  }
-
-  const char *ip = argv[1];
-  int port = atoi(argv[2]);
+int main() {
+  const char *ip = "127.0.0.1";
+  int port = 7000;
 
   int ret = -1;
   struct sockaddr_in address;
-  bzero(&address, sizeof(address));
+  //bzero(&address, sizeof(address));
   address.sin_family = AF_INET;
   inet_pton(AF_INET, ip, &address.sin_addr);
   address.sin_port = htons(port);
