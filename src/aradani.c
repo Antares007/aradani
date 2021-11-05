@@ -74,8 +74,9 @@ N(arada) {
   σ[--ρ].c = arada_an;
   O;
 }
-static N(D3_P_D_O) { D3 P D3 O; }
-static N(D3_D_P_O) { D3 D P3 O; }
+// TODO: generate rays using macro to avoid name and definition problem.
+static N(D3_P_D_O) { D3 P D O; }
+static N(D3_D_P_O) { D3 D P O; }
 N(anda) { CONJ(U U, D3_D_P_O, D3_P_D_O) O; }
 static N(D3_P_D3_O) { D3 P D3 O; }
 static N(D3_D_P3_O) { D3 D P3 O; }

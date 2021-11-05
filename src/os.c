@@ -53,11 +53,15 @@ N(run) {
 }
 N(os_impexp);
 N(example_cicle);
+N(test_epoll);
 
 int main(int argc, char **argv) {
   os_queue_init();
   os_epoll_init();
   OarS(, os_ან, os_და, os_არა, 0x1000, 0);
+  α = 0, example_cicle(T());
+  // test_epoll(T());
+  return 0;
   if (argc < 2)
     printf("%s filenameToRun\n", argv[0]);
   else
@@ -66,5 +70,8 @@ int main(int argc, char **argv) {
   n_t arsi = mapfile(argc < 2 ? "src/arsi00.arsi" : argv[1], &size);
   *(void **)((char *)arsi + size - 10) = stab;
   A6("მთავარი", os_impexp, arsi, run, da, daa) O;
-  α = 0, example_cicle(T());
+  //
+  //
+  //
+  //
 }
