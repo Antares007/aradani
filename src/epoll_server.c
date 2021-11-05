@@ -132,7 +132,7 @@ int main() {
 
   int ret = -1;
   struct sockaddr_in address;
-  //bzero(&address, sizeof(address));
+  // bzero(&address, sizeof(address));
   address.sin_family = AF_INET;
   inet_pton(AF_INET, ip, &address.sin_addr);
   address.sin_port = htons(port);

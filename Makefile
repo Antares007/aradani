@@ -5,7 +5,7 @@ OBJCOPY=objcopy
 src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
-src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o src/os_debugger.o src/os_impexp.o src/example_cicle.o src/os_epoll.o
+src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o src/os_debugger.o src/os_impexp.o src/example_cicle.o src/os_epoll.o src/os_queue.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A
