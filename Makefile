@@ -5,7 +5,7 @@ OBJCOPY=objcopy
 src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
-src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o src/os_debugger.o src/os_impexp.o src/example_cicle.o
+src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o src/os_debugger.o src/os_impexp.o src/example_cicle.o src/os_epoll.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A
@@ -33,5 +33,5 @@ src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o src/os_debugg
 %00.arsi: %00.oars src/jmp.bin
 	cat $^ > $@
 clean:
-	rm -f src/*.bin src/*.oars src/*.o src/*.arsi src/os
+	rm -f src/*.bin src/*.oars src/*.o src/*.arsi src/os src/epoll_client src/epoll_server
 .PHONY: clean 

@@ -1,10 +1,10 @@
 #include "aradani.h"
 #include "mmap.h"
+#include "os_epoll.h"
 #include "queue.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/epoll.h>
 
 #define MAX_QUEUE_PAPERS 1024
 
@@ -18,7 +18,6 @@ typedef void (*memcopy_t)(p_t *, p_t *);
 
 queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
 QUEUE main_queue, temp_queue;
-int epoll_fd;
 
 Nd(os_new) {
   R(Q_t, ws);
@@ -26,6 +25,7 @@ Nd(os_new) {
   OarS(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
   A(nσ) C(1);
 }
+
 Nd(os_delete) {
   R(p_t *, nσ);
   free(nσ[0].v);
@@ -63,8 +63,12 @@ N(os_next) {
     QUEUE_INIT(&temp_queue);
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue))) {
-    return (printf("the end!\n"), (void)0);
-    // TODO: wait -1
+    // TODO: epoll when listeners are registered
+    //int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
+    //if (ret < 0) {
+    //  printf("epoll failure!\n");
+    //} else {
+    //}
   } else {
     // TODO: wait 0
     QUEUE_REMOVE(q);
@@ -113,8 +117,7 @@ N(run) {
 }
 N(os_impexp);
 N(example_cicle);
-static void os_init_queue() {
-  epoll_fd = epoll_create(5);
+static void os_queue_init() {
   QUEUE_INIT(&main_queue);
   QUEUE_INIT(&temp_queue);
   for (Q_t i = 0; i < MAX_QUEUE_PAPERS; i++)
@@ -122,7 +125,8 @@ static void os_init_queue() {
 }
 
 int main(int argc, char **argv) {
-  os_init_queue();
+  os_queue_init();
+  os_epoll_init();
   OarS(, os_ან, os_და, os_არა, 0x1000, 0);
   if (argc < 2)
     printf("%s filenameToRun\n", argv[0]);
@@ -132,7 +136,7 @@ int main(int argc, char **argv) {
   n_t arsi = mapfile(argc < 2 ? "src/arsi00.arsi" : argv[1], &size);
   *(void **)((char *)arsi + size - 10) = stab;
   A6("მთავარი", os_impexp, arsi, run, da, daa) O;
-  //α = 0, example_cicle(T());
+  α = 0, example_cicle(T());
 }
 
 static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
