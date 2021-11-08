@@ -1,7 +1,15 @@
-#include "aradani.h"
-#include "os.h"
-#include <stdio.h>
-static N(gor) { C(0); }
+#include "arsi.h"
+typedef int (*printf_t)(const char *, ...);
+// clang-format off
+IN(gor,
+da,                    L)IN(L,
+daa,                   L)IN(L,
+os_new,                L)IN(L,
+os_next,               L)IN(L,
+os_queue,              L)INT(L,
+printf, printf_t, import);
+// clang-format on
+
 static N(god) { C(1); }
 static N(so0) {
   R(p_t *, oσ);
@@ -31,4 +39,9 @@ static N(si1) {
 }
 static N(si2) { printf("si2\n"); }
 static N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
-N(example_cicle) { A8(0, si, gor, so, daa, 3, os_queue, დაა) O; }
+N(example_cicle) { A8(0, si, gor, so, daa, 3, os_queue, daa) O; }
+
+// clang-format off
+EN(Tail,
+example_cicle,         L)EN(L,
+printf,           export);

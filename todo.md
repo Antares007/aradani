@@ -10,5 +10,6 @@ use tdd
 remove osnext calls from os rays by extending meaning of dOt
 debugger
 epoll socket / tcp stack
+use arsi
 .simplify aradani iplementetaion
 .arsis redefine

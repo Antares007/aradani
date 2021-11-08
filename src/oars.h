@@ -88,6 +88,9 @@ typedef unsigned int W_t;
 #define IN(t, name, n)                                                         \
   n_t name;                                                                    \
   I(t, #name, name, n)
+#define INT(t, name, T, n)                                                     \
+  T name;                                                                      \
+  I(t, #name, name, n)
 #define EN(t, name, n) E(t, #name, name, n)
 /*
 console.log(

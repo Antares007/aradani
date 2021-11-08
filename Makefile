@@ -5,19 +5,27 @@ OBJCOPY=objcopy
 src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
-src/os: src/mmap.o src/aradani.o src/os_wordump.o src/os_exports.o \
-	src/os_debugger.o src/os_impexp.o src/example_cicle.o src/os_epoll.o \
-	src/os_queue.o
+src/os:	src/mmap.o  	\
+	src/os_queue.o	\
+	src/aradani.o 	\
+	src/os_wordump.o 	\
+	src/os_exports.o 	\
+	src/os_debugger.o \
+	src/os_impexp.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A
 	nasm -f bin $^ -o $@
 %.oars: %.c
-	${CC} -c $^ -o %.o ${CFLAGS} -ffreestanding -O3 -fno-stack-clash-protection -fno-stack-protector
-	${LD} -T arsi.ld %.o -o %.elf
-	${OBJCOPY} -O binary -j .text.* -j .text -j .data %.elf %.binp
-	head -c -1 %.binp > $@
-	rm %.binp %.elf %.o
+	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3 -fno-stack-clash-protection -fno-stack-protector
+	# place "head" nargo body text at begining and "tail" nargo text at end.
+	${LD} -T arsi.ld $@ -o $@.elf
+	# copy text from elf formated object file to pure text (binary) file. 
+	${OBJCOPY} -O binary -j .text.* -j .text -j .data $@.elf $@.binp
+	# remove tail nargo body text. just 1 byte form behaind.
+	head -c -1 $@.binp > $@
+	# delete trush.
+	rm $@.binp $@.elf 
 %07.arsi: %07.oars %06.arsi
 	cat $^ > $@
 %06.arsi: %06.oars %05.arsi

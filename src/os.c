@@ -1,8 +1,6 @@
 #include "aradani.h"
 #include "mmap.h"
-#include "os_epoll.h"
 #include "os_queue.h"
-#include "queue.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,16 +17,18 @@ Nd(os_delete) {
   free(nσ[0].v);
   C(1);
 }
-static Nd(os_არა) {}
 N(wordump);
 N(αzero) { α = 0, C(1); }
+
+static Nd(os_არა) { printf("ARA\n"); }
 static Nd(os_და) {
   if (α)
     A5(wordump, αzero, da, os_next, da) O;
   else
     os_next(T());
 }
-static Nd(os_ან) { os_next(T()); }
+static Nd(os_ან) {}
+
 #include "os_exports.h"
 N(stab) { --α, A(os_exports) C(1); }
 N(nn) {
@@ -52,16 +52,15 @@ N(run) {
   }
 }
 N(os_impexp);
-N(example_cicle);
-N(test_epoll);
+// N(example_cicle);
+// N(test_epoll);
 
 int main(int argc, char **argv) {
   os_queue_init();
-  os_epoll_init();
   OarS(, os_ან, os_და, os_არა, 0x1000, 0);
-  α = 0, example_cicle(T());
+  //α = 0, example_cicle(T());
   // test_epoll(T());
-  return 0;
+  // return 0;
   if (argc < 2)
     printf("%s filenameToRun\n", argv[0]);
   else
