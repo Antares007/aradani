@@ -36,6 +36,12 @@ N(daaa) { CONJ(U3, D3_P3_O, D3_D3_C0) O; }
 static N(D3_D4_C0) { D3 D4 C(0); }
 static N(D3_P4_O) { D3 P4 O; }
 N(daaaa) { CONJ(U4, D3_P4_O, D3_D4_C0) O; }
+static N(D3_D5_C0) { D3 D5 C(0); }
+static N(D3_P5_O) { D3 P5 O; }
+N(daaaaa) { CONJ(U5, D3_P5_O, D3_D5_C0) O; }
+static N(D3_D6_C0) { D3 D5 C(0); }
+static N(D3_P6_O) { D3 P5 O; }
+N(daaaaaa) { CONJ(U5, D3_P6_O, D3_D6_C0) O; }
 
 static N(aradani_ara) { D3 P D D O; }
 static N(aradani_da) { D3 D P D O; }
