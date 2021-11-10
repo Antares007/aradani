@@ -55,7 +55,7 @@ typedef void (*n_t)(OARS);
   p_t *n##σ = ο[--α].v;                                                        \
   long n##ρ = n##σ[0].q
 
-#define C(r) σ[ρ + r].c(ο, α, ρ, σ)
+#define C(r) σ[ρ + (r)].c(ο, α, ρ, σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)a,
 

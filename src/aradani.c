@@ -68,8 +68,8 @@ static N(got) { C(2); }
   Ray5(Moakhie3, Moakhie##Pan, Amoakhvie##Pda, Moakhie##Para, O);              \
   Ray5(Moakhie3, Amoakhvie##Pan, Moakhie##Pda, Moakhie##Para, O);              \
   N(Name) {                                                                    \
-    Chaakhvie3 0;                                                              \
-    σ[--ρ].c = Moakhie3_Moakhie##Pan##_Moakhie##Pda##_Amoakhvie##Para##_O;     \
+    Chaakhvie3 σ[--ρ].c =                                                      \
+        Moakhie3_Moakhie##Pan##_Moakhie##Pda##_Amoakhvie##Para##_O;            \
     σ[--ρ].c = Moakhie3_Moakhie##Pan##_Amoakhvie##Pda##_Moakhie##Para##_O;     \
     σ[--ρ].c = Moakhie3_Amoakhvie##Pan##_Moakhie##Pda##_Moakhie##Para##_O;     \
     O;                                                                         \
