@@ -1,6 +1,6 @@
 #include "aradani.h"
 #include "mmap.h"
-#include "os_queue.h"
+//#include "os_queue.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,18 +17,6 @@ Nd(os_delete) {
   free(nσ[0].v);
   C(1);
 }
-N(wordump);
-N(αzero) { α = 0, C(1); }
-
-static Nd(os_არა) { printf("ARA\n"); }
-static Nd(os_და) {
-  if (α)
-    A5(wordump, αzero, da, os_next, da) O;
-  else
-    os_next(T());
-}
-static Nd(os_ან) {}
-
 #include "os_exports.h"
 N(stab) { --α, A(os_exports) C(1); }
 N(nn) {
@@ -52,12 +40,10 @@ N(run) {
   }
 }
 N(os_impexp);
-// N(example_cicle);
-// N(test_epoll);
 N(loadrun_n) {
   R(n_t, pith);
   R(const char *, nargoname);
-  A6(nargoname, os_impexp, pith, run, da, daa) O;
+  A6(nargoname, os_impexp, pith, run, da, da2) O;
 }
 N(loadrun) {
   R(n_t, bpith);
@@ -65,12 +51,13 @@ N(loadrun) {
   R(const char *, nargoname);
   A6(nargoname, filename, bpith, mapfile, loadrun_n, da) O;
 }
+static Nd(os_არა) {}
+static Nd(os_და) {}
+static Nd(os_ან) {}
 int main(int argc, char **argv) {
-  os_queue_init();
+  //  os_queue_init();
   OarS(, os_ან, os_და, os_არა, 0x1000, 0);
-  if (argc < 2)
-    printf("%s filenameToRun\n", argv[0]);
-  else
-    printf("%s\n", argv[1]);
-  A4("მთავარი", "src/arsi00.arsi", stab, loadrun) O;
+  const char *filename = argc < 2 ? "src/arsi00.arsi" : argv[1];
+  printf("%s\n", filename);
+  A4("მთავარი", filename, stab, loadrun) O;
 }

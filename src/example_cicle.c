@@ -3,7 +3,7 @@ typedef int (*printf_t)(const char *, ...);
 // clang-format off
 IN(gor,
 da,                    L)IN(L,
-daa,                   L)IN(L,
+da2,                   L)IN(L,
 os_new,                L)IN(L,
 os_next,               L)IN(L,
 os_queue,              L)INT(L,
@@ -39,7 +39,7 @@ static N(si1) {
 }
 static N(si2) { printf("si2\n"); }
 static N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
-N(example_cicle) { A8(0, si, gor, so, daa, 3, os_queue, daa) O; }
+N(example_cicle) { A8(0, si, gor, so, da2, 3, os_queue, da2) O; }
 
 // clang-format off
 EN(Tail,

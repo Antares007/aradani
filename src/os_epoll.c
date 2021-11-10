@@ -61,7 +61,7 @@ void os_epoll_wait(Q_t ms) {
       long connfd =
           accept(s->fd, (struct sockaddr *)&client_address, &client_addrlength);
       printf("z\n");
-      A10(0, connfd, mksocket, addtopolln, da, god, s->dσ, 2, os_queue, daaaa)
+      A10(0, connfd, mksocket, addtopolln, da, god, s->dσ, 2, os_queue, da4)
       X;
     } else if (events[i].events & EPOLLIN) {
       printf("bb\n");
@@ -122,7 +122,7 @@ Nd(drain) {
 }
 N(test_epoll) {
   A('hell') C(1);
-  // A10(os_socket, "127.0.0.1", 7000, os_bind, daaa, drain, mkdrain, daa,
+  // A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2,
   //    os_listen, da)
   // O;
 }

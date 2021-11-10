@@ -1,23 +1,23 @@
 #pragma once
 #include "oars.h"
 #define და da
-#define დაა daa
-#define დააა daaa
-#define დაააა daaaa
+#define დაა da2
+#define დააა da3
+#define დაააა da4
 #define არადანი aradani
 N(da);
-N(daa);
-N(daaa);
-N(daaaa);
+N(da2);
+N(da3);
+N(da4);
 N(daaaaa);
 N(daaaaaa);
 N(aradani);
 N(arada);
 N(anda);
-N(andaaa);
-N(andaaaaa);
+N(anda3);
+N(anda5);
 N(andaaaaaa);
-N(anndaaaaaa);
+N(an2da6);
 N(ara);
 
 #define ან an

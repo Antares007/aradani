@@ -16,7 +16,7 @@ static N(impexp_nn) {
   // printf("%s %s\n", iname, ename);
   if (cmp(iname, ename) == 0) {
     *iaddr = eaddr;
-    A6(import, god, export, impexp_nn, da, andaaa) O;
+    A6(import, god, export, impexp_nn, da, anda3) O;
   } else {
     A6(iname, iaddr, import, export, impexp_nn, da) O;
   }
@@ -25,8 +25,8 @@ static N(impexp_n) {
   R(n_t, tailexport);
   R(n_t, export);
   R(n_t, import);
-  A10(import, export, god, tailexport, impexp_nn, da, export, god, daa,
-      anndaaaaaa)
+  A10(import, export, god, tailexport, impexp_nn, da, export, god, da2,
+      an2da6)
   O;
 }
 N(os_impexp) {
