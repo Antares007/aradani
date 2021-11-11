@@ -1,5 +1,4 @@
 #include "aradani.h"
-#include "mmap.h"
 #include "os_queue.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,32 +47,25 @@ N(os_delete) {
 }
 #include "os_exports.h"
 N(stab) { --α, A(os_exports) C(1); }
-N(nn) {
-  R(n_t, export);
-  R(n_t, addr);
-  R(char *, name);
-  printf("N %s %p\n", name, addr);
-  A3(export, nn, da) O;
-}
-N(os_loadrun);
-static N(os_არა) {}
+N(os_run);
+static N(os_არა) { printf("os_ara\n"); }
 static N(os_და) {
   printf("os_da\n");
   os_next(T());
 }
-static N(os_ან) {}
+static N(os_ან) { printf("os_an\n"); }
 N(main_nn) {
   printf("main_nn\n");
   R(p_t *, nσ);
   R(const char *, filename);
   printf("%s\n", filename);
-  A9("მთავარი", filename, stab, os_loadrun, nσ, 4, os_queue, os_next, da)
+  A9("მთავარი", filename, stab, os_run, nσ, 4, os_queue, os_next, da)
   O;
 }
 N(main_n) {
   printf("main_n\n");
   R(const char *, filename);
-  A9(filename, os_ან, os_და, os_არა, 0x1000, 0, os_new, main_nn, da) O;
+  A9(filename, os_ან, os_და, os_არა, 4090, 0, os_new, main_nn, da) O;
 }
 int main(int argc, char **argv) {
   printf("main\n");

@@ -5,8 +5,7 @@ OBJCOPY=objcopy
 src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
-src/os:	src/mmap.o  	\
-	src/aradani.o 	\
+src/os:	src/aradani.o 	\
 	src/os_wordump.o 	\
 	src/os_exports.o 	\
 	src/os_debugger.o \
