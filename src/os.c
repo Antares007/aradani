@@ -27,6 +27,7 @@ N(nn) {
   A3(export, nn, da) O;
 }
 int cmp(const char *s1, const char *s2);
+N(os_impexp);
 N(run) {
   R(n_t, export);
   R(n_t, addr);
@@ -39,7 +40,6 @@ N(run) {
     A4(mame, export, run, da) O;
   }
 }
-N(os_impexp);
 N(loadrun_n) {
   R(n_t, pith);
   R(const char *, nargoname);
