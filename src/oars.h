@@ -37,44 +37,23 @@ typedef struct p_s {
   };
 } p_t;
 #define OARS p_t *ο, unsigned long α, long ρ, p_t *σ
-typedef void (*n_t)(OARS);
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
 
 #define N(n) void n(OARS)
-#define Nd(n)                                                                  \
-  N(CAT(n, ___));                                                              \
-  N(n) {                                                                       \
-    printf("%s\n", __FUNCTION__);                                              \
-    CAT(n, ___)(T());                                                          \
-  }                                                                            \
-  N(CAT(n, ___))
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v;
-#define Rpith(n)                                                               \
-  p_t *n##σ = ο[--α].v;                                                        \
-  long n##ρ = n##σ[0].q
 
 #define C(r) σ[ρ + (r)].c(ο, α, ρ, σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)(a),
+#define X A2(os_next, და) O
+#define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
 
+typedef void (*n_t)(OARS);
 typedef unsigned long Q_t;
 typedef long q_t;
 typedef unsigned int W_t;
-#define X A2(os_next, და) O
-#define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
-#define OarS(NAME, AN, DA, ARA, WC, WS)                                        \
-  p_t *NAME##ο = malloc(((WC) + (WS) + 3 + 3) * sizeof(void *)),               \
-      *NAME##σ = NAME##ο + (WC) + (WS) + 3;                                    \
-  unsigned long NAME##α = 0;                                                   \
-  long NAME##ρ = -(WS);                                                        \
-  NAME##σ[--NAME##ρ].c = ARA;                                                  \
-  NAME##σ[--NAME##ρ].c = DA;                                                   \
-  NAME##σ[--NAME##ρ].c = AN;                                                   \
-  NAME##σ[0].v = NAME##ο;                                                      \
-  NAME##σ[1].Q = NAME##α;                                                      \
-  NAME##σ[2].q = NAME##ρ
 
 #define wordCountOf(T)                                                         \
   ((sizeof(T) +                                                                \

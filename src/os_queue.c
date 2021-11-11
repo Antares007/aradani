@@ -18,7 +18,6 @@ static QUEUE main_queue, temp_queue;
 static memcopy_t tablelookup[8];
 
 N(os_queue) {
-  printf("os_queue\n");
   R(Q_t, wc);
   R(p_t *, nσ);
   static unsigned short qpno = 0;
@@ -32,7 +31,6 @@ N(os_queue) {
   C(1);
 }
 N(os_next) {
-  printf("os_next\n");
   QUEUE *q;
   if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {
     QUEUE_PREV(q) = QUEUE_PREV(&main_queue);

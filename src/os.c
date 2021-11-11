@@ -49,13 +49,9 @@ N(os_delete) {
 N(stab) { --α, A(os_exports) C(1); }
 N(os_run);
 static N(os_არა) { printf("os_ara\n"); }
-static N(os_და) {
-  printf("os_da\n");
-  os_next(T());
-}
+static N(os_და) { printf("os_da\n"), os_next(T()); }
 static N(os_ან) { printf("os_an\n"); }
 N(main_nn) {
-  printf("main_nn\n");
   R(p_t *, nσ);
   R(const char *, filename);
   printf("%s\n", filename);
@@ -63,12 +59,10 @@ N(main_nn) {
   O;
 }
 N(main_n) {
-  printf("main_n\n");
   R(const char *, filename);
   A9(filename, os_ან, os_და, os_არა, 4090, 0, os_new, main_nn, da) O;
 }
 int main(int argc, char **argv) {
-  printf("main\n");
   p_t ο[512], *σ = &ο[512];
   q_t α = 0, ρ = 0;
   A4(os_queue_init, argc < 2 ? "src/arsi00.arsi" : argv[1], main_n, da2) O;
