@@ -1,6 +1,4 @@
-#include "os_epoll.h"
 #include "aradani.h"
-#include "os.h"
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -11,8 +9,13 @@
 #define MAX_EVENT_NUMBER 1024 // event
 static N(gor) { C(0); }
 static N(god) { C(1); }
+
 N(os_bind);
 N(os_listen);
+N(mksocket);
+N(os_queue);
+N(os_next);
+N(os_new);
 
 int epoll_fd;
 struct epoll_event events[MAX_EVENT_NUMBER];
@@ -37,7 +40,6 @@ static void addtopoll(p_t *σ) {
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, s->fd, &event);
   SetNonblocking(s->fd);
 }
-N(mksocket);
 N(addtopolln) {
   R(p_t *, nσ);
   addtopoll(nσ);
@@ -81,16 +83,15 @@ static N(setσ) {
   A(nσ) C(1);
 }
 
-static Nd(os_socket_an) {
+static N(os_socket_an) {
   R(p_t *, oσ);
   struct state_s *s = S(state_s, σ);
   s->dσ = oσ;
   addtopoll(σ);
   A5(σ, gor, s->dσ, 2, os_queue) X;
 }
-static Nd(os_socket_da) {}
-static Nd(os_socket_ara) {}
-
+static N(os_socket_da) {}
+static N(os_socket_ara) {}
 N(mksocket) {
   R(Q_t, listen_fd);
   R(Q_t, flag);
@@ -106,16 +107,16 @@ N(os_socket) {
   }
   A3(1, listen_fd, mksocket) O;
 }
-static Nd(drain_an) {
+static N(drain_an) {
   α--;
   os_next(T());
 }
-static Nd(drain_ara) {}
-Nd(mkdrain) {
+static N(drain_ara) {}
+N(mkdrain) {
   R(n_t, drain_da);
   A6(drain_an, drain_da, drain_ara, 0x1000, 0, os_new) O;
 }
-Nd(drain) {
+N(drain) {
   R(Q_t, events);
   printf("events: %lx\n", events);
   C(1);
@@ -138,11 +139,12 @@ N(test_epoll) {
 //   s->fd = 0;
 //   A3(wc, event, nσ) O;
 // }
+
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <strings.h>
 
-Nd(os_listen) {
+N(os_listen) {
   R(p_t *, kσ);
   R(p_t *, nσ);
   A5(kσ, gor, nσ, 2, os_queue) O;
@@ -197,7 +199,7 @@ N(l_bind) {
     A(fd) C(1);
 }
 
-Nd(os_bind) {
+N(os_bind) {
   R(Q_t, port);
   R(const char *, ip);
   R(p_t *, nσ);

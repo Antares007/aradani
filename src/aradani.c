@@ -151,11 +151,12 @@ da5,          5,      L)DA(L,
 da6,          6,      L)DA(L,
 da7,          7,      L)END(L,
 // os_next exports
+debugger,             L)END(L,
 os_delete,            L)END(L,
 os_new,               L)END(L,
 os_next,              L)END(L,
 os_queue,             L)END(L,
-os_wordump,     os_exports);
+os_wordump,  os_exports);
 
 ARADANI(aradani, 1, 1, 1);
 ARADANI(aradani2, 1, 1, 2);

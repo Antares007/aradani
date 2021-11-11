@@ -5,10 +5,11 @@ OBJCOPY=objcopy
 src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
-src/os:	src/aradani.o 	\
-	src/os_wordump.o 			\
-	src/os_impexp.o   		\
-	src/os_next.o 				\
+src/os:	src/aradani.o   \
+	src/os_debbuger.o     \
+	src/os_wordump.o      \
+	src/os_impexp.o       \
+	src/os_next.o         \
 	src/os_new.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}

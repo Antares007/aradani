@@ -12,9 +12,9 @@ http server demo program / async programming
 http parser / language parsin sample
 
 11/11
-debugger
+X debugger - martivi stepin/continue
 epoll socket / tcp stack
-use arsi / renames / cleanup
+X use arsi / renames / cleanup
 
 .simplify aradani iplementetaion
 .arsis redefine
