@@ -10,7 +10,8 @@ src/os:	src/mmap.o  	\
 	src/os_wordump.o 	\
 	src/os_exports.o 	\
 	src/os_debugger.o \
-	src/os_impexp.o 
+	src/os_impexp.o   \
+	src/os_queue.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A

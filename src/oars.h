@@ -57,7 +57,7 @@ typedef void (*n_t)(OARS);
 
 #define C(r) σ[ρ + (r)].c(ο, α, ρ, σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
-#define A(a) ο[α++].v = (void *)a,
+#define A(a) ο[α++].v = (void *)(a),
 
 typedef unsigned long Q_t;
 typedef long q_t;
@@ -80,18 +80,6 @@ typedef unsigned int W_t;
   ((sizeof(T) +                                                                \
     ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
    sizeof(void *))
-#define L CAT(e, __LINE__)
-#define E(t, name, addr, n)                                                    \
-  N(n) { A3(name, addr, t) C(1); }
-#define I(t, name, addr, n)                                                    \
-  N(n) { A3(name, &addr, t) C(1); }
-#define IN(t, name, n)                                                         \
-  n_t name;                                                                    \
-  I(t, #name, name, n)
-#define INT(t, name, T, n)                                                     \
-  T name;                                                                      \
-  I(t, #name, name, n)
-#define EN(t, name, n) E(t, #name, name, n)
 /*
 console.log(
   Array(21).fill()

@@ -1,5 +1,6 @@
 #include "os_exports.h"
 #include "aradani.h"
+#include "importexportmacros.h"
 #include "os.h"
 #include "os_wordump.h"
 

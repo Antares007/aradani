@@ -1,59 +1,9 @@
 #include "aradani.h"
 #include "mmap.h"
-//#include "os_queue.h"
-//#include <assert.h>
+#include "os_queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-Nd(os_new) {
-  R(Q_t, ws);
-  R(Q_t, wc);
-  OarS(n, ο[--α].c, ο[--α].c, ο[--α].c, wc, ws);
-  A(nσ) C(1);
-}
-
-Nd(os_delete) {
-  R(p_t *, nσ);
-  free(nσ[0].v);
-  C(1);
-}
-#include "os_exports.h"
-N(stab) { --α, A(os_exports) C(1); }
-N(nn) {
-  R(n_t, export);
-  R(n_t, addr);
-  R(char *, name);
-  printf("N %s %p\n", name, addr);
-  A3(export, nn, da) O;
-}
-int cmp(const char *s1, const char *s2);
-N(os_impexp);
-N(run) {
-  R(n_t, export);
-  R(n_t, addr);
-  R(char *, name);
-  R(char *, mame);
-  printf("N %s %p\n", name, addr);
-  if (cmp(mame, name) == 0) {
-    A(addr) O;
-  } else {
-    A4(mame, export, run, da) O;
-  }
-}
-N(loadrun_n) {
-  R(n_t, pith);
-  R(const char *, nargoname);
-  A6(nargoname, os_impexp, pith, run, da, da2) O;
-}
-N(loadrun) {
-  R(n_t, bpith);
-  R(const char *, filename);
-  R(const char *, nargoname);
-  A6(nargoname, filename, bpith, mapfile, loadrun_n, da) O;
-}
-static Nd(os_არა) {}
-static Nd(os_და) {}
-static Nd(os_ან) {}
 N(nalloc) {
   R(Q_t, size);
   void *m = malloc(size);
@@ -67,14 +17,67 @@ N(nfree) {
   free(m);
   C(1);
 }
+static N(os_new_n) {
+  R(Q_t, σminuscount)
+  R(Q_t, οσcount)
+  R(void *, m)
+  p_t *nο = m;
+  p_t *nσ = nο + οσcount;
+  Q_t nα = 0;
+  q_t nρ = -σminuscount;
+  nσ[--nρ].c = ο[--α].c;
+  nσ[--nρ].c = ο[--α].c;
+  nσ[--nρ].c = ο[--α].c;
+  nσ[0].v = nο;
+  nσ[1].Q = nα;
+  nσ[2].q = nρ;
+  A(nσ) C(1);
+}
+N(os_new) {
+  printf("os_new\n");
+  R(Q_t, σminuscount);
+  R(Q_t, οpluscount);
+  Q_t οσcount = οpluscount + σminuscount + 3, οσpluscount = οσcount + 3;
+  A6(οσpluscount * sizeof(void *), nalloc, οσcount, σminuscount, os_new_n, da3)
+  O;
+}
+N(os_delete) {
+  R(p_t *, nσ);
+  free(nσ[0].v);
+  C(1);
+}
+#include "os_exports.h"
+N(stab) { --α, A(os_exports) C(1); }
+N(nn) {
+  R(n_t, export);
+  R(n_t, addr);
+  R(char *, name);
+  printf("N %s %p\n", name, addr);
+  A3(export, nn, da) O;
+}
+N(os_loadrun);
+static N(os_არა) {}
+static N(os_და) {
+  printf("os_da\n");
+  os_next(T());
+}
+static N(os_ან) {}
+N(main_nn) {
+  printf("main_nn\n");
+  R(p_t *, nσ);
+  R(const char *, filename);
+  printf("%s\n", filename);
+  A9("მთავარი", filename, stab, os_loadrun, nσ, 4, os_queue, os_next, da)
+  O;
+}
+N(main_n) {
+  printf("main_n\n");
+  R(const char *, filename);
+  A9(filename, os_ან, os_და, os_არა, 0x1000, 0, os_new, main_nn, da) O;
+}
 int main(int argc, char **argv) {
+  printf("main\n");
   p_t ο[512], *σ = &ο[512];
   q_t α = 0, ρ = 0;
-
-  // os_queue_init();
-  // return 9;
-  // OarS(, os_ან, os_და, os_არა, 0x1000, 0);
-  const char *filename = argc < 2 ? "src/arsi00.arsi" : argv[1];
-  printf("%s\n", filename);
-  A4("მთავარი", filename, stab, loadrun) O;
+  A4(os_queue_init, argc < 2 ? "src/arsi00.arsi" : argv[1], main_n, da2) O;
 }

@@ -10,12 +10,11 @@ presentation video
 Edsger W. Dijkstra translation
 http server demo program / async programming
 http parser / language parsin sample
-renames/cleanup
 
 11/11
 debugger
 epoll socket / tcp stack
-use arsi
+use arsi / renames/cleanup
 
 .simplify aradani iplementetaion
 .arsis redefine

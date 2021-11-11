@@ -1,4 +1,5 @@
 #pragma once
+#include "importexportmacros.h"
 #include "oars.h"
 N(import);
 N(export);
