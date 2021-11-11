@@ -6,11 +6,10 @@ src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
 src/os:	src/aradani.o 	\
-	src/os_wordump.o 	\
-	src/os_exports.o 	\
-	src/os_debugger.o \
-	src/os_impexp.o   \
-	src/os_queue.o
+	src/os_wordump.o 			\
+	src/os_impexp.o   		\
+	src/os_next.o 				\
+	src/os_new.o
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A

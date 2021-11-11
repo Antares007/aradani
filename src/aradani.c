@@ -76,6 +76,8 @@ static N(got) { C(2); }
     O;                                                                         \
   }
 
+#define END(Tail, Name, Head) N(Name);EN(Tail, Name, Head)
+
 // clang-format off
 AN(got,
 an,           1,      L)AN(L,
@@ -147,7 +149,13 @@ da3,          3,      L)DA(L,
 da4,          4,      L)DA(L,
 da5,          5,      L)DA(L,
 da6,          6,      L)DA(L,
-da7,          7,      aradani_exports)
+da7,          7,      L)END(L,
+// os_next exports
+os_delete,            L)END(L,
+os_new,               L)END(L,
+os_next,              L)END(L,
+os_queue,             L)END(L,
+os_wordump,     os_exports);
 
 ARADANI(aradani, 1, 1, 1);
 ARADANI(aradani2, 1, 1, 2);

@@ -1,6 +1,6 @@
 #include "aradani.h"
 #include <stdio.h>
-N(wordump) {
+N(os_wordump) {
   printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", (void *)((Q_t)ο >> 12),
          α, ρ, (void *)((Q_t)σ >> 12));
   long i = 0;
@@ -17,9 +17,4 @@ N(wordump) {
     i++;
   }
   C(1);
-}
-N(loog) {
-  R(char *, s);
-  printf("\n%s\n", s);
-  wordump(T());
 }

@@ -14,7 +14,7 @@ http parser / language parsin sample
 11/11
 debugger
 epoll socket / tcp stack
-use arsi / renames/cleanup
+use arsi / renames / cleanup
 
 .simplify aradani iplementetaion
 .arsis redefine
