@@ -42,7 +42,8 @@ static N(os_impexp_n) {
   R(n_t, tailexport);
   R(n_t, export);
   R(n_t, import);
-  A10(import, export, god, tailexport, os_impexp_nn, da, export, god, da2, an2da6)
+  A10(import, export, god, tailexport, os_impexp_nn, da, export, god, da2,
+      an2da6)
   O;
 }
 static N(os_impexp) {

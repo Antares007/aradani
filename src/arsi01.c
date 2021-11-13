@@ -1,17 +1,16 @@
 #include "arsi.h"
+#include "queue.h"
+
 // clang-format off
-IN(gor,
-an,                           L)IN(L,
-ara,                          L)IN(L,
-arada,                        L)IN(L,
-os_next,                      L)IN(L,
-wordump,                 import);
+IN(gor,    
+da,                                     L)IN(L,
+da2,                                    L)IN(L,
+//
+debugger,                          import);
 // clang-format on
 
-N(s2) { A(7) C(1); }
-N(mmain) { A(9) C(1); }
+N(მთავარი) { A3(9, da, debugger) O; }
 
 // clang-format off
-E(Tail,
-"aaaaa",    mmain,            L)E(L,
-"მთავარი",  mmain,       export);
+EN(Tail,
+მთავარი,                            export);

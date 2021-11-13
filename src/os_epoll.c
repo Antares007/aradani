@@ -199,24 +199,4 @@ N(l_bind) {
     A(fd) C(1);
 }
 
-N(os_bind) {
-  R(Q_t, port);
-  R(const char *, ip);
-  R(p_t *, nσ);
-
-  struct state_s *s = S(state_s, nσ);
-  int ret = -1;
-
-  struct sockaddr_in address;
-  bzero(&address, sizeof(address));
-  address.sin_family = AF_INET;
-  inet_pton(AF_INET, ip, &address.sin_addr);
-  address.sin_port = htons(port);
-
-  ret = bind(s->fd, (struct sockaddr *)&address, sizeof(address));
-  if (ret == -1) {
-    printf("fail to bind socket!\n");
-    C(2);
-  } else
-    A(nσ) C(1);
-}
+N(os_bind) {}
