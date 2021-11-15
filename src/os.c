@@ -27,8 +27,8 @@ N(main_n) {
 }
 #include <unistd.h>
 int main(int argc, char **argv) {
-  write(STDOUT_FILENO,"abc\n",5);//(1);
-  return 0;
+  // write(STDOUT_FILENO,"abc\n",5);//(1);
+  // return 0;
   p_t ο[512], *σ = &ο[512];
   q_t α = 0, ρ = 0;
   A4(os_queue_init, argc < 2 ? "src/arsi00.arsi" : argv[1], main_n, da2) O;

@@ -1,13 +1,10 @@
 #pragma once
-#define L CAT(e, __LINE__)
-#define E(t, name, addr, n)                                                    \
-  N(n) { A3(name, addr, t) C(1); }
-#define I(t, name, addr, n)                                                    \
-  N(n) { A3(name, &addr, t) C(1); }
-#define IN(t, name, n)                                                         \
-  n_t name;                                                                    \
-  I(t, #name, name, n)
-#define INT(t, name, T, n)                                                     \
-  T name;                                                                      \
-  I(t, #name, name, n)
-#define EN(t, name, n) E(t, #name, name, n)
+#define L CAT(expimp_, __LINE__)
+#define E(Tail, Name, Addr, Head)                                                    \
+  N(Head) { A3(#Name, Addr, Tail) C(1); }
+#define I(Tail, Name, Addr, Head)                                                    \
+  N(Head) { A3(#Name, &Addr, Tail) C(1); }
+#define IN(Tail, Name, Head)                                                         \
+  n_t Name;                                                                    \
+  I(Tail, Name, Name, Head)
+#define EN(Tail, Name, Head) E(Tail, Name, Name, Head)

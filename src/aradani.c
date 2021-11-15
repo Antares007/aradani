@@ -104,6 +104,9 @@ static N(got) { C(2); }
 #define END(Tail, Name, Head)                                                  \
   N(Name);                                                                     \
   EN(Tail, Name, Head)
+#define ENDT(Tail, Name, T, Head)                                                  \
+  T export_##Name = (void*)(Name);                                                                     \
+  E(Tail, #Name, export_##Name, Head)
 
 AN(got,
 an,           1,      L)AN(L,
@@ -224,15 +227,18 @@ da3,          3,      L)DA(L,
 da4,          4,      L)DA(L,
 da5,          5,      L)DA(L,
 da6,          6,      L)DA(L,
-da7,          7,      L)END(L,
+da7,          7,      junctions)
+
+#include <stdio.h>
 // os_next exports
+END(junctions,
 la_stdin,             L)END(L,
 os_delete,            L)END(L,
 os_new,               L)END(L,
 os_next,              L)END(L,
 os_queue,             L)END(L,
-os_wordump,           L)END(L,
-printf,      os_exports);
+os_wordump,           L)E(L,
+printf, printf,  os_exports);
 
 ARADANI(aradani,  1, 1, 1);
 ARADANI(aradani2, 1, 1, 2);

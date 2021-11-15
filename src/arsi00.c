@@ -41,7 +41,7 @@ N(head) {
   else
     A7(import, export, tail, σeτail, impexp, hook, da) O;
 }
-typedef int (*printf_t)(const char *__restrict __format, ...);
+
 // clang-format off
 IN(gor,    
 an,                                     L)IN(L,
@@ -51,8 +51,7 @@ da2,                                    L)IN(L,
 //
 la_stdin,                               L)IN(L,
 os_new,                                 L)IN(L,
-os_wordump,                             L)INT(L,
-printf, printf_t,                  import);
+os_wordump,                        import);
 // clang-format on
 
 typedef struct {
@@ -66,7 +65,6 @@ N(fillnargonames) {
   R(n_t, export);
   R(n_t, nargo);
   R(const char *, name);
-  printf("%s\n", name);
   nargonames[i % MNN].nargo = nargo;
   nargonames[i % MNN].name = name;
   A5(export, god, i + 1, fillnargonames, arada2) O;
@@ -76,7 +74,6 @@ N(hook) {
   A5(addr, addr, 0, fillnargonames, da2) O;
 }
 N(debugger) {
-  printf("press any key\n");
   A3(os_wordump, la_stdin, da) O;
 }
 N(მთავარი) { A2(6, 1) C(1); }
