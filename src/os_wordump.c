@@ -18,3 +18,14 @@ N(os_wordump) {
   }
   C(1);
 }
+N(printfn) {
+  R(Q_t, n);
+  if (n == 0) {
+    R(const char *, str);
+    puts(str);
+  } else if (n == 1) {
+    R(void *, p0);
+    R(const char *, str);
+    printf(str, p0);
+  }
+}

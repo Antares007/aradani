@@ -34,13 +34,13 @@
   N(a##_##b##_##c##_##d##_##e) { a b c d e; }
 
 static N(got) { C(2); }
-
+// clang-format off
 #define AN(Tail, Name, Pc, Next)                                               \
   Ray3(Moakhie3, Amoakhe##Pc, O);                                              \
   Ray3(Moakhie3, Moakhie##Pc, C1);                                             \
   Ray3(Moakhie3, Moakhie##Pc, C2);                                             \
   N(Name) {                                                                    \
-    Chaakhvie##Pc 0;                                                           \
+    Chaakhvie##Pc                                                              \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C2;                                      \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C1;                                      \
     σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
@@ -49,7 +49,7 @@ static N(got) { C(2); }
   EN(Tail, Name, Next)
 #define DA(Tail, Name, Pc, Next)                                               \
   N(Name) {                                                                    \
-    Chaakhvie##Pc 0;                                                           \
+    Chaakhvie##Pc                                                              \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C2;                                      \
     σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C0;                                      \
@@ -61,7 +61,8 @@ static N(got) { C(2); }
   Ray4(Moakhie3, Amoakhe##Pcan, Moakhie##Pcda, O);                             \
   Ray4(Moakhie3, Moakhie##Pcan, Amoakhe##Pcda, O);                             \
   N(Name) {                                                                    \
-    Chaakhvie##Pcda Chaakhvie##Pcan 0;                                         \
+    Chaakhvie##Pcda                                                            \
+    Chaakhvie##Pcan                                                            \
     σ[--ρ].c = Moakhie3_Moakhie##Pcan##_Moakhie##Pcda##_C2;                    \
     σ[--ρ].c = Moakhie3_Moakhie##Pcan##_Amoakhe##Pcda##_O;                     \
     σ[--ρ].c = Moakhie3_Amoakhe##Pcan##_Moakhie##Pcda##_O;                     \
@@ -71,7 +72,7 @@ static N(got) { C(2); }
 #define ARA(Tail, Name, Pc, Head)                                              \
   Ray3(Moakhie3, Moakhie##Pc, C0);                                             \
   N(Name) {                                                                    \
-    Chaakhvie##Pc 0;                                                           \
+    Chaakhvie##Pc                                                              \
     σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C1;                                      \
     σ[--ρ].c = Moakhie3_Moakhie##Pc##_C0;                                      \
@@ -81,7 +82,8 @@ static N(got) { C(2); }
 #define ARADA(Tail, Name, Pcara, Pcda, Head)                                   \
   Ray4(Moakhie3, Moakhie##Pcara, Moakhie##Pcda, C0);                           \
   N(Name) {                                                                    \
-    Chaakhvie##Pcara Chaakhvie##Pcda 0;                                        \
+    Chaakhvie##Pcara                                                           \
+    Chaakhvie##Pcda                                                            \
     σ[--ρ].c = Moakhie3_Amoakhe##Pcara##_Moakhie##Pcda##_O;                    \
     σ[--ρ].c = Moakhie3_Moakhie##Pcara##_Amoakhe##Pcda##_O;                    \
     σ[--ρ].c = Moakhie3_Moakhie##Pcara##_Moakhie##Pcda##_C0;                   \
@@ -93,18 +95,16 @@ static N(got) { C(2); }
   Ray5(Moakhie3, Moakhie##Pan, Amoakhe##Pda, Moakhie##Para, O);                \
   Ray5(Moakhie3, Amoakhe##Pan, Moakhie##Pda, Moakhie##Para, O);                \
   N(Name) {                                                                    \
-    Chaakhvie3 0;                                                              \
+    Chaakhvie3                                                                 \
     σ[--ρ].c = Moakhie3_Moakhie##Pan##_Moakhie##Pda##_Amoakhe##Para##_O;       \
     σ[--ρ].c = Moakhie3_Moakhie##Pan##_Amoakhe##Pda##_Moakhie##Para##_O;       \
     σ[--ρ].c = Moakhie3_Amoakhe##Pan##_Moakhie##Pda##_Moakhie##Para##_O;       \
     O;                                                                         \
   }
-
 #define END(Tail, Name, Head)                                                  \
   N(Name);                                                                     \
   EN(Tail, Name, Head)
 
-// clang-format off
 AN(got,
 an,           1,      L)AN(L,
 an2,          2,      L)ANDA(L,
@@ -231,7 +231,8 @@ os_delete,            L)END(L,
 os_new,               L)END(L,
 os_next,              L)END(L,
 os_queue,             L)END(L,
-os_wordump,  os_exports);
+os_wordump,           L)END(L,
+printf,      os_exports);
 
 ARADANI(aradani,  1, 1, 1);
 ARADANI(aradani2, 1, 1, 2);
