@@ -1,18 +1,16 @@
 #TODO
 share - mazeg
 
-13/11
 patreon page 
 githab page 
 presentation video
 
-12/11
 Edsger W. Dijkstra translation
 http server demo program / async programming
 http parser / language parsin sample
 
-11/11
 X debugger - martivi stepin/continue
+  printf???????
 epoll socket / tcp stack
 X use arsi / renames / cleanup
 

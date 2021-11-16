@@ -9,7 +9,7 @@ da2,                                    L)IN(L,
 debugger,                          import);
 // clang-format on
 
-N(მთავარი) { A3(9, da, debugger) O; }
+N(მთავარი) { A4(9, debugger, debugger, da) O; }
 
 // clang-format off
 EN(Tail,

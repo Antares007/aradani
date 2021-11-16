@@ -26,7 +26,7 @@ void Moakhie3_Amoakhe1_O(p_t *ο, unsigned long α, long ρ, p_t *σ) {
 void Moakhie3_Moakhie1_C2(p_t *ο, unsigned long α, long ρ, p_t *σ) {
   ρ += 3, ρ += 1, σ[ρ + (2)].c(ο, α, ρ, σ);
 };
-void da(p_t *ο, unsigned long α, long ρ, p_t *σ) {
+void da0(p_t *ο, unsigned long α, long ρ, p_t *σ) {
   σ[--ρ].c = ο[--α].c, 0;
   σ[--ρ].c = Moakhie3_Moakhie1_C2;
   σ[--ρ].c = Moakhie3_Amoakhe1_O;
@@ -39,7 +39,7 @@ N(head) {
   if (Tail)
     A(export) C(1);
   else
-    A7(import, export, tail, σeτail, impexp, hook, da) O;
+    A7(import, export, tail, σeτail, impexp, hook, da0) O;
 }
 
 // clang-format off
@@ -47,11 +47,11 @@ IN(gor,
 an,                                     L)IN(L,
 arada,                                  L)IN(L,
 arada2,                                 L)IN(L,
+da,                                     L)IN(L,
 da2,                                    L)IN(L,
 //
-la_stdin,                               L)IN(L,
-os_new,                                 L)IN(L,
-os_wordump,                        import);
+la_stdin,                               L)int(*print)(const char*, ...);I(L,
+printf, print,                     import);
 // clang-format on
 
 typedef struct {
@@ -60,6 +60,36 @@ typedef struct {
 } nargoname_t;
 #define MNN 2048
 nargoname_t nargonames[MNN];
+
+Q_t findnm(void *nargo) {
+  for (Q_t i = 0; i < MNN; i++)
+    if (nargonames[i].nargo == nargo)
+      return i;
+  return -1;
+}
+
+N(os_wordump) {
+  print("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
+  long i = 0;
+  while (i < α) {
+    q_t k = findnm(ο[i].v);
+    if (k < 0)
+      print("%lx ", ο[i].Q);
+    else
+      print("%s ", nargonames[k].name);
+    i++;
+  }
+  print("\n...\n"), i = ρ;
+  while (i < 0) {
+    q_t k = findnm(σ[i].v);
+    if (k < 0)
+      print("%lx ", σ[i].Q);
+    else
+      print("%s ", nargonames[k].name);
+    i++;
+  }
+  C(1);
+}
 N(fillnargonames) {
   R(Q_t, i);
   R(n_t, export);
@@ -73,9 +103,7 @@ N(hook) {
   R(n_t, addr);
   A5(addr, addr, 0, fillnargonames, da2) O;
 }
-N(debugger) {
-  A3(os_wordump, la_stdin, da) O;
-}
+N(debugger) { A3(os_wordump, la_stdin, da) O; }
 N(მთავარი) { A2(6, 1) C(1); }
 
 // clang-format off

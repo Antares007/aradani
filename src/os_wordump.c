@@ -1,31 +1,37 @@
 #include "aradani.h"
 #include <stdio.h>
 N(os_wordump) {
-  printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", (void *)((Q_t)ο >> 12),
-         α, ρ, (void *)((Q_t)σ >> 12));
+  printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
   long i = 0;
   while (i < α) {
-    (ο[i].Q & (Q_t)0xfe8) == (Q_t)0xfe8
-        ? printf("%p      ", (void *)(ο[i].Q >> 12))
-        : printf("%016lx ", ο[i].Q);
+    printf("%016lx ", ο[i].Q);
     if (++i < α)
-      (ο[i].Q & (Q_t)0xfe8) == (Q_t)0xfe8
-          ? printf("%p\n", (void *)(ο[i].Q >> 12))
-          : printf("%016lx\n", ο[i].Q);
+      printf("%016lx\n", ο[i].Q);
     else
       printf("\n");
     i++;
   }
   C(1);
 }
-N(printfn) {
+N(aaa_aaa_aaa) { A4(printf, 2, 3, 4) O; }
+N(print_cstring) {
+  R(const char *, str);
+  puts(str);
+  C(1);
+}
+// print_string daa ab sizeof(void*) 5 2 for_each
+N(for_each) {
+  R(Q_t, wc);
   R(Q_t, n);
-  if (n == 0) {
-    R(const char *, str);
-    puts(str);
-  } else if (n == 1) {
-    R(void *, p0);
-    R(const char *, str);
-    printf(str, p0);
+  R(Q_t, s);
+  R(char *, b);
+  p_t o[7];
+  α -= wc;
+  for (Q_t a = 0; a < wc; a++)
+    o[a].v = ο[α + a].v;
+  for (Q_t a = 0; a < n; a += s) {
+    ο[α++].v = &b[a];
+    for (Q_t a = 0; a < wc; a++)
+      ο[α++].v = o[a].v;
   }
 }
