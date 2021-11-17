@@ -43,6 +43,10 @@ typedef struct p_s {
 #define N(n) void n(OARS)
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v;
+#define As(T, n)                                                               \
+  struct T n =                                                                 \
+      (α += wordCountOf(struct T), (struct T *)&ο[α - wordCountOf(struct T)])
+#define Rs(T, n) struct T n = ((struct T *)&ο[α -= wordCountOf(struct T)])
 
 #define C(r) σ[ρ + (r)].c(ο, α, ρ, σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)

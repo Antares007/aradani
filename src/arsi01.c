@@ -6,11 +6,13 @@ IN(gor,
 da,                                     L)IN(L,
 da2,                                    L)IN(L,
 //
+os_next,                                L)IN(L,
+//
 debugger,                          import);
 // clang-format on
 
-N(მთავარი) { A4(9, debugger, debugger, da) O; }
+N(მთავარი) { A3(9, da, debugger) O; }
 
 // clang-format off
 EN(Tail,
-მთავარი,                            export);
+მთავარი,                           export);

@@ -232,6 +232,11 @@ da7,          7,      junctions)
 #include <stdio.h>
 // os_next exports
 END(junctions,
+l_address,            L)END(L,
+l_bind,               L)END(L,
+l_epoll_ctl,          L)END(L,
+l_setnoblock,         L)END(L,
+l_socket,             L)END(L,
 la_stdin,             L)END(L,
 os_delete,            L)END(L,
 os_new,               L)END(L,

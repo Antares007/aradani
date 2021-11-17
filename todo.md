@@ -9,8 +9,7 @@ Edsger W. Dijkstra translation
 http server demo program / async programming
 http parser / language parsin sample
 
-X debugger - martivi stepin/continue
-  printf???????
+X debugger - martivi stepin/continue printf???????
 epoll socket / tcp stack
 X use arsi / renames / cleanup
 

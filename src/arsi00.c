@@ -104,9 +104,7 @@ N(hook) {
   A5(addr, addr, 0, fillnargonames, da2) O;
 }
 N(debugger) { A3(os_wordump, la_stdin, da) O; }
-N(მთავარი) { A2(6, 1) C(1); }
 
 // clang-format off
 EN(Tail,
-debugger,                              L)EN(L,
-მთავარი,                          export);
+debugger,                        export);
