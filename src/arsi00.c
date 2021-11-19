@@ -27,7 +27,7 @@ void Moakhie3_Moakhie1_C2(p_t *ο, unsigned long α, long ρ, p_t *σ) {
   ρ += 3, ρ += 1, σ[ρ + (2)].c(ο, α, ρ, σ);
 };
 void da0(p_t *ο, unsigned long α, long ρ, p_t *σ) {
-  σ[--ρ].c = ο[--α].c, 0;
+  σ[--ρ].c = ο[--α].c;
   σ[--ρ].c = Moakhie3_Moakhie1_C2;
   σ[--ρ].c = Moakhie3_Amoakhe1_O;
   σ[--ρ].c = Moakhie3_Moakhie1_C0;

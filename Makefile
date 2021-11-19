@@ -26,6 +26,8 @@ src/os: src/aradani.o   \
 	head -c -1 $@.binp > $@
 	# delete trush.
 	rm $@.binp $@.elf 
+src/example_cicle.arsi: src/example_cicle.oars src/arsi00.oars src/jmp.bin
+	cat $^ > $@
 %07.arsi: %07.oars %06.arsi
 	cat $^ > $@
 %06.arsi: %06.oars %05.arsi
