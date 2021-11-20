@@ -49,23 +49,23 @@ N(l_bind) {
 // #define MAX_EVENT_NUMBER 1024 // event
 // static N(gor) { C(0); }
 // static N(god) { C(1); }
-// 
+//
 // N(os_bind);
 // N(os_listen);
 // N(mksocket);
 // N(os_queue);
 // N(os_next);
 // N(os_new);
-// 
+//
 // int epoll_fd;
 // struct epoll_event events[MAX_EVENT_NUMBER];
-// 
+//
 // struct state_s {
 //   long fd;
 //   p_t *dσ;
 //   int flag;
 // };
-// 
+//
 // static int SetNonblocking(int fd) {
 //   int old_option = fcntl(fd, F_GETFL);
 //   int new_option = old_option | O_NONBLOCK;
@@ -95,13 +95,14 @@ N(l_bind) {
 //     Q_t α = 0;
 //     q_t ρ = σ[2].q;
 //     struct state_s *s = S(state_s, σ);
-// 
+//
 //     if (s->flag) {
 //       printf("aa\n");
 //       struct sockaddr_in client_address;
 //       socklen_t client_addrlength = sizeof(client_address);
 //       long connfd =
-//           accept(s->fd, (struct sockaddr *)&client_address, &client_addrlength);
+//           accept(s->fd, (struct sockaddr *)&client_address,
+//           &client_addrlength);
 //       printf("z\n");
 //       A10(0, connfd, mksocket, addtopolln, da, god, s->dσ, 2, os_queue, da4)
 //       X;
@@ -111,7 +112,7 @@ N(l_bind) {
 //   }
 // }
 // void os_epoll_init() { epoll_fd = epoll_create(5); }
-// 
+//
 // // TODO: use As macro instead of composition after creation
 // static N(setσ) {
 //   R(p_t *, nσ);
@@ -122,7 +123,7 @@ N(l_bind) {
 //   s->flag = flag;
 //   A(nσ) C(1);
 // }
-// 
+//
 // static N(os_socket_an) {
 //   R(p_t *, oσ);
 //   struct state_s *s = S(state_s, σ);

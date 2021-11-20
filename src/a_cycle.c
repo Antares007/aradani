@@ -38,9 +38,7 @@ N(si1) {
 }
 N(si2) { print("si2\n"); }
 N(sink) { A6(si0, si1, si2, 64, 0, os_new) O; }
-N(მთავარი) { 
-  A8(0, sink, gor, source, da2, 3, os_queue, da2) O; 
-}
+N(მთავარი) { A8(0, sink, gor, source, da2, 3, os_queue, da2) O; }
 
 // clang-format off
 EN(Tail,

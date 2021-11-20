@@ -14,11 +14,19 @@ l_setnoblock,         L)IN(L,
 l_socket,             L)IN(L,
 //
 os_next,              L)IN(L,
-os_wordump,      import);
+os_wordump,           L)int(*print)(const char*, ...);I(L,
+printf, print,   import);
 // clang-format on
 
-N(მთავარი) { A2(6, 9) C(1); }
+N(მთავარი) { A2(9, 6) C(1); }
+
+N(os_socket) { C(1); }
+N(os_bind) { C(1); }
+N(os_listen) { C(1); }
 
 // clang-format off
 EN(Tail,          
-მთავარი,         export);
+os_bind,                L)EN(L,
+os_listen,              L)EN(L,
+os_socket,              L)EN(L,
+მთავარი,           export);

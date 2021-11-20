@@ -30,6 +30,8 @@ src/a_cycle.arsi: src/a_cycle.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
 src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
+src/a_test_socket.arsi: src/a_test_socket.oars src/a_epoll.oars src/jmp.bin
+	cat $^ > $@
 clean:
 	rm -f src/*.bin src/*.oars src/*.o src/*.arsi src/os src/epoll_client src/epoll_server
 .PHONY: clean 

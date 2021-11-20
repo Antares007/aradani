@@ -63,7 +63,7 @@ N(მთავარი) {
   long e;
   A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
   A7(0, 8, b, e, qsort, os_wordump, da) O;
-  //A2(6, 9) C(1);
+  // A2(6, 9) C(1);
 }
 
 // clang-format off
