@@ -234,7 +234,9 @@ da7,          7,      junctions)
 END(junctions,
 l_address,            L)END(L,
 l_bind,               L)END(L,
+l_epoll_create,       L)END(L,
 l_epoll_ctl,          L)END(L,
+l_epoll_wait,         L)END(L,
 l_setnoblock,         L)END(L,
 l_socket,             L)END(L,
 la_stdin,             L)END(L,
@@ -245,6 +247,16 @@ os_next,              L)END(L,
 os_queue,             L)END(L,
 os_wordump,           L)E(L,
 printf, printf,  os_exports);
+
+
+
+
+
+
+
+
+
+
 
 ARADANI(aradani,  1, 1, 1);
 ARADANI(aradani2, 1, 1, 2);

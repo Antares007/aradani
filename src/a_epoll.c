@@ -18,6 +18,15 @@ os_wordump,           L)int(*print)(const char*, ...);I(L,
 printf, print,   import);
 // clang-format on
 
+#include <sys/epoll.h>
+#define MAX_EVENT_NUMBER 1024 // event
+q_t epoll_fd;
+struct epoll_event events[MAX_EVENT_NUMBER];
+struct state_s {
+  long fd;
+  p_t *dσ;
+  int flag;
+};
 N(მთავარი) { A2(9, 6) C(1); }
 
 N(os_socket_n) { C(1); }

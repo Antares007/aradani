@@ -36,9 +36,7 @@ N(drain) {
 }
 N(მთავარი) {
   A2(export, ls_export) O;
-  // A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2,
-  //     os_listen, da)
-  // O;
+  //A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2, os_listen, da) O;
 }
 
 // clang-format off
