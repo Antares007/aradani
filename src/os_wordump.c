@@ -13,25 +13,14 @@ N(os_wordump) {
   }
   C(1);
 }
-N(aaa_aaa_aaa) { A4(printf, 2, 3, 4) O; }
-N(print_cstring) {
-  R(const char *, str);
-  puts(str);
-  C(1);
+N(ls_export_n) {
+  R(n_t, export);
+  R(n_t, nargo);
+  R(const char *, name);
+  printf("%s\t%p\n", name, nargo);
+  A3(export, ls_export_n, da) O;
 }
-// print_string daa ab sizeof(void*) 5 2 for_each
-N(for_each) {
-  R(Q_t, wc);
-  R(Q_t, n);
-  R(Q_t, s);
-  R(char *, b);
-  p_t o[7];
-  α -= wc;
-  for (Q_t a = 0; a < wc; a++)
-    o[a].v = ο[α + a].v;
-  for (Q_t a = 0; a < n; a += s) {
-    ο[α++].v = &b[a];
-    for (Q_t a = 0; a < wc; a++)
-      ο[α++].v = o[a].v;
-  }
+N(ls_export) {
+  R(n_t, export);
+  A3(export, ls_export_n, da) O;
 }

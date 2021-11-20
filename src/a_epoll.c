@@ -20,13 +20,20 @@ printf, print,   import);
 
 N(მთავარი) { A2(9, 6) C(1); }
 
-N(os_socket) { C(1); }
-N(os_bind) { C(1); }
-N(os_listen) { C(1); }
+N(os_socket_n) { C(1); }
+N(os_socket) { A3(l_socket, os_socket_n, da) O; }
+N(os_bind) { A(2) C(1); }
+N(os_listen) { A(3) C(1); }
+N(os_next_nn) {
+  print("aha\n");
+  C(1);
+}
+N(os_next_n) { A3(os_next, os_next_nn, an) O; }
 
 // clang-format off
 EN(Tail,          
 os_bind,                L)EN(L,
-os_listen,              L)EN(L,
+os_listen,              L)E(L,
+os_next, os_next_n,     L)EN(L,
 os_socket,              L)EN(L,
 მთავარი,           export);
