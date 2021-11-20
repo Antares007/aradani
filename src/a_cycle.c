@@ -23,7 +23,7 @@ N(so1) {
   A8(c + 1, σ, god, oσ, 3, os_queue, os_next, da) O;
 }
 N(so2) { print("so2\n"); }
-N(so) { A6(so0, so1, so2, 64, 0, os_new) O; }
+N(source) { A6(so0, so1, so2, 64, 0, os_new) O; }
 N(si0) {
   R(p_t *, oσ);
   print("si0\n");
@@ -37,11 +37,11 @@ N(si1) {
   A8(c + 1, σ, god, oσ, 3, os_queue, os_next, da) O;
 }
 N(si2) { print("si2\n"); }
-N(si) { A6(si0, si1, si2, 64, 0, os_new) O; }
+N(sink) { A6(si0, si1, si2, 64, 0, os_new) O; }
 N(მთავარი) { 
-  A8(0, si, gor, so, da2, 3, os_queue, da2) O; 
+  A8(0, sink, gor, source, da2, 3, os_queue, da2) O; 
 }
 
 // clang-format off
 EN(Tail,
-მთავარი,         export);
+მთავარი,          export);

@@ -26,23 +26,9 @@ src/os: src/aradani.o   \
 	head -c -1 $@.binp > $@
 	# delete trush.
 	rm $@.binp $@.elf 
-src/example_cicle.arsi: src/example_cicle.oars src/arsi00.oars src/jmp.bin
+src/a_cycle.arsi: src/a_cycle.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
-%07.arsi: %07.oars %06.arsi
-	cat $^ > $@
-%06.arsi: %06.oars %05.arsi
-	cat $^ > $@
-%05.arsi: %05.oars %04.arsi
-	cat $^ > $@
-%04.arsi: %04.oars %03.arsi
-	cat $^ > $@
-%03.arsi: %03.oars %02.arsi
-	cat $^ > $@
-%02.arsi: %02.oars %01.arsi
-	cat $^ > $@
-%01.arsi: %01.oars %00.arsi
-	cat $^ > $@
-%00.arsi: %00.oars src/jmp.bin
+src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
 clean:
 	rm -f src/*.bin src/*.oars src/*.o src/*.arsi src/os src/epoll_client src/epoll_server
