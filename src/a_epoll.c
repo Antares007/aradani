@@ -32,8 +32,14 @@ struct state_s {
   int flag;
 };
 N(მთავარი) { A2(export, ls_export) O; }
+
+
 N(sock_an) {
-  // TODO: we have drain connected so add to epoll
+  R(p_t *, oσ);
+  struct state_s *s = S(struct state_s, σ);
+  s->dσ = oσ;
+  //addtopoll(σ);
+  //(σ, gor, s->dσ, 2, os_queue, os_next_org, da) ;
 }
 N(sock_da) {}
 N(sock_ara) {}
@@ -41,7 +47,10 @@ N(sock) {
   A6(sock_an, sock_da, sock_ara, 4090, wordCountOf(struct state_s), os_new) O;
 }
 N(os_socket_n) { A(0) O; }
-N(os_socket) { A3(l_socket, os_socket_n, da) O; }
+N(os_socket) {
+  // A3(l_socket, os_socket_n, da) O;
+  A(1) C(1);
+}
 N(os_bind) { A(2) C(1); }
 N(os_listen) { A(3) C(1); }
 N(os_next_nn) {
@@ -51,6 +60,10 @@ N(os_next_nn) {
 N(os_next) {
   print("os_next_n\n");
   A3(os_next_org, os_next_nn, an) O;
+}
+N(addtopoll) {
+  struct state_s *s = S(struct state_s, σ);
+  A6(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl) O;
 }
 // static void addtopoll(p_t *σ) {
 //   struct state_s *s = S(state_s, σ);
@@ -104,15 +117,6 @@ N(os_next) {
 //   A(nσ) C(1);
 // }
 //
-// static N(os_socket_an) {
-//   R(p_t *, oσ);
-//   struct state_s *s = S(state_s, σ);
-//   s->dσ = oσ;
-//   addtopoll(σ);
-//   A5(σ, gor, s->dσ, 2, os_queue) X;
-// }
-// static N(os_socket_da) {}
-// static N(os_socket_ara) {}
 // N(mksocket) {
 //   R(Q_t, listen_fd);
 //   R(Q_t, flag);

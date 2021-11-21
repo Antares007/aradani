@@ -29,5 +29,6 @@ N(main_n) {
 int main(int argc, char **argv) {
   p_t ο[512], *σ = &ο[512];
   q_t α = 0, ρ = 0;
-  A4(os_queue_init, argc < 2 ? "src/arsi00.arsi" : argv[1], main_n, da2) O;
+  const char *filename = argc < 2 ? "src/arsi00.arsi" : argv[1];
+  A4(os_queue_init, filename, main_n, da2) O;
 }

@@ -52,7 +52,7 @@ typedef struct p_s {
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)(a),
 #define X A2(os_next, და) O
-#define S(n, σ) ((struct n *)&σ[-wordCountOf(struct n)])
+#define S(T, σ) ((T *)&σ[-wordCountOf(T)])
 
 typedef void (*n_t)(OARS);
 typedef unsigned long Q_t;
