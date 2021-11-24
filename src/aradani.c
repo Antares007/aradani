@@ -1,26 +1,26 @@
 #include "importexportmacros.h"
 #include "oars.h"
-#define Moakhie1 ρ += 1,
-#define Moakhie2 ρ += 2,
-#define Moakhie3 ρ += 3,
-#define Moakhie4 ρ += 4,
-#define Moakhie5 ρ += 5,
-#define Moakhie6 ρ += 6,
-#define Moakhie7 ρ += 7,
-#define Amoakhe1 ο[α++].v = σ[ρ++].v,
-#define Amoakhe2 Amoakhe1 Amoakhe1
-#define Amoakhe3 Amoakhe2 Amoakhe1
-#define Amoakhe4 Amoakhe3 Amoakhe1
-#define Amoakhe5 Amoakhe4 Amoakhe1
-#define Amoakhe6 Amoakhe5 Amoakhe1
-#define Amoakhe7 Amoakhe6 Amoakhe1
-#define Chaakhvie1 σ[--ρ].c = ο[--α].c,
-#define Chaakhvie2 Chaakhvie1 Chaakhvie1
-#define Chaakhvie3 Chaakhvie2 Chaakhvie1
-#define Chaakhvie4 Chaakhvie3 Chaakhvie1
-#define Chaakhvie5 Chaakhvie4 Chaakhvie1
-#define Chaakhvie6 Chaakhvie5 Chaakhvie1
-#define Chaakhvie7 Chaakhvie6 Chaakhvie1
+#define D1 ρ += 1,
+#define D2 ρ += 2,
+#define D3 ρ += 3,
+#define D4 ρ += 4,
+#define D5 ρ += 5,
+#define D6 ρ += 6,
+#define D7 ρ += 7,
+#define SO1 ο[α++].v = σ[ρ++].v,
+#define SO2 SO1 SO1
+#define SO3 SO2 SO1
+#define SO4 SO3 SO1
+#define SO5 SO4 SO1
+#define SO6 SO5 SO1
+#define SO7 SO6 SO1
+#define OS1 σ[--ρ].c = ο[--α].c,
+#define OS2 OS1 OS1
+#define OS3 OS2 OS1
+#define OS4 OS3 OS1
+#define OS5 OS4 OS1
+#define OS6 OS5 OS1
+#define OS7 OS6 OS1
 
 #define C0 C(0)
 #define C1 C(1)
@@ -34,80 +34,48 @@
   N(a##_##b##_##c##_##d##_##e) { a b c d e; }
 
 static N(got) { C(2); }
-// clang-format off
+#define Junction(a, b, c, d, e)                                                \
+  N(a) { b σ[--ρ].v = c, σ[--ρ].v = d, σ[--ρ].v = e, O; }
 #define AN(Tail, Name, Pc, Next)                                               \
-  Ray3(Moakhie3, Amoakhe##Pc, O);                                              \
-  Ray3(Moakhie3, Moakhie##Pc, C1);                                             \
-  Ray3(Moakhie3, Moakhie##Pc, C2);                                             \
-  N(Name) {                                                                    \
-    Chaakhvie##Pc                                                              \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C2;                                      \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C1;                                      \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
-    O;                                                                         \
-  }                                                                            \
+  Ray3(D3, SO##Pc, O);                                                         \
+  Ray3(D3, D##Pc, C1);                                                         \
+  Ray3(D3, D##Pc, C2);                                                         \
+  Junction(Name, OS##Pc, D3_D##Pc##_C2, D3_D##Pc##_C1, D3_SO##Pc##_O);         \
   EN(Tail, Name, Next)
 #define DA(Tail, Name, Pc, Next)                                               \
-  N(Name) {                                                                    \
-    Chaakhvie##Pc                                                              \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C2;                                      \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C0;                                      \
-    O;                                                                         \
-  }                                                                            \
+  Junction(Name, OS##Pc, D3_D##Pc##_C2, D3_SO##Pc##_O, D3_D##Pc##_C0);         \
   EN(Tail, Name, Next)
 #define ANDA(Tail, Name, Pcan, Pcda, Next)                                     \
-  Ray4(Moakhie3, Moakhie##Pcan, Moakhie##Pcda, C2);                            \
-  Ray4(Moakhie3, Amoakhe##Pcan, Moakhie##Pcda, O);                             \
-  Ray4(Moakhie3, Moakhie##Pcan, Amoakhe##Pcda, O);                             \
-  N(Name) {                                                                    \
-    Chaakhvie##Pcda                                                            \
-    Chaakhvie##Pcan                                                            \
-    σ[--ρ].c = Moakhie3_Moakhie##Pcan##_Moakhie##Pcda##_C2;                    \
-    σ[--ρ].c = Moakhie3_Moakhie##Pcan##_Amoakhe##Pcda##_O;                     \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pcan##_Moakhie##Pcda##_O;                     \
-    O;                                                                         \
-  }                                                                            \
+  Ray4(D3, D##Pcan, D##Pcda, C2);                                              \
+  Ray4(D3, SO##Pcan, D##Pcda, O);                                              \
+  Ray4(D3, D##Pcan, SO##Pcda, O);                                              \
+  Junction(Name, OS##Pcda OS##Pcan, D3_D##Pcan##_D##Pcda##_C2,                 \
+           D3_D##Pcan##_SO##Pcda##_O, D3_SO##Pcan##_D##Pcda##_O);              \
   EN(Tail, Name, Next)
 #define ARA(Tail, Name, Pc, Head)                                              \
-  Ray3(Moakhie3, Moakhie##Pc, C0);                                             \
-  N(Name) {                                                                    \
-    Chaakhvie##Pc                                                              \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pc##_O;                                       \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C1;                                      \
-    σ[--ρ].c = Moakhie3_Moakhie##Pc##_C0;                                      \
-    O;                                                                         \
-  }                                                                            \
+  Ray3(D3, D##Pc, C0);                                                         \
+  Junction(Name, OS##Pc, D3_SO##Pc##_O, D3_D##Pc##_C1, D3_D##Pc##_C0);         \
   EN(Tail, Name, Head)
 #define ARADA(Tail, Name, Pcara, Pcda, Head)                                   \
-  Ray4(Moakhie3, Moakhie##Pcara, Moakhie##Pcda, C0);                           \
-  N(Name) {                                                                    \
-    Chaakhvie##Pcara                                                           \
-    Chaakhvie##Pcda                                                            \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pcara##_Moakhie##Pcda##_O;                    \
-    σ[--ρ].c = Moakhie3_Moakhie##Pcara##_Amoakhe##Pcda##_O;                    \
-    σ[--ρ].c = Moakhie3_Moakhie##Pcara##_Moakhie##Pcda##_C0;                   \
-    O;                                                                         \
-  }                                                                            \
+  Ray4(D3, D##Pcara, D##Pcda, C0);                                             \
+  Junction(Name, OS##Pcara OS##Pcda, D3_SO##Pcara##_D##Pcda##_O,               \
+           D3_D##Pcara##_SO##Pcda##_O, D3_D##Pcara##_D##Pcda##_C0);            \
   EN(Tail, Name, Head)
 #define ARADANI(Name, Para, Pda, Pan)                                          \
-  Ray5(Moakhie3, Moakhie##Pan, Moakhie##Pda, Amoakhe##Para, O);                \
-  Ray5(Moakhie3, Moakhie##Pan, Amoakhe##Pda, Moakhie##Para, O);                \
-  Ray5(Moakhie3, Amoakhe##Pan, Moakhie##Pda, Moakhie##Para, O);                \
+  Ray5(D3, D##Pan, D##Pda, SO##Para, O);                                       \
+  Ray5(D3, D##Pan, SO##Pda, D##Para, O);                                       \
+  Ray5(D3, SO##Pan, D##Pda, D##Para, O);                                       \
   N(Name) {                                                                    \
-    Chaakhvie3                                                                 \
-    σ[--ρ].c = Moakhie3_Moakhie##Pan##_Moakhie##Pda##_Amoakhe##Para##_O;       \
-    σ[--ρ].c = Moakhie3_Moakhie##Pan##_Amoakhe##Pda##_Moakhie##Para##_O;       \
-    σ[--ρ].c = Moakhie3_Amoakhe##Pan##_Moakhie##Pda##_Moakhie##Para##_O;       \
+    OS3 σ[--ρ].c = D3_D##Pan##_D##Pda##_SO##Para##_O;                          \
+    σ[--ρ].c = D3_D##Pan##_SO##Pda##_D##Para##_O;                              \
+    σ[--ρ].c = D3_SO##Pan##_D##Pda##_D##Para##_O;                              \
     O;                                                                         \
   }
 #define END(Tail, Name, Head)                                                  \
   N(Name);                                                                     \
   EN(Tail, Name, Head)
-#define ENDT(Tail, Name, T, Head)                                                  \
-  T export_##Name = (void*)(Name);                                                                     \
-  E(Tail, #Name, export_##Name, Head)
 
+// clang-format off
 AN(got,
 an,           1,      L)AN(L,
 an2,          2,      L)ANDA(L,

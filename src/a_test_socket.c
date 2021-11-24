@@ -36,10 +36,10 @@ N(drain) {
 }
 N(მთავარი) {
   //A(os_next) O;
-  //A9(export, ls_export, god, ara, σ, 4, os_queue, os_next, da) O;
-  A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2,
-      os_listen, da)
-  O;
+  A9(export, ls_export, god, ara, σ, 4, os_queue, os_next, da) O;
+  //A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2,
+  //    os_listen, da)
+  //O;
 }
 
 // clang-format off
