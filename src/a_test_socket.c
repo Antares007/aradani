@@ -1,13 +1,13 @@
 #include "arsi.h"
 // clang-format off
 IN(gor,
-an,                   L)IN(L,
-anda3,                L)IN(L,
-ara,                  L)IN(L,
-arada,                L)IN(L,
-da,                   L)IN(L,
-da2,                  L)IN(L,
-da3,                  L)IN(L,
+and,                  L)IN(L,
+and2,                 L)IN(L,
+and3,                 L)IN(L,
+and3or,               L)IN(L,
+not,                  L)IN(L,
+notand,               L)IN(L,
+or,                   L)IN(L,
 
 ls_export,            L)IN(L,
 os_new,               L)IN(L,
@@ -36,7 +36,7 @@ N(drain) {
 }
 N(მთავარი) {
   //A(os_next) O;
-  A9(export, ls_export, god, ara, σ, 4, os_queue, os_next, da) O;
+  A9(export, ls_export, god, not, σ, 4, os_queue, os_next, and) O;
   //A10(os_socket, "127.0.0.1", 7000, os_bind, da3, drain, mkdrain, da2,
   //    os_listen, da)
   //O;

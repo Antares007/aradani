@@ -1,11 +1,11 @@
 #include "arsi.h"
 // clang-format off
 IN(gor,
-an,                   L)IN(L,
-anda3,                L)IN(L,
-ara,                  L)IN(L,
-arada,                L)IN(L,
-da,                   L)IN(L,
+and,                  L)IN(L,
+and3or,               L)IN(L,
+not,                  L)IN(L,
+notand,               L)IN(L,
+or,                   L)IN(L,
 //
 l_address,            L)IN(L,
 l_bind,               L)IN(L,
@@ -44,7 +44,7 @@ N(sock_an) {
 N(sock_da) {}
 N(sock_ara) {}
 N(sock) {
-  A6(sock_an, sock_da, sock_ara, 4090, wordCountOf(struct state_s), os_new) O;
+  A6(sock_an, sock_da, sock_ara, 4090, wordCountOf(struct state_s), os_new_org) O;
 }
 N(os_socket_n) { A(0) O; }
 N(os_socket) {
@@ -59,7 +59,7 @@ N(os_next_nn) {
 }
 N(os_next) {
   print("os_next_n\n");
-  A3(os_next_org, os_next_nn, an) O;
+  A3(os_next_org, os_next_nn, or) O;
 }
 N(addtopoll) {
   struct state_s *s = S(struct state_s, σ);
