@@ -5,23 +5,57 @@
         α|            |ρ        .             fXXe
      ο - 0123456789abcdef - σ   .             dXXc
          XXXXXXXXXXXXXXXX       .           α|    |ρ
-         rsp - fXXe             .   ο - 0123456789abcdef - σ
+               fXXe             .   ο - 0123456789abcdef - σ
                dXXc             .       XXXXXXXXXXXXXXXX
-               bXXa             .       rsp - bXXa
+               bXXa             .             bXXa
                9XX8             .             9XX8
                7XX6             .             7XX6
                5XX4             .             5XX4
                3XX2             .             3XX2
                1XX0             .             1XX0
-                        ο <= α <= ρ <= σ
-            σ[ρ+2] = არა σ[ρ+1] = და σ[ρ+0] = ან
-1. პირველითგან იყო სიტყუაჲ, და სიტყუაჲ იგი იყო ღმრთისა თანა, და ღმერთი იყო
-   სიტყუაჲ იგი.
-2. ესე იყო პირველითგან ღმრთისა თანა.
-3. ყოველივე მის მიერ შეიქმნა, და თჳნიერ მისა არცა ერთი რაჲ იქმნა, რაოდენი-რაჲ
-   იქმნა.
+                          ο + α <= σ + ρ
+                          σ[ρ+2] = არა
+                          σ[ρ+1] = და
+                          σ[ρ+0] = ან
+
+M-word        - Any instruction from the CPU instruction set.
+M-text space  - Continuous space in the random access memory (RAM) of a computer.
+                Let's visualize it as a vertical line of a cross.
+M-text        - A bunch of M-words in the M-text space.
+OarS          - M-text space is used as two stack-like structures facing each other.
+                From "ο" to "α" let's call it the N-text space,
+                and from "σ" down to "ρ" let's call it the execution space
+                or pith of the sentence or dot.
+                Let's visualize is as a horizontal line of a cross.
+N-text        - A bunch of N-words is composed of syntax rules.
+N-word        - Void C function (let's stay above low-level definitions of
+                ABI and use the C function in our description) with four
+                parameters "ο," "α," "ρ," and "σ." Or just OarS with
+                only parameter. That means that the M-text defines
+                the N-word. Its definition can include any M-word by
+                which it can write or take N-words from the N-text space
+                or the execution space (or modify OarS).
+                Finally, the N-word must answer the question
+                to act as a whole word of the N-text. That means that
+                the last M-word must be a goto (jump) to σ[ρ + (0 or 1 or 2)] ray.
+Keep in mind.
+We will consider the composition with "return" (functional composition)
+as a harmful thing!
+Think about it.
+There is no point in returning to what you already left behind!
+In our cross, the vertical line represents the M-text space.
+The horizontal line is the OarS.
+So these are the three dimensions of "Aradani."
+Why aradani? Those are three rays of execution space.
+And from mathematics, particularly from logic,
+we know to have a choice all we need is "and," "or" and "not" junctions.
+"ara", "da" and "an" in Georgian sounds like "not", "and", and "or" in English.
+So we can call our three-dimensional composition unit "aradan," a.k.a. "notandor."
+What kind of pros it has?
+It will fly like a bullet because we don't use conditional branching.
+It is a complete (whole) unit of composition. Therefore, we can express specifications like executable definitions.
+...
 */
-#pragma once
 typedef struct p_s {
   union {
     void (*c)(struct p_s *, unsigned long, long, struct p_s *);
@@ -42,7 +76,7 @@ typedef struct p_s {
 
 #define N(n) void n(OARS)
 #define T(n) n##ο, n##α, n##ρ, n##σ
-#define R(T, n) T n = (T)ο[--α].v;
+#define R(T, n) T n = (T)ο[--α].v
 #define As(T, n)                                                               \
   struct T n =                                                                 \
       (α += wordCountOf(struct T), (struct T *)&ο[α - wordCountOf(struct T)])
