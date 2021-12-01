@@ -6,6 +6,7 @@ src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
 src/os: src/aradani.o   \
+	src/junctions.o   		\
 	src/os_debbuger.o     \
 	src/os_epoll.o   			\
 	src/os_impexp.o       \

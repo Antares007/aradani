@@ -33,7 +33,6 @@
 #define Ray5(a, b, c, d, e)                                                    \
   N(a##_##b##_##c##_##d##_##e) { a b c d e; }
 
-static N(got) { C(2); }
 #define Junction(a, b, c, d, e)                                                \
   N(a) { b σ[--ρ].v = c, σ[--ρ].v = d, σ[--ρ].v = e, O; }
 #define AN(Tail, Name, Pc, Next)                                               \
@@ -76,7 +75,10 @@ static N(got) { C(2); }
   EN(Tail, Name, Head)
 
 // clang-format off
-AN(got,
+#undef L
+#define L CAT(expimp_2_, __LINE__)
+N(notandor_junctions);
+AN(notandor_junctions,
 an,           1,      L)AN(L,
 an2,          2,      L)ANDA(L,
 an2da,        2, 1,   L)ANDA(L,

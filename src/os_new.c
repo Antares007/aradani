@@ -17,7 +17,7 @@ static N(os_new_n) {
   R(p_t *, nο);
   R(Q_t, state_count);
   R(Q_t, word_count);
-  p_t *nσ = nο + (word_count + state_count);
+  p_t *nσ = nο + (word_count + state_count - 3);
   Q_t nα = 0;
   q_t nρ = -state_count;
   nσ[--nρ].c = ο[--α].c;
@@ -31,7 +31,7 @@ static N(os_new_n) {
 N(os_new) {
   R(Q_t, state_count);
   R(Q_t, word_count);
-  A6(word_count, state_count, (word_count + state_count + 3) * sizeof(void *),
+  A6(word_count, state_count, (word_count + state_count) * sizeof(void *),
      nalloc, os_new_n, da)
   O;
 }
