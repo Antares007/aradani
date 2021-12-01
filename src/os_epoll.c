@@ -40,11 +40,15 @@ N(l_epoll_ctl) {
   C(epoll_ctl(epoll_fd, op, fd, &event) < 0 ? 2 : 1);
 }
 N(l_epoll_wait) {
-  R(Q_t, timeout);
+  R(q_t, timeout);
   R(Q_t, maxevents);
   R(struct epoll_event *, events);
   R(Q_t, epfd);
   q_t ret = epoll_wait(epfd, events, maxevents, timeout);
+  printf("ret: %ld\n", ret);
+  ret = epoll_wait(epfd, events, maxevents, timeout);
+  printf("ret: %ld\n", ret);
+  printf("epoll_wait %lu %p %lu %ld\n", epfd, events, maxevents, timeout);
   if (ret < 0)
     C(2);
   else
@@ -52,6 +56,7 @@ N(l_epoll_wait) {
 }
 N(l_setnoblock) {
   R(q_t, fd);
+  printf("l_setnoblock %ld\n", fd);
   int flags = fcntl(fd, F_GETFL, 0);
   if (flags < 0)
     return C(2);

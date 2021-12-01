@@ -19,7 +19,9 @@ os_new, os_new_org,   L)n_t os_next_org;I(L,
 os_next, os_next_org, L)IN(L,
 os_queue,             L)IN(L,
 os_wordump,           L)int(*print)(const char*, ...);I(L,
-printf, print,   import);
+printf, print,        L)IN(L,
+//
+debugger, import);
 // clang-format on
 
 #include <sys/epoll.h>
@@ -31,39 +33,68 @@ struct state_s {
   p_t *dσ;
   int flag;
 };
-N(მთავარი) { A2(export, ls_export) O; }
 
-
-N(sock_an) {
-  R(p_t *, oσ);
-  struct state_s *s = S(struct state_s, σ);
-  s->dσ = oσ;
-  //addtopoll(σ);
-  //(σ, gor, s->dσ, 2, os_queue, os_next_org, da) ;
-}
-N(sock_da) {}
-N(sock_ara) {}
-N(sock) {
-  A6(sock_an, sock_da, sock_ara, 4090, wordCountOf(struct state_s), os_new_org) O;
-}
-N(os_socket_n) { A(0) O; }
-N(os_socket) {
-  // A3(l_socket, os_socket_n, da) O;
-  A(1) C(1);
-}
-N(os_bind) { A(2) C(1); }
-N(os_listen) { A(3) C(1); }
 N(os_next_nn) {
   print("os_next_nn\n");
-  C(1);
+  A5(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait) O;
 }
 N(os_next) {
   print("os_next_n\n");
   A3(os_next_org, os_next_nn, or) O;
 }
-N(addtopoll) {
+N(set_epoll_fd) {
+  R(Q_t, fd);
+  epoll_fd = fd;
+  print("epoll_fd: %d\n", epoll_fd);
+  C(1);
+}
+N(მთავარი) { A4(3, l_epoll_create, set_epoll_fd, and) O; }
+
+N(sock_or) {
+  R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
-  A6(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl) O;
+  s->dσ = oσ;
+  A6(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl) X;
+}
+N(sock_and) {}
+N(sock_not) {}
+N(sock) {
+  A6(sock_or, sock_and, sock_not, 4090, wordCountOf(struct state_s), os_new_org)
+  O;
+}
+N(os_socket_n) {
+  R(Q_t, fd);
+  R(p_t *, sσ);
+  struct state_s *s = S(struct state_s, sσ);
+  s->fd = fd;
+  A(sσ) C(1);
+}
+N(os_socket) { A5(sock, l_socket, and, os_socket_n, and) O; }
+N(drop) { --α, C(1); }
+
+N(os_bind) {
+  R(Q_t, port);
+  R(const char *, ip);
+  R(p_t *, sock);
+  struct state_s *s = S(struct state_s, sock);
+  A11(sock, s->fd, ip, port, l_address, l_bind, and, l_setnoblock, and, drop,
+      and)
+  O;
+}
+N(os_listen) {
+  R(p_t *, sink);
+  R(p_t *, sock);
+  A5(sink, gor, sock, 2, os_queue) O;
+}
+
+N(drain_an) {
+  α--;
+  os_next(T());
+}
+static N(drain_ara) {}
+N(mkdrain) {
+  R(n_t, drain_da);
+  A6(drain_an, drain_da, drain_ara, 0x1000, 0, os_new_org) O;
 }
 // static void addtopoll(p_t *σ) {
 //   struct state_s *s = S(state_s, σ);
@@ -146,6 +177,7 @@ N(addtopoll) {
 
 // clang-format off
 EN(Tail,          
+mkdrain,                L)EN(L,
 os_bind,                L)EN(L,
 os_listen,              L)EN(L,
 os_next,                L)EN(L,

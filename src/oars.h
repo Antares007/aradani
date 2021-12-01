@@ -85,7 +85,7 @@ typedef struct p_s {
 #define C(r) σ[ρ + (r)].c(ο, α, ρ, σ)
 #define O ο[α - 1].c(ο, α - 1, ρ, σ)
 #define A(a) ο[α++].v = (void *)(a),
-#define X A2(os_next, და) O
+#define X A2(os_next, and) O
 #define S(T, σ) ((T *)&σ[-wordCountOf(T)])
 
 typedef void (*n_t)(OARS);
