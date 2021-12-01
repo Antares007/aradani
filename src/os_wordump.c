@@ -1,4 +1,4 @@
-#include "aradani.h"
+#include "oars.h"
 #include <stdio.h>
 N(os_wordump) {
   printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
@@ -13,14 +13,15 @@ N(os_wordump) {
   }
   C(1);
 }
+N(and);
 N(ls_export_n) {
   R(n_t, export);
   R(n_t, nargo);
   R(const char *, name);
   printf("%s\t%p\n", name, nargo);
-  A3(export, ls_export_n, da) O;
+  A3(export, ls_export_n, and) O;
 }
 N(ls_export) {
   R(n_t, export);
-  A3(export, ls_export_n, da) O;
+  A3(export, ls_export_n, and) O;
 }

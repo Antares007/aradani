@@ -44,11 +44,11 @@ N(head) {
 
 // clang-format off
 IN(gor,    
-an,                                     L)IN(L,
-arada,                                  L)IN(L,
-arada2,                                 L)IN(L,
-da,                                     L)IN(L,
-da2,                                    L)IN(L,
+and,                                     L)IN(L,
+and2,                                    L)IN(L,
+notand,                                  L)IN(L,
+notand2,                                 L)IN(L,
+or,                                      L)IN(L,
 //
 la_stdin,                               L)int(*print)(const char*, ...);I(L,
 printf, print,                     import);
@@ -97,13 +97,13 @@ N(fillnargonames) {
   R(const char *, name);
   nargonames[i % MNN].nargo = nargo;
   nargonames[i % MNN].name = name;
-  A5(export, god, i + 1, fillnargonames, arada2) O;
+  A5(export, god, i + 1, fillnargonames, notand2) O;
 }
 N(hook) {
   R(n_t, addr);
-  A5(addr, addr, 0, fillnargonames, da2) O;
+  A5(addr, addr, 0, fillnargonames, and2) O;
 }
-N(debugger) { A3(os_wordump, la_stdin, da) O; }
+N(debugger) { A3(os_wordump, la_stdin, and) O; }
 
 // clang-format off
 EN(Tail,
