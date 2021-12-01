@@ -2,7 +2,7 @@
 // clang-format off
 IN(gor,
 an,           L)IN(L,
-anda3,       L)IN(L,
+anda3,        L)IN(L,
 ara,          L)IN(L,
 arada,        L)IN(L,
 da,           L)IN(L,

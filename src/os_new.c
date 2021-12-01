@@ -1,4 +1,4 @@
-#include "oars.h"
+#include "junctions.h"
 #include <stdlib.h>
 N(nalloc) {
   R(Q_t, size);
@@ -28,7 +28,6 @@ static N(os_new_n) {
   nσ[2].q = nρ;
   A(nσ) C(1);
 }
-N(and);
 N(os_new) {
   R(Q_t, state_count);
   R(Q_t, word_count);

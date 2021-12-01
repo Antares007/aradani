@@ -1,12 +1,8 @@
-#include "oars.h"
+#include "junctions.h"
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
-N(and3or);
-N(and);
-N(and2);
-N(and6or2);
 static N(mapfile) {
   R(n_t, bpith);
   R(const char *, filename);
