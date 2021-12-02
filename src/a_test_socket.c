@@ -21,7 +21,6 @@ os_listen,              L)IN(L,
 os_next,                L)IN(L,
 os_socket,              L)n_t მთავარი2;I(L,
 მთავარი, მთავარი2, import);
-// clang-format on
 
 N(ondata) {
   print("ondata %ld\n", α);
@@ -37,7 +36,6 @@ N(drain) {
 N(მთავარი) {
   // A(os_next) O;
   // A9(export, ls_export, god, not, σ, 4, os_queue, os_next, and) O;
-  // clang-format off
   A12(მთავარი2,
       os_socket, and,
       "127.0.0.1", 7000, os_bind, and3,
