@@ -17,6 +17,7 @@ l_epoll_create,       L)IN(L,
 l_epoll_ctl,          L)IN(L,
 l_epoll_wait,         L)IN(L,
 l_listen,             L)IN(L,
+l_read,               L)IN(L,
 l_setnoblock,         L)IN(L,
 l_socket,             L)IN(L,
 ls_export,            L)IN(L,
@@ -37,7 +38,6 @@ struct state_s {
   long fd;
   p_t *dσ;
   n_t word;
-  int flag;
 };
 N(sock);
 N(os_next);
@@ -46,7 +46,7 @@ N(csock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
-  A8(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
+  A8(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET | EPOLLONESHOT), l_epoll_ctl,
      os_next, and) O;
 }
 N(csock_and) {}
@@ -60,7 +60,6 @@ N(set_client_socket) {
   R(q_t, fd);
   struct state_s *c = S(struct state_s, cσ);
   c->fd = fd;
-  c->flag = 0;
   c->word = client_word;
   A(cσ) C(1);
 }
@@ -82,7 +81,10 @@ N(client_word) {
   print("client_word\n");
   R(q_t, i);
   R(q_t, ret);
-  A3(ret, i + 1, process_events) O;
+  p_t *cσ = events[i].data.ptr;
+  struct state_s *c = S(struct state_s, cσ);
+  A10(0, c->fd, l_read, c->dσ, 3, os_queue,
+     ret, i + 1, process_events, and3) O;
 }
 N(server_word) {
   print("server_word\n");
@@ -132,7 +134,6 @@ N(os_socket_n) {
   R(p_t *, sσ);
   struct state_s *s = S(struct state_s, sσ);
   s->fd = fd;
-  s->flag = 1;
   s->word = server_word;
   A(sσ) C(1);
 }
