@@ -36,44 +36,64 @@ struct epoll_event events[MAX_EVENT_NUMBER];
 struct state_s {
   long fd;
   p_t *dσ;
+  n_t word;
   int flag;
 };
 N(sock);
+N(os_next);
+N(csock_or) {
+  print("csock_or %ld\n", α);
+  R(p_t *, oσ);
+  struct state_s *s = S(struct state_s, σ);
+  s->dσ = oσ;
+  A8(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
+     os_next, and) O;
+}
+N(csock_and) {}
+N(csock_not) {}
+N(csock) {
+  A6(csock_or, csock_and, csock_not, 0x1000, wordCountOf(struct state_s), os_new) O;
+}
+N(client_word);
 N(set_client_socket) {
   R(p_t *, cσ);
   R(q_t, fd);
   struct state_s *c = S(struct state_s, cσ);
   c->fd = fd;
   c->flag = 0;
+  c->word = client_word;
   A(cσ) C(1);
 }
-N(os_next);
 N(naccept) {
   R(q_t, fd);
   A8(fd, l_setnoblock,
      l_accept, and,
-     sock, and,
+     csock, and,
      set_client_socket, and) O;
 }
 N(process_events) {
   R(q_t, i);
   R(q_t, ret);
-  if (i == ret)
-    C(1);
-  else {
-    p_t *sσ = events[i].data.ptr;
-    struct state_s *s = S(struct state_s, sσ);
-    if (s->flag) {
-      print("s->flag\n");
-      A12(s->fd, naccept,
-          god,
-          god, s->dσ, 2, os_queue, notand4,
-          ret, i + 1, process_events, and3) O;
-    } else {
-      print("data sock\n");
-      A3(ret, i + 1, process_events) O;
-    }
-  }
+  p_t *sσ = events[i].data.ptr;
+  if (i == ret) C(1);
+  else A3(ret, i, S(struct state_s, sσ)->word) O;
+}
+N(client_word) {
+  print("client_word\n");
+  R(q_t, i);
+  R(q_t, ret);
+  A3(ret, i + 1, process_events) O;
+}
+N(server_word) {
+  print("server_word\n");
+  R(q_t, i);
+  R(q_t, ret);
+  p_t *sσ = events[i].data.ptr;
+  struct state_s *s = S(struct state_s, sσ);
+  A12(s->fd, naccept,
+      god,
+      god, s->dσ, 2, os_queue, notand4,
+      ret, i + 1, process_events, and3) O;
 }
 N(os_next_nn) {
   A10(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
@@ -98,13 +118,14 @@ N(sock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
-  A8(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
-     os_next, and) O;
+  A11(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
+      s->fd, l_listen, and2,
+      os_next, and) O;
 }
 N(sock_and) {}
 N(sock_not) {}
 N(sock) {
-  A6(sock_or, sock_and, sock_not, 4090, wordCountOf(struct state_s), os_new) O;
+  A6(sock_or, sock_and, sock_not, 0x1000, wordCountOf(struct state_s), os_new) O;
 }
 N(os_socket_n) {
   R(Q_t, fd);
@@ -112,6 +133,7 @@ N(os_socket_n) {
   struct state_s *s = S(struct state_s, sσ);
   s->fd = fd;
   s->flag = 1;
+  s->word = server_word;
   A(sσ) C(1);
 }
 N(os_socket) {
@@ -133,18 +155,16 @@ N(os_bind) {
 N(os_listen) {
   R(p_t *, sink);
   R(p_t *, sock);
-  struct state_s *s = S(struct state_s, sock);
-  A8(sink, gor, sock, 2, os_queue,
-     s->fd, l_listen, and2) O;
+  A5(sink, gor, sock, 2, os_queue) O;
 }
-N(drain_an) {
+N(drain_or) {
   α--, os_next(T());
 }
-static N(drain_ara) {}
+static N(drain_not) {}
 N(mkdrain) {
   print("mkdrain\n");
-  R(n_t, drain_da);
-  A6(drain_an, drain_da, drain_ara, 0x1000, 0, os_new) O;
+  R(n_t, drain_and);
+  A6(drain_or, drain_and, drain_not, 0x1000, 0, os_new) O;
 }
 // clang-format off
 EN(Tail,          
