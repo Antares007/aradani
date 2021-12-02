@@ -65,8 +65,8 @@ N(set_client_socket) {
 }
 N(naccept) {
   R(q_t, fd);
-  A8(fd, l_setnoblock,
-     l_accept, and,
+  A8(fd, l_accept,
+     l_setnoblock, and,
      csock, and,
      set_client_socket, and) O;
 }
@@ -159,9 +159,15 @@ N(os_listen) {
   A5(sink, gor, sock, 2, os_queue) O;
 }
 N(drain_or) {
-  α--, os_next(T());
+  R(Q_t, nread);
+  print("drain_or - α:%ld nread:%ld\n", α, nread);
+  α=0, os_next(T());
 }
-static N(drain_not) {}
+N(drain_not) {
+  R(Q_t, nread);
+  print("drain_not - α:%ld nread:%ld\n", α, nread);
+  α=0, os_next(T());
+}
 N(mkdrain) {
   print("mkdrain\n");
   R(n_t, drain_and);

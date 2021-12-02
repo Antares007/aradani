@@ -2,27 +2,28 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-#include <stdio.h>
 N(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
   ssize_t ret = read(connfd, ((char *)ο) + nread, sizeof(void *));
   printf("ret: %ld\n", ret);
-  if (ret < 0)
+  if (ret < 0) {
     A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
-  else if (ret == 0)
+  } else if (ret == 0) {
     A(nread) C(1);
-  else
+  } else {
     α = (nread + ret + sizeof(void *) - 1) / sizeof(void *),
     A3(nread + ret, connfd, l_read) O;
+  }
 }
 N(l_accept) {
   R(q_t, fd);
-  socklen_t addr_len;
-  struct sockaddr addr;
-  q_t rez = accept(fd, &addr, &addr_len);
+  struct sockaddr_in clnt_addr;
+  socklen_t clnt_addr_len = sizeof(clnt_addr);
+  q_t rez = accept(fd, (struct sockaddr *)&clnt_addr, &clnt_addr_len);
   if (rez < 0)
     C(2);
   else

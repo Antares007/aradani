@@ -23,9 +23,9 @@ os_socket,              L)n_t შიდა_მთავარი;I(L,
 მთავარი, შიდა_მთავარი, import);
 
 N(ondata) {
-  print("ondata %ld\n", α);
-  α = 0;
-  os_next(T());
+  R(Q_t, nread);
+  print("drain_and - α:%ld nread:%ld\n", α, nread);
+  α=0, os_next(T());
 }
 N(drain) {
   R(p_t*, cσ);
