@@ -97,13 +97,13 @@ N(server_word) {
       god, s->dσ, 2, os_queue, notand4,
       ret, i + 1, process_events, and3) O;
 }
-N(os_next_nn) {
+N(os_next_epoll_wait) {
   A10(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
       0, process_events, and2,
       os_next, and) O;
 }
 N(os_next) {
-  A3(os_next_org, os_next_nn, or) O;
+  A3(os_next_org, os_next_epoll_wait, or) O;
 }
 N(set_epoll_fd) {
   R(Q_t, fd);
@@ -129,7 +129,7 @@ N(sock_not) {}
 N(sock) {
   A6(sock_or, sock_and, sock_not, 0x1000, wordCountOf(struct state_s), os_new) O;
 }
-N(os_socket_n) {
+N(setup_os_socket) {
   R(Q_t, fd);
   R(p_t *, sσ);
   struct state_s *s = S(struct state_s, sσ);
@@ -140,7 +140,7 @@ N(os_socket_n) {
 N(os_socket) {
   A5(sock,
      l_socket, and,
-     os_socket_n, and) O;
+     setup_os_socket, and) O;
 }
 N(drop) { --α, C(1); }
 N(os_bind) {
@@ -160,13 +160,13 @@ N(os_listen) {
 }
 N(drain_or) {
   R(Q_t, nread);
-  print("drain_or - α:%ld nread:%ld\n", α, nread);
-  α=0, os_next(T());
+  print("drain_or  - α:%ld nread:%ld\n", α, nread);
+  α = 0, os_next(T());
 }
 N(drain_not) {
   R(Q_t, nread);
   print("drain_not - α:%ld nread:%ld\n", α, nread);
-  α=0, os_next(T());
+  α = 0, os_next(T());
 }
 N(mkdrain) {
   print("mkdrain\n");
