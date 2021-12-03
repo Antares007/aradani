@@ -81,9 +81,7 @@ NP(client_word) {
 
 N(os_next);
 NP(os_next_epoll_wait) {
-  A10(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
-      0, process_events, and2,
-      os_next, and) O;
+  A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait, 0, process_events, and2) X;
 }
 NP(os_next) {
   A3(os_next_org, os_next_epoll_wait, or) O;
@@ -92,7 +90,7 @@ NP(client_socket_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
-  A4(σ, epoll_add_in, os_next, and) O;
+  A2(σ, epoll_add_in) X;
 }
 NP(client_socket_and) {}
 NP(client_socket_not) {/* TODO: close client fd */}
@@ -129,8 +127,8 @@ NP(sock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
-  A11(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
-     s->fd, l_listen, and2, os_next, and) O;
+  A9(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
+     s->fd, l_listen, and2) X;
 }
 NP(sock_and) {}
 NP(sock_not) {}
