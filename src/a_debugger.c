@@ -17,21 +17,23 @@ N(σeτail) {
   A(addr) C(1);
 }
 N(hook);
-void Moakhie3_Moakhie1_C0(p_t *ο, unsigned long α, long ρ, p_t *σ) {
-  ρ += 3, ρ += 1, σ[ρ + (0)].c(ο, α, ρ, σ);
-};
-void Moakhie3_Amoakhe1_O(p_t *ο, unsigned long α, long ρ, p_t *σ) {
-  ρ += 3, ο[α++].v = σ[ρ++].v, ο[α - 1].c(ο, α - 1, ρ, σ);
-};
-void Moakhie3_Moakhie1_C2(p_t *ο, unsigned long α, long ρ, p_t *σ) {
-  ρ += 3, ρ += 1, σ[ρ + (2)].c(ο, α, ρ, σ);
-};
-void da0(p_t *ο, unsigned long α, long ρ, p_t *σ) {
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].c = Moakhie3_Moakhie1_C2;
-  σ[--ρ].c = Moakhie3_Amoakhe1_O;
-  σ[--ρ].c = Moakhie3_Moakhie1_C0;
-  ο[α - 1].c(ο, α - 1, ρ, σ);
+// clang-format off
+N(rot) { ρ += 4, C(2); };
+N(rod) { ρ += 3, ο[α++].v = σ[ρ++].v, O; };
+N(ror) { ρ += 4, C(0); };
+// TODO: define most usefull junctions in header file.
+//       lets spread them around all codebase;
+N(and1) { σ[--ρ].c = ο[--α].c; σ[--ρ].c = rot; σ[--ρ].c = rod; σ[--ρ].c = ror; O; }
+N(mod_export);
+N(mod_export_n) {
+  R(n_t, export);
+  R(n_t, addr);
+  R(const char*, name);
+  R(Q_t, i);
+  A6(i + 1, name, addr, export, mod_export, and1) C(1);
+}
+N(mod_export) {
+  A4(0, export, mod_export_n, and1) O;
 }
 N(head) {
   ((void)gor), ((void)god), ((void)got), ((void)Tail);
@@ -39,7 +41,7 @@ N(head) {
   if (Tail)
     A(export) C(1);
   else
-    A7(import, export, tail, σeτail, impexp, hook, da0) O;
+    A7(import, export, tail, σeτail, impexp, hook, and1) O;
 }
 
 // clang-format off
@@ -50,8 +52,8 @@ notand,                                  L)IN(L,
 notand2,                                 L)IN(L,
 or,                                      L)IN(L,
 //
-la_stdin,                               L)int(*print)(const char*, ...);I(L,
-printf, print,                     import);
+la_stdin,                                L)int(*print)(const char*, ...);I(L,
+printf, print,                      import);
 // clang-format on
 
 typedef struct {

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-N(l_read) {
+NP(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
   ssize_t ret = read(connfd, ((char *)ο) + nread, sizeof(void *));
@@ -19,7 +19,7 @@ N(l_read) {
     A3(nread + ret, connfd, l_read) O;
   }
 }
-N(l_accept) {
+NP(l_accept) {
   R(q_t, fd);
   struct sockaddr_in clnt_addr;
   socklen_t clnt_addr_len = sizeof(clnt_addr);
@@ -29,7 +29,7 @@ N(l_accept) {
   else
     A(rez) C(1);
 }
-N(l_address) {
+NP(l_address) {
   R(Q_t, port);
   R(const char *, ip);
   As(sockaddr_in, *address);
@@ -38,7 +38,7 @@ N(l_address) {
   address->sin_port = htons(port);
   C(1);
 }
-N(l_bind) {
+NP(l_bind) {
   Rs(sockaddr_in, *address);
   R(Q_t, fd);
   long r = bind(fd, (struct sockaddr *)address, sizeof(*address));
@@ -47,7 +47,7 @@ N(l_bind) {
   else
     A(fd) C(1);
 }
-N(l_epoll_create) {
+NP(l_epoll_create) {
   R(Q_t, size);
   q_t fd = epoll_create(size);
   if (fd < 0)
@@ -55,7 +55,7 @@ N(l_epoll_create) {
   else
     A(fd) C(1);
 }
-N(l_epoll_ctl) {
+NP(l_epoll_ctl) {
   R(Q_t, events);
   R(void *, ptr);
   R(Q_t, fd);
@@ -66,7 +66,7 @@ N(l_epoll_ctl) {
   event.events = events;
   C(epoll_ctl(epoll_fd, op, fd, &event) < 0 ? 2 : 1);
 }
-N(l_epoll_wait) {
+NP(l_epoll_wait) {
   R(q_t, timeout);
   R(Q_t, maxevents);
   R(struct epoll_event *, events);
@@ -77,7 +77,7 @@ N(l_epoll_wait) {
   else
     A(ret) C(1);
 }
-N(l_setnoblock) {
+NP(l_setnoblock) {
   R(q_t, fd);
   int flags = fcntl(fd, F_GETFL, 0);
   if (flags < 0)
@@ -85,14 +85,14 @@ N(l_setnoblock) {
   flags |= O_NONBLOCK;
   A(fd) C(fcntl(fd, F_SETFL, flags) != -1 ? 1 : 2);
 }
-N(l_socket) {
+NP(l_socket) {
   long fd = socket(PF_INET, SOCK_STREAM, 0);
   if (fd < 0)
     A("fail to create socket!") C(2);
   else
     A(fd) C(1);
 }
-N(l_listen) {
+NP(l_listen) {
   R(q_t, fd);
   q_t rez = listen(fd, 101);
   if (rez < 0)

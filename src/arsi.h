@@ -1,6 +1,8 @@
 #pragma once
 #include "importexportmacros.h"
 #include "oars.h"
+#undef NP
+#define NP(n) N(n##p); N(n) { print("%p\t%ld\t%ld\t%s\n", σ, α, ρ, #n); n##p(T()); } N(n##p)
 N(import);
 N(export);
 void tail() __attribute__((section(".text.end")));

@@ -41,44 +41,15 @@ struct state_s {
 };
 N(sock);
 N(os_next);
-N(csock_or) {
-  print("csock_or %ld\n", α);
-  R(p_t *, oσ);
-  struct state_s *s = S(struct state_s, σ);
-  s->dσ = oσ;
-  A8(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET | EPOLLONESHOT), l_epoll_ctl,
-     os_next, and) O;
-}
-N(csock_and) {}
-N(csock_not) {}
-N(csock) {
-  A6(csock_or, csock_and, csock_not, 0x1000, wordCountOf(struct state_s), os_new) O;
-}
 N(client_word);
-N(set_client_socket) {
-  R(p_t *, cσ);
-  R(q_t, fd);
-  struct state_s *c = S(struct state_s, cσ);
-  c->fd = fd;
-  c->word = client_word;
-  A(cσ) C(1);
-}
-N(naccept) {
-  R(q_t, fd);
-  A8(fd, l_accept,
-     l_setnoblock, and,
-     csock, and,
-     set_client_socket, and) O;
-}
-N(process_events) {
+NP(process_events) {
   R(q_t, i);
   R(q_t, ret);
   p_t *sσ = events[i].data.ptr;
   if (i == ret) C(1);
   else A3(ret, i, S(struct state_s, sσ)->word) O;
 }
-N(client_word) {
-  print("client_word\n");
+NP(client_word) {
   R(q_t, i);
   R(q_t, ret);
   p_t *cσ = events[i].data.ptr;
@@ -86,8 +57,39 @@ N(client_word) {
   A10(0, c->fd, l_read, c->dσ, 3, os_queue,
      ret, i + 1, process_events, and3) O;
 }
-N(server_word) {
-  print("server_word\n");
+
+N(epoll_add_in) {
+  R(p_t*, sσ);
+  struct state_s *s = S(struct state_s, sσ);
+  A6(epoll_fd, EPOLL_CTL_ADD, s->fd, sσ, (EPOLLIN | EPOLLET | EPOLLONESHOT), l_epoll_ctl) O;
+}
+NP(client_socket_or) {
+  R(p_t *, oσ);
+  struct state_s *s = S(struct state_s, σ);
+  s->dσ = oσ;
+  A2(σ, epoll_add_in) X;
+}
+NP(client_socket_and) {}
+NP(client_socket_not) {}
+NP(make_client_socketσ) {
+  A6(client_socket_or, client_socket_and, client_socket_not, 0x1000, wordCountOf(struct state_s), os_new) O;
+}
+NP(set_client_socketσ) {
+  R(p_t *, cσ);
+  R(q_t, fd);
+  struct state_s *c = S(struct state_s, cσ);
+  c->fd = fd;
+  c->word = client_word;
+  A(cσ) C(1);
+}
+NP(naccept) {
+  R(q_t, fd);
+  A8(fd, l_accept,
+     l_setnoblock, and,
+     make_client_socketσ, and,
+     set_client_socketσ, and) O;
+}
+NP(server_word) {
   R(q_t, i);
   R(q_t, ret);
   p_t *sσ = events[i].data.ptr;
@@ -97,26 +99,28 @@ N(server_word) {
       god, s->dσ, 2, os_queue, notand4,
       ret, i + 1, process_events, and3) O;
 }
-N(os_next_epoll_wait) {
+
+
+
+
+NP(os_next_epoll_wait) {
   A10(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
       0, process_events, and2,
       os_next, and) O;
 }
-N(os_next) {
+NP(os_next) {
   A3(os_next_org, os_next_epoll_wait, or) O;
 }
-N(set_epoll_fd) {
+NP(set_epoll_fd) {
   R(Q_t, fd);
   epoll_fd = fd;
-  print("epoll_fd: %d\n", epoll_fd);
   C(1);
 }
-N(მთავარი) {
+NP(მთავარი) {
   A4(3, l_epoll_create,
      set_epoll_fd, and) O;
 }
-N(sock_or) {
-  print("sock_or %ld\n", α);
+NP(sock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
@@ -124,12 +128,12 @@ N(sock_or) {
       s->fd, l_listen, and2,
       os_next, and) O;
 }
-N(sock_and) {}
-N(sock_not) {}
-N(sock) {
+NP(sock_and) {}
+NP(sock_not) {}
+NP(sock) {
   A6(sock_or, sock_and, sock_not, 0x1000, wordCountOf(struct state_s), os_new) O;
 }
-N(setup_os_socket) {
+NP(setup_os_socket) {
   R(Q_t, fd);
   R(p_t *, sσ);
   struct state_s *s = S(struct state_s, sσ);
@@ -137,13 +141,13 @@ N(setup_os_socket) {
   s->word = server_word;
   A(sσ) C(1);
 }
-N(os_socket) {
+NP(os_socket) {
   A5(sock,
      l_socket, and,
      setup_os_socket, and) O;
 }
-N(drop) { --α, C(1); }
-N(os_bind) {
+NP(drop) { --α, C(1); }
+NP(os_bind) {
   R(Q_t, port);
   R(const char *, ip);
   R(p_t *, sock);
@@ -153,23 +157,22 @@ N(os_bind) {
       l_setnoblock, and,
       drop, and) O;
 }
-N(os_listen) {
+NP(os_listen) {
   R(p_t *, sink);
   R(p_t *, sock);
   A5(sink, gor, sock, 2, os_queue) O;
 }
-N(drain_or) {
+NP(drain_or) {
   R(Q_t, nread);
   print("drain_or  - α:%ld nread:%ld\n", α, nread);
   α = 0, os_next(T());
 }
-N(drain_not) {
+NP(drain_not) {
   R(Q_t, nread);
   print("drain_not - α:%ld nread:%ld\n", α, nread);
   α = 0, os_next(T());
 }
-N(mkdrain) {
-  print("mkdrain\n");
+NP(mkdrain) {
   R(n_t, drain_and);
   A6(drain_or, drain_and, drain_not, 0x1000, 0, os_new) O;
 }

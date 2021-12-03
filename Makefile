@@ -19,14 +19,14 @@ src/os: src/aradani.o   \
 	nasm -f bin $^ -o $@
 %.oars: %.c
 	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3 -fno-stack-clash-protection -fno-stack-protector
-	# place "head" nargo body text at begining and "tail" nargo text at end.
-	${LD} -T arsi.ld $@ -o $@.elf
-	# copy text from elf formated object file to pure text (binary) file. 
-	${OBJCOPY} -O binary -j .text.* -j .text -j .data $@.elf $@.binp
-	# remove tail nargo body text. just 1 byte form behaind.
-	head -c -1 $@.binp > $@
-	# delete trush.
-	rm $@.binp $@.elf 
+	@# place "head" nargo body text at begining and "tail" nargo text at end.
+	@${LD} -T arsi.ld $@ -o $@.elf
+	@# copy text from elf formated object file to pure text (binary) file. 
+	@${OBJCOPY} -O binary -j .text.* -j .text -j .data $@.elf $@.binp
+	@# remove tail nargo body text. just 1 byte form behaind.
+	@head -c -1 $@.binp > $@
+	@# delete trush.
+	@rm $@.binp $@.elf 
 src/a_cycle.arsi: src/a_cycle.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
 src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin

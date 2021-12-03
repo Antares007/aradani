@@ -75,6 +75,7 @@ typedef struct p_s {
 #define CAT(a, b) CAT_(a, b)
 
 #define N(n) void n(OARS)
+#define NP(n) N(n##p); N(n) { printf("%p\t%ld\t%ld\t%s\n", σ, α, ρ, #n); n##p(T()); } N(n##p)
 #define T(n) n##ο, n##α, n##ρ, n##σ
 #define R(T, n) T n = (T)ο[--α].v
 #define As(T, n)                                                               \

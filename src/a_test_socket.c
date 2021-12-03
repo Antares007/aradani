@@ -22,19 +22,19 @@ os_next,                    L)IN(L,
 os_socket,                  L)n_t შიდა_მთავარი;I(L,
 მთავარი, შიდა_მთავარი, import);
 
-N(ondata) {
+NP(ondata) {
   R(Q_t, nread);
   print("drain_and - α:%ld nread:%ld\n", α, nread);
   α=0, os_next(T());
 }
-N(drain) {
+NP(drain) {
   R(p_t*, cσ);
   print("events: %p\n", cσ);
   A9(ondata, mkdrain,
      gor, cσ, 2, os_queue, and4,
      os_next, and) O;
 }
-N(მთავარი) {
+NP(მთავარი) {
   // A(os_next) O;
   // A9(export, ls_export, god, not, σ, 4, os_queue, os_next, and) O;
   A12(შიდა_მთავარი,
