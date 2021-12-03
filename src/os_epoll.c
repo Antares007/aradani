@@ -2,22 +2,17 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <sys/epoll.h>
 #include <unistd.h>
+#undef NP
+#define NP N
 NP(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
   ssize_t ret = read(connfd, ((char *)ο) + nread, sizeof(void *));
-  printf("ret: %ld\n", ret);
-  if (ret < 0) {
-    A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
-  } else if (ret == 0) {
-    A(nread) C(1);
-  } else {
-    α = (nread + ret + sizeof(void *) - 1) / sizeof(void *),
-    A3(nread + ret, connfd, l_read) O;
-  }
+  if (ret < 0)       A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
+  else if (ret == 0) A(nread) C(1);
+  else               α = (nread + ret + sizeof(void *) - 1) / sizeof(void *), A3(nread + ret, connfd, l_read) O;
 }
 NP(l_accept) {
   R(q_t, fd);

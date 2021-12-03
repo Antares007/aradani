@@ -9,22 +9,22 @@ and4,                       L)IN(L,
 not,                        L)IN(L,
 notand,                     L)IN(L,
 or,                         L)IN(L,
-
+//
 ls_export,                  L)IN(L,
 os_new,                     L)IN(L,
 os_queue,                   L)int(*print)(const char*, ...);I(L,
 printf, print,              L)IN(L,
-
+//
 mkdrain,                    L)IN(L,
 os_bind,                    L)IN(L,
 os_listen,                  L)IN(L,
 os_next,                    L)IN(L,
-os_socket,                  L)n_t შიდა_მთავარი;I(L,
-მთავარი, შიდა_მთავარი, import);
+os_socket,                  L)n_t init;I(L,
+მთავარი, init,         import);
 
 NP(ondata) {
   R(Q_t, nread);
-  print("drain_and - α:%ld nread:%ld\n", α, nread);
+  print("drain_and - α:%ld nread:%s\n", α, (char*)&nread);
   α=0, os_next(T());
 }
 NP(drain) {
@@ -35,9 +35,8 @@ NP(drain) {
      os_next, and) O;
 }
 NP(მთავარი) {
-  // A(os_next) O;
-  // A9(export, ls_export, god, not, σ, 4, os_queue, os_next, and) O;
-  A12(შიდა_მთავარი,
+  // A2(export, ls_export) O;
+  A12(init,
       os_socket, and,
       "127.0.0.1", 7000, os_bind, and3,
       drain, mkdrain, and2,

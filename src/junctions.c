@@ -56,22 +56,20 @@
   EN(Tail, Name, Head)
 #define NOTOR(Tail, Name, PcNot, PcOr, Head)                                   \
   Ray4(D3, D##PcNot, D##PcOr, C1);                                             \
-  Junction(Name, OS##PcOr OS##PcNot, D3_SO##PcNot##_D##PcOr##_O,               \
+  Junction(Name, OS##PcNot OS##PcOr, D3_SO##PcNot##_D##PcOr##_O,               \
            D3_D##PcNot##_D##PcOr##_C1, D3_D##PcNot##_SO##PcOr##_O);            \
   EN(Tail, Name, Head)
 #define OR(Tail, Name, Pc, Head)                                               \
   Junction(Name, OS##Pc, D3_D##Pc##_C2, D3_D##Pc##_C1, D3_SO##Pc##_O);         \
   EN(Tail, Name, Head)
 #define NOTANDOR(Tail, Name, PcNot, PcAnd, PcOr, Head)                         \
-  Ray5(D3, D##PcOr, D##PcAnd, SO##PcNot, O);                                   \
-  Ray5(D3, D##PcOr, SO##PcAnd, D##PcNot, O);                                   \
-  Ray5(D3, SO##PcOr, D##PcAnd, D##PcNot, O);                                   \
-  N(Name) {                                                                    \
-    OS3 σ[--ρ].c = D3_D##PcOr##_D##PcAnd##_SO##PcNot##_O;                      \
-    σ[--ρ].c = D3_D##PcOr##_SO##PcAnd##_D##PcNot##_O;                          \
-    σ[--ρ].c = D3_SO##PcOr##_D##PcAnd##_D##PcNot##_O;                          \
-    O;                                                                         \
-  }                                                                            \
+  Ray5(D3, SO##PcNot,  D##PcAnd,  D##PcOr, O);                                 \
+  Ray5(D3,  D##PcNot, SO##PcAnd,  D##PcOr, O);                                 \
+  Ray5(D3,  D##PcNot,  D##PcAnd, SO##PcOr, O);                                 \
+  Junction(Name, OS##PcOr OS##PcAnd OS##PcNot,                                 \
+           D3_SO##PcNot##_D##PcAnd##_D##PcOr##_O,                              \
+           D3_D##PcNot##_SO##PcAnd##_D##PcOr##_O,                              \
+           D3_D##PcNot##_D##PcAnd##_SO##PcOr##_O);                             \
   EN(Tail, Name, Head)
 static N(got) { C(2); }
 // clang-format off
@@ -138,7 +136,8 @@ not2and,          2,1,                L)  NOTAND(L,
 not2and2,         2,2,                L)NOTANDOR(L,
 not2and2or,       2,2,1,              L)NOTANDOR(L,
 not2and2or2,      2,2,2,              L)NOTANDOR(L,
-not2and2or3,      2,2,3,              L)  NOTAND(L,
+not2and2or3,      2,2,3,              L)NOTANDOR(L,
+not2and2or6,      2,2,6,              L)  NOTAND(L,
 not2and3,         2,3,                L)NOTANDOR(L,
 not2and3or,       2,3,1,              L)NOTANDOR(L,
 not2and3or2,      2,3,2,              L)NOTANDOR(L,
