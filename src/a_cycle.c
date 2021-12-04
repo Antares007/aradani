@@ -4,44 +4,43 @@ IN(gor,
 and,                   L)IN(L,
 and2,                  L)IN(L,
 or,                    L)IN(L,
-
-
+//
 os_new,                L)IN(L,
 os_next,               L)IN(L,
 os_queue,              L)int(*print)(const char*, ...);I(L,
 printf, print,         L)IN(L,
 debugger,         import);
 // clang-format on
+// this is great example where we can see execution "line" (like line from Chess game).
+N(p_or) {
+  R(p_t *, oσ);
+  print("p_or\n");
+  A5(σ, gor, oσ, 3, os_queue) X;
+}
+N(p_and) {
+  R(p_t *, oσ);
+  R(Q_t, c);
+  if (c % 100000000 == 0) print("p_and %ld\n", c);
+  A6(c + 1, σ, god, oσ, 3, os_queue) X;
+}
+N(p_not) { print("p_not\n"); }
+N(mproducer) { A6(p_or, p_and, p_not, 0x700, 0x0, os_new) O; }
 
-N(so0) {
+N(c_or) {
   R(p_t *, oσ);
-  print("so0\n");
-  A7(σ, gor, oσ, 3, os_queue, os_next, and) O;
+  print("c_or\n");
+  A5(σ, god, oσ, 3, os_queue) X;
 }
-N(so1) {
-  R(p_t *, oσ);
-  R(Q_t, c);
-  if (c % 100000000 == 0)
-    print("so1 %ld\n", c);
-  A8(c + 1, σ, god, oσ, 3, os_queue, os_next, and) O;
-}
-N(so2) { print("so2\n"); }
-N(source) { A6(so0, so1, so2, 64, 0, os_new) O; }
-N(si0) {
-  R(p_t *, oσ);
-  print("si0\n");
-  A7(σ, god, oσ, 3, os_queue, os_next, and) O;
-}
-N(si1) {
+N(c_and) {
   R(p_t *, oσ);
   R(Q_t, c);
-  if (c % 100000000 == 1)
-    print("si1 %ld\n", c);
-  A8(c + 1, σ, god, oσ, 3, os_queue, os_next, and) O;
+  if (c % 100000000 == 1) print("c_and %ld\n", c);
+  A6(c + 1, σ, god, oσ, 3, os_queue) X;
 }
-N(si2) { print("si2\n"); }
-N(sink) { A6(si0, si1, si2, 64, 0, os_new) O; }
-N(მთავარი) { A8(0, sink, gor, source, and2, 3, os_queue, and2) X; }
+N(c_not) { print("c_not\n"); }
+N(mconsumer) { A6(c_or, c_and, c_not, 0x700, 0x0, os_new) O; }
+
+N(მთავარი) { A8(0, mconsumer, gor, mproducer, and2, 3, os_queue, and2) X; }
 
 // clang-format off
 EN(Tail,
