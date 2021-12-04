@@ -10,8 +10,9 @@ os_next,               L)IN(L,
 os_queue,              L)int(*print)(const char*, ...);I(L,
 printf, print,         L)IN(L,
 debugger,         import);
-// clang-format on
-// this is great example where we can see execution "line" (like line from Chess game).
+
+// this is nice example where we can
+// see execution "line" (like line from Chess game).
 N(p_or) {
   R(p_t *, oσ);
   print("p_or\n");

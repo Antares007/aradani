@@ -50,8 +50,7 @@ NP(sink_or ) {
 //Window of valid deliveries:
 //A callbag MUST NOT be delivered data before it has been greeted
 //A callbag MUST NOT be delivered data after it has been terminated
-//A sink MUST NOT be delivered data
-//after it terminates its source
+//A sink MUST NOT be delivered data after it terminates its source
 NP(sink_and) { 
 }
 //A callbag is terminated when the first argument is 2 and the

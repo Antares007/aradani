@@ -35,6 +35,8 @@ src/a_test_socket.arsi: src/a_test_socket.oars src/a_epoll.oars src/a_debugger.o
 	cat $^ > $@
 src/a_stream_example.arsi: src/a_stream_example.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
+src/a_%.arsi: src/a_%.oars src/jmp.bin
+	cat $^ > $@
 clean:
 	rm -f src/*.bin src/*.oars src/*.o src/*.arsi 			\
 	src/os src/epoll_client src/epoll_server src/seven 	
