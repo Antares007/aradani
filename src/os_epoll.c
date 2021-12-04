@@ -4,8 +4,9 @@
 #include <fcntl.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-#undef NP
-#define NP N
+#include <stdio.h>
+//#undef NP
+//#define NP N
 NP(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
@@ -67,10 +68,8 @@ NP(l_epoll_wait) {
   R(struct epoll_event *, events);
   R(Q_t, epfd);
   q_t ret = epoll_wait(epfd, events, maxevents, timeout);
-  if (ret <= 0)
-    C(2);
-  else
-    A(ret) C(1);
+  if (ret <= 0) C(2);
+  else A(ret) C(1);
 }
 NP(l_setnoblock) {
   R(q_t, fd);

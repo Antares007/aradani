@@ -22,25 +22,54 @@ os_next,                    L)IN(L,
 os_socket,                  L)n_t init;I(L,
 მთავარი, init,         import);
 
-NP(ondata) {
+NP(on_data) {
   R(Q_t, nread);
-  print("drain_and - α:%ld nread:%s\n", α, (char*)&nread);
-  α=0, os_next(T());
+  print("drain_and - α:%ld nread:%ld\n", α, nread);
+  α = 0, os_next(T());
 }
-NP(drain) {
+NP(on_connection) {
   R(p_t*, cσ);
   print("events: %p\n", cσ);
-  A9(ondata, mkdrain,
-     gor, cσ, 2, os_queue, and4,
-     os_next, and) O;
+  A7(on_data, mkdrain,
+     gor, cσ, 2, os_queue, and4) X;
+}
+
+struct sink_state_s {
+  p_t *uσ;
+};
+
+//The sink MUST be greeted back with a callbag payload
+//that is either the source itself
+//or another callbag (known as the "talkback"). 
+NP(sink_or ) {
+  R(p_t*, sσ);
+  struct sink_state_s *s = S(struct sink_state_s, sσ);
+  s->uσ = sσ;
+
+}
+//Window of valid deliveries:
+//A callbag MUST NOT be delivered data before it has been greeted
+//A callbag MUST NOT be delivered data after it has been terminated
+//A sink MUST NOT be delivered data
+//after it terminates its source
+NP(sink_and) { 
+}
+//A callbag is terminated when the first argument is 2 and the
+//second argument is either undefined (signalling termination
+//due to success) or any truthy value (signalling termination
+//due to failure).
+NP(sink_not) { 
+}
+NP(sink    ) {
+  A6(sink_or, sink_and, sink_not, 0x1000, wordCountOf(struct sink_state_s), os_new) O;
 }
 NP(მთავარი) {
   // A2(export, ls_export) O;
   A12(init,
       os_socket, and,
       "127.0.0.1", 7000, os_bind, and3,
-      drain, mkdrain, and2,
-      os_listen, and) O;
+      on_connection, mkdrain,     and2,
+      os_listen,                  and) X;
 }
 
 // clang-format off

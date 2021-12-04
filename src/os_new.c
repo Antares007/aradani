@@ -3,21 +3,19 @@
 N(nalloc) {
   R(Q_t, size);
   void *m = malloc(size);
-  if (m)
-    A(m) C(1);
-  else
-    C(2);
+  if (m) A(m) C(1);
+  else C(2);
 }
 N(nfree) {
   R(void *, m);
   free(m);
   C(1);
 }
-static N(os_new_n) {
+N(os_new_n) {
   R(p_t *, nο);
   R(Q_t, state_count);
   R(Q_t, word_count);
-  p_t *nσ = nο + (word_count + state_count - 3);
+  p_t *nσ = nο + (word_count + state_count - 4);
   Q_t nα = 0;
   q_t nρ = -state_count;
   nσ[--nρ].c = ο[--α].c;
@@ -26,14 +24,14 @@ static N(os_new_n) {
   nσ[0].v = nο;
   nσ[1].Q = nα;
   nσ[2].q = nρ;
+  nσ[3].v = σ[4].v;
   A(nσ) C(1);
 }
 N(os_new) {
   R(Q_t, state_count);
   R(Q_t, word_count);
   A6(word_count, state_count, (word_count + state_count) * sizeof(void *),
-     nalloc, os_new_n, and)
-  O;
+     nalloc, os_new_n, and) O;
 }
 N(os_delete) {
   R(p_t *, nσ);

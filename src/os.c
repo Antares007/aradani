@@ -2,34 +2,30 @@
 #include <stdio.h>
 
 N(os_run);
-N(os_new);
 N(os_next);
-N(os_queue);
 N(os_queue_init);
 N(os_exports);
 N(os_wordump);
 N(and);
 N(and2);
-static N(os_pith) { --α, A(os_exports) C(1); }
-static N(os_არა) { printf("os_ara\n"); }
-static N(os_და) { printf("os_da\n"), A3(os_wordump, os_next, and) O; }
-static N(os_ან) { printf("os_an\n"); }
+N(and4);
 
-N(main_nn) {
-  R(p_t *, nσ);
-  R(const char *, filename);
-  printf("%s\n", filename);
-  A9("მთავარი", filename, os_pith, os_run, nσ, 4, os_queue, os_next, and)
-  O;
-}
-N(main_n) {
-  R(const char *, filename);
-  A9(filename, os_ან, os_და, os_არა, 4090, 0, os_new, main_nn, and) O;
-}
-#include <unistd.h>
+static N(os_pith) { --α, A(os_exports) C(1); }
+static N(os_not) { printf("os_not\n"); }
+static N(os_and) { printf("os_and\n"); }
+static N(os_or) { printf("os_or\n"); }
+
 int main(int argc, char **argv) {
-  p_t ο[512], *σ = &ο[512];
+  // rec defined σ
+  p_t ο[512], *σ = &ο[512 - 4];
   q_t α = 0, ρ = 0;
+  σ[--ρ].c = os_not;
+  σ[--ρ].c = os_and;
+  σ[--ρ].c = os_or;
+  σ[0].v = ο;
+  σ[1].Q = α;
+  σ[2].q = ρ;
+  σ[3].v = σ;
   const char *filename = argc < 2 ? "src/arsi00.arsi" : argv[1];
-  A4(os_queue_init, filename, main_n, and2) O;
+  A6(os_queue_init, "მთავარი", filename, os_pith, os_run, and4) O;
 }

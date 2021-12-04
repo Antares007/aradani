@@ -12,6 +12,9 @@ not2and2or6,          L)IN(L,
 notand,               L)IN(L,
 notand4,              L)IN(L,
 or,                   L)IN(L,
+or3,                  L)IN(L,
+or4,                  L)IN(L,
+or6,                  L)IN(L,
 //
 l_accept,             L)IN(L,
 l_address,            L)IN(L,
@@ -49,9 +52,9 @@ N(epoll_ctl2) {
   struct state_s *s = S(struct state_s, sσ);
   A6(epoll_fd, op, s->fd, sσ, (events | EPOLLET | EPOLLONESHOT), l_epoll_ctl) O;
 }
-NP(epoll_add_in)  { A3(EPOLL_CTL_ADD, EPOLLIN,  epoll_ctl2) O; }
+NP(epoll_add_in)  { A3(EPOLL_CTL_ADD,  EPOLLIN, epoll_ctl2) O; }
 NP(epoll_add_out) { A3(EPOLL_CTL_ADD, EPOLLOUT, epoll_ctl2) O; }
-NP(epoll_mod_in)  { A3(EPOLL_CTL_MOD, EPOLLIN,  epoll_ctl2) O; }
+NP(epoll_mod_in)  { A3(EPOLL_CTL_MOD,  EPOLLIN, epoll_ctl2) O; }
 NP(epoll_mod_out) { A3(EPOLL_CTL_MOD, EPOLLOUT, epoll_ctl2) O; }
 N(sock);
 NP(process_events) {
@@ -61,14 +64,14 @@ NP(process_events) {
   if (i == ret) C(1);
   else A3(ret, i, S(struct state_s, sσ)->word) O;
 }
+N(os_next);
 NP(nread) {
   R(p_t*, cσ);
   struct state_s *c = S(struct state_s, cσ);
   A14(0, c->fd, l_read,
-      'ERR', god,
-      'END', god,
-      'AGN', cσ, epoll_mod_in, σ, 2, os_queue,
-      not2and2or6) O;
+      1, god,
+      2, god,
+      3, cσ, epoll_mod_in, σ, 2, os_queue, not2and2or6) X;
 }
 NP(client_word) {
   R(q_t, i);
@@ -78,23 +81,41 @@ NP(client_word) {
   A9(cσ, nread, c->dσ, 2, os_queue, ret, i + 1, process_events, and3) O;
 }
 
-
-N(os_next);
 NP(os_next_epoll_wait) {
-  A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait, 0, process_events, and2) X;
+  A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
+     0, process_events, and2) O;
+}
+NP(queue_epoll_wait)   {
+  A6(os_next_epoll_wait, os_next, and, σ[4].v, 3, os_queue) O;
 }
 NP(os_next) {
-  A3(os_next_org, os_next_epoll_wait, or) O;
+  A5(os_next_org, os_next_epoll_wait, os_next_org, and, or3) O;
 }
+
+//The sink MUST be greeted back with a callbag payload
+//that is either the source itself
+//or another callbag (known as the "talkback"). 
 NP(client_socket_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
   A2(σ, epoll_add_in) X;
 }
-NP(client_socket_and) {}
-NP(client_socket_not) {/* TODO: close client fd */}
-NP(make_client_socketσ) { A6(client_socket_or, client_socket_and, client_socket_not, 0x1000, wordCountOf(struct state_s), os_new) O; }
+//Window of valid deliveries:
+//A callbag MUST NOT be delivered data before it has been greeted
+//A callbag MUST NOT be delivered data after it has been terminated
+//A sink MUST NOT be delivered data after it terminates its source
+NP(client_socket_and) {
+}
+//A callbag is terminated when the first argument is 2 and the
+//second argument is either undefined (signalling termination
+//due to success) or any truthy value (signalling termination
+//due to failure).
+NP(client_socket_not) {
+}
+NP(make_client_socketσ) {
+  A6(client_socket_or, client_socket_and, client_socket_not, 0x1000, wordCountOf(struct state_s), os_new) O;
+}
 NP(set_client_socketσ) {
   R(p_t *, cσ);
   R(q_t, fd);
@@ -117,8 +138,6 @@ NP(server_word) {
       god, s->dσ, 2, os_queue, notand4,
       ret, i + 1, process_events, and3) O;
 }
-
-
 
 
 NP(set_epoll_fd) { R(Q_t, fd); epoll_fd = fd; C(1); }
