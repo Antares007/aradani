@@ -2,18 +2,14 @@
 #include <stdio.h>
 
 N(os_run);
-N(os_next);
 N(os_queue_init);
 N(os_exports);
-N(os_wordump);
-N(and);
-N(and2);
 N(and4);
 
 static N(os_pith) { --α, A(os_exports) C(1); }
 static N(os_not) { printf("os_not\n"); }
 static N(os_and) { printf("os_and\n"); }
-static N(os_or) { printf("os_or\n"); }
+static N(os_or ) { printf("os_or\n"); }
 
 int main(int argc, char **argv) {
   // rec defined σ

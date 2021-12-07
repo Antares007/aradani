@@ -38,11 +38,19 @@ N(c_and) {
   if (c % 100000000 == 1) print("c_and %ld\n", c);
   A6(c + 1, σ, god, oσ, 3, os_queue) X;
 }
-N(c_not) { print("c_not\n"); }
+N(c_not)     { print("c_not\n"); }
 N(mconsumer) { A6(c_or, c_and, c_not, 0x700, 0x0, os_new) O; }
 
-N(მთავარი) { A8(0, mconsumer, gor, mproducer, and2, 3, os_queue, and2) X; }
-
+N(pipe) {
+}
+p_t o[1024], *s = o + sizeof(o) / sizeof(*o);
+q_t a = 0, p = 0;
+N(მთავარი2) {
+  // (mproducer, mconsumer, pipe) X; 
+}
+N(მთავარი) {
+  A8(0, mconsumer, gor, mproducer, and2, 3, os_queue,  and2) X; 
+}
 // clang-format off
 EN(Tail,
 მთავარი,          export);
