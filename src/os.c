@@ -6,6 +6,24 @@ N(os_queue_init);
 N(os_exports);
 N(and4);
 
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+static void * mapfile(const char*filename, void*bpith) {
+  int fd = open(filename, O_RDWR);
+  struct stat sb;
+  if (fd == -1 || fstat(fd, &sb) == -1)
+    return 0;
+  void *addr =
+      mmap((void *)0x0000777777700000, sb.st_size,
+           PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_FIXED, fd, 0);
+  close(fd);
+  *(void **)((char *)addr + sb.st_size - 10) = bpith;
+  return addr;
+}
+
 static N(os_pith) { --α, A(os_exports) C(1); }
 static N(os_not) { printf("os_not\n"); }
 static N(os_and) { printf("os_and\n"); }
