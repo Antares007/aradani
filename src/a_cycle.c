@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(gor,
+IN(0,
 and,                   L)IN(L,
 and2,                  L)IN(L,
 or,                    L)IN(L,
@@ -8,9 +8,9 @@ or,                    L)IN(L,
 os_new,                L)IN(L,
 os_next,               L)IN(L,
 os_queue,              L)int(*print)(const char*, ...);I(L,
-printf, print,         L)IN(L,
-debugger,         import);
-
+printf, print,    import);
+N(god) { C(1); }
+N(gor) { C(1); }
 // this is nice example where we can
 // see execution "line" (like line from Chess game).
 N(p_or) {
@@ -52,5 +52,5 @@ N(მთავარი) {
   A8(0, mconsumer, gor, mproducer, and2, 3, os_queue,  and2) X; 
 }
 // clang-format off
-EN(Tail,
+EN(tail,
 მთავარი,          export);
