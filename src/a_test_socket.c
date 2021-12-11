@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(gor,
+IN(0,
 and,                        L)IN(L,
 and2,                       L)IN(L,
 and3,                       L)IN(L,
@@ -27,6 +27,7 @@ NP(on_data) {
   print("drain_and - α:%ld nread:%ld\n", α, nread);
   α = 0, os_next(T());
 }
+N(gor) { C(0); }
 NP(on_connection) {
   R(p_t*, cσ);
   print("events: %p\n", cσ);
@@ -72,5 +73,5 @@ NP(მთავარი) {
 }
 
 // clang-format off
-EN(Tail,          
+EN(tail,          
 მთავარი,               export);

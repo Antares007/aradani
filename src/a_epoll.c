@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(gor,
+IN(0,
 and,                  L)IN(L,
 and2,                 L)IN(L,
 and3,                 L)IN(L,
@@ -65,6 +65,7 @@ NP(process_events) {
   else A3(ret, i, S(struct state_s, sσ)->word) O;
 }
 N(os_next);
+N(god) { C(1); }
 NP(nread) {
   R(p_t*, cσ);
   struct state_s *c = S(struct state_s, cσ);
@@ -170,7 +171,7 @@ NP(os_bind) {
   struct state_s *s = S(struct state_s, sock);
   A11(sock, s->fd, ip, port, l_address, l_bind, and, l_setnoblock, and, drop, and) O;
 }
-
+N(gor) { C(0); }
 NP(os_listen) {
   R(p_t *, sink);
   R(p_t *, sock);
@@ -192,7 +193,7 @@ NP(mkdrain) {
 }
 
 // clang-format off
-EN(Tail,          
+EN(tail,          
 mkdrain,                L)EN(L,
 os_bind,                L)EN(L,
 os_listen,              L)EN(L,

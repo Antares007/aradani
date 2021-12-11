@@ -9,11 +9,12 @@ ls_export,                L)IN(L,
 os_new,                   L)IN(L,
 os_next,                  L)IN(L,
 os_queue,                 L)int(*print)(const char*, ...);I(L,
-printf, print,       import);
+printf, print,            L)IN(L,
+//
+debugger,            import);
 
 N(მთავარი) {
-  print("hey\n");
-  A2(export, ls_export) O;
+  A5(and, debugger, export, ls_export, and2) O;
 }
 
 EN(tail,

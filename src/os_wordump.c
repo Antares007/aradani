@@ -13,15 +13,13 @@ N(os_wordump) {
   }
   C(1);
 }
-N(and);
-N(ls_export_n) {
-  R(n_t, export);
-  R(n_t, nargo);
-  R(const char *, name);
-  printf("%s\t%p\n", name, nargo);
-  A3(export, ls_export_n, and) O;
+typedef void (*m_t)();
+static void nop() {}
+static void print_pith(void *s, const char *name, void *addr, m_t export) {
+  printf("%s\t%p\n", name, addr), export(0, print_pith, nop);
 }
 N(ls_export) {
-  R(n_t, export);
-  A3(export, ls_export_n, and) O;
+  R(m_t, export);
+  export(0, print_pith, nop);
+  C(1);
 }
