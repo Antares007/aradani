@@ -1,6 +1,3 @@
-#define ARSIHOOK hook
-void hook();
-
 #include "arsi.h"
 // clang-format off
 IN(0,    
@@ -20,15 +17,14 @@ typedef struct {
 } nargoname_t;
 #define MNN 2048
 nargoname_t nargonames[MNN];
-void fillnames_pith(int *i, const char *name, void *nargo, void(export)()) {
-  nargonames[*i].name = name;
-  nargonames[*i].nargo = nargo;
-  *i = *i + 1;
-  export(i, fillnames_pith, nop);
+void fillnames_pith(int i, const char *name, void *nargo, void(export)()) {
+  nargonames[i].name = name;
+  nargonames[i].nargo = nargo;
+  export(i + 1, fillnames_pith, nop);
 }
 void hook() {
-  int i = 0;
-  export(&i, fillnames_pith, nop);
+  volatile m_t t = tail;
+  t(0, fillnames_pith, nop);
 }
 
 Q_t findnm(void *nargo) {
@@ -62,7 +58,8 @@ N(os_wordump) {
 }
 N(god) { C(1); }
 N(debugger) { A3(os_wordump, la_stdin, and) O; }
-
+N(მთავარი) { hook(); C(1); }
 // clang-format off
 EN(tail,
-debugger,                        export);
+debugger,                        L)EN(L,
+მთავარი,                    export);

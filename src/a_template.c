@@ -11,10 +11,11 @@ os_next,                  L)IN(L,
 os_queue,                 L)int(*print)(const char*, ...);I(L,
 printf, print,            L)IN(L,
 //
-debugger,            import);
+debugger,                 L)n_t მთავარი2;I(L,
+მთავარი, მთავარი2,   import);
 
 N(მთავარი) {
-  A5(and, debugger, export, ls_export, and2) O;
+  A7(and, მთავარი2, debugger, and, export, ls_export, and2) O;
 }
 
 EN(tail,

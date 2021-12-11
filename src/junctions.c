@@ -1,6 +1,7 @@
 #include "junctions.h"
+static void m_gor(void *s, void(a)(), void(o)()) { o(s); }
 // clang-format off
-AND(0,
+AND(m_gor,
 and,              1,                  L)     AND(L,
 and2,             2,                  L)   ANDOR(L,
 and2or,           2,1,                L)   ANDOR(L,
