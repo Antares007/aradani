@@ -21,7 +21,7 @@ N(p_or) {
 N(p_and) {
   R(p_t *, oσ);
   R(Q_t, c);
-  if (c % 100000000 == 0) print("p_and %ld\n", c);
+  if (c % 10000000 == 0) print("p_and %ld\n", c);
   A6(c + 1, σ, god, oσ, 3, os_queue) X;
 }
 N(p_not) { print("p_not\n"); }
@@ -35,7 +35,7 @@ N(c_or) {
 N(c_and) {
   R(p_t *, oσ);
   R(Q_t, c);
-  if (c % 100000000 == 1) print("c_and %ld\n", c);
+  if (c % 10000000 == 1) print("c_and %ld\n", c);
   A6(c + 1, σ, god, oσ, 3, os_queue) X;
 }
 N(c_not)     { print("c_not\n"); }
