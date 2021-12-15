@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(gor,
+IN(0,
 and,                   L)IN(L,
 and2,                  L)IN(L,
 or,                    L)IN(L,
@@ -13,5 +13,5 @@ printf, print,    import);
 
 N(მთავარი) { print("hey\n"); A2(export, ls_export) O; }
 
-EN(Tail,
+EN(tail,
 მთავარი,          export);

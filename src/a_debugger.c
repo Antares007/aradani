@@ -17,6 +17,7 @@ typedef struct {
 } nargoname_t;
 #define MNN 2048
 nargoname_t nargonames[MNN];
+static void nop() {}
 void fillnames_pith(int i, const char *name, void *nargo, void(export)()) {
   nargonames[i].name = name;
   nargonames[i].nargo = nargo;

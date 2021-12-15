@@ -1,29 +1,17 @@
 #include "arsi.h"
 // clang-format off
-IN(gor,
-an,           L)IN(L,
-anda3,        L)IN(L,
-ara,          L)IN(L,
-arada,        L)IN(L,
-da,           L)IN(L,
+IN(0,
+and,                    L)IN(L,
+//
+os_next,                L)IN(L,
+os_wordump,        import);
 
-os_next,      L)IN(L,
-os_wordump, import);
-// clang-format on
-
-int cmp(const char *s1, const char *s2) {
-  while (*s1 == *s2++)
-    if (*s1++ == 0)
-      return (0);
-  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
 N(qsort);
 void swap(long *a, long *b) {
   long t = *a;
   *a = *b;
   *b = t;
 }
-
 /* This function takes last element as pivot, places
 the pivot element at its correct position in sorted
 array, and places all smaller (smaller than pivot)
@@ -57,16 +45,16 @@ N(qsort_next) {
   } else
     C(1);
 }
-N(qsort) { A3(os_wordump, qsort_next, da) O; }
+N(qsort) { A3(os_wordump, qsort_next, and) O; }
 N(მთავარი) {
   void *b = &ο[α];
   long e;
   A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
-  A7(0, 8, b, e, qsort, os_wordump, da) O;
+  A7(0, 8, b, e, qsort, os_wordump, and) O;
   // A2(6, 9) C(1);
 }
 
 // clang-format off
-EN(Tail,          
+EN(tail,          
 qsort,                  L)EN(L,
 მთავარი,           export);
