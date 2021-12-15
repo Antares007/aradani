@@ -7,7 +7,6 @@ M(export);
 void tail() __attribute__((section(".text.end")));
 void head() __attribute__((section(".text.begin")));
 M(tail) {}
-void nop() {}
 int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
     if (*s1++ == 0)
@@ -23,17 +22,13 @@ typedef struct impexp_s {
 
 static void imp_err(ies_t *s) { s->or_ray(s->s); }
 
-#ifndef ARSIHOOK
-#define ARSIHOOK nop
-#endif
 #define I(Tail, Name, Addr, Head)                                              \
   Mpith(Head) {                                                                \
     if (cmp(#Name, name) == 0) {                                               \
       Addr = addr;                                                             \
       if ((Tail) == 0)                                                         \
         imported = 1,                                                          \
-        export(((ies_t *)s)->s, ((ies_t *)s)->and_ray, ((ies_t *)s)->or_ray),  \
-        ARSIHOOK();                                                            \
+        export(((ies_t *)s)->s, ((ies_t *)s)->and_ray, ((ies_t *)s)->or_ray);  \
       else                                                                     \
         ie(s, Tail, imp_err);                                                  \
     } else                                                                     \
