@@ -1,5 +1,5 @@
 #pragma once
-#include "importexportmacros.h"
+#include "exportmacros.h"
 #include "oars.h"
 #define Mpith(n) void n(void *s, const char *name, void *addr, m_t ie)
 Mpith(import);
