@@ -13,24 +13,25 @@ int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 typedef void (*m_t)(void *, void (*)(), void (*)());
+
 static int imported = 0;
 
 static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
 
-#define I(Tail, Name, Addr, Head)                                              \
-  void Head(void **s, const char *name, void *addr, m_t ie) {                  \
-    if (cmp(#Name, name) == 0) {                                               \
-      Addr = addr;                                                             \
-      if ((Tail) == 0)                                                         \
+#define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
+  void ThisImport(void **s, const char *name, void *addr, m_t ie) {            \
+    if (cmp(#ImportName, name) == 0) {                                         \
+      ImportAddress = addr;                                                    \
+      if ((NextImport) == 0)                                                   \
         imported = 1, export(s[0], s[1], s[2]);                                \
       else                                                                     \
-        ie(s, Tail, imp_err);                                                  \
+        ie(s, NextImport, imp_err);                                            \
     } else                                                                     \
-      ie(s, Head, imp_err);                                                    \
+      ie(s, ThisImport, imp_err);                                              \
   }
-#define IN(Tail, Name, Head)                                                   \
-  n_t Name;                                                                    \
-  I(Tail, Name, Name, Head)
+#define IN(NextImport, ImportName, ThisImport)                                 \
+  n_t ImportName;                                                              \
+  I(NextImport, ImportName, ImportName, ThisImport)
 void head(void *s, void(and_ray)(), void(or_ray)()) {
   volatile m_t t = tail;
   if (imported)
