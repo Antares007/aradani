@@ -14,13 +14,8 @@ int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 static int imported = 0;
-typedef struct impexp_s {
-  struct impexp_s *s;
-  void (*and_ray)();
-  void (*or_ray)();
-} ies_t;
 
-static void imp_err(ies_t *s) { s->or_ray(s->s); }
+static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
 
 #define I(Tail, Name, Addr, Head)                                              \
   Mpith(Head) {                                                                \
@@ -28,7 +23,7 @@ static void imp_err(ies_t *s) { s->or_ray(s->s); }
       Addr = addr;                                                             \
       if ((Tail) == 0)                                                         \
         imported = 1,                                                          \
-        export(((ies_t *)s)->s, ((ies_t *)s)->and_ray, ((ies_t *)s)->or_ray);  \
+        export(((void **)s)[0], ((void **)s)[1], ((void **)s)[2]);             \
       else                                                                     \
         ie(s, Tail, imp_err);                                                  \
     } else                                                                     \
@@ -42,8 +37,7 @@ M(head) {
   if (imported)
     export(s, and_ray, or_ray);
   else
-    t(&(struct impexp_s){.s = s, .and_ray = and_ray, .or_ray = or_ray}, import,
-      imp_err);
+    t(&(void *[]){s, and_ray, or_ray}, import, imp_err);
 }
 #undef NP
 #define NP(n)                                                                  \
