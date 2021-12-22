@@ -7,6 +7,7 @@ src/os_g:
 	
 src/os: 					 		\
 	src/junctions.o  		\
+	src/os_mapfile.o		\
 	src/os_debbuger.o		\
 	src/os_epoll.o   		\
 	src/os_exports.o 		\
