@@ -1,37 +1,31 @@
 #include "oars.h"
 #include <stdio.h>
+#include <string.h>
 
-N(os_queue_init);
-N(os_exports);
-N(and);
 void *mapfile(const char *, void *);
+void os_exports(void *, void (*)(), void (*)());
 
-static N(os_not) { printf("os_not\n"); }
-static N(os_and) { printf("os_and\n"); }
-static N(os_or) { printf("os_or\n"); }
-static int cmp(const char *s1, const char *s2) {
-  while (*s1 == *s2++)
-    if (*s1++ == 0)
-      return (0);
-  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
-void ray_or(void *s) { printf("O: %p\n", s); }
-void ray_and(void **s, const char *name, n_t addr, void(ie)()) {
-  if (cmp("მთავარი", name) == 0)
-    *s = addr;
-  else
-    ie(s, ray_and, ray_or);
+void ray_or(const char *s_pith) { printf("We can't find s_pith '%s'.\n", s_pith); }
+void ray_and(const char *s_pith, const char *name, p_t *σ, void(ie)()) {
+  if (strcmp(s_pith, name) == 0) {
+    printf("Found 's_pith,' so let's go.\n");
+    p_t *ο = σ[0].v;
+    Q_t α = σ[1].Q;
+    q_t ρ = σ[2].q;
+    O;
+  } else
+    ie(s_pith, ray_and, ray_or);
 }
 int main(int argc, char **argv) {
-  // rec defined σ
-  p_t ο[512], *σ = &ο[512 - 4];
-  q_t α = 0, ρ = 0;
-  σ[--ρ].c = os_not, σ[--ρ].c = os_and, σ[--ρ].c = os_or;
-  σ[0].v = ο, σ[1].Q = α, σ[2].q = ρ, σ[3].v = σ;
-
-  const char *filename = argc < 2 ? "src/arsi00.arsi" : argv[1];
+  if (argc < 2) {
+    printf("Would you mind adding the 'filename' as an argument?\n");
+    return 8;
+  }
+  const char *filename = argv[1];
   void (*exports)() = mapfile(filename, os_exports);
-  n_t theword = 0;
-  exports(&theword, ray_and, ray_or);
-  if (theword) A3(os_queue_init, theword, and) O;
+  if (exports == 0) {
+    printf("Can't 'mmap' file '%s'.\n", filename);
+    return 9;
+  }
+  exports("s_pith", ray_and, ray_or);
 }

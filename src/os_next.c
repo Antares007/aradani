@@ -2,7 +2,7 @@
 #include "queue.h"
 #include <stdio.h>
 #define MAX_QUEUE_PAPERS 1024
-
+// TODO: convert this into the arsi
 typedef struct {
   QUEUE q;
   Q_t α;
