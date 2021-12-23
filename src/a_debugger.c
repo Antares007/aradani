@@ -27,7 +27,7 @@ void hook() {
   volatile m_t t = tail;
   t(0, fillnames_pith, nop);
 }
-
+void init() {}
 Q_t findnm(void *nargo) {
   for (Q_t i = 0; i < MNN; i++)
     if (nargonames[i].nargo == nargo)

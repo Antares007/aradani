@@ -1,6 +1,7 @@
 #pragma once
 #include "exportmacros.h"
 #include "oars.h"
+void init();
 void import(void **s, const char *name, void *addr, void(ie)());
 void export(void *, void (*)(), void (*)());
 void tail() __attribute__((section(".text.end")));
@@ -17,13 +18,12 @@ typedef void (*m_t)(void *, void (*)(), void (*)());
 static int imported = 0;
 
 static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
-
 #define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
   void ThisImport(void **s, const char *name, void *addr, m_t ie) {            \
     if (cmp(#ImportName, name) == 0) {                                         \
       ImportAddress = addr;                                                    \
       if ((NextImport) == 0)                                                   \
-        imported = 1, export(s[0], s[1], s[2]);                                \
+        imported = 1, init(), export(s[0], s[1], s[2]);                        \
       else                                                                     \
         ie(s, NextImport, imp_err);                                            \
     } else                                                                     \

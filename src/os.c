@@ -8,10 +8,11 @@ void os_exports(void *, void (*)(), void (*)());
 void ray_or(const char *s_pith) { printf("We can't find s_pith '%s'.\n", s_pith); }
 void ray_and(const char *s_pith, const char *name, p_t *σ, void(ie)()) {
   if (strcmp(s_pith, name) == 0) {
-    printf("Found 's_pith,' so let's go.\n");
+    printf("Found 's_pith,' at %p so let's go.\n", σ);
     p_t *ο = σ[0].v;
-    Q_t α = σ[1].Q;
-    q_t ρ = σ[2].q;
+    Q_t α  = σ[1].Q;
+    q_t ρ  = σ[2].q;
+    printf("A: %p %lu %ld %p\n", ο, α, ρ, σ);
     O;
   } else
     ie(s_pith, ray_and, ray_or);
