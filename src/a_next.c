@@ -1,35 +1,22 @@
-#include "oars.h"
+#include "arsi.h"
 #include "queue.h"
 #include <stdio.h>
 #define MAX_QUEUE_PAPERS 1024
-// TODO: convert this into the arsi
-typedef struct {
-  QUEUE q;
-  Q_t α;
-  p_t *σ;
-  p_t ο[12];
-} queue_paper_t;
-typedef void (*memcopy_t)(p_t *, p_t *);
 
+// clang-format off
+IN(0,
+and,                                         L)IN(L,
+and2,                                        L)IN(L,
+//
+ls_export,                                   L)int(*print)(const char*, ...);I(L,
+printf, print,                          import);
+
+typedef struct { QUEUE q; Q_t α; p_t *σ; p_t ο[12]; } queue_paper_t;
+typedef void (*memcopy_t)(p_t *, p_t *);
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
-// TODO: move temp_queue on OarS.
-// to stop/start execution of word?
 static QUEUE main_queue, temp_queue;
 static memcopy_t tablelookup[8];
 
-N(os_queue) {
-  R(Q_t, wc);
-  R(p_t *, nσ);
-  static unsigned short qpno = 0;
-  qpno++, qpno %= 1024;
-  if (queue_papers[qpno].q[0])
-    return C(2);
-  queue_papers[qpno].σ = nσ;
-  queue_papers[qpno].α = wc;
-  tablelookup[wc](queue_papers[qpno].ο, &ο[α -= wc]);
-  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
-  C(1);
-}
 N(os_next) {
   QUEUE *q;
   if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {
@@ -50,6 +37,39 @@ N(os_next) {
   tablelookup[pα](pο, p->ο);
   pο[pα - 1].c(pο, pα - 1, pρ, pσ);
 }
+N(os_queue) {
+  R(Q_t, wc);
+  R(p_t *, nσ);
+  static unsigned short qpno = 0;
+  qpno++, qpno %= 1024;
+  if (queue_papers[qpno].q[0])
+    return C(2);
+  queue_papers[qpno].σ = nσ;
+  queue_papers[qpno].α = wc;
+  tablelookup[wc](queue_papers[qpno].ο, &ο[α -= wc]);
+  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
+  C(1);
+}
+
+N(ray_not) { print("ray_not %p %lu %ld\n", σ, α, ρ); }
+N(ray_and) { print("ray_and %p %lu %ld\n", σ, α, ρ); os_next(T()); }
+N(ray_or ) { print("ray_or  %p %lu %ld\n", σ, α, ρ); }
+N(seven) { A(7) C(1); }
+p_t ο[512];
+static void init_pith() {
+  p_t *σ = ο + sizeof(ο) / sizeof(*ο) - 3;
+  q_t α = 0, ρ = 0;
+  σ[--ρ].v = ray_not, σ[--ρ].v = ray_and, σ[--ρ].v = ray_or;
+  ο[α++].v = seven;
+  σ[0].v = ο, σ[1].Q = α, σ[2].q = ρ;
+}
+static void init_queue();
+void init() { init_queue(); init_pith(); }
+
+// clang-format off
+E(tail,
+s_pith, ο + sizeof(ο) / sizeof(*ο) - 3, export)
+
 static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
 static void memcopy2(p_t *pο, p_t *ο) {
   pο[0].v = ο[0].v;
@@ -90,7 +110,7 @@ static void memcopy7(p_t *pο, p_t *ο) {
   pο[5].v = ο[5].v;
   pο[6].v = ο[6].v;
 }
-N(os_queue_init) {
+static void init_queue() {
   QUEUE_INIT(&main_queue);
   QUEUE_INIT(&temp_queue);
   tablelookup[1] = memcopy1;
@@ -102,5 +122,4 @@ N(os_queue_init) {
   tablelookup[7] = memcopy7;
   for (Q_t i = 0; i < MAX_QUEUE_PAPERS; i++)
     queue_papers[i].q[0] = 0;
-  C(1);
 }

@@ -12,7 +12,6 @@ src/os: 					 		\
 	src/os_epoll.o   		\
 	src/os_exports.o 		\
 	src/os_new.o     		\
-	src/os_next.o    		\
 	src/os_wordump.o 		
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
