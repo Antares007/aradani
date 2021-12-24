@@ -20,7 +20,6 @@ void *mapfile(const char *filename, void *pith) {
 }
 void ray_or(void *s) { printf("We can't find s_pith.\n"); }
 void ray_and(n_t nargo, const char *name, p_t *σ, void(ie)()) {
-  printf("%s", name);
   if (strcmp("s_pith", name) == 0) {
     printf("Found 's_pith,' at %p so let's go.\n", σ);
     p_t *ο = σ[0].v;
