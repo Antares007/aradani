@@ -1,4 +1,7 @@
+#include "oars.h"
 #include <fcntl.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -15,4 +18,26 @@ void *mapfile(const char *filename, void *pith) {
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
 }
-
+void ray_or(const char *s_pith) {
+  printf("We can't find s_pith '%s'.\n", s_pith);
+}
+void ray_and(n_t nargo, const char *name, p_t *σ, void(ie)()) {
+  if (strcmp("s_pith", name) == 0) {
+    printf("Found 's_pith,' at %p so let's go.\n", σ);
+    p_t *ο = σ[0].v;
+    Q_t α = σ[1].Q;
+    q_t ρ = σ[2].q;
+    nargo(ο, α, ρ, σ);
+  } else
+    ie(nargo, ray_and, ray_or);
+}
+void bark(const char *name, void *tail, n_t nargo, p_t *σ) {
+  void (*head)() = mapfile(name, tail);
+  if (head == 0) {
+    p_t *ο = σ[0].v;
+    Q_t α = σ[1].Q;
+    q_t ρ = σ[2].q;
+    O;
+  } else
+    head(nargo, ray_and, ray_or);
+}
