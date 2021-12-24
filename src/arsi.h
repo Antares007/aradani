@@ -49,3 +49,10 @@ void head(void *s, void(and_ray)(), void(or_ray)()) {
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
+static N(updateσ_ray) { σ[1].q = α, σ[2].q = ρ + 3; }
+void updateσ(void*s, n_t nargo) {
+  p_t *σ = s, *ο = σ[0].v;
+  q_t  α = σ[1].q, ρ = σ[2].q;
+  σ[--ρ].v = updateσ_ray, σ[--ρ].v = updateσ_ray, σ[--ρ].v = updateσ_ray;
+  nargo(T());
+}

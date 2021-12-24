@@ -44,16 +44,10 @@ N(c_and) {
 N(c_not)     { print("c_not\n"); }
 N(mconsumer) { A6(c_or, c_and, c_not, 0x700, 0x0, os_new) O; }
 
-N(მთავარი) { A8(0, mconsumer, gor, mproducer, and2, 3, os_queue,  and2) O; }
+N(მთავარი) { A8(0, mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
 
-void init() { 
-  p_t *σ = (void*)s_pith, *ο = σ[0].v;
-  q_t α = σ[1].q, ρ = σ[2].q;
-  ο[α++].v = მთავარი;
-  ο[α++].v = and;
-  σ[1].q = α;
-  σ[2].q = ρ;
-}
+N(updater) { A2(მთავარი, and) C(1); }
+void init() { updateσ(s_pith, updater); }
 
 EN(tail,
 s_pith,              export);

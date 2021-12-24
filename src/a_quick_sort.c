@@ -57,14 +57,8 @@ N(მთავარი) {
   // A2(6, 9) C(1);
 }
 
-void init() { 
-  p_t *σ = (void*)s_pith, *ο = σ[0].v;
-  q_t α = σ[1].q, ρ = σ[2].q;
-  ο[α++].v = მთავარი;
-  ο[α++].v = and;
-  σ[1].q = α;
-  σ[2].q = ρ;
-}
+N(updater) { A2(მთავარი, and) C(1); }
+void init() { updateσ(s_pith, updater); }
 
 // clang-format off
 EN(tail,          
