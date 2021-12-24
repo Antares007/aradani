@@ -4,11 +4,8 @@
 #define MAX_QUEUE_PAPERS 1024
 
 // clang-format off
-IN(0,
-and,                                         L)IN(L,
-and2,                                        L)IN(L,
-//
-ls_export,                                   L)int(*print)(const char*, ...);I(L,
+int(*print)(const char*, ...);
+I(0,
 printf, print,                          import);
 
 typedef struct { QUEUE q; Q_t α; p_t *σ; p_t ο[12]; } queue_paper_t;
@@ -54,7 +51,7 @@ N(os_queue) {
 N(ray_not) { print("ray_not %p %lu %ld\n", σ, α, ρ); }
 N(ray_and) { print("ray_and %p %lu %ld\n", σ, α, ρ); os_next(T()); }
 N(ray_or ) { print("ray_or  %p %lu %ld\n", σ, α, ρ); }
-N(seven) { A(7) C(1); }
+N(seven  ) { A(7) C(1); }
 p_t ο[512];
 static void init_pith() {
   p_t *σ = ο + sizeof(ο) / sizeof(*ο) - 3;

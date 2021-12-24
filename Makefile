@@ -6,12 +6,8 @@ src/os_g:
 	CFLAGS="-O3 -g" make src/os
 	
 src/os: 					 		\
-	src/junctions.o  		\
 	src/os_mapfile.o		\
-	src/os_debbuger.o		\
-	src/os_epoll.o   		\
 	src/os_exports.o 		\
-	src/os_new.o     		\
 	src/os_wordump.o 		
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
@@ -27,8 +23,13 @@ src/os: 					 		\
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
-src/a_cycle.arsi: src/a_cycle.oars src/a_debugger.oars src/jmp.bin
+
+src/a_cycle.arsi: src/a_cycle.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
 	cat $^ > $@
+
+src/a_junctions.arsi: src/a_junctions.oars src/a_next.oars src/jmp.bin
+	cat $^ > $@
+
 src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
 src/a_test_socket.arsi: src/a_test_socket.oars src/a_epoll.oars src/a_debugger.oars src/jmp.bin
