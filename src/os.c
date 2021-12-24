@@ -27,12 +27,27 @@ int main(int argc, char **argv) {
   bark(filename, os_exports, Main, σ);
 }
 
+N(os_wordump) {
+  printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
+  long i = 0;
+  while (i < α) {
+    printf("%016lx ", ο[i].Q);
+    if (++i < α)
+      printf("%016lx\n", ο[i].Q);
+    else
+      printf("\n");
+    i++;
+  }
+  C(1);
+}
+
 // clang-format off
 static void m_gor(void *s, void(a)(), void(o)()) { o(s); }
 E(m_gor,
 bark, bark,                  L)E(L,
 free, free,                  L)E(L,
 malloc, malloc,              L)E(L,
+os_wordump, os_wordump,      L)E(L,
 printf, printf,     os_exports);
 // clang-format on
 
