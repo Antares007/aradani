@@ -1,10 +1,26 @@
 #include "arsi.h"
 // clang-format off
-IN(0,
-and,                    L)IN(L,
+int(*print)(const char*, ...);I(0,
+printf, print,          L)IN(L,
 //
 os_next,                L)IN(L,
-os_wordump,        import);
+//
+and,                    L)IN(L,
+s_pith,            import);
+
+N(os_wordump) {
+  print("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
+  long i = 0;
+  while (i < α) {
+    print("%016lx ", ο[i].Q);
+    if (++i < α)
+      print("%016lx\n", ο[i].Q);
+    else
+      print("\n");
+    i++;
+  }
+  C(1);
+}
 
 N(qsort);
 void swap(long *a, long *b) {
@@ -54,7 +70,15 @@ N(მთავარი) {
   // A2(6, 9) C(1);
 }
 
+void init() { 
+  p_t *σ = (void*)s_pith, *ο = σ[0].v;
+  q_t α = σ[1].q, ρ = σ[2].q;
+  ο[α++].v = მთავარი;
+  ο[α++].v = and;
+  σ[1].q = α;
+  σ[2].q = ρ;
+}
+
 // clang-format off
 EN(tail,          
-qsort,                  L)EN(L,
-მთავარი,           export);
+s_pith,           export);

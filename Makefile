@@ -21,7 +21,7 @@ OBJCOPY=objcopy
 src/a_cycle.arsi: src/a_cycle.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
 	cat $^ > $@
 
-src/a_junctions.arsi: src/a_junctions.oars src/a_next.oars src/jmp.bin
+src/a_quick_sort.arsi: src/a_quick_sort.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
 	cat $^ > $@
 
 src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin
