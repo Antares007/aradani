@@ -2,13 +2,7 @@ CC|=clang
 LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar
 OBJCOPY=objcopy
-src/os_g:
-	CFLAGS="-O3 -g" make src/os
-	
-src/os: 					 		\
-	src/os_mapfile.o		\
-	src/os_exports.o 		\
-	src/os_wordump.o 		
+
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.A
