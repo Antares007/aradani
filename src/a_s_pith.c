@@ -1,10 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(0,
-and,                                         L)IN(L,
-and2,                                        L)IN(L,
-//
-ls_export,                                   L)int(*print)(const char*, ...);I(L,
+int(*print)(const char*, ...);I(0,
 printf, print,                          import);
 // clang-format on
 
