@@ -19,8 +19,8 @@ mkdrain,                    L)IN(L,
 os_bind,                    L)IN(L,
 os_listen,                  L)IN(L,
 os_next,                    L)IN(L,
-os_socket,                  L)n_t init;I(L,
-მთავარი, init,         import);
+os_socket,                  L)n_t init2;I(L,
+მთავარი, init2,         import);
 
 NP(on_data) {
   R(Q_t, nread);
@@ -65,7 +65,7 @@ NP(sink    ) {
 }
 NP(მთავარი) {
   // A2(export, ls_export) O;
-  A12(init,
+  A12(init2,
       os_socket, and,
       "127.0.0.1", 7000, os_bind, and3,
       on_connection, mkdrain,     and2,

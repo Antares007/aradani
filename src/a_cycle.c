@@ -1,9 +1,10 @@
 #include "arsi.h"
 // clang-format off
-int(*print)(const char*, ...);I(0,
+IN(0,
+os_delete,             L)IN(L,
+os_new,                L)int(*print)(const char*, ...);I(L,
 printf, print,         L)IN(L,
 //
-os_new,                L)IN(L,
 os_next,               L)IN(L,
 os_queue,              L)IN(L,
 //

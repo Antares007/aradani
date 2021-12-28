@@ -5,11 +5,7 @@
 
 // clang-format off
 int   (*print)(const char*, ...);
-void* (*alloc)(size_t __size);
-void  (*unalloc)(void*);
 I(0, 
-free, unalloc,              L)I(L,
-malloc, alloc,              L)I(L,
 printf, print,         import);
 
 typedef struct { QUEUE q; Q_t α; p_t *σ; p_t ο[12]; } queue_paper_t;
@@ -51,26 +47,6 @@ N(os_queue) {
   QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
   C(1);
 }
-N(os_new) {
-  R(Q_t, state_count);
-  R(Q_t, word_count);
-  p_t *nο = alloc((word_count + state_count) * sizeof(void*));
-  p_t *nσ = nο + (word_count + state_count - 3);
-  Q_t nα = 0;
-  q_t nρ = -state_count;
-  nσ[--nρ].c = ο[--α].c;
-  nσ[--nρ].c = ο[--α].c;
-  nσ[--nρ].c = ο[--α].c;
-  nσ[0].v = nο;
-  nσ[1].Q = nα;
-  nσ[2].q = nρ;
-  A(nσ) C(1);
-}
-N(os_delete) {
-  R(p_t *, nσ);
-  unalloc(nσ[0].v);
-  C(1);
-}
 
 N(ray_not) { print("ray_not σ:%p α:%lu ρ:%ld\n", σ, α, ρ); }
 N(ray_and) { print("ray_and σ:%p α:%lu ρ:%ld\n", σ, α, ρ); os_next(T()); }
@@ -89,8 +65,6 @@ void init() { init_queue(); init_pith(); }
 
 // clang-format off
 EN(tail,
-os_delete,                                   L)EN(L,
-os_new,                                      L)EN(L,
 os_next,                                     L)EN(L,
 os_queue,                                    L)E(L,
 s_pith, ο + sizeof(ο) / sizeof(*ο) - 3, export)
