@@ -25,6 +25,7 @@ N(os_next) {
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
     return C(0);
+  σ[1].Q = α, σ[2].q = ρ;
   QUEUE_REMOVE(q);
   queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
   p->q[0] = 0;
