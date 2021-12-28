@@ -14,11 +14,7 @@ int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 typedef void (*m_t)(void *, void (*)(), void (*)());
-
 static int imported = 0;
-void import_none(void **s, const char *name, void *addr, m_t ie) {
-  imported = 1, init(), export(s[0], s[1], s[2]);
-}
 static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
 #define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
   void ThisImport(void **s, const char *name, void *addr, m_t ie) {            \
