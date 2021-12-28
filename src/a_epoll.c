@@ -1,6 +1,24 @@
 #include "arsi.h"
 // clang-format off
 IN(0,
+l_accept,             L)IN(L,
+l_address,            L)IN(L,
+l_bind,               L)IN(L,
+l_epoll_create,       L)IN(L,
+l_epoll_ctl,          L)IN(L,
+l_epoll_wait,         L)IN(L,
+l_listen,             L)IN(L,
+l_read,               L)IN(L,
+l_setnoblock,         L)IN(L,
+l_socket,             L)IN(L,
+ls_export,            L)IN(L,
+os_new,               L)IN(L,
+os_wordump,           L)int(*print)(const char*, ...);I(L,
+printf, print,        L)n_t os_next_org;I(L,
+//
+os_next, os_next_org, L)IN(L,
+os_queue,             L)IN(L,
+//
 and,                  L)IN(L,
 and2,                 L)IN(L,
 and3,                 L)IN(L,
@@ -16,24 +34,7 @@ or3,                  L)IN(L,
 or4,                  L)IN(L,
 or6,                  L)IN(L,
 //
-l_accept,             L)IN(L,
-l_address,            L)IN(L,
-l_bind,               L)IN(L,
-l_epoll_create,       L)IN(L,
-l_epoll_ctl,          L)IN(L,
-l_epoll_wait,         L)IN(L,
-l_listen,             L)IN(L,
-l_read,               L)IN(L,
-l_setnoblock,         L)IN(L,
-l_socket,             L)IN(L,
-ls_export,            L)IN(L,
-os_new,               L)n_t os_next_org;I(L,
-os_next, os_next_org, L)IN(L,
-os_queue,             L)IN(L,
-os_wordump,           L)int(*print)(const char*, ...);I(L,
-printf, print,        L)IN(L,
-//
-debugger,        import);
+s_pith,           import);
 
 #include <arpa/inet.h>
 #include <sys/epoll.h>
@@ -143,6 +144,10 @@ NP(server_word) {
 
 NP(set_epoll_fd) { R(Q_t, fd); epoll_fd = fd; C(1); }
 NP(მთავარი) { A4(3, l_epoll_create, set_epoll_fd, and) O; }
+
+N(updater) { A2(მთავარი, and) C(1); }
+void init() { updateσ(s_pith, updater); }
+
 NP(sock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
@@ -199,4 +204,5 @@ os_bind,                L)EN(L,
 os_listen,              L)EN(L,
 os_next,                L)EN(L,
 os_socket,              L)EN(L,
-მთავარი,           export);
+//
+s_pith,            export);

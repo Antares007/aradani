@@ -30,10 +30,21 @@ src/a_cycle.arsi: src/a_cycle.oars src/a_junctions.oars src/a_next.oars src/jmp.
 src/a_quick_sort.arsi: src/a_quick_sort.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
 	cat $^ > $@
 
-src/a_epoll.arsi: src/a_epoll.oars src/a_debugger.oars src/jmp.bin
+src/a_epoll.arsi: \
+	src/a_epoll.oars \
+	src/a_junctions.oars \
+	src/a_next.oars \
+	src/jmp.bin 
 	cat $^ > $@
-src/a_test_socket.arsi: src/a_test_socket.oars src/a_epoll.oars src/a_debugger.oars src/jmp.bin
+
+src/a_test_socket.arsi: \
+	src/a_test_socket.oars \
+	src/a_epoll.oars \
+	src/a_junctions.oars \
+	src/a_next.oars \
+	src/jmp.bin
 	cat $^ > $@
+
 src/a_stream_example.arsi: src/a_stream_example.oars src/a_debugger.oars src/jmp.bin
 	cat $^ > $@
 src/a_%.arsi: src/a_%.oars src/jmp.bin

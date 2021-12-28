@@ -1,6 +1,12 @@
 #include "arsi.h"
 // clang-format off
 IN(0,
+ls_export,                  L)IN(L,
+os_new,                     L)int(*print)(const char*, ...);I(L,
+printf, print,              L)IN(L,
+//
+os_queue,                   L)IN(L,
+//
 and,                        L)IN(L,
 and2,                       L)IN(L,
 and3,                       L)IN(L,
@@ -10,17 +16,13 @@ not,                        L)IN(L,
 notand,                     L)IN(L,
 or,                         L)IN(L,
 //
-ls_export,                  L)IN(L,
-os_new,                     L)IN(L,
-os_queue,                   L)int(*print)(const char*, ...);I(L,
-printf, print,              L)IN(L,
-//
 mkdrain,                    L)IN(L,
 os_bind,                    L)IN(L,
 os_listen,                  L)IN(L,
 os_next,                    L)IN(L,
-os_socket,                  L)n_t init2;I(L,
-მთავარი, init2,         import);
+os_socket,                  L)IN(L,
+//
+s_pith,                import);
 
 NP(on_data) {
   R(Q_t, nread);
@@ -64,14 +66,15 @@ NP(sink    ) {
   A6(sink_or, sink_and, sink_not, 0x1000, wordCountOf(struct sink_state_s), os_new) O;
 }
 NP(მთავარი) {
-  // A2(export, ls_export) O;
-  A12(init2,
-      os_socket, and,
+  A10(os_socket,
       "127.0.0.1", 7000, os_bind, and3,
       on_connection, mkdrain,     and2,
       os_listen,                  and) X;
 }
 
+N(updater) { A2(მთავარი, and) C(1); }
+void init() { updateσ(s_pith, updater); }
+
 // clang-format off
 EN(tail,          
-მთავარი,               export);
+s_pith,                export);
