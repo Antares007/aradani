@@ -27,7 +27,7 @@ printf, printf,  os_exports);
 // clang-format on
 
 
-N(Main) { printf("Main\n"), O; }
+N(Main) { O; }
 N(print_error) { printf("error\n"); }
 
 int main(int argc, char **argv) {
