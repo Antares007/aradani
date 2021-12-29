@@ -3,24 +3,32 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
-src/a_cycle.arsi: src/a_cycle.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
-	cat $^ > $@
-
-src/a_quick_sort.arsi: src/a_quick_sort.oars src/a_junctions.oars src/a_next.oars src/jmp.bin
-	cat $^ > $@
-
-src/a_test_socket.arsi: \
-	src/a_test_socket.oars \
-	src/a_epoll.oars \
-	src/a_junctions.oars \
-	src/a_next.oars \
+src/a_cycle.arsi: 				\
+	src/a_cycle.oars 				\
+	src/a_junctions.oars 		\
+	src/a_next.oars 				\
 	src/jmp.bin
 	cat $^ > $@
 
-src/os: \
-	src/os.c \
-	src/os_exports.o \
-	src/os_exports_bark.o \
+src/a_quick_sort.arsi: 		\
+	src/a_quick_sort.oars 	\
+	src/a_junctions.oars 		\
+	src/a_next.oars 				\
+	src/jmp.bin
+	cat $^ > $@
+
+src/a_test_socket.arsi: 	\
+	src/a_test_socket.oars 	\
+	src/a_epoll.oars 				\
+	src/a_junctions.oars 		\
+	src/a_next.oars 				\
+	src/jmp.bin
+	cat $^ > $@
+
+src/os: 									\
+	src/os.c 								\
+	src/os_exports.o 				\
+	src/os_exports_bark.o 	\
 	src/os_exports_epoll.o
 
 %.o: %.c
