@@ -2,7 +2,7 @@
 #include "oars.h"
 #include <stdio.h>
 
-void bark(const char *name, void *tail, n_t nargo, p_t *σ);
+void bark(const char *name, void *tail, void(ok)(), void(err)());
 
 // clang-format off
 static void m_gor(void *s, void(a)(), void(o)()) { o(s); }
@@ -26,9 +26,13 @@ os_wordump,               L)E(L,
 printf, printf,  os_exports);
 // clang-format on
 
-
-N(Main) { O; }
-N(print_error) { printf("error\n"); }
+void ok(p_t *σ) {
+  p_t *ο = σ[0].v;
+  Q_t α = σ[1].Q;
+  q_t ρ = σ[2].q;
+  O;
+}
+void err() { printf("error\n"); }
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -36,9 +40,5 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *filename = argv[1];
-  p_t ο[4], *σ = ο + sizeof(ο) / sizeof(*ο) - 3;
-  q_t α = 0, ρ = 0;
-  ο[α++].v = print_error;
-  σ[0].v = ο, σ[1].Q = α, σ[2].q = ρ;
-  bark(filename, os_exports, Main, σ);
+  bark(filename, os_exports, ok, err);
 }

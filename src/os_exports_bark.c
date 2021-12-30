@@ -19,25 +19,12 @@ void *mapfile(const char *filename, void *pith) {
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
 }
-void ray_or(void *s) { printf("We can't find s_pith.\n"); }
-void ray_and(n_t nargo, const char *name, p_t *σ, void(ie)()) {
-  if (strcmp("s_pith", name) == 0) {
-    printf("Found 's_pith,' at %p so let's go.\n", σ);
-    p_t *ο = σ[0].v;
-    Q_t α = σ[1].Q;
-    q_t ρ = σ[2].q;
-    nargo(ο, α, ρ, σ);
-  } else
-    ie(nargo, ray_and, ray_or);
+typedef void (*f_t)();
+void ray_err(f_t *s) { s[1](); }
+void ray_and(f_t *s, const char *name, p_t *σ, void(ie)()) {
+  (strcmp("s_pith", name) == 0) ? s[0](σ) : ie(s, ray_and, ray_err);
 }
-void bark(const char *name, void *tail, n_t nargo, p_t *σ) {
+void bark(const char *name, void *tail, f_t ok, f_t err) {
   void (*head)() = mapfile(name, tail);
-  if (head == 0) {
-    p_t *ο = σ[0].v;
-    Q_t α = σ[1].Q;
-    q_t ρ = σ[2].q;
-    O;
-  } else
-    head(nargo, ray_and, ray_or);
+  (head == 0) ? err() : head((f_t[]){ok, err}, ray_and, ray_err);
 }
-
