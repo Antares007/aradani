@@ -36,11 +36,11 @@ NP(on_connection) {
 }
 
 NP(მთავარი_test) {
-  //A2(export, ls_export) O;
-  A10(os_socket,
-      "127.0.0.1", 7000, os_bind, and3,
-      on_connection, mkdrain, and2,
-      os_listen, and) O;
+  A2(export, ls_export) O;
+  //A10(os_socket,
+  //    "127.0.0.1", 7000, os_bind, and3,
+  //    on_connection, mkdrain, and2,
+  //    os_listen, and) O;
 }
 
 N(updater) { A2(მთავარი_test, and) C(1); }

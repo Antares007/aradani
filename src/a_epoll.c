@@ -133,32 +133,37 @@ NP(server_word) {
 NP(set_epoll_fd) { R(Q_t, fd); epoll_fd = fd; C(1); }
 NP(მთავარი_epoll) { A4(3, l_epoll_create, set_epoll_fd, and) O; }
 
-// NP(os_next_epoll_wait) {
-//   A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
-//      0, process_events, and2) O;
-// }
+NP(os_next_epoll_wait) {
+  A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
+     0, process_events, and2) O;
+}
 // NP(queue_epoll_wait)   {
 //   A6(os_next_epoll_wait, os_next, and, σ[4].v, 3, os_queue) O;
 // }
 // NP(os_next) {
 //   A5(os_next_org, os_next_epoll_wait, os_next_org, and, or3) O;
 // }
-N(updater) { A2(მთავარი_epoll, and) C(1); }
-void init() { updateσ(s_pith, updater); }
-// p_t ο[512];
-// p_t *s_pith;
-// static void init_pith() {
-//   p_t *σ = s_pith = ο + sizeof(ο) / sizeof(*ο) - 4;
-//   q_t α = 0, ρ = 0;
-//   σ[--ρ].v = ray_not;
-//   σ[--ρ].v = ray_and;
-//   σ[--ρ].v = ray_or;
-//   ο[α++].v = seven;
-//   σ[0].v = ο;
-//   σ[1].Q = α;
-//   σ[2].q = ρ;
-//   σ[3].v = σ;
-// }
+
+NP(d3c2) { ρ += 3, C(2); }
+NP(epoll_next) { ρ += 3, os_next_epoll_wait(T()); }
+
+void init() { 
+  p_t *σ   = (void*)s_pith;
+  p_t *ο   = σ[0].v;
+  Q_t  α   = σ[1].Q;
+  q_t  ρ   = σ[2].q;
+
+  ο[α++].c = მთავარი_epoll;
+  ο[α++].c = and;
+
+  n_t os_next = σ[ρ + 1].c;
+
+  σ[--ρ].c = d3c2;
+  σ[--ρ].c = os_next;
+  σ[--ρ].c = epoll_next;
+
+  σ[1].Q   = α; σ[2].q   = ρ;
+}
 
 NP(sock_or) {
   R(p_t *, oσ);
