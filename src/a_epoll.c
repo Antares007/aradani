@@ -14,9 +14,8 @@ l_socket,             L)IN(L,
 ls_export,            L)IN(L,
 os_new,               L)IN(L,
 os_wordump,           L)int(*print)(const char*, ...);I(L,
-printf, print,        L)n_t os_next_org;I(L,
+printf, print,        L)IN(L,
 //
-os_next, os_next_org, L)IN(L,
 os_queue,             L)IN(L,
 //
 and,                  L)IN(L,
@@ -65,7 +64,6 @@ NP(process_events) {
   if (i == ret) C(1);
   else A3(ret, i, S(struct state_s, sσ)->word) O;
 }
-N(os_next);
 N(god) { C(1); }
 NP(nread) {
   R(p_t*, cσ);
@@ -73,7 +71,7 @@ NP(nread) {
   A14(0, c->fd, l_read,
       1, god,
       2, god,
-      3, cσ, epoll_mod_in, σ, 2, os_queue, not2and2or6) X;
+      3, cσ, epoll_mod_in, σ, 2, os_queue, not2and2or6) O;
 }
 NP(client_word) {
   R(q_t, i);
@@ -83,16 +81,6 @@ NP(client_word) {
   A9(cσ, nread, c->dσ, 2, os_queue, ret, i + 1, process_events, and3) O;
 }
 
-NP(os_next_epoll_wait) {
-  A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
-     0, process_events, and2) O;
-}
-NP(queue_epoll_wait)   {
-  A6(os_next_epoll_wait, os_next, and, σ[4].v, 3, os_queue) O;
-}
-NP(os_next) {
-  A5(os_next_org, os_next_epoll_wait, os_next_org, and, or3) O;
-}
 
 //The sink MUST be greeted back with a callbag payload
 //that is either the source itself
@@ -101,7 +89,7 @@ NP(client_socket_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
-  A2(σ, epoll_add_in) X;
+  A2(σ, epoll_add_in) O;
 }
 //Window of valid deliveries:
 //A callbag MUST NOT be delivered data before it has been greeted
@@ -143,17 +131,41 @@ NP(server_word) {
 
 
 NP(set_epoll_fd) { R(Q_t, fd); epoll_fd = fd; C(1); }
-NP(მთავარი) { A4(3, l_epoll_create, set_epoll_fd, and) O; }
+NP(მთავარი_epoll) { A4(3, l_epoll_create, set_epoll_fd, and) O; }
 
-N(updater) { A2(მთავარი, and) C(1); }
+// NP(os_next_epoll_wait) {
+//   A8(epoll_fd, events, MAX_EVENT_NUMBER, -1, l_epoll_wait,
+//      0, process_events, and2) O;
+// }
+// NP(queue_epoll_wait)   {
+//   A6(os_next_epoll_wait, os_next, and, σ[4].v, 3, os_queue) O;
+// }
+// NP(os_next) {
+//   A5(os_next_org, os_next_epoll_wait, os_next_org, and, or3) O;
+// }
+N(updater) { A2(მთავარი_epoll, and) C(1); }
 void init() { updateσ(s_pith, updater); }
+// p_t ο[512];
+// p_t *s_pith;
+// static void init_pith() {
+//   p_t *σ = s_pith = ο + sizeof(ο) / sizeof(*ο) - 4;
+//   q_t α = 0, ρ = 0;
+//   σ[--ρ].v = ray_not;
+//   σ[--ρ].v = ray_and;
+//   σ[--ρ].v = ray_or;
+//   ο[α++].v = seven;
+//   σ[0].v = ο;
+//   σ[1].Q = α;
+//   σ[2].q = ρ;
+//   σ[3].v = σ;
+// }
 
 NP(sock_or) {
   R(p_t *, oσ);
   struct state_s *s = S(struct state_s, σ);
   s->dσ = oσ;
   A9(epoll_fd, EPOLL_CTL_ADD, s->fd, σ, (EPOLLIN | EPOLLET), l_epoll_ctl,
-     s->fd, l_listen, and2) X;
+     s->fd, l_listen, and2) O;
 }
 NP(sock_and) {}
 NP(sock_not) {}
@@ -185,12 +197,12 @@ NP(os_listen) {
 NP(drain_or) {
   R(Q_t, nread);
   print("drain_or  - α:%ld nread:%ld\n", α, nread);
-  α = 0, os_next(T());
+  α = 0, C(1);
 }
 NP(drain_not) {
   R(Q_t, nread);
   print("drain_not - α:%ld nread:%ld\n", α, nread);
-  α = 0, os_next(T());
+  α = 0, C(1);
 }
 NP(mkdrain) {
   R(n_t, drain_and);
@@ -202,7 +214,6 @@ EN(tail,
 mkdrain,                L)EN(L,
 os_bind,                L)EN(L,
 os_listen,              L)EN(L,
-os_next,                L)EN(L,
 os_socket,              L)EN(L,
 //
 s_pith,            export);
