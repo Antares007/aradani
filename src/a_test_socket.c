@@ -5,8 +5,6 @@ ls_export,                  L)IN(L,
 os_new,                     L)int(*print)(const char*, ...);I(L,
 printf, print,              L)IN(L,
 //
-os_queue,                   L)IN(L,
-//
 and,                        L)IN(L,
 and2,                       L)IN(L,
 and3,                       L)IN(L,
@@ -15,6 +13,8 @@ and4,                       L)IN(L,
 not,                        L)IN(L,
 notand,                     L)IN(L,
 or,                         L)IN(L,
+//
+os_queue,                   L)IN(L,
 //
 mkdrain,                    L)IN(L,
 os_bind,                    L)IN(L,

@@ -72,11 +72,11 @@
            D3_D##PcNot##_SO##PcAnd##_D##PcOr##_O,                              \
            D3_D##PcNot##_D##PcAnd##_SO##PcOr##_O);                             \
   EN(Tail, Name, Head)
-IN(0,
-s_pith,                          import);
 
-void init() {
+void import(void **s, const char *name, void *addr, m_t ie) {            
+      imported = 1, init(), export(s[0], s[1], s[2]);                        
 }
+void init() {}
 
 AND(tail,
 and,              1,                  L)     AND(L,
@@ -274,5 +274,4 @@ or3,              3,                  L)      OR(L,
 or4,              4,                  L)      OR(L,
 or5,              5,                  L)      OR(L,
 or6,              6,                  L)      OR(L,
-or7,              7,                  L)      EN(L,
-s_pith,                          export);
+or7,              7,             export);

@@ -3,9 +3,9 @@
 IN(0,
 os_wordump,             L)IN(L,
 //
-os_next,                L)IN(L,
-//
 and,                    L)IN(L,
+//
+os_next,                L)IN(L,
 //
 s_pith,            import);
 

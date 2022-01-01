@@ -16,8 +16,6 @@ os_new,               L)IN(L,
 os_wordump,           L)int(*print)(const char*, ...);I(L,
 printf, print,        L)IN(L,
 //
-os_queue,             L)IN(L,
-//
 and,                  L)IN(L,
 and2,                 L)IN(L,
 and3,                 L)IN(L,
@@ -32,6 +30,8 @@ or,                   L)IN(L,
 or3,                  L)IN(L,
 or4,                  L)IN(L,
 or6,                  L)IN(L,
+//
+os_queue,             L)IN(L,
 //
 s_pith,           import);
 
@@ -156,11 +156,11 @@ void init() {
   ο[α++].c = მთავარი_epoll;
   ο[α++].c = and;
 
-  n_t os_next = σ[ρ + 1].c;
+  //n_t os_next = σ[ρ + 1].c;
 
-  σ[--ρ].c = d3c2;
-  σ[--ρ].c = os_next;
-  σ[--ρ].c = epoll_next;
+  //σ[--ρ].c = d3c2;
+  //σ[--ρ].c = os_next;
+  //σ[--ρ].c = epoll_next;
 
   σ[1].Q   = α; σ[2].q   = ρ;
 }

@@ -5,12 +5,12 @@ os_delete,                L)IN(L,
 os_new,                   L)int(*print)(const char*, ...);I(L,
 printf, print,            L)IN(L,
 //
-os_next,                  L)IN(L,
-os_queue,                 L)IN(L,
-//
 and,                      L)IN(L,
 and2,                     L)IN(L,
 or,                       L)IN(L,
+//
+os_next,                  L)IN(L,
+os_queue,                 L)IN(L,
 //
 s_pith,              import);
 
