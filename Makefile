@@ -7,14 +7,14 @@ src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
 	src/a_next.oars 	     \
 	src/a_junctions.oars   \
-	src/jmp.bin
+	src/goto.bin
 	cat $^ > $@
 
 src/a_quick_sort.arsi:   \
 	src/a_quick_sort.oars  \
 	src/a_next.oars        \
 	src/a_junctions.oars   \
-	src/jmp.bin
+	src/goto.bin
 	cat $^ > $@
 
 src/a_test_socket.arsi:  \
@@ -22,7 +22,7 @@ src/a_test_socket.arsi:  \
 	src/a_epoll.oars       \
 	src/a_next.oars        \
 	src/a_junctions.oars   \
-	src/jmp.bin
+	src/goto.bin
 	cat $^ > $@
 
 src/os:                         \
@@ -34,21 +34,31 @@ src/os:                         \
 
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
-%.bin: %.A
+%.bin: %.asm
 	nasm -f bin $^ -o $@
 %.oars: %.c
+	@#compile as whole
 	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3 -fno-stack-clash-protection -fno-stack-protector
-	@# place "head" nargo body text at begining and "tail" nargo text at end.
+	@# use linker script to place
+	@# "head" function body text at the begining and
+	@# "tail" - text at the end.
 	@${LD} -T arsi.ld $@ -o $@.elf
 	@# copy text from elf formated object file to pure text (binary) file. 
 	@${OBJCOPY} -O binary -j .text.* -j .text -j .data $@.elf $@.binp
-	@# remove tail nargo body text. just 1 byte form behaind.
+	@# remove 1 byte (ret) instruction from "tail" function body
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
-src/a_%.arsi: src/a_%.oars src/jmp.bin
+src/a_%.arsi: src/a_%.oars src/goto.bin
 	cat $^ > $@
 clean:
-	rm -f src/*.bin src/*.oars src/*.o src/*.arsi 			\
-	src/os src/epoll_client src/epoll_server src/seven 	
+	rm -f              \
+		src/*.bin        \
+		src/*.oars       \
+		src/*.o          \
+		src/*.arsi       \
+		src/os           \
+		src/epoll_client \
+		src/epoll_server \
+		src/seven 	
 .PHONY: clean 
