@@ -14,15 +14,15 @@ N(os_wordump) {
   }
   C(1);
 }
-#define RAY_FORWARD_TO_PARENT(r)                                                       \
-  N(ray_forward_to_parent_##r) {                                                       \
+#define RAY_FORWARD_TO_PARENT(r)                                               \
+  N(ray_forward_to_parent_##r) {                                               \
     p_t *pσ = σ[3].v;                                                          \
     pσ[pσ[2].q + r].c(pσ[0].v, pσ[1].Q, pσ[2].q, pσ);                          \
   }
 RAY_FORWARD_TO_PARENT(2)
 RAY_FORWARD_TO_PARENT(1)
 RAY_FORWARD_TO_PARENT(0)
-#define RAY_ALIGN_TO_FORWARDER(r)                                                      \
+#define RAY_ALIGN_TO_FORWARDER(r)                                              \
   N(ray_align_to_forwarder_##r) { ρ += 6, σ[ρ - 3 + r].c(T()); }
 RAY_ALIGN_TO_FORWARDER(2)
 RAY_ALIGN_TO_FORWARDER(1)

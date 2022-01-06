@@ -45,9 +45,12 @@ N(c_and) {
 N(c_not)     { print("c_not\n"); }
 N(mconsumer) { A6(c_or, c_and, c_not, 0x700, 0x0, os_new) O; }
 
-N(მთავარი) { A8(0, mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
+N(მთავარი) { A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
 
-N(updater) { A2(მთავარი, and) C(1); }
+N(updater) {
+  A3(0, მთავარი, and2)
+  C(1);
+}
 void init() { updateσ(s_pith, updater); }
 
 EN(tail,
