@@ -27,7 +27,6 @@ src/a_test_socket.arsi:  \
 
 src/os:                         \
 	src/os.c               \
-	src/a_junctions.o      \
 	src/os_exports.o       \
 	src/os_exports_bark.o  \
 	src/os_exports_epoll.o
