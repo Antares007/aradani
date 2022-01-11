@@ -4,6 +4,15 @@
 
 void bark(const char *name, void *tail, void(ok)(), void(err)());
 
+N(bark_n) {
+  R(m_t, export);
+  R(n_t, name);
+  export(0, 0, 0);
+  name(T());
+}
+
+p_t *σ;
+
 // clang-format off
 static void m_gor(void *s, void(a)(), void(o)()) { o(s); }
 E(m_gor,
@@ -22,8 +31,8 @@ la_stdin,                 L)FEN(L,
 ls_export,                L)FEN(L,
 os_delete,                L)FEN(L,
 os_new,                   L)FEN(L,
-os_wordump,               L)E(L,
-printf, printf,  os_exports);
+os_wordump,               L) E (L,
+printf, printf,           L) ES(L);
 // clang-format on
 
 void ok(p_t *σ) {
@@ -40,5 +49,5 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *filename = argv[1];
-  bark(filename, os_exports, ok, err);
+  bark(filename, export, ok, err);
 }

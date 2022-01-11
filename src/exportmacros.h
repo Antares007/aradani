@@ -1,4 +1,5 @@
 #pragma once
+typedef void (*m_t)(void *, void (*)(), void (*)());
 #define L CAT(expimp_, __LINE__)
 #define E(Tail, Name, Addr, Head)                                              \
   void Head(void *s, void(and_ray)(), void(or_ray)()) {                        \
@@ -6,3 +7,4 @@
   }
 #define EN(Tail, Name, Head) E(Tail, Name, Name, Head)
 #define FEN(Tail, Name, Head) N(Name);EN(Tail, Name, Head)
+#define ES(Tail) EN(Tail, σ, export)

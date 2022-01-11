@@ -13,7 +13,6 @@ int cmp(const char *s1, const char *s2) {
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
-typedef void (*m_t)(void *, void (*)(), void (*)());
 static int imported = 0;
 static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
 #define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
@@ -27,6 +26,9 @@ static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
     } else                                                                     \
       ie(s, ThisImport, imp_err);                                              \
   }
+#define IS(Tail)                                                               \
+  p_t *σ;                                                                      \
+  I(Tail, σ, σ, import)
 #define IN(NextImport, ImportName, ThisImport)                                 \
   n_t ImportName;                                                              \
   I(NextImport, ImportName, ImportName, ThisImport)
