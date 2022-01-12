@@ -1,5 +1,24 @@
-#include "oars.h"
 #include <stdio.h>
+typedef struct p_s {
+  union {
+    void (*c)(struct p_s *, unsigned long, long);
+    void *v;
+    char b;
+    short w;
+    int d;
+    long q;
+    unsigned char B;
+    unsigned short W;
+    unsigned int D;
+    unsigned long Q;
+  };
+} p_t;
+#define N(n) void n(p_t *ο, unsigned long α, long ρ)
+#define A(a) ο[α++].v = (void *)(a),
+#define R(T, n) T n = (T)ο[--α].v
+#define C(r) ο[ρ + (r)].c(ο, α, ρ)
+#define O ο[α - 1].c(ο, α - 1, ρ)
+#include "a20.h"
 // clang-format off
 N(one) {
   A(1) C(1);
@@ -13,18 +32,18 @@ N(jara) {
   ρ += 3, ρ += 1, C(2);
 }
 N(cda) {
-  ρ += 3, A(σ[ρ++].v) O;
+  ρ += 3, A(ο[ρ++].v) O;
 }
 N(jan) {
   ρ += 3, ρ += 1, C(0);
 }
 N(da) {
-  σ[--ρ].c = ο[--α].c;
-  σ[--ρ].v = jara;
-  σ[--ρ].v = cda;
-  σ[--ρ].v = jan;
+  ο[--ρ].c = ο[--α].c;
+  ο[--ρ].v = jara;
+  ο[--ρ].v = cda;
+  ο[--ρ].v = jan;
   O;
-};
+}
 N(two) {
   A5(one, one, da, add, da) O;
 }
@@ -53,12 +72,12 @@ N(ray_da) {
 N(ray_an) {
 }
 int main() {
-  p_t o[64], *s = o + (sizeof(o) / sizeof(*o));
-  long a = 0, r = 0;
-  s[--r].c = ray_ara;
-  s[--r].c = ray_da;
-  s[--r].c = ray_an;
-  two(o, a, r, s);
-  seven(o, a, r, s);
-  test_gcd(o, a, r, s);
+  p_t o[64];
+  long a = 0, r = sizeof(o) / sizeof(*o);
+  o[--r].c = ray_ara;
+  o[--r].c = ray_da;
+  o[--r].c = ray_an;
+  two(o, a, r);
+  seven(o, a, r);
+  test_gcd(o, a, r);
 }
