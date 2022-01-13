@@ -5,9 +5,9 @@ printf, print,                          import);
 // clang-format on
 
 N(მთავარი) { A7(7, 7, 7, 7, 7, 7, 7) C(1);           }
-N(ray_not) { print("ray_not %p %lu %ld\n", σ, α, ρ); }
-N(ray_and) { print("ray_and %p %lu %ld\n", σ, α, ρ); }
-N(ray_or ) { print("ray_or  %p %lu %ld\n", σ, α, ρ); }
+N(ray_not) { print("ray_not %p %lu %ld\n", ο, α, ρ); }
+N(ray_and) { print("ray_and %p %lu %ld\n", ο, α, ρ); }
+N(ray_or ) { print("ray_or  %p %lu %ld\n", ο, α, ρ); }
 
 p_t ο[512];
 void init() {

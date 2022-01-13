@@ -11,7 +11,7 @@ N(bark_n) {
   name(T());
 }
 
-p_t *σ;
+p_t ο[512];
 
 // clang-format off
 static void m_gor(void *s, void(a)(), void(o)()) { o(s); }
@@ -32,7 +32,7 @@ ls_export,                L)FEN(L,
 os_delete,                L)FEN(L,
 os_new,                   L)FEN(L,
 os_wordump,               L) E (L,
-printf, printf,           L) ES(L);
+printf, printf,           L) EO(L);
 // clang-format on
 
 void ok(p_t *σ) {
@@ -49,5 +49,9 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *filename = argv[1];
+  //ο[0].v = ο;
+  //Q_t α = ο[1].Q = 0;
+  //Q_t ρ = ο[2].Q = ο[3].Q = sizeof(ο) / sizeof(*ο);
+
   bark(filename, export, ok, err);
 }

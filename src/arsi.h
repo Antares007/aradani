@@ -1,44 +1,65 @@
 #pragma once
 #include "exportmacros.h"
 #include "oars.h"
+
 void init();
-void import(void **s, const char *name, void *addr, void(ie)());
-void export(void *, void (*)(), void (*)());
+
+N(import);
+N(export);
+
 void tail() __attribute__((section(".text.end")));
-void head() __attribute__((section(".text.begin")));
-void tail(void *s, void(a)(), void(o)()) {}
-int cmp(const char *s1, const char *s2) {
+N(tail) {}
+
+static int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
     if (*s1++ == 0)
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 static int imported = 0;
-static void imp_err(void **s) { ((void (*)())s[2])(s[0]); }
+
+static N(δ2) { ρ += 4, C(2); }
+static N(δ1) { ρ += 3, A(ο[ρ++].v) O; }
+static N(δ0) { ρ += 4, C(0); }
+static N(anδ) {
+  ο[--ρ].c = ο[--α].c, ο[--ρ].v = δ2, ο[--ρ].v = δ1, ο[--ρ].v = δ0, O;
+}
+N(do_imp) {
+  R(n_t, ThisImport);
+  R(void **, ImportAddress);
+  R(const char *, ImportName);
+  R(n_t, NextImport);
+  R(n_t, ie);
+  R(void *, addr);
+  R(const char *, name);
+  if (cmp(ImportName, name) == 0) {
+    *ImportAddress = addr;
+    if (NextImport == 0) {
+      imported = 1;
+      init();
+      A(export) O;
+    } else
+      A3(ie, NextImport, anδ) O;
+  } else
+    A3(ie, ThisImport, anδ) O;
+}
 #define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
-  void ThisImport(void **s, const char *name, void *addr, m_t ie) {            \
-    if (cmp(#ImportName, name) == 0) {                                         \
-      ImportAddress = addr;                                                    \
-      if ((NextImport) == 0)                                                   \
-        imported = 1, init(), export(s[0], s[1], s[2]);                        \
-      else                                                                     \
-        ie(s, NextImport, imp_err);                                            \
-    } else                                                                     \
-      ie(s, ThisImport, imp_err);                                              \
+  N(ThisImport) {                                                              \
+    A5(NextImport, #ImportName, &ImportAddress, ThisImport, do_imp) O;         \
   }
-#define IS(Tail)                                                               \
-  p_t *σ;                                                                      \
-  I(Tail, σ, σ, import)
 #define IN(NextImport, ImportName, ThisImport)                                 \
   n_t ImportName;                                                              \
   I(NextImport, ImportName, ImportName, ThisImport)
-void head(void *s, void(and_ray)(), void(or_ray)()) {
-  volatile m_t t = tail;
-  if (imported)
-    export(s, and_ray, or_ray);
-  else
-    t(&(void *[]){s, and_ray, or_ray}, import, imp_err);
+#define IO(Tail)                                                               \
+  p_t *ο;                                                                      \
+  I(Tail, ο, ο, import)
+
+void head() __attribute__((section(".text.begin")));
+N(head) {
+  volatile n_t t = tail;
+  imported ? export(T()) : (A3(t, import, anδ) O);
 }
+
 #undef NP
 #define NP(n)                                                                  \
   N(n##p);                                                                     \
@@ -47,10 +68,3 @@ void head(void *s, void(and_ray)(), void(or_ray)()) {
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
-static N(updateσ_ray) { σ[1].q = α, σ[2].q = ρ + 3; }
-void updateσ(void*s, n_t nargo) {
-  p_t *σ = s, *ο = σ[0].v;
-  q_t  α = σ[1].q, ρ = σ[2].q;
-  σ[--ρ].v = updateσ_ray, σ[--ρ].v = updateσ_ray, σ[--ρ].v = updateσ_ray;
-  nargo(T());
-}
