@@ -2,62 +2,64 @@
 #include "exportmacros.h"
 #include "oars.h"
 
-void init();
-
-N(import);
-N(export);
-
 void tail() __attribute__((section(".text.end")));
 N(tail) {}
 
+N(init);
+N(import);
+N(export);
+
+static N(anδ);
+static N(noτ);
+static N(god) { C(1); }
+static int cmp(const char *s1, const char *s2);
+static int imported = 0;
+static N(iε) { α -= 3, imported = 1, export(T()); }
+static N(δo_imp) {
+  R(n_t, thisImp);
+  R(void **, iaddr);
+  R(const char *, iname);
+  R(n_t, prevImp);
+
+  R(n_t, export);
+  R(void *, eaddr);
+  R(const char *, ename);
+
+  A4(export, god, noτ, cmp(iname, ename) ? thisImp : (*iaddr = eaddr, prevImp))
+  anδ(T());
+}
+#define I(PrevImp, Name, Addr, ThisImp)                                        \
+  N(ThisImp) { A4(PrevImp, #Name, &Addr, ThisImp) δo_imp(T()); }
+#define IN(PrevImp, Name, ThisImp)                                             \
+  n_t Name;                                                                    \
+  I(PrevImp, Name, Name, ThisImp)
+#define IB(PrevImp)                                                            \
+  p_t *ο;                                                                      \
+  I(PrevImp, ο, ο, import)
+
+void head() __attribute__((section(".text.begin")));
+N(head) {
+  (void)δo_imp, (void)iε;
+  volatile n_t t = tail;
+  n_t nar = (imported ? export : (ο[α++].c = t, ο[α++].c = import, anδ));
+  nar(T());
+}
+
+static N(ρ4ξ2) { ρ += 4, C(2); }
+static N(ρ3α1) { ρ += 3, A(ο[ρ++].v) O; }
+static N(ρ4ξ1) { ρ += 4, C(1); }
+static N(ρ4ξ0) { ρ += 4, C(0); }
+static N(anδ) {
+  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ4ξ2, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ0, O;
+}
+static N(noτ) {
+  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ1, ο[--ρ].v = ρ4ξ0, O;
+}
 static int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
     if (*s1++ == 0)
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
-static int imported = 0;
-
-static N(δ2) { ρ += 4, C(2); }
-static N(δ1) { ρ += 3, A(ο[ρ++].v) O; }
-static N(δ0) { ρ += 4, C(0); }
-static N(anδ) {
-  ο[--ρ].c = ο[--α].c, ο[--ρ].v = δ2, ο[--ρ].v = δ1, ο[--ρ].v = δ0, O;
-}
-N(do_imp) {
-  R(n_t, ThisImport);
-  R(void **, ImportAddress);
-  R(const char *, ImportName);
-  R(n_t, NextImport);
-  R(n_t, ie);
-  R(void *, addr);
-  R(const char *, name);
-  if (cmp(ImportName, name) == 0) {
-    *ImportAddress = addr;
-    if (NextImport == 0) {
-      imported = 1;
-      init();
-      A(export) O;
-    } else
-      A3(ie, NextImport, anδ) O;
-  } else
-    A3(ie, ThisImport, anδ) O;
-}
-#define I(NextImport, ImportName, ImportAddress, ThisImport)                   \
-  N(ThisImport) {                                                              \
-    A5(NextImport, #ImportName, &ImportAddress, ThisImport, do_imp) O;         \
-  }
-#define IN(NextImport, ImportName, ThisImport)                                 \
-  n_t ImportName;                                                              \
-  I(NextImport, ImportName, ImportName, ThisImport)
-#define IO(Tail)                                                               \
-  p_t *ο;                                                                      \
-  I(Tail, ο, ο, import)
-
-void head() __attribute__((section(".text.begin")));
-N(head) {
-  volatile n_t t = tail;
-  imported ? export(T()) : (A3(t, import, anδ) O);
 }
 
 #undef NP

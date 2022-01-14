@@ -27,9 +27,9 @@ src/a_test_socket.arsi:  \
 
 src/os:                         \
 	src/os.c               \
-	src/os_exports.o       \
-	src/os_exports_bark.o  \
-	src/os_exports_epoll.o
+	src/os_exports_bark.o  
+#src/os_exports.o
+#src/os_exports_epoll.o
 
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}

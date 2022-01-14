@@ -6,4 +6,4 @@
 #define FEN(Tail, Name, Head)                                                  \
   N(Name);                                                                     \
   EN(Tail, Name, Head)
-#define EO(Tail) EN(Tail, ο, export)
+#define EB(Tail) EN(Tail, ο, export)
