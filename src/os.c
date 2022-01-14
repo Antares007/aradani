@@ -16,29 +16,35 @@ N(map_arsi) {
 }
 
 p_t ο[512];
-
 // clang-format off
-static N(got) { C(2); }
 EN(got, ο, export)
 
 N(ray_not) { printf("ray_not %lu %lu\n", α, ρ); }
 N(ray_and) { printf("ray_and %lu %lu\n", α, ρ); }
 N(ray_or ) { printf("ray_or  %lu %lu\n", α, ρ); }
-
+N(run    ) {
+  α -= 3;
+  printf("run     %lu %lu %d\n", α, ρ, ο[α+1].v == ο); O;
+}
 int main(int argc, char **argv) {
   if (argc < 2) {
     printf("Would you mind adding the 'file_name' as an argument?\n");
     return 8;
   }
   const char *file_name = argv[1];
-  ο[0].v = ο;
-  Q_t α = ο[1].Q = 0;
-  Q_t ρ = ο[2].Q = sizeof(ο) / sizeof(*ο);
+  Q_t α =  0;
+  Q_t ρ =  sizeof(ο) / sizeof(*ο);
+
+  ο[α++].c = god;
+
   ο[--ρ].c = ray_not;
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_or;
-  A3(file_name, export, map_arsi) O;
+
+  // ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
+  A5(file_name, export, map_arsi, run, anδ) O;
 }
+
 // EN(got,
 // bark,                     L)FEN(L,
 // l_accept,                 L)FEN(L,

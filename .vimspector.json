@@ -5,7 +5,7 @@
       "configuration": {
         "request": "launch",
         "program": "src/os",
-        "args": [],
+        "args": ["src/a_init_seven.arsi"],
         "cwd": "${workspaceRoot}",
         "environment": [  ],
         "externalConsole": true,

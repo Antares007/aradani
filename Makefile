@@ -9,6 +9,11 @@ src/a_cycle.arsi:        \
 	src/a_junctions.oars   \
 	src/goto.bin
 	cat $^ > $@
+src/a_init_seven.arsi:          \
+	src/a_init_seven.oars  \
+	src/a_init_seven2.oars \
+	src/goto.bin
+	cat $^ > $@
 
 src/a_quick_sort.arsi:   \
 	src/a_quick_sort.oars  \

@@ -5,21 +5,20 @@
           ο[α] MC   ο[ρ]        .           MC
              | MC   |           .           MC
      ο - NNNN○○○○○○○SSS - ο[σ]  .           MC
-               MC               .      ο[ρ] MC         
-               MC               .         | MC         
+               MC               .      ο[ρ] MC
+               MC               .         | MC
                MC               . ο - ○○○○SSSSSSSSSS - ο[σ]
-               MC               .     |     MC             
-               MC               .     ο[α]  MC             
-                                
+               MC               .     |     MC
+               MC               .     ο[α]  MC
+
    α <= ρ <= σ | ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
 M-word.       Any instruction from the CPU instruction set.
 M-text space. Continuous space in the random access memory (RAM) of a computer.
 M-text.       A bunch of M-words in the M-text space.
               Let's visualize it as a vertical line of a cross.
-OarS.         M-text space is used as two stack-like structures facing each other.
-              From "ο[0]" to "ο[α]" let's call it the N-text space,
-          and from "ο[ρ]" to "ο[σ]" let's call it S-pith.
-              Let's visualize it as a horizontal line of a cross.
+OarS.         M-text space is used as two stack-like structures facing each
+other. From "ο[0]" to "ο[α]" let's call it the N-text space, and from "ο[ρ]" to
+"ο[σ]" let's call it S-pith. Let's visualize it as a horizontal line of a cross.
 N-text.       A bunch of N-words is composed according to syntax rules.
 N-word.       Void C function with four fixed parameters "ο," "α," and "ρ."
               Next, the M-text defines the N-word, and finally,
@@ -53,7 +52,13 @@ typedef struct p_s {
 #define CAT(a, b) CAT_(a, b)
 
 #define N(n) void n(OARS)
-#define NP(n) N(n##p); N(n) { printf("%p\t%ld\t%ld\t%s\n", ο, α, ρ, #n); n##p(T()); } N(n##p)
+#define NP(n)                                                                  \
+  N(n##p);                                                                     \
+  N(n) {                                                                       \
+    printf("%p\t%ld\t%ld\t%s\n", ο, α, ρ, #n);                                 \
+    n##p(T());                                                                 \
+  }                                                                            \
+  N(n##p)
 #define T(n) n##ο, n##α, n##ρ
 #define R(T, n) T n = (T)ο[--α].v
 #define As(T, n)                                                               \
@@ -77,3 +82,23 @@ typedef unsigned int W_t;
   ((sizeof(T) +                                                                \
     ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
    sizeof(void *))
+
+static N(noτ);
+static N(gor) { C(0); }
+static N(god) { C(1); }
+static N(got) { C(2); }
+static N(ρ4ξ2) { ρ += 4, C(2); }
+static N(ρ3α1) { ρ += 3, A(ο[ρ++].v) O; }
+static N(ρ4ξ1) { ρ += 4, C(1); }
+static N(ρ4ξ0) { ρ += 4, C(0); }
+static N(anδ) {
+  (void)got;
+  (void)gor;
+  (void)god;
+  (void)noτ;
+  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ4ξ2, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ0, O;
+}
+static N(noτ) {
+  (void)anδ;
+  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ1, ο[--ρ].v = ρ4ξ0, O;
+}

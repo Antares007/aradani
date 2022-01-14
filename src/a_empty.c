@@ -1,12 +1,13 @@
 #include "arsi.h"
 
 // clang-format off
-IB(iε);
+IB(0);
 
-N(seven) { A7(7, 7, 7, 7, 7, 7, 7) C(1); }
+//N(seven) { A7(7, 7, 7, 7, 7, 7, 7) C(1); }
 
 N(init) {
-  //ο[ο[1].Q++].c = seven; 
+  //ο[α++].c = seven; 
+  C(1);
 }
 
 EB(tail);
