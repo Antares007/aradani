@@ -37,6 +37,9 @@ static N(δo_imp) {
 #define IN(PrevImp, Name, ThisImp)                                             \
   n_t Name;                                                                    \
   I(PrevImp, Name, Name, ThisImp)
+#define IF(Tail, IName, Name, Head, Ret, ...)                                  \
+  Ret (*Name)(__VA_ARGS__);                                                    \
+  I(Tail, IName, Name, Head)
 #define IB(PrevImp)                                                            \
   p_t *ο;                                                                      \
   I(PrevImp, ο, ο, import)

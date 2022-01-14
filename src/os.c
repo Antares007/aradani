@@ -17,7 +17,9 @@ N(map_arsi) {
 
 p_t ο[512];
 // clang-format off
-EN(got, ο, export)
+E(got,
+printf, printf,           L)EN(L,
+ο,                   export);
 
 N(ray_not) { printf("ray_not %lu %lu\n", α, ρ); }
 N(ray_and) { printf("ray_and %lu %lu\n", α, ρ); }
