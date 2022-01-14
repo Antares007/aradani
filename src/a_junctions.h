@@ -1,5 +1,6 @@
 #pragma once
 // clang-format off
+
 #define D1 ρ += 1,
 #define D2 ρ += 2,
 #define D3 ρ += 3,
@@ -7,14 +8,14 @@
 #define D5 ρ += 5,
 #define D6 ρ += 6,
 #define D7 ρ += 7,
-#define SO1 ο[α++].v = σ[ρ++].v,
+#define SO1 ο[α++].v = ο[ρ++].v,
 #define SO2 SO1 SO1
 #define SO3 SO2 SO1
 #define SO4 SO3 SO1
 #define SO5 SO4 SO1
 #define SO6 SO5 SO1
 #define SO7 SO6 SO1
-#define OS1 σ[--ρ].c = ο[--α].c,
+#define OS1 ο[--ρ].c = ο[--α].c,
 #define OS2 OS1 OS1
 #define OS3 OS2 OS1
 #define OS4 OS3 OS1
@@ -31,7 +32,8 @@
 #define Ray5(a, b, c, d, e)                                                    \
   static N(a##_##b##_##c##_##d##_##e) { a b c d e; }
 #define Junction(a, b, c, d, e)                                                \
-  N(a) { b σ[--ρ].v = c, σ[--ρ].v = d, σ[--ρ].v = e, O; }
+  N(a) { b ο[--ρ].v = c, ο[--ρ].v = d, ο[--ρ].v = e, O; }
+
 #define AND(Tail, Name, Pc, Head)                                              \
   Ray3(D3, D##Pc, C0);                                                         \
   Ray3(D3, SO##Pc, O);                                                         \
@@ -71,4 +73,3 @@
            D3_D##PcNot##_SO##PcAnd##_D##PcOr##_O,                              \
            D3_D##PcNot##_D##PcAnd##_SO##PcOr##_O);                             \
   EN(Tail, Name, Head)
-

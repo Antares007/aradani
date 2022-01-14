@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *file_name = argv[1];
-  Q_t α =  0;
+  Q_t α =  3;
   Q_t ρ =  sizeof(ο) / sizeof(*ο);
 
   ο[α++].c = god;
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_or;
 
-  // ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
+  ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
   A5(file_name, export, map_arsi, run, anδ) O;
 }
 

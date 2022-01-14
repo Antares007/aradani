@@ -3,10 +3,8 @@
 #include "a_junctions.h"
 
 // clang-format off
-void import(void **s, const char *name, void *addr, m_t ie) {            
-      imported = 1, init(), export(s[0], s[1], s[2]);                        
-}
-void init() {}
+IB(0);
+N(init) { C(1); }
 
 AND(tail,
 and,              1,                  L)     AND(L,
@@ -204,4 +202,4 @@ or3,              3,                  L)      OR(L,
 or4,              4,                  L)      OR(L,
 or5,              5,                  L)      OR(L,
 or6,              6,                  L)      OR(L,
-or7,              7,             export);
+or7,              7,                  L)      EB(L);
