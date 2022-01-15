@@ -2,8 +2,8 @@
 // clang-format off
 IN(0,
 os_delete,                L)IN(L,
-os_new,                   L)int(*print)(const char*, ...);I(L,
-printf, print,            L)IN(L,
+os_new,                   L)IF(L,
+printf, print,            L, int, const char*, ...)IN(L,
 //
 and,                      L)IN(L,
 and2,                     L)IN(L,
