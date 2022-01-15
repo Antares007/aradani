@@ -5,10 +5,16 @@
 
 // clang-format off
 int   (*print)(const char*, ...);
-I(0, 
+I(iε, 
 printf, print,         import);
+// clang-format on
 
-typedef struct { QUEUE q; Q_t α; p_t *σ; p_t ο[12]; } queue_paper_t;
+typedef struct {
+  QUEUE q;
+  Q_t wc;
+  p_t *targetο;
+  p_t ntext[12];
+} queue_paper_t;
 typedef void (*memcopy_t)(p_t *, p_t *);
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
 static QUEUE main_queue, temp_queue;
@@ -25,15 +31,14 @@ N(os_next) {
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
     return C(0);
-  //σ[1].Q = α, σ[2].q = ρ;
   QUEUE_REMOVE(q);
   queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
   p->q[0] = 0;
-  p_t *pσ = p->σ, *pο = pσ[0].v;
-  Q_t pα = p->α;
-  q_t pρ = pσ[2].q;
-  tablelookup[pα](pο, p->ο);
-  pο[pα - 1].c(pο, pα - 1, pρ, pσ);
+  p_t *pο = p->targetο;
+  Q_t pα = pο[1].Q + p->wc;
+  q_t pρ = pο[2].Q;
+  tablelookup[pα](&pο[pο[1].Q], p->ntext);
+  pο[pα - 1].c(pο, pα - 1, pρ);
 }
 N(os_queue) {
   R(Q_t, wc);
@@ -42,35 +47,35 @@ N(os_queue) {
   qpno++, qpno %= 1024;
   if (queue_papers[qpno].q[0])
     return C(2);
-  queue_papers[qpno].σ = nσ;
-  queue_papers[qpno].α = wc;
-  tablelookup[wc](queue_papers[qpno].ο, &ο[α -= wc]);
+  queue_papers[qpno].targetο = nσ;
+  queue_papers[qpno].wc = wc;
+  tablelookup[wc](queue_papers[qpno].ntext, &ο[α -= wc]);
   QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
   C(1);
 }
 
-N(ray_not) { print("ray_not σ:%p α:%lu ρ:%ld\n", σ, α, ρ); }
+N(ray_not) { print("ray_not ο:%p α:%lu ρ:%ld\n", ο, α, ρ); }
 N(ray_and) { os_next(T()); }
-N(ray_or ) { print("ray_or  σ:%p α:%lu ρ:%ld\n", σ, α, ρ); }
-N(seven  ) { print("seven\n");A2(7, 7) C(1); }
+N(ray_or) { print("ray_or  ο:%p α:%lu ρ:%ld\n", ο, α, ρ); }
+N(seven) {
+  print("seven\n");
+  A2(7, 7) C(1);
+}
 
 // requrcive defined OarS;
 p_t ο[512];
 p_t *s_pith;
 static void init_pith() {
-  p_t *σ = s_pith = ο + sizeof(ο) / sizeof(*ο) - 4;
-  q_t α = 0, ρ = 0;
-  σ[--ρ].v = ray_not;
-  σ[--ρ].v = ray_and;
-  σ[--ρ].v = ray_or;
+  q_t α = 4, ρ = 0;
+  ο[--ρ].v = ray_not, ο[--ρ].v = ray_and, ο[--ρ].v = ray_or;
+  ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ, ο[3].Q = sizeof(ο) / sizeof(*ο);
   ο[α++].v = seven;
-  σ[0].v = ο;
-  σ[1].Q = α;
-  σ[2].q = ρ;
-  σ[3].v = σ;
 }
 static void init_queue();
-void init() { init_queue(); init_pith(); }
+N(init) {
+  (void)init_pith, (void)init_queue;
+  C(1);
+}
 
 // clang-format off
 EN(tail,

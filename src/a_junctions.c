@@ -3,7 +3,7 @@
 #include "a_junctions.h"
 
 // clang-format off
-IB(0);
+IB(iε);
 N(init) { C(1); }
 
 AND(tail,

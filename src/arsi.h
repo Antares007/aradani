@@ -1,36 +1,25 @@
 #pragma once
 #include "exportmacros.h"
 #include "oars.h"
-
-N(tail) __attribute__((section(".text.end")));
-N(tail) {}
-
 N(init);
 N(import);
 N(export);
-
+N(tail) __attribute__((section(".text.end")));
+N(tail) {}
 static int cmp(const char *s1, const char *s2);
 static int imported = 0;
+static N(iε) { α -= 3, imported = 1, A2(init, export) anδ(T()); }
 static N(δo_imp) {
+  (void)iε;
   R(n_t, thisImp);
   R(void **, iaddr);
   R(const char *, iname);
   R(n_t, prevImp);
-
   R(n_t, prevExp);
   R(void *, eaddr);
   R(const char *, ename);
-
-  if (cmp(iname, ename) == 0) {
-    *iaddr = eaddr;
-    if (prevImp == 0) {
-      imported = 1, A2(init, export) anδ(T());
-    } else {
-      A2(prevExp, prevImp) anδ(T());
-    }
-  } else {
-    A2(prevExp, thisImp) anδ(T());
-  }
+  A2(prevExp, (cmp(iname, ename) == 0 ? *iaddr = eaddr, prevImp : thisImp))
+  anδ(T());
 }
 #define I(PrevImp, Name, Addr, ThisImp)                                        \
   N(ThisImp) { A4(PrevImp, #Name, &Addr, ThisImp) δo_imp(T()); }
@@ -47,8 +36,7 @@ static N(δo_imp) {
 N(head) __attribute__((section(".text.begin")));
 N(head) {
   (void)δo_imp;
-  volatile n_t t = tail;
-  n_t nar = (imported ? export : (ο[α++].c = t, ο[α++].c = import, anδ));
+  n_t nar = (imported ? export : (A2(tail, import) anδ));
   nar(T());
 }
 

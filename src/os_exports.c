@@ -1,29 +1,16 @@
 #include "oars.h"
 #include <stdio.h>
 #include <stdlib.h>
-N(os_wordump) {
-  printf("ο:%p α:%02ld               ρ: %02ld σ: %p\n", ο, α, ρ, σ);
-  long i = 0;
-  while (i < α) {
-    printf("%016lx ", ο[i].Q);
-    if (++i < α)
-      printf("%016lx\n", ο[i].Q);
-    else
-      printf("\n");
-    i++;
-  }
-  C(1);
-}
 #define RAY_FORWARD_TO_PARENT(r)                                               \
   N(ray_forward_to_parent_##r) {                                               \
-    p_t *pσ = σ[3].v;                                                          \
-    pσ[pσ[2].q + r].c(pσ[0].v, pσ[1].Q, pσ[2].q, pσ);                          \
+    p_t *pο = ο[0].v;                                                          \
+    pο[pο[2].q + r].c(pο[0].v, pο[1].Q, pο[2].Q);                              \
   }
 RAY_FORWARD_TO_PARENT(2)
 RAY_FORWARD_TO_PARENT(1)
 RAY_FORWARD_TO_PARENT(0)
 #define RAY_ALIGN_TO_FORWARDER(r)                                              \
-  N(ray_align_to_forwarder_##r) { ρ += 6, σ[ρ - 3 + r].c(T()); }
+  N(ray_align_to_forwarder_##r) { ρ += 6, ο[ρ - 3 + r].c(T()); }
 RAY_ALIGN_TO_FORWARDER(2)
 RAY_ALIGN_TO_FORWARDER(1)
 RAY_ALIGN_TO_FORWARDER(0)
@@ -47,7 +34,7 @@ N(os_new) {
   nσ[0].v = nο;
   nσ[1].Q = nα;
   nσ[2].q = nρ;
-  nσ[3].v = σ[3].v;
+  nσ[3].v = ο[0].v;
   A(nσ) C(1);
 }
 N(os_delete) {
