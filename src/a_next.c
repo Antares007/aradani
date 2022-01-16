@@ -4,9 +4,8 @@
 #define MAX_QUEUE_PAPERS 1024
 
 // clang-format off
-int   (*print)(const char*, ...);
-I(iε, 
-printf, print,         import);
+IF(iε, 
+printf, print,         import, int, const char*, ...);
 // clang-format on
 
 typedef struct {
