@@ -30,8 +30,7 @@ N(map_arsi) {
 
 p_t ο[512];
 // clang-format off
-E(got,
-"", 0,                         L)E(L,
+E(got, "", 0,                  L)E(L,
 "printf", printf,              L)EN(L,
 ο,                        export);
 

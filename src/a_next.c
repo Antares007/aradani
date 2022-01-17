@@ -66,8 +66,13 @@ p_t ο[512];
 p_t *s_pith;
 static void init_pith() {
   q_t α = 4, ρ = 0;
-  ο[--ρ].v = ray_not, ο[--ρ].v = ray_and, ο[--ρ].v = ray_or;
-  ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ, ο[3].Q = sizeof(ο) / sizeof(*ο);
+  ο[--ρ].v = ray_not;
+  ο[--ρ].v = ray_and;
+  ο[--ρ].v = ray_or;
+  ο[0].v = ο;
+  ο[1].Q = α;
+  ο[2].Q = ρ;
+  ο[3].Q = sizeof(ο) / sizeof(*ο);
   ο[α++].v = seven;
 }
 static void init_queue();

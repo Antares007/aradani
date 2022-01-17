@@ -4,7 +4,7 @@
 #define RAY_FORWARD_TO_PARENT(r)                                               \
   N(ray_forward_to_parent_##r) {                                               \
     p_t *pο = ο[0].v;                                                          \
-    pο[pο[2].q + r].c(pο[0].v, pο[1].Q, pο[2].Q);                              \
+    pο[pο[2].Q + r].c(pο, pο[1].Q, pο[2].Q);                                   \
   }
 RAY_FORWARD_TO_PARENT(2)
 RAY_FORWARD_TO_PARENT(1)

@@ -4,7 +4,7 @@
 IF(iε,
 printf, print,                L, int, const char*, ...)IN(L,
 and,                          L)IN(L,
-and9,                         L)IB(L);
+and2,                         L)IB(L);
 
 N(seven) {
   print("seven2\n");
