@@ -8,12 +8,9 @@ IF(iε,
 printf, print,         import, int, const char*, ...);
 // clang-format on
 
-typedef struct {
-  QUEUE q;
-  Q_t wc;
-  p_t *targetο;
-  p_t ntext[12];
-} queue_paper_t;
+typedef struct { QUEUE q; Q_t wc; p_t *targetο; p_t ntext[12]; } queue_paper_t;
+typedef struct { p_t *ο; Q_t α, ρ, σ; QUEUE q; } oars_t;
+
 typedef void (*memcopy_t)(p_t *, p_t *);
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
 static QUEUE main_queue, temp_queue;
@@ -41,12 +38,12 @@ N(os_next) {
 }
 N(os_queue) {
   R(Q_t, wc);
-  R(p_t *, nσ);
+  R(p_t *, oο);
   static unsigned short qpno = 0;
   qpno++, qpno %= 1024;
   if (queue_papers[qpno].q[0])
     return C(2);
-  queue_papers[qpno].targetο = nσ;
+  queue_papers[qpno].targetο = oο;
   queue_papers[qpno].wc = wc;
   tablelookup[wc](queue_papers[qpno].ntext, &ο[α -= wc]);
   QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);

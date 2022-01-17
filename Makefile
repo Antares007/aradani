@@ -3,6 +3,13 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
+src/a_a.arsi:        \
+	src/a_a.oars       \
+	src/a_b.oars       \
+	src/a_c.oars       \
+	src/a_junctions.oars   \
+	src/goto.bin
+	cat $^ > $@
 src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
 	src/a_next.oars 	     \

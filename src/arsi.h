@@ -22,16 +22,16 @@ static N(δo_imp) {
   anδ(T());
 }
 #define I(PrevImp, Name, Addr, ThisImp)                                        \
-  N(ThisImp) { A4(PrevImp, #Name, &Addr, ThisImp) δo_imp(T()); }
+  N(ThisImp) { A4(PrevImp, Name, &Addr, ThisImp) δo_imp(T()); }
 #define IN(PrevImp, Name, ThisImp)                                             \
   n_t Name;                                                                    \
-  I(PrevImp, Name, Name, ThisImp)
+  I(PrevImp, #Name, Name, ThisImp)
 #define IF(Tail, IName, Name, Head, Ret, ...)                                  \
   Ret (*Name)(__VA_ARGS__);                                                    \
-  I(Tail, IName, Name, Head)
+  I(Tail, #IName, Name, Head)
 #define IB(PrevImp)                                                            \
   p_t *ο;                                                                      \
-  I(PrevImp, ο, ο, import)
+  I(PrevImp, "ο", ο, import)
 
 N(head) __attribute__((section(".text.begin")));
 N(head) {
