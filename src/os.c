@@ -1,5 +1,5 @@
-#include "oars.h"
 #include "import_export.h"
+#include "oars.h"
 #include <stdio.h>
 
 void *mapfile(const char *file_name, void *pith);
@@ -28,17 +28,32 @@ N(map_arsi) {
     C(2);
 }
 
-p_t ο[512];
+N(run);
 // clang-format off
-E(got, "", 0,                  L)E(L,
+IN(run, 
+and,                           L)IN(L,
+and2,                          L)IN(L,
+and3,                          L)p_t *oo;I(L,
+"ο", oo,                  import);
+// clang-format on
+
+N(run) {
+  α -= 3;
+  printf("run     %lu %lu %d\n", α, ρ, ο[α + 1].v == ο);
+  O;
+}
+p_t ο[512];
+
+// clang-format off
+E(got,
+"", 0,                         L)E(L,
 "printf", printf,              L)EN(L,
 ο,                        export);
 
 N(ray_not) { os_wordump(T()), printf("the end! (not) %lu %lu\n", α, ρ); }
 N(ray_and) { os_wordump(T()), printf("the end! (and) %lu %lu\n", α, ρ); }
 N(ray_or ) { os_wordump(T()), printf("the end! (or)  %lu %lu\n", α, ρ); }
-
-N(run    ) { α -= 3; printf("run     %lu %lu %d\n", α, ρ, ο[α+1].v == ο); O; }
+// clang-format on
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -46,14 +61,14 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *file_name = argv[1];
-  Q_t α =  3, ρ =  sizeof(ο) / sizeof(*ο);
+  Q_t α = 3, ρ = sizeof(ο) / sizeof(*ο);
   ο[--ρ].c = ray_not, ο[--ρ].c = ray_and, ο[--ρ].c = ray_or;
   ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
 
   ο[α++].c = god;
   printf("god:%p\n", god);
 
-  A5(file_name, export, map_arsi, run, anδ) O;
+  A5(file_name, export, map_arsi, import, anδ) O;
 }
 
 // EN(got,
