@@ -82,23 +82,3 @@ typedef unsigned int W_t;
   ((sizeof(T) +                                                                \
     ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
    sizeof(void *))
-
-static N(noτ);
-static N(gor) { C(0); }
-static N(god) { C(1); }
-static N(got) { C(2); }
-static N(ρ4ξ2) { ρ += 4, C(2); }
-static N(ρ3α1) { ρ += 3, A(ο[ρ++].v) O; }
-static N(ρ4ξ1) { ρ += 4, C(1); }
-static N(ρ4ξ0) { ρ += 4, C(0); }
-static N(anδ) {
-  (void)got;
-  (void)gor;
-  (void)god;
-  (void)noτ;
-  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ4ξ2, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ0, O;
-}
-static N(noτ) {
-  (void)anδ;
-  ο[--ρ].c = ο[--α].c, ο[--ρ].v = ρ3α1, ο[--ρ].v = ρ4ξ1, ο[--ρ].v = ρ4ξ0, O;
-}
