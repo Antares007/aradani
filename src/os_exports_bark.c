@@ -1,3 +1,5 @@
+#include "gorgodandgot.h"
+#include "oars.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void *mapfile(const char *filename, void *pith) {
+static void *mapfile(const char *filename, void *pith) {
   int fd = open(filename, O_RDWR);
   struct stat sb;
   if (fd == -1 || fstat(fd, &sb) == -1)
@@ -17,4 +19,14 @@ void *mapfile(const char *filename, void *pith) {
   close(fd);
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
+}
+N(run_arsi) {
+  R(void *, import);
+  R(void *, pith);
+  R(const char *, file_name);
+  n_t arsi = mapfile(file_name, pith);
+  if (arsi)
+    A2(arsi, import) anδ(T());
+  else
+    C(2);
 }

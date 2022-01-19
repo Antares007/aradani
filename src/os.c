@@ -2,8 +2,6 @@
 #include "oars.h"
 #include <stdio.h>
 
-void *mapfile(const char *file_name, void *pith);
-
 N(os_wordump) {
   printf("ο:%p α:%02ld               ρ: %02ld\n", ο, α, ρ);
   long i = 0;
@@ -17,18 +15,10 @@ N(os_wordump) {
   }
 }
 
-N(map_arsi) {
-  R(void *, pith);
-  R(const char *, file_name);
-  printf("%s %p\n", file_name, pith);
-  n_t arsi = mapfile(file_name, pith);
-  if (arsi)
-    arsi(T());
-  else
-    C(2);
-}
+N(run_arsi);
 
 N(run);
+
 // clang-format off
 IN(run, 
 and,                           L)IN(L,
@@ -68,7 +58,7 @@ int main(int argc, char **argv) {
   ο[α++].c = god;
   printf("god:%p\n", god);
 
-  A5(file_name, export, map_arsi, import, anδ) O;
+  A4(file_name, export, import, run_arsi) O;
 }
 
 // EN(got,
