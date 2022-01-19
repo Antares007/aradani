@@ -1,6 +1,19 @@
 #include "oars.h"
 #include <stdio.h>
 #include <stdlib.h>
+N(os_wordump) {
+  printf("ο:%p α:%02ld               ρ: %02ld\n", ο, α, ρ);
+  long i = 0;
+  while (i < α) {
+    printf("%016lx ", ο[i].Q);
+    if (++i < α)
+      printf("%016lx\n", ο[i].Q);
+    else
+      printf("\n");
+    i++;
+  }
+  C(1);
+}
 #define RAY_FORWARD_TO_PARENT(r)                                               \
   N(ray_forward_to_parent_##r) {                                               \
     p_t *pο = ο[0].v;                                                          \

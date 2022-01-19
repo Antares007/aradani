@@ -38,10 +38,10 @@ src/a_test_socket.arsi:  \
 	src/goto.bin
 	cat $^ > $@
 
-src/os:                         \
+src/os:                  \
 	src/os.c               \
-	src/os_exports_bark.o  
-#src/os_exports.o
+	src/os_exports_bark.o  \
+	src/os_exports.o
 #src/os_exports_epoll.o
 
 %.o: %.c

@@ -2,24 +2,11 @@
 #include "oars.h"
 #include <stdio.h>
 
-N(os_wordump) {
-  printf("ο:%p α:%02ld               ρ: %02ld\n", ο, α, ρ);
-  long i = 0;
-  while (i < α) {
-    printf("%016lx ", ο[i].Q);
-    if (++i < α)
-      printf("%016lx\n", ο[i].Q);
-    else
-      printf("\n");
-    i++;
-  }
-}
-
 N(run_arsi);
-
-N(run);
+N(os_wordump);
 
 // clang-format off
+N(run);
 IN(run, 
 and,                           L)IN(L,
 and2,                          L)IN(L,
@@ -39,10 +26,14 @@ E(got,
 "", 0,                         L)E(L,
 "printf", printf,              L)EN(L,
 ο,                        export);
+N(thend       ) { printf("the end!\n"); }
+N(ray_dump_not) { printf("\nnot\n"), os_wordump(T()); }
+N(ray_dump_and) { printf("\nand\n"), os_wordump(T()); }
+N(ray_dump_or ) { printf("\nor \n"), os_wordump(T()); }
+N(ray_cb_not  ) { ρ += 6, ο[ρ - 1].c(T()); }
+N(ray_cb_and  ) { ρ += 6, ο[ρ - 2].c(T()); }
+N(ray_cb_or   ) { ρ += 6, ο[ρ - 3].c(T()); }
 
-N(ray_not) { os_wordump(T()), printf("the end! (not) %lu %lu\n", α, ρ); }
-N(ray_and) { os_wordump(T()), printf("the end! (and) %lu %lu\n", α, ρ); }
-N(ray_or ) { os_wordump(T()), printf("the end! (or)  %lu %lu\n", α, ρ); }
 // clang-format on
 
 int main(int argc, char **argv) {
@@ -52,7 +43,14 @@ int main(int argc, char **argv) {
   }
   const char *file_name = argv[1];
   Q_t α = 3, ρ = sizeof(ο) / sizeof(*ο);
-  ο[--ρ].c = ray_not, ο[--ρ].c = ray_and, ο[--ρ].c = ray_or;
+  ο[--ρ].c = thend;
+  ο[--ρ].c = 0;
+  ο[--ρ].c = ray_dump_not;
+  ο[--ρ].c = ray_dump_and;
+  ο[--ρ].c = ray_dump_or;
+  ο[--ρ].c = ray_cb_not;
+  ο[--ρ].c = ray_cb_and;
+  ο[--ρ].c = ray_cb_or;
   ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
 
   ο[α++].c = god;
