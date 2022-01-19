@@ -44,6 +44,9 @@ src/os:                  \
 	src/os_exports.o
 #src/os_exports_epoll.o
 
+src/ui: src/ui.c
+	${CC} $^ -o $@ ${CFLAGS} -lraylib
+
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
