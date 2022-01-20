@@ -6,35 +6,36 @@ N(run_arsi);
 N(os_wordump);
 
 // clang-format off
-N(run);
-IN(run, 
-and,                           L)IN(L,
-and2,                          L)IN(L,
-and3,                          L)p_t *oo;I(L,
-"ο", oo,                  import);
-// clang-format on
-
-N(run) {
-  α -= 3;
-  printf("run     %lu %lu %d\n", α, ρ, ο[α + 1].v == ο);
-  O;
-}
 p_t ο[512];
 
 // clang-format off
 E(got,
-"", 0,                         L)E(L,
-"printf", printf,              L)EN(L,
+"", 0,                         L)  E(L,
+"printf", printf,              L)FEN(L,
+os_new,                        L) EN(L,
 ο,                        export);
+
 N(thend       ) { printf("the end!\n"); }
 N(ray_dump_not) { printf("\nnot\n"), os_wordump(T()); }
 N(ray_dump_and) { printf("\nand\n"), os_wordump(T()); }
-N(ray_dump_or ) { printf("\nor \n"), os_wordump(T()); }
-N(ray_cb_not  ) { ρ += 6, ο[ρ - 1].c(T()); }
-N(ray_cb_and  ) { ρ += 6, ο[ρ - 2].c(T()); }
-N(ray_cb_or   ) { ρ += 6, ο[ρ - 3].c(T()); }
+N(ray_dump_oor) { printf("\nor \n"), os_wordump(T()); }
 
 // clang-format on
+
+N(run) {
+  R(n_t, export);
+  R(p_t *, oο);
+  R(const char *, name);
+  (void)name, (void)export;
+  printf("run   %p  %lu %lu\n", ο, α, ρ);
+  printf("oo    %p  %lu %lu\n", oο, oο[1].Q, oο[2].Q);
+  --oο[1].Q;
+  oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
+}
+
+static N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
+static N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
+static N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -42,21 +43,26 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *file_name = argv[1];
-  Q_t α = 3, ρ = sizeof(ο) / sizeof(*ο);
+  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
+
+  ο[--ρ].c = 0;
   ο[--ρ].c = thend;
   ο[--ρ].c = 0;
+
   ο[--ρ].c = ray_dump_not;
   ο[--ρ].c = ray_dump_and;
-  ο[--ρ].c = ray_dump_or;
+  ο[--ρ].c = ray_dump_oor;
+
   ο[--ρ].c = ray_cb_not;
   ο[--ρ].c = ray_cb_and;
-  ο[--ρ].c = ray_cb_or;
-  ο[0].v = ο, ο[1].Q = α, ο[2].Q = ρ;
+  ο[--ρ].c = ray_cb_oor;
 
-  ο[α++].c = god;
-  printf("god:%p\n", god);
+  ο[α++].v = ο;
+  ο[α++].Q = 001;
+  ο[α++].Q = ρ;
+  ο[001].Q = α;
 
-  A4(file_name, export, import, run_arsi) O;
+  A4(file_name, export, run, run_arsi) O;
 }
 
 // EN(got,

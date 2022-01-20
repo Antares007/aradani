@@ -11,6 +11,7 @@ static N(iε) { α -= 3, imported = 1, A2(init, export) anδ(T()); }
 N(head) __attribute__((section(".text.begin")));
 N(head) {
   (void)δo_imp;
+  (void)iε;
   n_t nar = (imported ? export : (A2(tail, import) anδ));
   nar(T());
 }
@@ -19,7 +20,7 @@ N(head) {
 #define NP(n)                                                                  \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    print("%p\t%ld\t%ld\t%s\n", σ, α, ρ, #n);                                  \
+    print("%s:%s\t%p %ld\t%ld\n", __FILE_NAME__, __FUNCTION__, ο, α, ρ);       \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)

@@ -1,15 +1,18 @@
 #include "arsi.h"
 #include "queue.h"
 #include <stdio.h>
-#define MAX_QUEUE_PAPERS 1024
 
 // clang-format off
 IF(iε, 
-printf, print,         import, int, const char*, ...);
-// clang-format on
+printf, print,         L, int, const char*, ...)p_t *oο;I(L,
+"ο", oο,          import);
 
-typedef struct { QUEUE q; Q_t wc; p_t *targetο; p_t ntext[12]; } queue_paper_t;
-typedef struct { p_t *ο; Q_t α, ρ, σ; QUEUE q; } oars_t;
+#define MAX_QUEUE_PAPERS 1024
+typedef struct {
+  QUEUE q;
+  Q_t word_count;
+  p_t *targetο, ntextspace[12];
+} queue_paper_t;
 
 typedef void (*memcopy_t)(p_t *, p_t *);
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
@@ -31,60 +34,65 @@ N(os_next) {
   queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
   p->q[0] = 0;
   p_t *pο = p->targetο;
-  Q_t pα = pο[1].Q + p->wc;
-  q_t pρ = pο[2].Q;
-  tablelookup[pα](&pο[pο[1].Q], p->ntext);
-  pο[pα - 1].c(pο, pα - 1, pρ);
+  tablelookup[p->word_count](&pο[pο[1].Q], p->ntextspace);
+  Q_t pα = pο[1].Q + p->word_count - 1;
+  ο[001].Q = α;
+  pο[pα].c(pο, pα, pο[2].Q);
 }
 N(os_queue) {
-  R(Q_t, wc);
-  R(p_t *, oο);
+  R(Q_t, word_count);
+  R(p_t *, targetο);
   static unsigned short qpno = 0;
   qpno++, qpno %= 1024;
-  if (queue_papers[qpno].q[0])
-    return C(2);
-  queue_papers[qpno].targetο = oο;
-  queue_papers[qpno].wc = wc;
-  tablelookup[wc](queue_papers[qpno].ntext, &ο[α -= wc]);
+  if (queue_papers[qpno].q[0]) return C(2);
+  queue_papers[qpno].targetο = targetο;
+  queue_papers[qpno].word_count = word_count;
+  tablelookup[word_count](queue_papers[qpno].ntextspace, &ο[α -= word_count]);
   QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
   C(1);
 }
 
-N(ray_not) { print("ray_not ο:%p α:%lu ρ:%ld\n", ο, α, ρ); }
-N(ray_and) { os_next(T()); }
-N(ray_or) { print("ray_or  ο:%p α:%lu ρ:%ld\n", ο, α, ρ); }
-N(seven) {
-  print("seven\n");
-  A2(7, 7) C(1);
-}
-
-// requrcive defined OarS;
-p_t ο[512];
-p_t *s_pith;
-static void init_pith() {
-  q_t α = 4, ρ = 0;
-  ο[--ρ].v = ray_not;
-  ο[--ρ].v = ray_and;
-  ο[--ρ].v = ray_or;
-  ο[0].v = ο;
-  ο[1].Q = α;
-  ο[2].Q = ρ;
-  ο[3].Q = sizeof(ο) / sizeof(*ο);
-  ο[α++].v = seven;
-}
-static void init_queue();
-N(init) {
-  (void)init_pith, (void)init_queue;
-  C(1);
-}
-
-// clang-format off
 EN(tail,
 os_next,                                     L)EN(L,
-os_queue,                                    L)EN(L,
-s_pith,                                 export)
+os_queue,                                    L)p_t bο[512];E(L,
+"ο", bο,                                export)
 
-static void memcopy1(p_t *pο, p_t *ο) { pο[0].v = ο[0].v; }
+static N(cont_fathers_not_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
+static N(cont_fathers_and_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
+static N(cont_fathers_oor_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 0].c(pο, pο[1].Q, pο[2].Q); }
+//static N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
+static N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
+static N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
+
+static void init_pith() {
+  Q_t bα = 0, bρ = sizeof(bο) / sizeof(*bο);
+
+  bο[--bρ].v = cont_fathers_not_ray;
+  bο[--bρ].v = cont_fathers_and_ray;
+  bο[--bρ].v = cont_fathers_oor_ray;
+
+  bο[--bρ].v = cont_fathers_not_ray;
+  bο[--bρ].v = os_next;
+  bο[--bρ].v = os_next;
+
+  bο[--bρ].v = cont_fathers_not_ray;
+  bο[--bρ].v = ray_cb_and;
+  bο[--bρ].v = ray_cb_oor;
+
+  bο[bα++].v = oο;
+  bο[bα++].Q = 0001;
+  bο[bα++].Q = bρ;
+  bο[bα++].v = god;
+
+  bο[0001].Q = bα;
+
+}
+
+static void memcopy0(p_t *pο, p_t *ο) {
+}
+static void memcopy1(p_t *pο, p_t *ο) {
+  pο[0].v = ο[0].v;
+}
 static void memcopy2(p_t *pο, p_t *ο) {
   pο[0].v = ο[0].v;
   pο[1].v = ο[1].v;
@@ -127,6 +135,7 @@ static void memcopy7(p_t *pο, p_t *ο) {
 static void init_queue() {
   QUEUE_INIT(&main_queue);
   QUEUE_INIT(&temp_queue);
+  tablelookup[0] = memcopy0;
   tablelookup[1] = memcopy1;
   tablelookup[2] = memcopy2;
   tablelookup[3] = memcopy3;
@@ -137,3 +146,4 @@ static void init_queue() {
   for (Q_t i = 0; i < MAX_QUEUE_PAPERS; i++)
     queue_papers[i].q[0] = 0;
 }
+N(init) { init_pith(), init_queue(), C(1); }
