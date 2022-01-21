@@ -57,12 +57,12 @@ os_next,                                     L)EN(L,
 os_queue,                                    L)p_t bο[512];E(L,
 "ο", bο,                                export)
 
-static N(cont_fathers_not_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
-static N(cont_fathers_and_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
-static N(cont_fathers_oor_ray) { p_t *pο = ο[3].v; pο[pο[2].Q + 0].c(pο, pο[1].Q, pο[2].Q); }
-//static N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
-static N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
-static N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
+N(cont_fathers_not_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
+N(cont_fathers_and_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
+N(cont_fathers_oor_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 0].c(pο, pο[1].Q, pο[2].Q); }
+N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
+N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
+N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
 
 static void init_pith() {
   Q_t bα = 0, bρ = sizeof(bο) / sizeof(*bο);
@@ -73,9 +73,9 @@ static void init_pith() {
 
   bο[--bρ].v = cont_fathers_not_ray;
   bο[--bρ].v = os_next;
-  bο[--bρ].v = os_next;
+  bο[--bρ].v = cont_fathers_oor_ray;
 
-  bο[--bρ].v = cont_fathers_not_ray;
+  bο[--bρ].v = ray_cb_not;
   bο[--bρ].v = ray_cb_and;
   bο[--bρ].v = ray_cb_oor;
 

@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 // clang-format off
-static N(cont_fathers_not_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
-static N(cont_fathers_and_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
-static N(cont_fathers_oor_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 0].c(pο, pο[1].Q, pο[2].Q); }
+static N(cont_fathers_not_ray) { p_t *pο = ο[0].v; ο[1].Q = α; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
+static N(cont_fathers_and_ray) { p_t *pο = ο[0].v; ο[1].Q = α; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
+static N(cont_fathers_oor_ray) { p_t *pο = ο[0].v; ο[1].Q = α; pο[pο[2].Q + 0].c(pο, pο[1].Q, pο[2].Q); }
 static N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
 static N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
 static N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }

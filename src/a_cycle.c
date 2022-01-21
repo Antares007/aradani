@@ -11,7 +11,7 @@ os_queue,                 L)p_t *oο;I(L,
 //
 "ο", oο,             import);
 
-NP(p_or) {
+N(p_or) {
   R(p_t *, oο);
   print("p_or\n");
   A5(ο, gor, oο, 3, os_queue) O;
@@ -25,7 +25,7 @@ N(p_and) {
 N(p_not) { print("p_not\n"); }
 N(mproducer) { A5(p_or, p_and, p_not, 512, os_new) O; }
 
-NP(c_or) {
+N(c_or) {
   R(p_t *, oο);
   print("c_or\n");
   A5(ο, god, oο, 3, os_queue) O;
@@ -38,10 +38,15 @@ N(c_and) {
 }
 N(c_not)     { print("c_not\n"); }
 N(mconsumer) { A5(c_or, c_and, c_not, 512, os_new) O; }
+N(seven) {
+  A7(7,7,7,7,7,7,7) C(1);
+}
+N(მთავარი) {
+  A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O;
+  //A4(seven, ο, 1, os_queue) O;
+}
 
-NP(მთავარი) { A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
-
-N(init   ) { oο[oο[1].Q++].v = მთავარი, oο[oο[1].Q++].v = and, C(1); }
+N(init   ) { oο[oο[1].Q++].v = 0, oο[oο[1].Q++].v = მთავარი, oο[oο[1].Q++].v = and2, C(1); }
 
 E(tail,
 "ο", oο,              export);

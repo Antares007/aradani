@@ -45,9 +45,9 @@ int main(int argc, char **argv) {
   const char *file_name = argv[1];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
 
-  ο[--ρ].c = 0;
   ο[--ρ].c = thend;
-  ο[--ρ].c = 0;
+  ο[--ρ].c = thend;
+  ο[--ρ].c = thend;
 
   ο[--ρ].c = ray_dump_not;
   ο[--ρ].c = ray_dump_and;
