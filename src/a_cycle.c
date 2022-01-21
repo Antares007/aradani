@@ -38,15 +38,11 @@ N(c_and) {
 }
 N(c_not)     { print("c_not\n"); }
 N(mconsumer) { A5(c_or, c_and, c_not, 512, os_new) O; }
-N(seven) {
-  A7(7,7,7,7,7,7,7) C(1);
-}
-N(მთავარი) {
-  A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O;
-  //A4(seven, ο, 1, os_queue) O;
-}
 
-N(init   ) { oο[oο[1].Q++].v = 0, oο[oο[1].Q++].v = მთავარი, oο[oο[1].Q++].v = and2, C(1); }
+N(counter) { A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
+N(მთავარი) { A5(0, counter, 0, counter, and2) O; }
+
+N(init) { oο[oο[1].Q++].v = მთავარი, oο[oο[1].Q++].v = and, C(1); }
 
 E(tail,
 "ο", oο,              export);
