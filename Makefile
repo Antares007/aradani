@@ -46,6 +46,7 @@ src/os:                  \
 
 src/ui: src/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
+src/seven: src/seven.c src/ada.o
 
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
