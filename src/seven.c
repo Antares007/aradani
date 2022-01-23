@@ -35,12 +35,14 @@ N(god) { C(1); }
 N(got) { C(2); }
 
 N(seven2) { A12(gor, 3, 3, one, 0003, ada, add, 0010, ada, add, 0010, ada) O; }
+N(init_ada);
 int main() {
   p_t o[64];
   long a = 0, r = sizeof(o) / sizeof(*o);
   o[--r].c = ray_ara;
   o[--r].c = ray_da;
   o[--r].c = ray_an;
+  init_ada(o, a, r);
   seven(o, a, r);
   seven2(o, a, r);
   test_gcd(o, a, r);
