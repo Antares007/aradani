@@ -14,6 +14,7 @@ src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
 	src/a_next.oars 	     \
 	src/a_junctions.oars   \
+	src/a_mc21.oars        \
 	src/goto.bin
 	cat $^ > $@
 src/a_init_seven.arsi:          \
