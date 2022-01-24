@@ -11,7 +11,7 @@
   I(Tail, #IName, Name, Head)
 #define IB(PrevImp)                                                            \
   p_t *ο;                                                                      \
-  I(PrevImp, "ο", ο, import)
+  I(PrevImp, "ο", ο, imports)
 
 static int cmp(const char *s1, const char *s2);
 static N(δo_imp) {
@@ -40,4 +40,4 @@ static int cmp(const char *s1, const char *s2) {
 #define FEN(Tail, Name, Head)                                                  \
   N(Name);                                                                     \
   EN(Tail, Name, Head)
-#define EB(Tail) EN(Tail, ο, export)
+#define EB(Tail) EN(Tail, ο, exports)

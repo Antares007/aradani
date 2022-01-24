@@ -9,7 +9,7 @@ and2,                     L)IN(L,
 //
 os_queue,                 L)p_t *oο;I(L,
 //
-"ο", oο,             import);
+"ο", oο,             imports);
 
 N(p_or) {
   R(p_t *, oο);
@@ -45,4 +45,4 @@ N(მთავარი) { A5(0, counter, 0, counter, and2) O; }
 N(init) { oο[oο[1].Q++].v = მთავარი, oο[oο[1].Q++].v = and, C(1); }
 
 E(tail,
-"ο", oο,              export);
+"ο", oο,              exports);

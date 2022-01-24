@@ -7,7 +7,7 @@ and,                    L)IN(L,
 //
 os_next,                L)IN(L,
 //
-s_pith,            import);
+s_pith,            imports);
 
 N(qsort);
 void swap(long *a, long *b) {
@@ -62,4 +62,4 @@ void init() { updateσ(s_pith, updater); }
 
 // clang-format off
 EN(tail,          
-s_pith,           export);
+s_pith,           exports);

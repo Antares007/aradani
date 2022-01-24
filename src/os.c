@@ -13,7 +13,7 @@ E(got,
 "", 0,                         L)  E(L,
 "printf", printf,              L)FEN(L,
 os_new,                        L) EN(L,
-ο,                        export);
+ο,                        exports);
 
 N(thend       ) { printf("the end!\n"); }
 N(ray_dump_not) { printf("\nnot\n"), os_wordump(T()); }
@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
   ο[α++].Q = ρ;
   ο[001].Q = α;
 
-  A4(file_name, export, run, run_arsi) O;
+  A4(file_name, exports, run, run_arsi) O;
 }
 
 // EN(got,

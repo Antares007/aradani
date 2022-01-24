@@ -2,8 +2,8 @@
 // clang-format off
 IN(0,
 ls_export,                  L)IN(L,
-os_new,                     L)int(*print)(const char*, ...);I(L,
-printf, print,              L)IN(L,
+os_new,                     L)IF(L,
+printf, print,              L, int, const char*, ...)IN(L,
 //
 and,                        L)IN(L,
 and2,                       L)IN(L,
@@ -21,14 +21,13 @@ os_bind,                    L)IN(L,
 os_listen,                  L)IN(L,
 os_socket,                  L)IN(L,
 //
-s_pith,                import);
+s_pith,                imports);
 
 NP(on_data) {
   R(Q_t, nread);
   print("drain_and - α:%ld nread:%ld\n", α, nread);
   α = 0;
 }
-N(gor) { C(0); }
 NP(on_connection) {
   R(p_t*, cσ);
   print("events: %p\n", cσ);
@@ -36,7 +35,7 @@ NP(on_connection) {
 }
 
 NP(მთავარი_test) {
-  A2(export, ls_export) O;
+  A2(exports, ls_export) O;
   //A10(os_socket,
   //    "127.0.0.1", 7000, os_bind, and3,
   //    on_connection, mkdrain, and2,
@@ -48,4 +47,4 @@ void init() { updateσ(s_pith, updater); }
 
 // clang-format off
 EN(tail,          
-s_pith,                export);
+s_pith,                exports);

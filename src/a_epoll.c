@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IN(0,
+IN(iε,
 l_accept,             L)IN(L,
 l_address,            L)IN(L,
 l_bind,               L)IN(L,
@@ -13,8 +13,8 @@ l_setnoblock,         L)IN(L,
 l_socket,             L)IN(L,
 ls_export,            L)IN(L,
 os_new,               L)IN(L,
-os_wordump,           L)int(*print)(const char*, ...);I(L,
-printf, print,        L)IN(L,
+os_wordump,           L)IF(L,
+printf, print,        L,int, const char*, ...)IN(L,
 //
 and,                  L)IN(L,
 and2,                 L)IN(L,
@@ -33,7 +33,7 @@ or6,                  L)IN(L,
 //
 os_queue,             L)IN(L,
 //
-s_pith,           import);
+s_pith,           imports);
 
 #include <arpa/inet.h>
 #include <sys/epoll.h>
@@ -193,7 +193,6 @@ NP(os_bind) {
   struct state_s *s = S(struct state_s, sock);
   A11(sock, s->fd, ip, port, l_address, l_bind, and, l_setnoblock, and, drop, and) O;
 }
-N(gor) { C(0); }
 NP(os_listen) {
   R(p_t *, sink);
   R(p_t *, sock);
@@ -221,4 +220,4 @@ os_bind,                L)EN(L,
 os_listen,              L)EN(L,
 os_socket,              L)EN(L,
 //
-s_pith,            export);
+s_pith,            exports);

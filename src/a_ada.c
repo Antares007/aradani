@@ -1,7 +1,7 @@
 #include "arsi.h"
 // clang-format off
 IN(iε,
-init_mc21,           import)
+init_mc21,           imports);
 // clang-format on
 
 typedef void (*fun_t)();
@@ -58,5 +58,5 @@ N(init) {
 
 // clang-format off
 EN(tail,
-ada,    export)
+ada,    exports);
 // clang-format on

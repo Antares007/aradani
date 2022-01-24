@@ -3,7 +3,7 @@
 // clang-format off
 p_t *ο;I(iε,
 "ο", ο,              L)IN(L,
-ada,            import);
+ada,            imports);
 N(init) {C(1);}
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) ada(T()); } EN(Tail, Name, Head)
 /*

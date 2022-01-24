@@ -1,13 +1,13 @@
 #include "arsi.h"
 // clang-format off
-int(*print)(const char*, ...);I(0,
-printf, print,                          import);
+IF(iε,
+printf, print,                          imports, int, const char*, ...);
 // clang-format on
 
-N(მთავარი) { A7(7, 7, 7, 7, 7, 7, 7) C(1);           }
+N(მთავარი) { A7(7, 7, 7, 7, 7, 7, 7) C(1); }
 N(ray_not) { print("ray_not %p %lu %ld\n", ο, α, ρ); }
 N(ray_and) { print("ray_and %p %lu %ld\n", ο, α, ρ); }
-N(ray_or ) { print("ray_or  %p %lu %ld\n", ο, α, ρ); }
+N(ray_or) { print("ray_or  %p %lu %ld\n", ο, α, ρ); }
 
 p_t ο[512];
 void init() {
@@ -21,4 +21,4 @@ void init() {
 
 // clang-format off
 E(tail,
-s_pith, ο + sizeof(ο) / sizeof(*ο) - 3, export)
+s_pith, ο + sizeof(ο) / sizeof(*ο) - 3, exports)

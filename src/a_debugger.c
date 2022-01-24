@@ -1,14 +1,14 @@
 #include "arsi.h"
 // clang-format off
-IN(0,    
+IN(iε,    
 and,                                     L)IN(L,
 and2,                                    L)IN(L,
 notand,                                  L)IN(L,
 notand2,                                 L)IN(L,
 or,                                      L)IN(L,
 //
-la_stdin,                                L)int(*print)(const char*, ...);I(L,
-printf, print,                      import);
+la_stdin,                                L)IF(L,
+printf, print,                     imports, int, const char*, ...);
 // clang-format on
 
 typedef struct {
@@ -18,10 +18,10 @@ typedef struct {
 #define MNN 2048
 nargoname_t nargonames[MNN];
 static void nop() {}
-void fillnames_pith(int i, const char *name, void *nargo, void(export)()) {
+void fillnames_pith(int i, const char *name, void *nargo, void(exports)()) {
   nargonames[i].name = name;
   nargonames[i].nargo = nargo;
-  export(i + 1, fillnames_pith, nop);
+  exports(i + 1, fillnames_pith, nop);
 }
 void hook() {
   volatile m_t t = tail;
@@ -59,8 +59,11 @@ N(os_wordump) {
 }
 N(god) { C(1); }
 N(debugger) { A3(os_wordump, la_stdin, and) O; }
-N(მთავარი) { hook(); C(1); }
+N(მთავარი) {
+  hook();
+  C(1);
+}
 // clang-format off
 EN(tail,
 debugger,                        L)EN(L,
-მთავარი,                    export);
+მთავარი,                    exports);

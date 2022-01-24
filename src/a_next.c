@@ -7,7 +7,7 @@ IF(iε,
 printf, print,         L, int, const char*, ...)p_t *oο;IN(L,
 init_mc21,             L)IN(L,
 and,                   L)I(L,
-"ο", oο,          import);
+"ο", oο,          imports);
 // clang-format on
 
 #define MAX_QUEUE_PAPERS 1024
@@ -59,7 +59,7 @@ N(os_queue) {
 EN(tail,
 os_next,                                     L)EN(L,
 os_queue,                                    L)p_t bο[512];E(L,
-"ο", bο,                                export)
+"ο", bο,                                exports);
 
 N(cont_fathers_not_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
 N(cont_fathers_and_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
