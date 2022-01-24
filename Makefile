@@ -5,6 +5,10 @@ OBJCOPY=objcopy
 
 src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
+	src/os.arsi
+	cat $^ > $@
+
+src/os.arsi:             \
 	src/a_next.oars 	     \
 	src/a_junctions.oars   \
 	src/a_ada.oars         \
@@ -16,11 +20,11 @@ src/os:                  \
 	src/os.c               \
 	src/os_exports_bark.o  \
 	src/os_exports.o
-#src/os_exports_epoll.o
+
+src/seven: src/seven.c src/ada.o src/a_mc21.o
 
 src/ui: src/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-src/seven: src/seven.c src/ada.o src/a_mc21.o
 
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
