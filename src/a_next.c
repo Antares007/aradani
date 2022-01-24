@@ -8,19 +8,15 @@ printf, print,         L, int, const char*, ...)p_t *oο;IN(L,
 init_mc21,             L)IN(L,
 and,                   L)I(L,
 "ο", oο,          imports);
-// clang-format on
 
 #define MAX_QUEUE_PAPERS 1024
-typedef struct {
-  QUEUE q;
-  Q_t word_count;
-  p_t *targetο, ntextspace[12];
-} queue_paper_t;
+typedef struct { QUEUE q; Q_t word_count; p_t *targetο, ntextspace[12]; } queue_paper_t;
 
 typedef void (*fun_t)();
 static fun_t mc21_lookup[22];
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
 static QUEUE main_queue, temp_queue;
+static p_t bο[512];
 
 N(os_next) {
   QUEUE *q;
@@ -41,25 +37,6 @@ N(os_next) {
   void **t = &pο[pο[1].Q].v, **s = &p->ntextspace[0].v;
   mc21_lookup[p->word_count](pο, pο[1].Q + p->word_count, pο[2].Q, dot, t, s);
 }
-N(os_queue) {
-  R(Q_t, word_count);
-  R(p_t *, targetο);
-  static unsigned short qpno = 0;
-  qpno++, qpno %= 1024;
-  if (queue_papers[qpno].q[0])
-    return C(2);
-  queue_papers[qpno].targetο = targetο;
-  queue_papers[qpno].word_count = word_count;
-  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
-  void **t = &queue_papers[qpno].ntextspace[0].v, **s = &ο[α -= word_count].v;
-  mc21_lookup[word_count](ο, α, ρ, god, t, s);
-}
-
-// clang-format off
-EN(tail,
-os_next,                                     L)EN(L,
-os_queue,                                    L)p_t bο[512];E(L,
-"ο", bο,                                exports);
 
 N(cont_fathers_not_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
 N(cont_fathers_and_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
@@ -67,7 +44,6 @@ N(cont_fathers_oor_ray) { p_t *pο = ο[0].v; pο[pο[2].Q + 0].c(pο, pο[1].Q,
 N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
 N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
 N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
-// clang-format on
 
 static void init_pith() {
   Q_t bα = 0, bρ = sizeof(bο) / sizeof(*bο);
@@ -98,3 +74,22 @@ static void init_queue() {
     queue_papers[i].q[0] = 0;
 }
 N(init) { init_pith(), init_queue(), A2(mc21_lookup, init_mc21) O; }
+N(os_queue) {
+  R(Q_t, word_count);
+  R(p_t *, targetο);
+  static unsigned short qpno = 0;
+  qpno++, qpno %= 1024;
+  if (queue_papers[qpno].q[0])
+    return C(2);
+  queue_papers[qpno].targetο = targetο;
+  queue_papers[qpno].word_count = word_count;
+  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
+  void **t = &queue_papers[qpno].ntextspace[0].v, **s = &ο[α -= word_count].v;
+  mc21_lookup[word_count](ο, α, ρ, god, t, s);
+}
+
+// clang-format off
+EN(tail,
+os_next,                                     L)EN(L,
+os_queue,                                    L)E(L,
+"ο", bο,                                exports);
