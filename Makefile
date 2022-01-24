@@ -3,40 +3,12 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
-src/a_a.arsi:        \
-	src/a_a.oars       \
-	src/a_b.oars       \
-	src/a_c.oars       \
-	src/a_junctions.oars   \
-	src/goto.bin
-	cat $^ > $@
 src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
 	src/a_next.oars 	     \
 	src/a_junctions.oars   \
 	src/a_ada.oars         \
 	src/a_mc21.oars        \
-	src/goto.bin
-	cat $^ > $@
-src/a_init_seven.arsi:   \
-	src/a_init_seven.oars  \
-	src/a_init_seven2.oars \
-	src/a_junctions.oars   \
-	src/goto.bin
-	cat $^ > $@
-
-src/a_quick_sort.arsi:   \
-	src/a_quick_sort.oars  \
-	src/a_next.oars        \
-	src/a_junctions.oars   \
-	src/goto.bin
-	cat $^ > $@
-
-src/a_test_socket.arsi:  \
-	src/a_test_socket.oars \
-	src/a_epoll.oars       \
-	src/a_next.oars        \
-	src/a_junctions.oars   \
 	src/goto.bin
 	cat $^ > $@
 
