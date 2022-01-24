@@ -14,10 +14,11 @@ src/a_cycle.arsi:        \
 	src/a_cycle.oars       \
 	src/a_next.oars 	     \
 	src/a_junctions.oars   \
+	src/a_ada.oars         \
 	src/a_mc21.oars        \
 	src/goto.bin
 	cat $^ > $@
-src/a_init_seven.arsi:          \
+src/a_init_seven.arsi:   \
 	src/a_init_seven.oars  \
 	src/a_init_seven2.oars \
 	src/a_junctions.oars   \
