@@ -22,7 +22,6 @@ static fun_t mc21_lookup[22];
 static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
 static QUEUE main_queue, temp_queue;
 
-static N(dot) { O; }
 N(os_next) {
   QUEUE *q;
   if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {

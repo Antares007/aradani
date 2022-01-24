@@ -527,7 +527,6 @@ or7        , 0007, L)EB(L)
 
 typedef void (*fun_t)();
 static fun_t mc21_lookup[22];
-static N(dot) {O;}
 static void ada_not_mc(OARS, void **t, void **s, Q_t wc) {
   mc21_lookup[wc](ο, α, ρ, dot, t, s);
 };
