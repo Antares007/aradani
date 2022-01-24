@@ -5,14 +5,15 @@ N(init_mc21);
 
 typedef void (*fun_t)();
 static fun_t mc21_lookup[22];
+static N(dot) { O; }
 static void ada_not_mc(OARS, void **t, void **s, Q_t wc) {
-  mc21_lookup[wc](ο, α, ρ, t, s);
+  mc21_lookup[wc](ο, α, ρ, dot, t, s);
 };
 static void ada_and_mc(OARS, void **t, void **s, Q_t wc) {
-  mc21_lookup[wc](ο, α, ρ, t, s);
+  mc21_lookup[wc](ο, α, ρ, dot, t, s);
 };
 static void ada_oor_mc(OARS, void **t, void **s, Q_t wc) {
-  mc21_lookup[wc](ο, α, ρ, t, s);
+  mc21_lookup[wc](ο, α, ρ, dot, t, s);
 };
 static fun_t ada_not_jun[2];
 static fun_t ada_and_jun[2];
@@ -51,5 +52,5 @@ N(ada_oor) {
 N(ada) {
   Q_t j = ο[--α].Q, nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0), tc = nc + ac + oc;
   void **t = &ο[ρ -= tc].v, **s = &ο[α -= tc].v;
-  ο[--ρ].Q = nc, ο[--ρ].Q = ac, ο[--ρ].Q = oc, ο[--ρ].c = ada_not, ο[--ρ].c = ada_and, ο[--ρ].c = ada_oor, mc21_lookup[tc](ο, α, ρ, t, s);
+  ο[--ρ].Q = nc, ο[--ρ].Q = ac, ο[--ρ].Q = oc, ο[--ρ].c = ada_not, ο[--ρ].c = ada_and, ο[--ρ].c = ada_oor, mc21_lookup[tc](ο, α, ρ, dot, t, s);
 }

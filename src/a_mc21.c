@@ -1,5 +1,5 @@
 #include "arsi.h"
-N(import) { iε(T()); }
+IB(iε)
 N(init) { C(1); }
 /*
 const set = Array(22).fill(0);
