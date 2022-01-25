@@ -9,10 +9,10 @@ src/a_cycle.arsi:        \
 	cat $^ > $@
 
 src/os.arsi:             \
-	src/a_next.oars 	     \
 	src/a_junctions.oars   \
 	src/a_ada.oars         \
-	src/a_mc21.oars        \
+	src/a_next.oars 	     \
+	src/a_mc21.oars				 \
 	src/goto.bin
 	cat $^ > $@
 

@@ -4,12 +4,11 @@ IF(iε,
 printf, print,            L, int, const char*, ...)IN(L,
 os_new,                   L)IN(L,
 //
-and,                      L)IN(L,
-and2,                     L)IN(L,
-//
 os_queue,                 L)p_t *oο;I(L,
+"ο", oο,                  L)IN(L,
 //
-"ο", oο,             imports);
+and,                      L)IN(L,
+and2,               imports);
 
 N(p_or) {
   R(p_t *, oο);

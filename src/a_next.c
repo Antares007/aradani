@@ -5,8 +5,7 @@
 // clang-format off
 IF(iε, 
 printf, print,       L, int, const char*, ...)IN(L,
-init_mc21,           L)IN(L,
-and,           imports);
+init_mc21,     imports);
 
 #define MAX_QUEUE_PAPERS 1024
 typedef struct { QUEUE q; Q_t word_count; p_t *targetο, ntextspace[12]; } queue_paper_t;
