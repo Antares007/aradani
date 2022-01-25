@@ -1,8 +1,7 @@
 #include "arsi.h"
 
 // clang-format off
-p_t *ο;I(iε,
-"ο", ο,              L)IN(L,
+IN(iε,
 ada,            imports);
 N(init) {C(1);}
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) ada(T()); } EN(Tail, Name, Head)
@@ -544,4 +543,4 @@ or3        , 0003, L)JUN(L,
 or4        , 0004, L)JUN(L,
 or5        , 0005, L)JUN(L,
 or6        , 0006, L)JUN(L,
-or7        , 0007, L)EB(L)
+or7        , 0007, exports)

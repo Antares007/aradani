@@ -1,4 +1,3 @@
-#include "gorgodandgot.h"
 #include "oars.h"
 #include <fcntl.h>
 #include <stdio.h>
@@ -21,12 +20,11 @@ static void *mapfile(const char *filename, void *pith) {
   return addr;
 }
 N(run_arsi) {
-  R(void *, import);
   R(void *, pith);
   R(const char *, file_name);
   n_t arsi = mapfile(file_name, pith);
   if (arsi)
-    A2(arsi, import) anδ(T());
+    arsi(T());
   else
     C(2);
 }

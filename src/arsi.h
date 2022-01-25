@@ -1,6 +1,7 @@
 #pragma once
 #include "import_export.h"
 #include "oars.h"
+#define Iε N(imports) { imported = 1, A2(init, exports) anδ(T()); }
 N(init);
 N(imports);
 N(exports);

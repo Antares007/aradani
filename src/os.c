@@ -2,40 +2,20 @@
 #include "oars.h"
 #include <stdio.h>
 
-N(run_arsi);
-N(os_wordump);
-
-// clang-format off
-p_t ο[512];
-
 // clang-format off
 E(got,
-"", 0,                         L)  E(L,
-"printf", printf,              L)FEN(L,
-os_new,                        L) EN(L,
-ο,                        exports);
+"", 0,            L)  E(L,
+"printf", printf, L)FEN(L,
+os_new,     exports);
 
-N(thend       ) { printf("the end!\n"); }
-N(ray_dump_not) { printf("\nnot\n"), os_wordump(T()); }
-N(ray_dump_and) { printf("\nand\n"), os_wordump(T()); }
-N(ray_dump_oor) { printf("\nor \n"), os_wordump(T()); }
-
-// clang-format on
-
-N(run) {
-  R(n_t, export);
-  R(p_t *, oο);
-  R(const char *, name);
-  (void)name, (void)export;
-  printf("run   %p  %lu %lu\n", ο, α, ρ);
-  printf("oo    %p  %lu %lu\n", oο, oο[1].Q, oο[2].Q);
-  --oο[1].Q;
-  oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
+N(ray_not) { printf("NOT\n"); }
+N(ray_and) { printf("AND\n");
+  --α; R(p_t *, oο); --α;
+  --oο[1].Q; oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
 }
+N(ray_oor) { printf("OR\n"); }
 
-static N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
-static N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
-static N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
+N(run_arsi);
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -43,26 +23,14 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *file_name = argv[1];
+  p_t ο[512];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
 
-  ο[--ρ].c = thend;
-  ο[--ρ].c = thend;
-  ο[--ρ].c = thend;
+  ο[--ρ].c = ray_not;
+  ο[--ρ].c = ray_and;
+  ο[--ρ].c = ray_oor;
 
-  ο[--ρ].c = ray_dump_not;
-  ο[--ρ].c = ray_dump_and;
-  ο[--ρ].c = ray_dump_oor;
-
-  ο[--ρ].c = ray_cb_not;
-  ο[--ρ].c = ray_cb_and;
-  ο[--ρ].c = ray_cb_oor;
-
-  ο[α++].v = ο;
-  ο[α++].Q = 001;
-  ο[α++].Q = ρ;
-  ο[001].Q = α;
-
-  A4(file_name, exports, run, run_arsi) O;
+  A3(file_name, exports, run_arsi) O;
 }
 
 // EN(got,

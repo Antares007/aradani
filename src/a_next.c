@@ -4,10 +4,9 @@
 
 // clang-format off
 IF(iε, 
-printf, print,         L, int, const char*, ...)p_t *oο;IN(L,
-init_mc21,             L)IN(L,
-and,                   L)I(L,
-"ο", oο,          imports);
+printf, print,       L, int, const char*, ...)IN(L,
+init_mc21,           L)IN(L,
+and,           imports);
 
 #define MAX_QUEUE_PAPERS 1024
 typedef struct { QUEUE q; Q_t word_count; p_t *targetο, ntextspace[12]; } queue_paper_t;
@@ -60,7 +59,7 @@ static void init_pith() {
   bο[--bρ].v = ray_cb_and;
   bο[--bρ].v = ray_cb_oor;
 
-  bο[bα++].v = oο;
+  bο[bα++].v = bο;
   bο[bα++].Q = 0001;
   bο[bα++].Q = bρ;
   bο[bα++].v = god;
@@ -90,6 +89,6 @@ N(os_queue) {
 
 // clang-format off
 EN(tail,
-os_next,                                     L)EN(L,
-os_queue,                                    L)E(L,
-"ο", bο,                                exports);
+os_next,             L)EN(L,
+os_queue,            L)E(L,
+"ο", bο,       exports);
