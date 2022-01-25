@@ -62,8 +62,6 @@ static void init_pith() {
   bο[bα++].v = bο;
   bο[bα++].Q = 0001;
   bο[bα++].Q = bρ;
-  bο[bα++].v = god;
-
   bο[0001].Q = bα;
 }
 static void init_queue() {
@@ -89,6 +87,5 @@ N(os_queue) {
 
 // clang-format off
 EN(tail,
-os_next,             L)EN(L,
 os_queue,            L)E(L,
 "ο", bο,       exports);
