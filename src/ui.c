@@ -86,12 +86,8 @@ int main(void) {
     DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, GRAY);
 
     DrawRectangleRec(textBox, LIGHTGRAY);
-    if (mouseOnText)
-      DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height,
-                         RED);
-    else
-      DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height,
-                         DARKGRAY);
+    DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height,
+                       mouseOnText ? RED : DARKGRAY);
 
     DrawText(name, textBox.x + 5, textBox.y + 8, 40, MAROON);
 
