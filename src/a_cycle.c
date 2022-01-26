@@ -1,8 +1,8 @@
 #include "arsi.h"
 // clang-format off
-IF(iε,
+IN(iε,
+os_new,                   L)IF(L,
 printf, print,            L, int, const char*, ...)IN(L,
-os_new,                   L)IN(L,
 //
 os_queue,                 L)p_t *oο;I(L,
 "ο", oο,                  L)IN(L,
