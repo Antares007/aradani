@@ -49,14 +49,6 @@ N(os_wordump) {
   }
   C(1);
 }
-N(os_ls) {
-  R(n_t, export);
-  R(void*, addr);
-  R(const char*, name);
-  printf("%p %s\n", addr, name);
-  if(addr) A3(export, os_ls, anδ) O;
-  else C(1);
-}
 N(os_run_arsi);
 
 #undef L
@@ -64,7 +56,6 @@ N(os_run_arsi);
 
 E(got,
 "", 0,                  L) EN(L,
-os_ls,                  L) EN(L,
 os_new,                 L) EN(L,
 os_run_arsi,            L) EN(L,
 os_wordump,             L)  E(L,

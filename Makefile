@@ -14,6 +14,7 @@ src/a_cycle.arsi:        		\
 	cat $^ > $@
 
 src/os.arsi:             		\
+	src/a_os_extra.oars   		\
 	src/a_junctions.oars   		\
 	src/a_ada.oars         		\
 	src/a_next.oars 	     		\
