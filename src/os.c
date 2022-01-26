@@ -4,9 +4,10 @@
 
 // clang-format off
 E(got,
-"", 0,            L)  E(L,
-"printf", printf, L)FEN(L,
-os_new,     exports);
+"", 0,                  L)  E(L,
+"printf", printf,       L)FEN(L,
+os_new,                 L)FEN(L,
+os_wordump,       exports)
 
 N(ray_not) { printf("NOT\n"); }
 N(ray_and) { printf("AND\n");

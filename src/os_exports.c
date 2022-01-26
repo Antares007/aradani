@@ -35,8 +35,8 @@ N(os_new) {
 }
 N(os_delete) { R(p_t *, nο); free(nο[0].v), C(1); }
 N(os_wordump) {
-  printf("ο:%p α:%02ld               ρ: %02ld\n", ο, α, ρ);
-  long i = 0;
+  long i = ο[1].Q;
+  printf("ο:%p α:%02ld               ρ: %02ld\n", ο, α - i, ρ);
   while (i < α) {
     printf("%016lx ", ο[i].Q);
     if (++i < α)
