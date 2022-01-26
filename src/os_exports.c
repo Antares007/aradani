@@ -1,6 +1,8 @@
+#include "import_export.h"
 #include "oars.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 // clang-format off
 static N(cont_fathers_not_ray) { p_t *pο = ο[0].v; ο[1].Q = α; pο[pο[2].Q + 2].c(pο, pο[1].Q, pο[2].Q); }
 static N(cont_fathers_and_ray) { p_t *pο = ο[0].v; ο[1].Q = α; pο[pο[2].Q + 1].c(pο, pο[1].Q, pο[2].Q); }
@@ -47,12 +49,23 @@ N(os_wordump) {
   }
   C(1);
 }
-#include "import_export.h"
+N(os_ls) {
+  R(n_t, export);
+  R(void*, addr);
+  R(const char*, name);
+  printf("%p %s\n", addr, name);
+  if(addr) A3(export, os_ls, anδ) O;
+  else C(1);
+}
+N(os_run_arsi);
+
 #undef L
 #define L CAT(exports_, __LINE__)
+
 E(got,
 "", 0,                  L) EN(L,
-os_new,                 L)FEN(L,
+os_ls,                  L) EN(L,
+os_new,                 L) EN(L,
 os_run_arsi,            L) EN(L,
 os_wordump,             L)  E(L,
 "printf", printf, exports)
