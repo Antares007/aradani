@@ -62,5 +62,6 @@ clean:
 		src/os           \
 		src/epoll_client \
 		src/epoll_server \
-		src/seven 	
+		src/seven 			 \
+		src/ui 	
 .PHONY: clean 

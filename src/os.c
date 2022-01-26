@@ -27,5 +27,5 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_oor;
 
   A3(file_name, exports_raylib, os_run_arsi) O;
-  return getchar();
+  return 0;
 }
