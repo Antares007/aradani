@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 static void *mapfile(const char *filename, void *pith) {
-  int fd = open(filename, O_RDWR);
+  int fd = open(filename, O_RDONLY);
   struct stat sb;
   if (fd == -1 || fstat(fd, &sb) == -1)
     return 0;
