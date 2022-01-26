@@ -43,12 +43,15 @@ N(ray_cb_not) { ρ += 6, ο[ρ - 1].c(T()); }
 N(ray_cb_and) { ρ += 6, ο[ρ - 2].c(T()); }
 N(ray_cb_oor) { ρ += 6, ο[ρ - 3].c(T()); }
 
+N(notthend) {print("NOT The End!\n");};
+N(andthend) {print("AND The End!\n");};
+N(oorthend) {print("OR  The End!\n");};
 static void init_pith() {
   Q_t bα = 0, bρ = sizeof(bο) / sizeof(*bο);
 
-  bο[--bρ].v = cont_fathers_not_ray;
-  bο[--bρ].v = cont_fathers_and_ray;
-  bο[--bρ].v = cont_fathers_oor_ray;
+  bο[--bρ].v = notthend;
+  bο[--bρ].v = andthend;
+  bο[--bρ].v = oorthend;
 
   bο[--bρ].v = cont_fathers_not_ray;
   bο[--bρ].v = os_next;
