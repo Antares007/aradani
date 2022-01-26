@@ -13,10 +13,12 @@ and2,                       L)IN(L,
 notand,                     L)IN(L,
 //
 os_ls,                imports);
+// clang-format on
 
-N(მთავარი) { A3(exports, os_ls, and) O; }
+N(მთავარი) { A2(exports, os_ls) O; }
 
 N(init) { oο[oο[1].Q++].v = მთავარი, C(1); }
 
+// clang-format off
 E(tail,
 "ο", oο,              exports);
