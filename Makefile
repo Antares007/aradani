@@ -3,28 +3,30 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=c99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
-src/a_ui.arsi:           \
-	src/a_ui.oars          \
+src/a_ui.arsi:           		\
+	src/a_ui.oars          		\
 	src/os.arsi
 	cat $^ > $@
 
-src/a_cycle.arsi:        \
-	src/a_cycle.oars       \
+src/a_cycle.arsi:        		\
+	src/a_cycle.oars       		\
 	src/os.arsi
 	cat $^ > $@
 
-src/os.arsi:             \
-	src/a_junctions.oars   \
-	src/a_ada.oars         \
-	src/a_next.oars 	     \
-	src/a_mc21.oars				 \
+src/os.arsi:             		\
+	src/a_junctions.oars   		\
+	src/a_ada.oars         		\
+	src/a_next.oars 	     		\
+	src/a_mc21.oars				 		\
 	src/goto.bin
 	cat $^ > $@
 
-src/os:                  \
-	src/os.c               \
-	src/os_exports_bark.o  \
-	src/os_exports.o
+src/os:                     \
+	src/os.c                  \
+	src/os_bark.o             \
+	src/os_exports.o          \
+	src/os_exports_raylib.o   
+	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src/seven: src/seven.c src/ada.o src/a_mc21.o
 

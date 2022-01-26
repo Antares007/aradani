@@ -19,7 +19,7 @@ static void *mapfile(const char *filename, void *pith) {
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
 }
-N(run_arsi) {
+N(os_run_arsi) {
   R(void *, pith);
   R(const char *, file_name);
   n_t arsi = mapfile(file_name, pith);

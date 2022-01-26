@@ -47,3 +47,31 @@ N(os_wordump) {
   }
   C(1);
 }
+#include "import_export.h"
+#undef L
+#define L CAT(exports_, __LINE__)
+E(got,
+"", 0,                  L) EN(L,
+os_new,                 L)FEN(L,
+os_run_arsi,            L) EN(L,
+os_wordump,             L)  E(L,
+"printf", printf, exports)
+
+// EN(got,
+// bark,                     L)FEN(L,
+// l_accept,                 L)FEN(L,
+// l_address,                L)FEN(L,
+// l_bind,                   L)FEN(L,
+// l_epoll_create,           L)FEN(L,
+// l_epoll_ctl,              L)FEN(L,
+// l_epoll_wait,             L)FEN(L,
+// l_listen,                 L)FEN(L,
+// l_read,                   L)FEN(L,
+// l_setnoblock,             L)FEN(L,
+// l_socket,                 L)FEN(L,
+// la_stdin,                 L)FEN(L,
+// ls_export,                L)FEN(L,
+// os_delete,                L)FEN(L,
+// os_new,                   L)FEN(L,
+// os_wordump,               L) E (L,
+// printf, printf,           L)

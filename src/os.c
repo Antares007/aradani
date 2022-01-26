@@ -3,12 +3,6 @@
 #include <stdio.h>
 
 // clang-format off
-E(got,
-"", 0,                  L)FEN(L,
-os_new,                 L)FEN(L,
-os_wordump,             L)  E(L,
-"printf", printf,       exports)
-
 N(ray_not) { printf("NOT\n"); }
 N(ray_and) { printf("AND\n");
   --α; R(p_t *, oο); --α;
@@ -16,7 +10,8 @@ N(ray_and) { printf("AND\n");
 }
 N(ray_oor) { printf("OR\n"); }
 
-N(run_arsi);
+N(os_run_arsi);
+N(exports_raylib);
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -31,24 +26,5 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_oor;
 
-  A3(file_name, exports, run_arsi) O;
+  A3(file_name, exports_raylib, os_run_arsi) O;
 }
-
-// EN(got,
-// bark,                     L)FEN(L,
-// l_accept,                 L)FEN(L,
-// l_address,                L)FEN(L,
-// l_bind,                   L)FEN(L,
-// l_epoll_create,           L)FEN(L,
-// l_epoll_ctl,              L)FEN(L,
-// l_epoll_wait,             L)FEN(L,
-// l_listen,                 L)FEN(L,
-// l_read,                   L)FEN(L,
-// l_setnoblock,             L)FEN(L,
-// l_socket,                 L)FEN(L,
-// la_stdin,                 L)FEN(L,
-// ls_export,                L)FEN(L,
-// os_delete,                L)FEN(L,
-// os_new,                   L)FEN(L,
-// os_wordump,               L) E (L,
-// printf, printf,           L)

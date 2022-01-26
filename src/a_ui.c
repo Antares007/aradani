@@ -11,7 +11,7 @@ os_queue,                 L)p_t *oο;I(L,
 and,                      L)IN(L,
 and2,               imports);
 
-N(მთავარი) { A5(1,2,3,4,os_wordump) O; }
+N(მთავარი) { A5(1, 2, 3, 4, os_wordump) O; }
 
 N(init) { oο[oο[1].Q++].v = მთავარი, C(1); }
 
