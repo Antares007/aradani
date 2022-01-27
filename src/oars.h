@@ -61,17 +61,16 @@ typedef struct p_s {
   N(n##p)
 #define T(n) n##ο, n##α, n##ρ
 #define R(T, n) T n = (T)ο[--α].v
-#define As(T, n)                                                               \
-  struct T n =                                                                 \
-      (α += wordCountOf(struct T), (struct T *)&ο[α - wordCountOf(struct T)])
-#define Rs(T, n) struct T n = ((struct T *)&ο[α -= wordCountOf(struct T)])
+#define AS(T, ...) (α += wordCountOf(T), *((T *)&ο[α - wordCountOf(T)]) = ((T)__VA_ARGS__)),
+#define RS(T, n) T *n = ((T *)&ο[α -= wordCountOf(T)])
 
 #define C(r) ο[ρ + (r)].c(ο, α, ρ)
 #define O ο[α - 1].c(ο, α - 1, ρ)
 #define A(a) ο[α++].v = (void *)(a),
 #define X A2(os_next, and) O
 #define S(T, σ) ((T *)&σ[-wordCountOf(T)])
-#include "a20.h"
+
+#include "a21.h"
 
 typedef void (*n_t)(OARS);
 typedef unsigned long Q_t;
