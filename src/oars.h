@@ -61,7 +61,7 @@ typedef struct p_s {
   N(n##p)
 #define T(n) n##ο, n##α, n##ρ
 #define R(T, n) T n = (T)ο[--α].v
-#define Sa(T, ...) (α += wordCountOf(T), *((T *)&ο[α - wordCountOf(T)]) = ((T)__VA_ARGS__)),
+#define Sa(T, ...) ((*((T *)&ο[α]) = ((T)__VA_ARGS__)), (α += wordCountOf(T))),
 #define Sr(T, n) T *n = ((T *)&ο[α -= wordCountOf(T)])
 
 #define C(r) ο[ρ + (r)].c(ο, α, ρ)
@@ -71,6 +71,7 @@ typedef struct p_s {
 #define S(T, σ) ((T *)&σ[-wordCountOf(T)])
 
 #include "a21.h"
+#include "sa21.h"
 
 typedef void (*n_t)(OARS);
 typedef unsigned long Q_t;
