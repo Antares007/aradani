@@ -61,8 +61,8 @@ typedef struct p_s {
   N(n##p)
 #define T(n) n##ο, n##α, n##ρ
 #define R(T, n) T n = (T)ο[--α].v
-#define AS(T, ...) (α += wordCountOf(T), *((T *)&ο[α - wordCountOf(T)]) = ((T)__VA_ARGS__)),
-#define RS(T, n) T *n = ((T *)&ο[α -= wordCountOf(T)])
+#define Sa(T, ...) (α += wordCountOf(T), *((T *)&ο[α - wordCountOf(T)]) = ((T)__VA_ARGS__)),
+#define Sr(T, n) T *n = ((T *)&ο[α -= wordCountOf(T)])
 
 #define C(r) ο[ρ + (r)].c(ο, α, ρ)
 #define O ο[α - 1].c(ο, α - 1, ρ)

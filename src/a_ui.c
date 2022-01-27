@@ -29,14 +29,21 @@ os_ls,                imports);
 // clang-format on
 #include <raylib.h>
 N(drawline) {
-  AS(Vector2, {10, 100})
-  AS(Vector2, {400, 100}) AS(Vector2, {10, 0}) AS(Vector2, {400, 0})
-      AS(float, 2) AS(Color, {0, 0, 0, 255}) A(rl_DrawLineBezierCubic) O;
+  Sa(Vector2, {10, 100})           //
+      Sa(Vector2, {400, 100})      //
+      Sa(Vector2, {10, 0})         //
+      Sa(Vector2, {400, 0})        //
+      Sa(float, 2)                 //
+      Sa(Color, {0, 0, 0, 255})    //
+      A(rl_DrawLineBezierCubic) O; //
 }
 N(mn) {
-  A3(rl_WindowShouldClose, rl_BeginDrawing, and)
-  AS(Color, {255, 100, 100, 255})
-  A8(rl_ClearBackground, and2, drawline, and, rl_EndDrawing, and, mn, and) O;
+  A3(rl_WindowShouldClose, rl_BeginDrawing, and) //
+  Sa(Color, {255, 100, 100, 255})                //
+      A2(rl_ClearBackground, and2)               //
+      A2(drawline, and)                          //
+      A2(rl_EndDrawing, and)                     //
+      A2(mn, and) O;                             //
 }
 N(მთავარი) {
   A8(800, 600, "mami", rl_InitWindow, mn, rl_CloseWindow, or, and3) O;

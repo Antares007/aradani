@@ -17,7 +17,7 @@ rl_BeginDrawing, {
 }, L)ED(L,
 
 rl_ClearBackground, {
-  RS(Color, c);
+  Sr(Color, c);
   (ClearBackground(*c), C(1));
 }, L)ED(L,
 
@@ -26,20 +26,20 @@ rl_CloseWindow, {
 }, L)ED(L,
 
 rl_DrawLineBezierCubic, {
-  RS(Color, color);
-  RS(float, thick);
-  RS(Vector2, endControlPos);
-  RS(Vector2, startControlPos);
-  RS(Vector2, endPos);
-  RS(Vector2, startPos);
+  Sr(Color, color);
+  Sr(float, thick);
+  Sr(Vector2, endControlPos);
+  Sr(Vector2, startControlPos);
+  Sr(Vector2, endPos);
+  Sr(Vector2, startPos);
   (DrawLineBezierCubic(*startPos, *endPos, *startControlPos, *endControlPos, *thick, *color), C(1));
 }, L)ED(L,
 
 rl_DrawLineEx, {
-  RS(Color, color);
-  RS(float, thick);
-  RS(Vector2, endPos);
-  RS(Vector2, startPos);
+  Sr(Color, color);
+  Sr(float, thick);
+  Sr(Vector2, endPos);
+  Sr(Vector2, startPos);
   (DrawLineEx(*startPos, *endPos, *thick, *color), C(1));
 }, L)ED(L,
 
