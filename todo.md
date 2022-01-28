@@ -1,16 +1,19 @@
 #TODO
-- share share share
-- patreon page 
-- githab page 
+- GUI sample
+  - auto parse and generate export definitions
+- Patreon page 
+- GitHub page 
 - presentation video
 - Edsger W. Dijkstra translation
-- http server demo program
+- HTTP server demo program
 - async programming
-- http parser / language parsin sample
-- debugger - martivi stepin/continue printf???????
-- epoll socket / tcp stack
+- HTTP parser
+- language parsing sample
+- debugger - simple step in/continue?
+- epoll socket / TCP stack
 - use arsi / renames / cleanup
 - implement openparen closeparen  
-- use tdd
+- use TDD
 - consider reindex aradani as da->0 an->1 ara->2
-+ remove osnext calls from os rays by extending meaning of dOt
+- share share share
++ remove os_next calls from os rays by extending the meaning of dOt
