@@ -12,6 +12,7 @@ N(ray_oor) { printf("OR\n"); }
 
 N(os_run_arsi);
 N(exports_raylib);
+void os_hrtime_init();
 
 int main(int argc, char **argv) {
   if (argc < 2) {
@@ -26,6 +27,7 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_oor;
 
+  os_hrtime_init();
   A3(file_name, exports_raylib, os_run_arsi) O;
   return 0;
 }

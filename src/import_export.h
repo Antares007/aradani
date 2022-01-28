@@ -37,7 +37,4 @@ static int cmp(const char *s1, const char *s2) {
 #define E(Tail, Name, Addr, Head)                                              \
   N(Head) { A3(Name, Addr, Tail) C(1); }
 #define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
-#define FEN(Tail, Name, Head)                                                  \
-  N(Name);                                                                     \
-  EN(Tail, Name, Head)
 #define EB(Tail) EN(Tail, ο, exports)

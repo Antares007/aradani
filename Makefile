@@ -1,6 +1,6 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-std=c99 -Wall -Wno-multichar
+CFLAGS+=-std=gnu99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
 src/a_ui.arsi:                      \
@@ -25,6 +25,7 @@ src/os.arsi:                        \
 
 src/os:                             \
 	src/os.c                   \
+	src/os_hrtime.o                   \
 	src/os_bark.o              \
 	src/os_exports.o           \
 	src/os_exports_raylib.o

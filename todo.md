@@ -1,15 +1,18 @@
 #TODO
 - Patreon page 
 - GitHub page 
+- Async programming
+  - Event emitter
+  - timeout
 - Presentation videos
   - HTTP server demo program
     - Epoll socket / TCP stack
-    - async programming
     - Language parsing sample
       - HTTP parser
   - GUI sample
     - auto parse and generate export definitions
   - Debugger - simple step in/continue?
+- XML parser http://www.jelks.nu/XML/xmlebnf.html#NT-XMLDecl
 - Edsger W. Dijkstra translation
 - implement openparen closeparen  
 - use TDD

@@ -50,16 +50,17 @@ N(os_wordump) {
   C(1);
 }
 N(os_run_arsi);
+N(os_hrtime);
 
 #undef L
 #define L CAT(exports_, __LINE__)
-
 E(got,
-"", 0,                  L) EN(L,
-os_new,                 L) EN(L,
-os_run_arsi,            L) EN(L,
-os_wordump,             L)  E(L,
-"printf", printf, exports)
+"", 0,                      L) EN(L,
+os_hrtime,                  L) EN(L,
+os_new,                     L) EN(L,
+os_run_arsi,                L) EN(L,
+os_wordump,                 L)  E(L,
+"printf", printf,     exports)
 
 // EN(got,
 // bark,                     L)FEN(L,
