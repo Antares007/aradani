@@ -12,7 +12,7 @@ rl_DrawLineBezierCubic,     L)IN(L,
 rl_DrawLineEx,              L)IN(L,
 rl_EndDrawing,              L)IN(L,
 rl_InitWindow,              L)IN(L,
-rl_WindowShouldClose,       L)IN(L,
+rl_WindowShouldKeepAlive,   L)IN(L,
 //
 os_queue,                   L)p_t *oο;I(L,
 "ο", oο,                    L)IN(L,
@@ -37,18 +37,21 @@ N(drawline) {
       Color, {0 σ 0 σ 0 σ 255}) A(rl_DrawLineBezierCubic) O;
 }
 N(mn) {
-  A3(rl_WindowShouldClose, rl_BeginDrawing, and) //
-  Sa(Color, {255, 100, 100, 255})                //
-      A2(rl_ClearBackground, and2)               //
-      A2(drawline, and)                          //
-      A2(rl_EndDrawing, and)                     //
-      A2(mn, and) O;                             //
+  A3(rl_WindowShouldKeepAlive, rl_BeginDrawing, and) //
+  Sa(Color, {255, 100, 100, 255})                    //
+      A2(rl_ClearBackground, and2)                   //
+      A2(drawline, and)                              //
+      A2(rl_EndDrawing, and)                         //
+      A2(mn, and) O;                                 //
 }
 N(მთავარი) {
   A8(800, 600, "mami", rl_InitWindow, mn, rl_CloseWindow, or, and3) O;
 }
 
-N(init) { oο[oο[1].Q++].v = მთავარი, C(1); }
+N(init) {
+  print("init\n");
+  oο[oο[1].Q++].v = მთავარი, C(1);
+}
 
 // clang-format off
 E(tail,
