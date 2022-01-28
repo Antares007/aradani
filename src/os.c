@@ -2,11 +2,14 @@
 #include "oars.h"
 #include <stdio.h>
 
-// clang-format off
 N(ray_not) { printf("NOT\n"); }
-N(ray_and) { printf("AND\n");
-  --α; R(p_t *, oο); --α;
-  --oο[1].Q; oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
+N(ray_and) {
+  printf("AND\n");
+  --α;
+  R(p_t *, oο);
+  --α;
+  --oο[1].Q;
+  oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
 }
 N(ray_oor) { printf("OR\n"); }
 

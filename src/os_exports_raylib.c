@@ -1,15 +1,16 @@
-#include "import_export.h"
 #include "export_fun.h"
+#include "import_export.h"
 #include "oars.h"
 #include <raylib.h>
 #include <stdio.h>
 
 N(exports);
 
-#define ED(Tail, Pref, Name, Body, Head) N(Pref##Name) Body EN(Tail, Pref##Name, Head)
+#define ED(Tail, Pref, Name, Body, Head)                                       \
+  N(Pref##Name) Body EN(Tail, Pref##Name, Head)
 #undef L
 #define L CAT(export_raylib_, __LINE__)
-bool WindowShouldKeepAlive() { return !WindowShouldClose();}
+bool WindowShouldKeepAlive() { return !WindowShouldClose(); }
 // clang-format off
 EVF0(exports,
 rl_, BeginDrawing, L)EVF1(L,

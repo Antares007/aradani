@@ -1,12 +1,13 @@
+#include "oars.h"
 #include <stdint.h>
 #include <time.h>
-#include "oars.h"
 
 static clock_t clock_id;
 
 N(os_hrtime) {
   struct timespec t;
-  A(clock_gettime(clock_id, &t) ? 0 : t.tv_sec * (uint64_t)1e9 + t.tv_nsec) C(1);
+  A((clock_gettime(clock_id, &t) ? 0 : t.tv_sec * (uint64_t)1e9 + t.tv_nsec))
+  C(1);
 }
 void os_hrtime_init() {
   struct timespec t;

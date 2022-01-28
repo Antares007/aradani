@@ -2,18 +2,22 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-#include <stdio.h>
 //#undef NP
 //#define NP N
 NP(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
   ssize_t ret = read(connfd, ((char *)ο) + nread, sizeof(void *));
-  if (ret < 0)       A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
-  else if (ret == 0) A(nread) C(1);
-  else               α = (nread + ret + sizeof(void *) - 1) / sizeof(void *), A3(nread + ret, connfd, l_read) O;
+  if (ret < 0)
+    A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
+  else if (ret == 0)
+    A(nread) C(1);
+  else
+    α = (nread + ret + sizeof(void *) - 1) / sizeof(void *),
+    A3(nread + ret, connfd, l_read) O;
 }
 NP(l_accept) {
   R(q_t, fd);
@@ -68,8 +72,10 @@ NP(l_epoll_wait) {
   R(struct epoll_event *, events);
   R(Q_t, epfd);
   q_t ret = epoll_wait(epfd, events, maxevents, timeout);
-  if (ret <= 0) C(2);
-  else A(ret) C(1);
+  if (ret <= 0)
+    C(2);
+  else
+    A(ret) C(1);
 }
 NP(l_setnoblock) {
   R(q_t, fd);
