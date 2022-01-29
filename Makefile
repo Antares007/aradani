@@ -3,19 +3,24 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=gnu99 -Wall -Wno-multichar
 OBJCOPY=objcopy
 
-src/a_ui.arsi:                      \
+src/a_ui.arsi:               \
 	src/a_ui.oars              \
 	src/a_gui.oars             \
 	src/os.arsi
 	cat $^ > $@
 
-src/a_cycle.arsi:                   \
+src/a_cycle.arsi:            \
 	src/a_cycle.oars           \
 	src/os.arsi
 	cat $^ > $@
 
-src/a_parse.arsi:                   \
+src/a_parse.arsi:            \
 	src/a_parse.oars           \
+	src/os.arsi
+	cat $^ > $@
+
+src/a_async.arsi:            \
+	src/a_async.oars           \
 	src/os.arsi
 	cat $^ > $@
 
