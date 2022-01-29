@@ -20,6 +20,46 @@ notand,                     L)IN(L,
 or,                         L)IN(L,
 //
 os_ls,                imports);
+
+// 0xxxxxxx
+// 110xxxxx	10xxxxxx
+// 1110xxxx	10xxxxxx	10xxxxxx
+// 11110xxx	10xxxxxx	10xxxxxx	10xxxxxx
+//struct u8cp {
+//  bool (*f)(uint32_t);
+//  template <typename O> void operator()(O o, const char *in) const {
+//    if ((in[0] & 0x80) == 0)
+//      if (f(in[0]))
+//        o(1);
+//      else
+//        o(error_ray_v, -1);
+//    else if ((in[1] & 0xc0) != 0x80)
+//      o(error_ray_v, -2);
+//    else if ((in[0] & 0xe0) == 0xc0)
+//      if (f((0x1f & in[0]) << 6 | (0x3f & in[1])))
+//        o(2);
+//      else
+//        o(error_ray_v, -3);
+//    else if ((in[2] & 0xc0) != 0x80)
+//      o(error_ray_v, -4);
+//    else if ((in[0] & 0xf0) == 0xe0)
+//      if (f((0x0f & in[0]) << 12 | (0x3f & in[1]) << 6 | (0x3f & in[2])))
+//        o(3);
+//      else
+//        o(error_ray_v, -5);
+//    else if ((in[3] & 0xc0) != 0x80)
+//      o(error_ray_v, -6);
+//    else if ((in[0] & 0xf8) == 0xf0)
+//      if (f((0x07 & in[0]) << 18 | (0x3f & in[1]) << 12 | (0x3f & in[2]) << 6 |
+//            (0x3f & in[3])))
+//        o(4);
+//      else
+//        o(error_ray_v, -7);
+//    else
+//      o(error_ray_v, -8);
+//  }
+//};
+
 N(Ο);                      
 N(Μ);
 
