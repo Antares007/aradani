@@ -1,5 +1,5 @@
 #pragma once
-#define σ ,
+#define ξ ,
 /*
 console.log(
   Array(7 + 7 + 7 + 1)

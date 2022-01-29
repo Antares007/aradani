@@ -29,12 +29,12 @@ os_ls,                imports);
 // clang-format on
 #include <raylib.h>
 N(drawline) {
-  Sa6(Vector2, {100 σ 100}, //
-      Vector2, {400 σ 100}, //
-      Vector2, {100 σ 200}, //
-      Vector2, {400 σ 200}, //
+  Sa6(Vector2, {100 ξ 100}, //
+      Vector2, {400 ξ 100}, //
+      Vector2, {100 ξ 200}, //
+      Vector2, {400 ξ 200}, //
       float, 2,             //
-      Color, {0 σ 0 σ 0 σ 255}) A(rl_DrawLineBezierCubic) O;
+      Color, {0 ξ 0 ξ 0 ξ 255}) A(rl_DrawLineBezierCubic) O;
 }
 N(mn) {
   A3(rl_WindowShouldKeepAlive, rl_BeginDrawing, and) //
