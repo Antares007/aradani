@@ -1,6 +1,7 @@
 #include "arsi.h"
 // clang-format off
-IN(iε,
+IF(iε,
+printf, print,             L, int, const char*, ...)IN(L,
 init_mc21,           imports);
 // clang-format on
 
@@ -49,7 +50,7 @@ static void ada_and_mc(OARS, void **t, void **s, Q_t wc) {
 static void ada_oor_mc(OARS, void **t, void **s, Q_t wc) {
   mc21_lookup[wc](ο, α, ρ, dot, t, s);
 };
-N(init) {
+NP(init) {
   ada_not_jun[0] = got, ada_not_jun[1] = ada_not_mc;
   ada_and_jun[0] = god, ada_and_jun[1] = ada_and_mc;
   ada_oor_jun[0] = gor, ada_oor_jun[1] = ada_oor_mc;

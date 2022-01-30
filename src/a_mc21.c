@@ -1,6 +1,9 @@
 #include "arsi.h"
-Iε;
-N(init) { C(1); }
+
+IF(iε,
+printf, print,             imports, int, const char*, ...);
+
+NP(init) { C(1); }
 /*
 const set = Array(22).fill(0);
 const pad = (x, v) => x.toString().padStart(2, v);

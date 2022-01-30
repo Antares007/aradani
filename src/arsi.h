@@ -21,7 +21,7 @@ N(head) {
 #define NP(n)                                                                  \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    print("%s:%s\t%p %ld\t%ld\n", __FILE_NAME__, __FUNCTION__, ο, α, ρ);       \
+    print("%p %ld\t%ld\t%s:%s\n", ο, α, ρ, __FILE_NAME__, __FUNCTION__);       \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)

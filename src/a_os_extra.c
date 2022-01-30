@@ -21,7 +21,7 @@ N(os_ls) {
   A3(exports, os_ls_n, and) O;
 }
 
-N(init) { C(1); }
+NP(init) { C(1); }
 
 // clang-format off
 EN(tail,

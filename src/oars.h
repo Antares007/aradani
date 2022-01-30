@@ -36,6 +36,7 @@ N-word.       Void C function with four fixed parameters "ο," "α," and "ρ."
 typedef struct p_s {
   union {
     void (*c)(struct p_s *, unsigned long, unsigned long);
+    struct p_s *p;
     void *v;
     char b;
     short w;
@@ -55,7 +56,7 @@ typedef struct p_s {
 #define NP(n)                                                                  \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    printf("%p\t%ld\t%ld\t%s\n", ο, α, ρ, #n);                                 \
+    printf("%p %ld\t%ld\t%s:%s\n", ο, α, ρ, __FILE_NAME__, __FUNCTION__);       \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)

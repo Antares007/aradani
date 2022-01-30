@@ -6,10 +6,9 @@ N(ray_not) { printf("NOT\n"); }
 N(ray_and) {
   printf("AND\n");
   --α;
-  R(p_t *, oο);
+  R(p_t *, σ);
   --α;
-  --oο[1].Q;
-  oο[oο[1].Q].c(oο, oο[1].Q, oο[2].Q);
+  σ[0].p[σ[1].Q - 1].c(σ[0].p, σ[1].Q - 1, σ[2].Q);
 }
 N(ray_oor) { printf("OR\n"); }
 
