@@ -28,15 +28,19 @@ src/a_async.arsi:            \
 src/os.arsi:                 \
 	src/a_os_extra.oars        \
 	src/a_junctions.oars       \
-	src/a_next.oars            \
-	src/a_ada.oars             \
-	src/a_mc21.oars            \
 	src/goto.bin
 	cat $^ > $@
 
-src/os:                             \
+#	src/a_next.oars            \
+#	src/a_ada.oars             \
+#	src/a_mc21.oars            \
+
+src/os:                      \
 	src/os.c                   \
 	src/os_hrtime.o            \
+	src/os_mc21.o              \
+	src/os_ada.o               \
+	src/os_next.o              \
 	src/os_bark.o              \
 	src/os_exports.o           \
 	src/os_exports_raylib.o
