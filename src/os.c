@@ -14,10 +14,10 @@ N(ray_oor) { printf("OR\n"); }
 
 N(os_run_arsi);
 N(exports_next);
-void os_hrtime_init();
 const char *file_name;
 N(runner) { A3(file_name, exports_next, os_run_arsi) O; }
 
+N(os_hrtime_init);
 N(init_ada);
 N(init_next);
 int main(int argc, char **argv) {
@@ -33,10 +33,6 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_oor;
 
-  os_hrtime_init();
-  A5(
-      init_ada, init_next, anδ,
-      runner, anδ
-  ) O;
+  A7(init_ada, os_hrtime_init, anδ, init_next, anδ, runner, anδ) O;
   return 0;
 }
