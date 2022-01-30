@@ -35,16 +35,17 @@ NP(os_init_pith) {
   nσ[4 + sc].v = nσ;
   C(1);
 }
-NP(os_new) {
+NP(os_new_s) {
   R(Q_t, sc);
   R(Q_t, wc);
-  R(n_t, not );
+  R(n_t, not);
   R(n_t, and);
   R(n_t, oor);
   p_t *nσ = malloc((wc + sc + 5) * sizeof(void *));
-  A9(nσ, oor, and, not, wc, sc, nσ, ο[-1].v, os_init_pith) O;
+  A9(nσ, oor, and, not, wc - 5, sc, nσ, ο[-1].v, os_init_pith) O;
 }
-N(os_delete) {
+NP(os_new) { A2(0, os_new_s) O; }
+NP(os_delete) {
   R(p_t *, σ);
   free(σ);
   C(1);

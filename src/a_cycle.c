@@ -10,19 +10,19 @@ os_queue,                 L)p_t *σ;I(L,
 and,                      L)IN(L,
 and2,               imports);
 
-NP(p_or) { R(p_t *, oσ); A5(ο[-1].v, gor, oσ, 3, os_queue) O; }
-N(p_and) {
+NP(p_or ) { R(p_t *, oσ); A5(ο[-1].v, gor, oσ, 3, os_queue) O; }
+N (p_and) {
   R(p_t *, oσ); R(Q_t, c);
-  if (c % 100000000 == 0) print("p_and %ld\n", c);
+  if (c % 100000000 == 0) print("p_and %lu %lu %lu\n", α, ρ, c);
   A6(c + 1, ο[-1].v, god, oσ, 3, os_queue) O;
 }
 NP(p_not) {}
 NP(mproducer) { A5(p_or, p_and, p_not, 512, os_new) O; }
 
-NP(c_or) { R(p_t *, oσ); A5(ο[-1].v, god, oσ, 3, os_queue) O; }
-N(c_and) {
+NP(c_or ) { R(p_t *, oσ); A5(ο[-1].v, god, oσ, 3, os_queue) O; }
+N (c_and) {
   R(p_t *, oσ); R(Q_t, c);
-  if (c % 100000000 == 1) print("c_and %ld\n", c);
+  if (c % 100000000 == 1) print("c_and %lu %lu %lu\n", α, ρ, c);
   A6(c + 1, ο[-1].v, god, oσ, 3, os_queue) O;
 }
 NP(c_not) {}
@@ -32,8 +32,8 @@ NP(counter) { A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
 NP(მთავარი) { A5(0, counter, 0, counter, and2) O; }
 NP(seven) { A(7) C(1); }
 NP(init) {
-  σ[0].p[σ[1].Q++].v = seven, C(1);
+  σ[0].p[σ[1].Q++].v = მთავარი, C(1);
 }
 
 EN(tail,
-σ,              exports);
+σ,                  exports);
