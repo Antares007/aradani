@@ -1,37 +1,17 @@
 #pragma once
-/*
-               init                           next
-   ...........................................................
-          ο[α] MC   ο[ρ]        .           MC
-             | MC   |           .           MC
-     ο - NNNN○○○○○○○SSS - ο[σ]  .           MC
-               MC               .      ο[ρ] MC
-               MC               .         | MC
-               MC               . ο - ○○○○SSSSSSSSSS - ο[σ]
-               MC               .     |     MC
-               MC               .     ο[α]  MC
-
-   α <= ρ <= σ | ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
-M-word.       Any instruction from the CPU instruction set.
-M-text space. Continuous space in the random access memory (RAM) of a computer.
-M-text.       A bunch of M-words in the M-text space.
-              Let's visualize it as a vertical line of a cross.
-OarS.         M-text space is used as two stack-like structures facing each
-other. From "ο[0]" to "ο[α]" let's call it the N-text space, and from "ο[ρ]" to
-"ο[σ]" let's call it S-pith. Let's visualize it as a horizontal line of a cross.
-N-text.       A bunch of N-words is composed according to syntax rules.
-N-word.       Void C function with four fixed parameters "ο," "α," and "ρ."
-              Next, the M-text defines the N-word, and finally,
-              the N-word must answer the question to act as a whole word.
-              That means that the last M-word must be a jump (goto) into S-pith.
-              In other words, the N-word must decide which junction ray/adapter
-              to use to continue the execution of the sentence.
-  "My first remark is that, although the programmer's activity ends
-  when he has constructed a correct program, the process taking
-  place under control of his program is the true subject matter
-  of his activity, for it is this process that has to accomplish
-  the desired effect; it is this process that in its dynamic
-  behavior has to satisfy the desired specifications." Edsger Wybe Dijkstra.
+/*                       Notandor / არადანი
+                                  .
+               init               .           next
+    .......................................................
+           σ[α]  C   ο[ρ]         .            C
+             |   C     |          .            C
+       σ→NNNn○○○ ο→○○○○OAN        .     σ[α]   C ο[ρ]
+                 C                .       |    C |
+                 C                .  σ→NNN○○○○ ο→OANnOAN
+                 C                .            C
+                 C                .            C
+                 C                .            C
+        ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
 */
 typedef struct p_s {
   union {

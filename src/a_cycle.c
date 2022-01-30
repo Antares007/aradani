@@ -28,7 +28,7 @@ N (c_and) {
 }
 NP(c_not) {}
 NP(mconsumer) { A5(c_or, c_and, c_not, 512, os_new) O; }
-
+//               mconsumer, gor, mproducer, os_queue
 NP(counter) { A7(mconsumer, gor, mproducer, and2, 3, os_queue, and2) O; }
 NP(მთავარი) { A5(0, counter, 0, counter, and2) O; }
 NP(seven) { A(7) C(1); }
