@@ -31,10 +31,6 @@ src/os.arsi:                 \
 	src/goto.bin
 	cat $^ > $@
 
-#	src/a_next.oars            \
-#	src/a_ada.oars             \
-#	src/a_mc21.oars            \
-
 src/os:                      \
 	src/os.c                   \
 	src/os_hrtime.o            \
