@@ -3,36 +3,30 @@
 #include <stdio.h>
 
 N(ray_not) { printf("NOT\n"); }
-N(ray_and) {
-  printf("AND\n");
-  --α;
-  R(p_t *, σ);
-  --α;
-  σ[0].p[σ[1].Q - 1].c(σ[0].p, σ[1].Q - 1, σ[2].Q);
-}
-N(ray_oor) { printf("OR\n"); }
+N(ray_and) { printf("AND\n"); }
+N(ray_oor) { printf("OOR\n"); }
 
 N(os_run_arsi);
 N(exports_next);
-const char *file_name;
-N(runner) { A3(file_name, exports_next, os_run_arsi) O; }
+N(os_wordump);
 
-N(os_hrtime_init);
-N(init_ada);
-N(init_next);
+void os_hrtime_init();
+void init_ada();
+void init_os_next();
+
 int main(int argc, char **argv) {
   if (argc < 2) {
     printf("Would you mind adding the 'file_name' as an argument?\n");
     return 8;
   }
-  file_name = argv[1];
-  p_t ο[512];
-  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
+  const char* file_name = argv[1];
+  p_t σ[512], *ο = σ + 256;
+  Q_t α = 0, ρ = 256;
 
   ο[--ρ].c = ray_not;
   ο[--ρ].c = ray_and;
   ο[--ρ].c = ray_oor;
-
-  A7(init_ada, os_hrtime_init, anδ, init_next, anδ, runner, anδ) O;
+  A2(file_name, os_wordump) O;
+  //A3(file_name, exports_next, os_run_arsi) O;
   return 0;
 }

@@ -1,20 +1,30 @@
-#include "queue.h"
 #include "import_export.h"
+#include "queue.h"
+#include <assert.h>
 #include <stdio.h>
 
-#define MAX_QUEUE_PAPERS 1024
-typedef struct {
-  QUEUE q;
-  Q_t word_count;
-  p_t *σ, ntextspace[12];
-} queue_paper_t;
-
-typedef void (*fun_t)();
-static fun_t mc21_lookup[22];
-static queue_paper_t queue_papers[MAX_QUEUE_PAPERS];
+#define MAXΣ 1024
+static p_t σtable[MAXΣ][512];
 static QUEUE main_queue, temp_queue;
-static p_t σ[512];
-
+static p_t emptyσ[1];
+static p_t *getσ();
+N(os_queue) {
+  R(p_t *, oο);
+  p_t *nσ;
+  Q_t nα = α;
+  if (ο[1].Q == ρ) {
+    nσ = σ;
+    σ = emptyσ, α = 0;
+  } else {
+    nσ = getσ();
+    while (α)
+      α--, nσ[α].v = σ[α].v;
+  }
+  nσ[nα + 0].Q = nα;
+  nσ[nα + 1].v = oο;
+  QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&nσ[nα + 2]);
+  C(1);
+}
 N(os_next) {
   QUEUE *q;
   if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {
@@ -26,54 +36,35 @@ N(os_next) {
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
     return C(0);
-  ο[-1].p[1].Q = α;
+  σ[0].Q  = 0;
   QUEUE_REMOVE(q);
-  queue_paper_t *p = QUEUE_DATA(q, queue_paper_t, q);
-  p->q[0] = 0;
-  p_t *σ = p->σ;
-  void **t = &σ[0].p[σ[1].Q].v, **s = &p->ntextspace[0].v;
-  mc21_lookup[p->word_count](σ[0].p, σ[1].Q + p->word_count, σ[2].Q, dot, t, s);
+  p_t *nσ = ((p_t *)q);
+  Q_t  nα = nσ[-2].Q;
+  p_t *oο = nσ[-1].p;
+  dot(nσ - nα - 2, nα, oο, oο[1].Q);
 }
-static N(notthend) { printf("NOT The End!\n"); };
-static N(oorthend) { printf("OR  The End!\n"); };
-static NP(init_queue) {
+void init_os_next() {
   QUEUE_INIT(&main_queue);
   QUEUE_INIT(&temp_queue);
-  for (Q_t i = 0; i < MAX_QUEUE_PAPERS; i++)
-    queue_papers[i].q[0] = 0;
-  C(1);
+  for (Q_t i = 0; i < MAXΣ; i++) σtable[i][0].Q = 0;
 }
-N(init_mc21);
-N(ada);
-N(os_init_pith);
-NP(init_next) {
-  A15(notthend, os_next, oorthend, sizeof(σ) / sizeof(*σ) - 5, 0, σ, σ,
-      os_init_pith, mc21_lookup, init_mc21, 020, ada, init_queue, 010, ada)
-  O;
-}
-N(os_queue) {
-  R(Q_t, word_count);
-  R(p_t *, σ);
-  static unsigned short qpno = 0;
-  qpno++, qpno %= 1024;
-  if (queue_papers[qpno].q[0])
-    return C(2);
-  queue_papers[qpno].σ = σ;
-  queue_papers[qpno].word_count = word_count;
-  QUEUE_INSERT_TAIL(&temp_queue, &queue_papers[qpno].q);
-  void **t = &queue_papers[qpno].ntextspace[0].v, **s = &ο[α -= word_count].v;
-  mc21_lookup[word_count](ο, α, ρ, god, t, s);
+static p_t *getσ() {
+  static Q_t last = 0;
+  Q_t i;
+  for (i = last + 1; i < MAXΣ; i++)
+    if (!σtable[i][0].Q)
+      return last = i, σtable[i];
+  for (i = 1; i < last; i++)
+    if (!σtable[i][0].Q)
+      return last = i, σtable[i];
+  assert(0);
 }
 
 N(exports_raylib);
-
-#undef L
-#define L CAT(exports_next, __LINE__)
-
 // clang-format off
-EN(exports_raylib,
-init_mc21,                 L)EN(L,
-ada,                       L)EN(L,
-os_queue,                  L)EN(L,
-σ,              exports_next)
+//EN(exports_raylib,
+//init_mc21,                 L)EN(L,
+//ada,                       L)EN(L,
+//os_queue,                  L)EN(L,
+//σ,              exports_next);
 // clang-format on
