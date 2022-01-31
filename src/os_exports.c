@@ -23,7 +23,7 @@ NP(os_new) {
   p_t *nο = malloc(nρ * sizeof(void *));
 
   nο[--nρ].c = ray_gof_not, nο[--nρ].c = ray_gof_and, nο[--nρ].c = ray_gof_oor;
-  nο[--nρ].c = ο[--α].c   , nο[--nρ].c = ο[--α].c   , nο[--nρ].c = ο[--α].c;
+  nο[--nρ].c = σ[--α].c   , nο[--nρ].c = σ[--α].c   , nο[--nρ].c = σ[--α].c;
   nο[--nρ].c = ray_alg_not, nο[--nρ].c = ray_alg_and, nο[--nρ].c = ray_alg_oor;
 
   nο[0].v = ο, nο[1].Q = nρ;
