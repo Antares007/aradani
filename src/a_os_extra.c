@@ -4,7 +4,6 @@ IF(iε,
 printf, print,              L, int, const char*, ...)IN(L,
 //
 and,                        L)IN(L,
-and2,                       L)IN(L,
 notand,               imports);
 // clang-format on
 
@@ -12,7 +11,6 @@ N(os_ls_n) {
   R(n_t, export);
   R(void *, addr);
   R(const char *, name);
-  (void)addr;
   print("%s\t%p\n", name, addr);
   A4(export, god, os_ls_n, notand) O;
 }

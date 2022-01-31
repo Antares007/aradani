@@ -9,9 +9,6 @@
 #define IF(Tail, IName, Name, Head, Ret, ...)                                  \
   Ret (*Name)(__VA_ARGS__);                                                    \
   I(Tail, #IName, Name, Head)
-#define IB(PrevImp)                                                            \
-  p_t *ο;                                                                      \
-  I(PrevImp, "ο", ο, imports)
 
 static int cmp(const char *s1, const char *s2);
 static N(δo_imp) {
@@ -37,4 +34,3 @@ static int cmp(const char *s1, const char *s2) {
 #define E(Tail, Name, Addr, Head)                                              \
   N(Head) { A3(Name, Addr, Tail) C(1); }
 #define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
-#define EB(Tail) EN(Tail, ο, exports)

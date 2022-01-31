@@ -3,20 +3,28 @@
 #include <stdio.h>
 
 N(os_run_arsi);
-N(exports_next);
 N(os_wordump);
 N(os_new);
 N(os_queue);
 N(os_next);
 N(ada);
+N(exports_next);
 
-N(ray_not) { printf("NOT\n"); }
-N(ray_and) {
-  R(p_t *, oο);
-  printf("AND\n");
-  A3(got, oο, os_queue) O;
+NP(ray_not) {
 }
-N(ray_oor) { printf("OOR\n"); }
+NP(run) {
+  --α;
+  R(n_t, nar);
+  --α;
+  nar(T());
+}
+NP(ray_and) {
+  R(p_t *, oο);
+  R(const char *, file_name);
+  A8(file_name, exports_next, os_run_arsi, run, 010, ada, oο, os_queue) O;
+}
+NP(ray_oor) {
+}
 
 void os_hrtime_init();
 void init_ada();
@@ -41,7 +49,7 @@ int main(int argc, char **argv) {
   init_os_next();
   os_hrtime_init();
 
-  A10(ray_oor, os_next, ray_not, os_new, os_wordump, 010, ada, ray_and, 010,
+  A11(file_name, ray_oor, os_next, ray_not, os_new, os_wordump, 010, ada, ray_and, 010,
       ada)
   O;
   return 0;

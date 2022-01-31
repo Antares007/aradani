@@ -62,11 +62,3 @@ static p_t *getσ() {
   assert(0);
 }
 
-N(exports_raylib);
-// clang-format off
-// EN(exports_raylib,
-// init_mc21,                 L)EN(L,
-// ada,                       L)EN(L,
-// os_queue,                  L)EN(L,
-// σ,              exports_next);
-// clang-format on

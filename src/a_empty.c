@@ -1,8 +1,8 @@
 #include "arsi.h"
 
 // clang-format off
-IB(iε);
+IN(iε, os_queue, imports);
 
 N(init) { C(1); }
 
-EB(tail);
+EN(tail, init, exports);

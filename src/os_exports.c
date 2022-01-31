@@ -52,14 +52,19 @@ N(os_wordump) {
 
 N(os_run_arsi);
 N(os_hrtime);
+N(ada);
+N(os_queue);
+
 // clang-format off
 E(got,
-"", 0,                      L) EN(L,
-os_hrtime,                  L) EN(L,
-os_new,                     L) EN(L,
-os_run_arsi,                L) EN(L,
-os_wordump,                 L)  E(L,
-"printf", printf,     exports);
+"", 0,                       L) EN(L,
+os_hrtime,                   L) EN(L,
+os_new,                      L) EN(L,
+os_run_arsi,                 L) EN(L,
+os_wordump,                  L)  E(L,
+"printf", printf,            L) EN(L,
+ada,                         L) EN(L,
+os_queue,         exports_next);
 // clang-format on
 
 // EN(got,
