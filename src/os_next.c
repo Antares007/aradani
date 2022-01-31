@@ -20,9 +20,10 @@ N(os_queue) {
     while (α)
       α--, nσ[α].v = σ[α].v;
   }
-  nσ[nα + 0].Q = nα;
-  nσ[nα + 1].v = oο;
-  QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&nσ[nα + 2]);
+  nσ[nα + 0].v = nσ;
+  nσ[nα + 1].Q = nα;
+  nσ[nα + 2].v = oο;
+  QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&nσ[nα + 3]);
   C(1);
 }
 N(os_next) {
@@ -38,10 +39,11 @@ N(os_next) {
     return C(0);
   σ[0].Q  = 0;
   QUEUE_REMOVE(q);
-  p_t *nσ = ((p_t *)q);
-  Q_t  nα = nσ[-2].Q;
-  p_t *oο = nσ[-1].p;
-  dot(nσ - nα - 2, nα, oο, oο[1].Q);
+  p_t *b = ((p_t *)q);
+  p_t *nσ = b[-3].p;
+  Q_t  nα = b[-2].Q;
+  p_t *oο = b[-1].p;
+  dot(nσ, nα, oο, oο[1].Q);
 }
 void init_os_next() {
   QUEUE_INIT(&main_queue);
@@ -62,9 +64,9 @@ static p_t *getσ() {
 
 N(exports_raylib);
 // clang-format off
-//EN(exports_raylib,
-//init_mc21,                 L)EN(L,
-//ada,                       L)EN(L,
-//os_queue,                  L)EN(L,
-//σ,              exports_next);
+// EN(exports_raylib,
+// init_mc21,                 L)EN(L,
+// ada,                       L)EN(L,
+// os_queue,                  L)EN(L,
+// σ,              exports_next);
 // clang-format on

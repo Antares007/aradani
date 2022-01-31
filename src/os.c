@@ -14,7 +14,7 @@ N(ray_not) { printf("NOT\n"); }
 N(ray_and) {
   R(p_t *, oο);
   printf("AND\n");
-  A6(got, oο, os_queue, os_next, 010, ada) O;
+  A3(got, oο, os_queue) O;
 }
 N(ray_oor) { printf("OOR\n"); }
 
@@ -32,13 +32,17 @@ int main(int argc, char **argv) {
   Q_t α = 0, ρ = 256;
 
   ο[--ρ].c = ray_not;
-  ο[--ρ].c = ray_and;
+  ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
+
+  ο[0].v = ο, ο[1].Q = ρ;
 
   init_ada();
   init_os_next();
   os_hrtime_init();
-  A7(ray_not, os_next, ray_oor, os_new, os_wordump, 010, ada) O;
-  // A3(file_name, exports_next, os_run_arsi) O;
+
+  A10(ray_oor, os_next, ray_not, os_new, os_wordump, 010, ada, ray_and, 010,
+      ada)
+  O;
   return 0;
 }

@@ -46,12 +46,12 @@ N(os_wordump) {
   }
   C(1);
 }
-N(os_run_arsi);
-N(os_hrtime);
 
 #undef L
 #define L CAT(exports_, __LINE__)
 
+N(os_run_arsi);
+N(os_hrtime);
 // clang-format off
 E(got,
 "", 0,                      L) EN(L,
