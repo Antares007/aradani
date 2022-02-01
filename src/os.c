@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
     return 8;
   }
   const char *file_name = argv[1];
-  p_t σ[512], *ο = σ + 256;
-  Q_t α = 0, ρ = 256;
+  p_t σ[512], ο[512];
+  Q_t α=0,    ρ=512;
 
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
