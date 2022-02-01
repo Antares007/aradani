@@ -12,13 +12,13 @@ N(os_queue) {
   R(p_t *, oο);
   p_t *nσ;
   Q_t nα = α;
-  if (ο[1].Q == ρ) {
-    nσ = σ;
-    σ = emptyσ, α = 0;
-  } else {
+  if (ρ < ο[1].Q) {
     nσ = getσ();
     while (α)
       α--, nσ[α].v = σ[α].v;
+  } else {
+    nσ = σ;
+    σ = emptyσ, α = 0;
   }
   nσ[nα + 0].v = nσ;
   nσ[nα + 1].Q = nα;
@@ -37,18 +37,19 @@ N(os_next) {
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
     return C(0);
-  σ[0].Q  = 0;
+  σ[0].Q = 0;
   QUEUE_REMOVE(q);
   p_t *b = ((p_t *)q);
   p_t *nσ = b[-3].p;
-  Q_t  nα = b[-2].Q;
+  Q_t nα = b[-2].Q;
   p_t *oο = b[-1].p;
   dot(nσ, nα, oο, oο[1].Q);
 }
 void init_os_next() {
   QUEUE_INIT(&main_queue);
   QUEUE_INIT(&temp_queue);
-  for (Q_t i = 0; i < MAXΣ; i++) σtable[i][0].Q = 0;
+  for (Q_t i = 0; i < MAXΣ; i++)
+    σtable[i][0].Q = 0;
 }
 static p_t *getσ() {
   static Q_t last = 0;
@@ -61,4 +62,3 @@ static p_t *getσ() {
       return last = i, σtable[i];
   assert(0);
 }
-

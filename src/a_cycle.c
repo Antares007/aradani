@@ -17,7 +17,7 @@ N(p_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 0)
-    print("p_and %lu %lu %lu\n", α, ρ, c);
+    print("p_and %p %lu %p %lu %lu\n", σ, α, ο, ρ, c);
   A5(c + 1, ο, god, oο, os_queue) O;
 }
 NP(p_not) {}
@@ -31,7 +31,7 @@ N(c_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 1)
-    print("c_and %lu %lu %lu\n", α, ρ, c);
+    print("c_and %p %lu %p %lu %lu\n", σ, α, ο, ρ, c);
   A5(c + 1, ο, god, oο, os_queue) O;
 }
 NP(c_not) {}
