@@ -32,14 +32,16 @@ NP(l_accept) {
 NP(l_address) {
   R(Q_t, port);
   R(const char *, ip);
-  As(sockaddr_in, *address);
+  struct sockaddr_in *address = (void *)&σ[α];
+  α += wordCountOf(struct sockaddr_in);
   address->sin_family = AF_INET;
   inet_pton(AF_INET, ip, &address->sin_addr);
   address->sin_port = htons(port);
   C(1);
 }
 NP(l_bind) {
-  Rs(sockaddr_in, *address);
+  α -= wordCountOf(struct sockaddr_in);
+  struct sockaddr_in *address = (void *)&σ[α];
   R(Q_t, fd);
   long r = bind(fd, (struct sockaddr *)address, sizeof(*address));
   if (r == -1)
