@@ -27,7 +27,6 @@ NP(ray_oor) {
 }
 
 void os_hrtime_init();
-void init_ada();
 void init_os_next();
 
 int main(int argc, char **argv) {
@@ -45,7 +44,6 @@ int main(int argc, char **argv) {
 
   ο[0].v = ο, ο[1].Q = ρ;
 
-  init_ada();
   init_os_next();
   os_hrtime_init();
 
