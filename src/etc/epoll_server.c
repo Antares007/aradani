@@ -116,8 +116,7 @@ int main() {
     return -1;
   }
 
-  AddFd(epoll_fd, listen_fd,
-        true); // Add listen file descriptor to event table using ET mode epoll
+  AddFd(epoll_fd, listen_fd);
 
   while (1) {
     int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
