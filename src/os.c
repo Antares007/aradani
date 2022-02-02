@@ -26,7 +26,7 @@ SP(ray_and) {
   R(p_t *, oο);
   R(const char *, file_name);
   (void)file_name;
-  A5(seven, os_wordump, and, oο, os_queue) O;
+  A3(seven, oο, os_queue) O;
 }
 SP(ray_oor) {}
 
