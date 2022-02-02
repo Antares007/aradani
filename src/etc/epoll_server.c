@@ -14,71 +14,27 @@
 
 #define MAX_EVENT_NUMBER 1024 // event
 #define BUFFER_SIZE 10        // Buffer Size
-#define ENABLE_ET 1           // Enable ET mode
 
-/* Set file descriptor to non-congested  */
+/*Set file descriptor to non-congested*/
 int SetNonblocking(int fd) {
   int old_option = fcntl(fd, F_GETFL);
   int new_option = old_option | O_NONBLOCK;
   fcntl(fd, F_SETFL, new_option);
   return old_option;
 }
-
-/* Register EPOLLIN on file descriptor FD into the epoll kernel event table
- * indicated by epoll_fd, and the parameter enable_et specifies whether et mode
- * is enabled for FD */
-void AddFd(int epoll_fd, int fd, bool enable_et) {
+/*Register EPOLLIN on file descriptor FD into the epoll kernel event table
+  indicated by epoll_fd, and the parameter enable_et specifies whether et mode
+  is enabled for FD*/
+void AddFd(int epoll_fd, int fd) {
   struct epoll_event event;
   event.data.fd = fd;
-  event.events = EPOLLIN; // Registering the fd is readable
-  if (enable_et) {
-    event.events |= EPOLLET;
-  }
+  event.events = EPOLLIN | EPOLLET; // Registering the fd is readable
 
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd,
             &event); // Register the fd with the epoll kernel event table
   SetNonblocking(fd);
 }
-
-/*  LT Work mode features: robust but inefficient */
-void lt_process(struct epoll_event *events, int number, int epoll_fd,
-                int listen_fd) {
-  char buf[BUFFER_SIZE];
-  int i;
-  for (i = 0; i < number; i++) // number: number of events ready
-  {
-    int sockfd = events[i].data.fd;
-    if (sockfd == listen_fd) // If it is a file descriptor for listen, it
-                             // indicates that a new customer is connected to
-    {
-      struct sockaddr_in client_address;
-      socklen_t client_addrlength = sizeof(client_address);
-      int connfd = accept(listen_fd, (struct sockaddr *)&client_address,
-                          &client_addrlength);
-      AddFd(epoll_fd, connfd, false); // Register new customer connection fd to
-                                      // epoll event table, using lt mode
-    } else if (events[i].events & EPOLLIN) // Readable with client data
-    {
-      // This code is triggered as long as the data in the buffer has not been
-      // read.This is what LT mode is all about: repeating notifications until
-      // processing is complete
-      printf("lt mode: event trigger once!\n");
-      memset(buf, 0, BUFFER_SIZE);
-      int ret = recv(sockfd, buf, BUFFER_SIZE - 1, 0);
-      if (ret <= 0) // After reading the data, remember to turn off fd
-      {
-        close(sockfd);
-        continue;
-      }
-      printf("get %d bytes of content: %s\n", ret, buf);
-
-    } else {
-      printf("something unexpected happened!\n");
-    }
-  }
-}
-
-/* ET Work mode features: efficient but potentially dangerous */
+/*ET Work mode features: efficient but potentially dangerous*/
 void et_process(struct epoll_event *events, int number, int epoll_fd,
                 int listen_fd) {
   char buf[BUFFER_SIZE];
@@ -90,12 +46,11 @@ void et_process(struct epoll_event *events, int number, int epoll_fd,
       socklen_t client_addrlength = sizeof(client_address);
       int connfd = accept(listen_fd, (struct sockaddr *)&client_address,
                           &client_addrlength);
-      AddFd(epoll_fd, connfd, true); // Use et mode
+      AddFd(epoll_fd, connfd);
     } else if (events[i].events & EPOLLIN) {
       /* This code will not be triggered repeatedly, so we cycle through the
        * data to make sure that all the data in the socket read cache is read
        * out.This is how we eliminate the potential dangers of the ET model */
-
       printf("et mode: event trigger once!\n");
       while (1) {
         memset(buf, 0, BUFFER_SIZE);
@@ -129,7 +84,6 @@ void et_process(struct epoll_event *events, int number, int epoll_fd,
 int main() {
   const char *ip = "127.0.0.1";
   int port = 7000;
-
   int ret = -1;
   struct sockaddr_in address;
   // bzero(&address, sizeof(address));
@@ -171,12 +125,7 @@ int main() {
       printf("epoll failure!\n");
       break;
     }
-
-    if (ENABLE_ET) {
-      et_process(events, ret, epoll_fd, listen_fd);
-    } else {
-      lt_process(events, ret, epoll_fd, listen_fd);
-    }
+    et_process(events, ret, epoll_fd, listen_fd);
   }
 
   close(listen_fd);
