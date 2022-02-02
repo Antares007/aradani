@@ -40,6 +40,8 @@ src/os:                      \
 	src/os_ada.o               \
 	src/os_bark.o              \
 	src/os_exports.o           \
+	src/os_exports_epoll.o     \
+	src/os_epoll_test.o        \
 	src/os_next.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 

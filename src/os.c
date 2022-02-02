@@ -10,21 +10,25 @@ N(os_next);
 N(ada);
 N(exports_next);
 
-NP(ray_not) {
-}
-NP(run) {
-  --α;
-  R(n_t, nar);
-  --α;
-  nar(T());
-}
-NP(ray_and) {
+SP(ray_not) {}
+//SP(run) {
+//  --α;
+//  R(n_t, nar);
+//  --α;
+//  nar(T());
+//}
+
+N(seven);
+
+S(and) { A(010) ada(T()); }
+
+SP(ray_and) {
   R(p_t *, oο);
   R(const char *, file_name);
-  A8(file_name, exports_next, os_run_arsi, run, 010, ada, oο, os_queue) O;
+  (void)file_name;
+  A5(seven, os_wordump, and, oο, os_queue) O;
 }
-NP(ray_oor) {
-}
+SP(ray_oor) {}
 
 void os_hrtime_init();
 void init_os_next();
@@ -36,7 +40,7 @@ int main(int argc, char **argv) {
   }
   const char *file_name = argv[1];
   p_t σ[512], ο[512];
-  Q_t α=0,    ρ=512;
+  Q_t α = 0, ρ = 512;
 
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
@@ -47,8 +51,6 @@ int main(int argc, char **argv) {
   init_os_next();
   os_hrtime_init();
 
-  A11(file_name, ray_oor, os_next, ray_not, os_new, os_wordump, 010, ada, ray_and, 010,
-      ada)
-  O;
+  A7(file_name, ray_oor, os_next, ray_not, os_new, ray_and, and) O;
   return 0;
 }

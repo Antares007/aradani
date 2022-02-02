@@ -29,14 +29,13 @@ typedef struct p_s {
 } p_t;
 #define OARS p_t *σ, Q_t α, p_t *ο, Q_t ρ
 typedef void (*n_t)(OARS);
-
 #define N(n) void n(OARS)
 #define A(a) σ[α++].v = (void *)(a),
 #define R(T, n) T n = (T)σ[--α].v
 #define G(r) ο[ρ + (r)].c(σ, α,     ο, ρ)
 #define O    σ[α - (1)].c(σ, α - 1, ο, ρ)
+#define S(n) static N(n)
 #define T(n) n##σ, n##α, n##ο, n##ρ
-
 #define C(r) G(r)
 
 #define Sa(T, ...) (*((T *)&σ[α]) = ((T)__VA_ARGS__), α += wordCountOf(T)),
@@ -60,3 +59,10 @@ typedef void (*n_t)(OARS);
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
+#define SP(n)                                                                  \
+  S(n##p);                                                                     \
+  S(n) {                                                                       \
+    printf("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE_NAME__, __FUNCTION__);\
+    n##p(T());                                                                 \
+  }                                                                            \
+  S(n##p)
