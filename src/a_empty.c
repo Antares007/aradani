@@ -1,16 +1,19 @@
 #include "arsi.h"
 
 // clang-format off
-IN(iε,
-os_queue,                   imports);
+IB(init2,
+                              L)IF(L,
+printf, print,                L, int, const char*, ...)IN(L,
+os_queue,                   imp);
 // clang-format on
 
-void init() {}
+void init2() { print("%s\n", __func__); }
 p_t ο[512];
 S(seven) { A(7) C(1); }
 
 // clang-format off
-EN(tail,
+EB(imp, exps,             
+                              L)EN(L,
 seven,                        L)EN(L,
-ο,                      exports);
+ο,                         exps);
 // clang-format on

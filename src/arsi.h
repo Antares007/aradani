@@ -1,24 +1,24 @@
 #pragma once
 #include "import_export.h"
-void tail(αos_t *o) __attribute__((section(".text.end")));
-void tail(αos_t *o) {}
-void init();
-void imports(αos_t *, const char *, void *, void (*)(αos_t *));
-void exports(αos_t *);
-
-static int imported = 0;
-void iε(αos_t *o, const char *n, void *a, void(e)(αos_t *)) {
-  imported = 1, init(), exports(o->s);
-}
-void head(αos_t *o) __attribute__((section(".text.begin")));
-void head(αos_t *o) {
-  volatile ε_t t = tail;
-  if (imported)
-    exports(o);
-  else
-    t(&(αos_t){.a = imports, .o = o->o, .s = o, .mn = __FILE__});
-}
-
+#define EB(Imports, Exports, Tail)                                             \
+  void Exports(αos_t *);                                                       \
+  void Tail(αos_t *o) __attribute__((section(".text.end")));                   \
+  void Tail(αos_t *o) {}                                                       \
+  void CAT(Head, Tail)(αos_t * o) __attribute__((section(".text.begin")));     \
+  void CAT(Head, Tail)(αos_t * o) {                                            \
+    volatile ε_t t = Tail;                                                     \
+    if (imported)                                                              \
+      Exports(o);                                                              \
+    else                                                                       \
+      t(&(αos_t){                                                              \
+          .a = Imports, .o = o->o, .s = o, .mn = __FILE__, .d = Exports});     \
+  }
+#define IB(Init, Head)                                                         \
+  static int imported = 0;                                                     \
+  void Init();                                                                 \
+  void Head(αos_t *o, const char *n, void *a, void(e)(αos_t *)) {              \
+    imported = 1, Init(o->s), ((ε_t)o->d)(o->s);                               \
+  }
 #undef NP
 #define NP(n)                                                                  \
   N(n##p);                                                                     \

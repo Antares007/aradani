@@ -59,7 +59,8 @@ void expo(αos_t *o) { o->o(o); }
 // clang-format off
 E(expo,
 "", 0,            L) E(L,
-"", 0,            L)EN(L,
+"", 0,            L) E(L,
+"printf", printf, L)EN(L,
 os_next,          L)EN(L,
 os_queue,         L)EN(L,
 os_wordump, exports);
