@@ -13,7 +13,7 @@ S(seven) { A(7) C(1); }
 
 // clang-format off
 EB(mod_empty, imp, exps,             
-                                     L)EN(L,
+                                  root)EN(root,
 seven,                               L)EN(L,
 ο,                                exps);
 // clang-format on

@@ -1,5 +1,5 @@
-#include "import_export.h"
 #include "arsi.h"
+#include "import_export.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -58,21 +58,20 @@ E(enderr,
 os_next,                 L)EN(L,
 os_queue,                L)EN(L,
 os_wordump, exportsexports);
-
 // clang-format on
-static void run() {
-  printf("aaa\n");
-}
-void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
-void mod_empty(αos_t *o);
+void root(αos_t *o) { exportsexports(o); }
+static void run() { printf("aaa\n"); }
 
+void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
+
+void mod_empty(αos_t *o);
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
-  ε_t e = mapfile(argv[1], exportsexports);
+  //ε_t e = mapfile(argv[1], exportsexports);
+  // e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
+  ε_t e = mod_empty;
   e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
-  //ε_t e = mod_empty;
-  //e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
   return 0;
   return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
 }

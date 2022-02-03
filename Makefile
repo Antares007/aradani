@@ -43,6 +43,7 @@ src/os:                      \
 	src/os_exports_epoll.o     \
 	src/os_test_epoll.o        \
 	src/os_test_cycle_time.o   \
+	src/a_empty.o		\
 	src/os_next.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
