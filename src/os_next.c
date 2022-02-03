@@ -1,5 +1,6 @@
-#include "import_export.h"
-#include "gorgodandgot.h"
+//#include "import_export.h"
+//#include "gorgodandgot.h"
+#include "oars.h"
 #include "queue.h"
 #include <assert.h>
 #include <stdio.h>
@@ -28,6 +29,7 @@ N(os_queue) {
   QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&nσ[nα + 3]);
   C(1);
 }
+S(dot) { O; }
 N(os_next) {
   QUEUE *q;
   if (&temp_queue != (q = QUEUE_NEXT(&temp_queue))) {

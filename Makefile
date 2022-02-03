@@ -57,7 +57,7 @@ src/ui: src/ui.c
 	nasm -f bin $^ -o $@
 %.oars: %.c
 	@#compile as whole
-	${CC} -c $^ -o $@ ${CFLAGS} -ffreestanding -O3
+	${CC} -c $^ -o $@ ${CFLAGS} -DARSI -ffreestanding -O3
 	@# use linker script to place
 	@# "head" function body text at the begining and
 	@# "tail" - text at the end.

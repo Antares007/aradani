@@ -1,5 +1,5 @@
 #include "import_export.h"
-#include "oars.h"
+#include "arsi.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -10,13 +10,6 @@ N(os_queue);
 N(os_next);
 N(ada);
 N(exports_next);
-
-// SP(run) {
-//   --α;
-//   R(n_t, nar);
-//   --α;
-//   nar(T());
-// }
 
 N(seven);
 
@@ -52,30 +45,34 @@ void os(Q_t s, ...) {
   va_end(args);
   O;
 }
-#include "import_export.h"
 void *mapfile(const char *filename, void *pith);
-void expo(αos_t *o) { o->o(o); }
 
 // clang-format off
-E(expo,
-"", 0,            L) E(L,
-"", 0,            L) E(L,
-"printf", printf, L)EN(L,
-os_next,          L)EN(L,
-os_queue,         L)EN(L,
-os_wordump, exports);
-void run(αos_t*, const char*, void*, void(e)(αos_t *));
-IN(run, ο, imports);
+IB(run,                  L)IN(L,
+ο,                 imports);
+
+void enderr(αos_t *o) { o->o(o); }
+E(enderr,
+"", 0,                   L)E(L,
+"printf", printf,        L)EN(L,
+os_next,                 L)EN(L,
+os_queue,                L)EN(L,
+os_wordump, exportsexports);
+
 // clang-format on
-void run(αos_t *o, const char *n, void *a, void(e)(αos_t *)) {
-  printf("%s %p\n", n, a);
+static void run() {
+  printf("aaa\n");
 }
 void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
+void mod_empty(αos_t *o);
+
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
-  ε_t e = mapfile(argv[1], exports);
-  e(&(αos_t){.a = imports, .o = e_or, .mn=__FILE__});
+  ε_t e = mapfile(argv[1], exportsexports);
+  e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
+  //ε_t e = mod_empty;
+  //e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
   return 0;
   return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
 }
