@@ -41,7 +41,8 @@ src/os:                      \
 	src/os_bark.o              \
 	src/os_exports.o           \
 	src/os_exports_epoll.o     \
-	src/os_epoll_test.o        \
+	src/os_test_epoll.o        \
+	src/os_test_cycle_time.o   \
 	src/os_next.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
