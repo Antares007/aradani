@@ -46,32 +46,39 @@ void os(Q_t s, ...) {
   O;
 }
 void *mapfile(const char *filename, void *pith);
-
+static int cmp(const char *s1, const char *s2) {
+  while (*s1 == *s2++)
+    if (*s1++ == 0)
+      return (0);
+  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
+}
 // clang-format off
-IB(run,                  L)IN(L,
-ο,                 imports);
+static void run();
+IN(run, ο,                 imports);
 
 void enderr(αos_t *o) { o->o(o); }
+// #define EB(Head, Imports, Exports, Tail)
 E(enderr,
-"", 0,                   L)E(L,
-"printf", printf,        L)EN(L,
-os_next,                 L)EN(L,
-os_queue,                L)EN(L,
-os_wordump, exportsexports);
+"", 0,                                  L) E(L,
+"printf", printf,                       L)EN(L,
+os_next,                                L)EN(L,
+os_queue,                               L)EN(L,
+os_wordump, exports);
+
 // clang-format on
-void root(αos_t *o) { exportsexports(o); }
+void root(αos_t *o) { exports(o); }
 static void run() { printf("aaa\n"); }
 
 void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
 
-void mod_empty(αos_t *o);
+void mod_empty2(αos_t *o);
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
   //ε_t e = mapfile(argv[1], exportsexports);
   // e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
-  ε_t e = mod_empty;
-  e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
+  ε_t e = mod_empty2;
+  e(&(αos_t){.a = imports, .o = e_or, .s = 0, .mn = __FILE__});
   return 0;
-  return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
+  // return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
 }

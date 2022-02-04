@@ -33,7 +33,7 @@ src/os.arsi:                 \
 
 #	src/os_exports_raylib.o    \
 
-src/os:                      \
+src/os:                             \
 	src/os.c                   \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \
@@ -43,7 +43,8 @@ src/os:                      \
 	src/os_exports_epoll.o     \
 	src/os_test_epoll.o        \
 	src/os_test_cycle_time.o   \
-	src/a_empty.o		\
+	src/a_empty2.o             \
+	src/a_empty.o              \
 	src/os_next.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
