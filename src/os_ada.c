@@ -1,5 +1,5 @@
 #include "oars.h"
-static N(ada_not) {
+S(ada_not) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
   while (nc)
@@ -7,7 +7,7 @@ static N(ada_not) {
   ρ += ac + oc;
   O;
 }
-static N(ada_and) {
+S(ada_and) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
   ρ += nc;
@@ -16,7 +16,7 @@ static N(ada_and) {
   ρ += oc;
   O;
 }
-static N(ada_oor) {
+S(ada_oor) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
   ρ += nc + ac;

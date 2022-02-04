@@ -1,32 +1,21 @@
 #include "arsi.h"
-#include "import_export.h"
 #include <stdarg.h>
 #include <stdio.h>
-
-N(os_run_arsi);
-N(os_wordump);
-N(os_new);
-N(os_queue);
-N(os_next);
-N(ada);
-N(exports_next);
-
 
 void os_hrtime_init();
 void init_os_next();
 void *mapfile(const char *filename, void *pith);
-static int cmp(const char *s1, const char *s2) {
-  while (*s1 == *s2++)
-    if (*s1++ == 0)
-      return (0);
-  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
+
 // clang-format off
 static void run();
 IN(run, ο,                 imports);
 
 void enderr(αos_t *o) { o->o(o); }
-// #define EB(Head, Imports, Exports, Tail)
+
+N(os_wordump);
+N(os_queue);
+N(os_next);
+
 E(enderr,
 "", 0,                                  L) E(L,
 "printf", printf,                       L)EN(L,
@@ -38,7 +27,9 @@ os_wordump, exports);
 void root(αos_t *o) { exports(o); }
 static void run() { printf("aaa\n"); }
 void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
+
 void mod_empty2(αos_t *o);
+
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
@@ -47,6 +38,7 @@ int main(int argc, char **argv) {
   e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
   return 0;
 }
+
 // return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
 //S(ray_not) {}
 //S(ray_oor) {}

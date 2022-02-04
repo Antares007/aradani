@@ -1,13 +1,7 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fstack-clash-protection -fstack-protector
+CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
-
-src/a_ui.arsi:               \
-	src/a_ui.oars              \
-	src/a_gui.oars             \
-	src/os.arsi
-	cat $^ > $@
 
 src/a_cycle.arsi:            \
 	src/a_cycle.oars           \
@@ -24,7 +18,6 @@ src/a_async.arsi:            \
 	src/os.arsi
 	cat $^ > $@
 
-
 src/os.arsi:                 \
 	src/a_os_extra.oars        \
 	src/a_junctions.oars       \
@@ -36,8 +29,6 @@ src/a_empty2.arsi:           \
 	src/a_empty.oars           \
 	src/goto.bin
 	cat $^ > $@
-
-#	src/os_exports_raylib.o    \
 
 src/os:                      \
 	src/os.c                   \
@@ -54,9 +45,7 @@ src/os:                      \
 #	src/a_empty2.o             \
 #	src/a_empty.o              \
 
-src/seven: src/seven.c src/ada.o src/a_mc21.o
-
-src/ui: src/ui.c
+src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 %.o: %.c

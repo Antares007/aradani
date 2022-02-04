@@ -2,10 +2,9 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <strings.h>
 #include <sys/epoll.h>
-#include <unistd.h>
+
 N(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);

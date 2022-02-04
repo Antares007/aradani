@@ -1,6 +1,5 @@
 #include "export_fun.h"
-#include "import_export.h"
-#include "oars.h"
+#include "arsi.h"
 #include <raylib.h>
 #include <stdio.h>
 

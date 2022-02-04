@@ -1,12 +1,8 @@
 #include "oars.h"
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 void *mapfile(const char *filename, void *pith) {
   int fd = open(filename, O_RDONLY);
   struct stat sb;
@@ -18,13 +14,4 @@ void *mapfile(const char *filename, void *pith) {
   close(fd);
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
-}
-N(os_run_arsi) {
-  R(void *, pith);
-  R(const char *, file_name);
-  n_t arsi = mapfile(file_name, pith);
-  if (arsi)
-    arsi(T());
-  else
-    C(2);
 }
