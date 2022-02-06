@@ -37,6 +37,8 @@ src/os:                      \
 	src/os_ada.o               \
 	src/os_bark.o              \
 	src/os_exports.o           \
+	src/os_queue.o             \
+	src/os_new.o               \
 	src/os_exports_epoll.o     
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 

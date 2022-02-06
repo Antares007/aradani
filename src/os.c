@@ -6,18 +6,24 @@ void os_hrtime_init();
 void init_os_next();
 void *mapfile(const char *filename, void *pith);
 
+N(os_queue);
+N(os_new);
+
 // clang-format off
 static void run();
 IN(run, ο,                 imports);
 
 void enderr(αos_t *o) { o->o(o); }
 E(enderr,
-"", 0,                           L)E(L,
-"printf", printf,          exports);
+"", 0,                          L)E(L,
+"printf", printf,               L)EN(L,
+os_queue,                 exports);
 // clang-format on
 
 void root(αos_t *o) { exports(o); }
-static void run() { printf("aaa\n"); }
+static void run() {
+  printf("aaa%p\n", ο);
+}
 void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
 
 void mod_empty2(αos_t *o);
