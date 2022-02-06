@@ -71,3 +71,11 @@ static void ε() { (void)cmp; }
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
+#undef SP
+#define SP(n)                                                                  \
+  S(n##p);                                                                     \
+  S(n) {                                                                       \
+    print("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);      \
+    n##p(T());                                                                 \
+  }                                                                            \
+  S(n##p)

@@ -1,4 +1,5 @@
 #include "arsi.h"
+#include "gotgod.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -10,53 +11,47 @@ N(os_queue);
 N(os_new);
 
 // clang-format off
-static void run();
-IN(run, ο,                 imports);
-
 void enderr(αos_t *o) { o->o(o); }
 E(enderr,
 "", 0,                          L)E(L,
 "printf", printf,               L)EN(L,
-os_queue,                 exports);
+os_queue,                 root);
 // clang-format on
-
-void root(αos_t *o) { exports(o); }
-static void run() {
-  printf("aaa%p\n", ο);
+static void os_and(αos_t *o, const char *n, void *a,
+                   void (*e)(struct αos_t *)) {
+  p_t *args = o->d;
+  p_t *σ = args[0].p, *ο = args[2].p;
+  Q_t α = args[1].Q, ρ = args[2].p[1].Q;
+  A(a) C(0);
 }
-void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
+static void os_or(αos_t *o) {
+  p_t *args = o->d;
+  p_t *σ = args[0].p, *ο = args[2].p;
+  Q_t α = args[1].Q, ρ = args[2].p[1].Q;
+  C(0);
+}
+N(os_bark) {
+  R(p_t *, oο);
+  R(ε_t, root);
+  R(const char *, name);
+  ε_t e = mapfile(name, root);
+  e(&(αos_t){.a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, oο}});
+}
+N(noor) {
+  R(p_t *, oο);
+  printf("noor\n");
+  god(σ, α, oο, oο[1].Q);
+}
 
-void mod_empty2(αos_t *o);
-
-//void os(void **, Q_t, n_t, n_t, n_t);
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
-  ε_t e = mapfile(argv[1], root);
-  //ε_t e = mod_empty2;
-  e(&(αos_t){.a = imports, .o = e_or, .mn = __FILE__});
+
+  p_t σ[512], ο[5];
+  Q_t α = 0, ρ = 512;
+  ο[--ρ].c = noor;
+  ο[0].v = ο, ο[1].Q = ρ;
+
+  A4(argv[1], root, ο, os_bark) O;
   return 0;
 }
-
-//return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
-//S(ray_not) {}
-//S(ray_oor) {}
-//static void os(Q_t s, ...) {
-//  va_list args;
-//  va_start(args, s);
-//  p_t σ[512], ο[512];
-//  Q_t α = 0, ρ = 512;
-//
-//  ο[--ρ].c = ray_not;
-//  ο[--ρ].c = os_next;
-//  ο[--ρ].c = ray_oor;
-//
-//  ο[0].v = ο, ο[1].Q = ρ;
-//
-//  init_os_next();
-//  os_hrtime_init();
-//  while (s)
-//    A(va_arg(args, void *)) s--;
-//  va_end(args);
-//  O;
-//}
