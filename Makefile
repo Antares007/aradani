@@ -37,13 +37,8 @@ src/os:                      \
 	src/os_ada.o               \
 	src/os_bark.o              \
 	src/os_exports.o           \
-	src/os_exports_epoll.o     \
-	src/os_test_epoll.o        \
-	src/os_test_cycle_time.o   \
-	src/os_next.o
+	src/os_exports_epoll.o     
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-#	src/a_empty2.o             \
-#	src/a_empty.o              \
 
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib

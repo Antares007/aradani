@@ -16,7 +16,7 @@ typedef void (*ε_t)(αos_t *);
 #define TAIL_BODY ;
 #define TAIL_ATTR ;
 #endif
-#define EBS(Head, Tail) EB(Head, imports, exports, Tail)
+#define EBS(Tail) EB(head, imports, exports, Tail)
 #define EB(Head, Imports, Exports, Tail)                                       \
   static void Exports(αos_t *);                                                \
   void Tail(αos_t *o) TAIL_ATTR;                                               \

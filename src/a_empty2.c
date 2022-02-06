@@ -2,8 +2,7 @@
 
 // clang-format off
 IBS(                              L)IF(L,
-printf, print,                    L, int, const char*, ...)IN(L,
-os_queue,                   imports);
+printf, print,              imports, int, const char*, ...)
 // clang-format on
 
 static void init() { print("%s %s\n", __FILE__, __func__); }

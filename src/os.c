@@ -11,17 +11,9 @@ static void run();
 IN(run, ο,                 imports);
 
 void enderr(αos_t *o) { o->o(o); }
-
-N(os_wordump);
-N(os_queue);
-N(os_next);
-
 E(enderr,
-"", 0,                                  L) E(L,
-"printf", printf,                       L)EN(L,
-os_next,                                L)EN(L,
-os_queue,                               L)EN(L,
-os_wordump, exports);
+"", 0,                           L)E(L,
+"printf", printf,          exports);
 // clang-format on
 
 void root(αos_t *o) { exports(o); }
@@ -30,6 +22,7 @@ void e_or(αos_t *o) { printf("error mn:%s\n", o->mn); }
 
 void mod_empty2(αos_t *o);
 
+//void os(void **, Q_t, n_t, n_t, n_t);
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
@@ -39,7 +32,7 @@ int main(int argc, char **argv) {
   return 0;
 }
 
-// return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
+//return os(7, argv[1], ray_oor, os_next, ray_not, os_new, ray_and, and), 0;
 //S(ray_not) {}
 //S(ray_oor) {}
 //static void os(Q_t s, ...) {
