@@ -21,7 +21,7 @@ SP(os_next) {
     QUEUE_INIT(temp_queue);
   }
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
-    return C(0);
+    return C(2);
   σ[0].Q = 0;
   QUEUE_REMOVE(q);
   p_t *b = ((p_t *)q);
@@ -36,11 +36,12 @@ SP(ray_oor) {
   //A4(ο, gor, oο, os_queue) O;
 }
 static p_t ο[1024];
-static void init_pith() {
+void init_pith() {
   ο[0].v = ο;
   ο[1].Q = sizeof(ο) / sizeof(*ο);
-
-  QUEUE_INIT((QUEUE *)&ο[2]);
+  //void* dσ[4] = {got, dσ, dσ, (void*)4};
+  //ο[2].v = dσ;
+  QUEUE_INIT((QUEUE*)&ο[2]);
 
   ο[--ο[1].Q].v = ray_not;
   ο[--ο[1].Q].v = os_next;
