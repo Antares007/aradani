@@ -1,5 +1,6 @@
 #include "arsi.h"
 #include "gotgod.h"
+#include "queue.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -8,6 +9,7 @@ void init_os_next();
 void *mapfile(const char *filename, void *pith);
 
 N(os_queue);
+N(os_next);
 N(os_new);
 
 // clang-format off
@@ -37,21 +39,28 @@ N(os_bark) {
   ε_t e = mapfile(name, root);
   e(&(αos_t){.a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, oο}});
 }
-N(noor) {
-  R(p_t *, oο);
-  printf("noor\n");
-  god(σ, α, oο, oο[1].Q);
-}
+N(ray_not) { printf("ray_not\n"); }
+N(ray_oor) { printf("ray_oor\n"); }
+
+N(seven) { printf("seven\n"), C(1); }
+N(cycle);
 
 int main(int argc, char **argv) {
-  if (argc < 2)
-    return printf("Would you mind adding the 'file_name' as an argument?\n"), 8;
+  // if (argc < 2)
+  //   return printf("Would you mind adding the 'file_name' as an argument?\n"),
+  //   8;
 
-  p_t σ[512], ο[5];
-  Q_t α = 0, ρ = 512;
-  ο[--ρ].c = noor;
+  p_t σ[512], ο[512];
+  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
+
+  ο[--ρ].c = ray_not;
+  ο[--ρ].c = os_next;
+  ο[--ρ].c = ray_oor;
+
   ο[0].v = ο, ο[1].Q = ρ;
-
-  A4(argv[1], root, ο, os_bark) O;
+  QUEUE_INIT((QUEUE *)&ο[2]);
+  
+  cycle(T());
+  // A4(argv[1], root, ο, os_bark) O;
   return 0;
 }
