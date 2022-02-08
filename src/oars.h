@@ -52,25 +52,18 @@ typedef void (*n_t)(OARS);
 #include "oars_a21.h"
 #include "oars_sa21.h"
 
-#define NP_(n, PRN)                                                            \
+#define NP_(n, PRN, N)                                                         \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    PRN("%p %s %ld\t%ld\t%s:%s\n", σ, (char*)ο[4].v, α, ρ, __FILE__, __FUNCTION__);   \
+    PRN("%p %s %ld\t%ld\t%s:%s\n", σ, (char*)ο[4].v, α, ρ, __FUNCTION__, __FILE_NAME__);   \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
-#define SP_(n, PRN)                                                            \
-  S(n##p);                                                                     \
-  S(n) {                                                                       \
-    PRN("%p %s %ld\t%ld\t%s:%s\n", σ, (char*)ο[4].v, α, ρ, __FILE__, __FUNCTION__);   \
-    n##p(T());                                                                 \
-  }                                                                            \
-  S(n##p)
 #ifdef ARSI
-#define NP(n) NP_(n, print)
-#define SP(n) SP_(n, print)
+#define NP(n) NP_(n, print, N)
+#define SP(n) NP_(n, print, S)
 #else
-#define NP(n) NP_(n, printf)
-#define SP(n) SP_(n, printf)
+#define NP(n) NP_(n, printf, N)
+#define SP(n) NP_(n, printf, S)
 #endif
 #undef PRN
