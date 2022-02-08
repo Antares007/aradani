@@ -6,6 +6,7 @@ typedef struct αos_t {
   struct αos_t *s;
   const char *mn;
   void *d;
+  int (*cmp)(const char *, const char *);
 } αos_t;
 typedef void (*ε_t)(αos_t *);
 #ifdef ARSI
@@ -27,8 +28,12 @@ typedef void (*ε_t)(αos_t *);
     if (imported)                                                              \
       Exports(o);                                                              \
     else                                                                       \
-      t(&(αos_t){                                                              \
-          .a = Imports, .o = o->o, .s = o, .mn = __FILE__, .d = Exports});     \
+      t(&(αos_t){.a = Imports,                                                 \
+                 .o = o->o,                                                    \
+                 .s = o,                                                       \
+                 .mn = __FILE__,                                               \
+                 .d = Exports,                                                 \
+                 .cmp = o->cmp});                                              \
   }
 #define IBS(Head)                                                              \
   IB(init, iff) IF(iff, printf, print, Head, int, const char *, ...)
@@ -42,7 +47,7 @@ typedef void (*ε_t)(αos_t *);
   static void Head(αos_t *o) { o->a(o, Name, Addr, Tail); }
 #define I(Tail, Name, Addr, Head)                                              \
   static void Head(αos_t *o, const char *n, void *a, void(e)(αos_t *)) {       \
-    if (cmp(n, Name) == 0)                                                     \
+    if (o->cmp(n, Name) == 0)                                                  \
       Addr = a, o->a = Tail;                                                   \
     e(o);                                                                      \
   }
@@ -54,12 +59,3 @@ typedef void (*ε_t)(αos_t *);
 #define IF(Tail, IName, Name, Head, Ret, ...)                                  \
   static Ret (*Name)(__VA_ARGS__);                                             \
   I(Tail, #IName, Name, Head)
-static void ε();
-static int cmp(const char *s1, const char *s2) {
-  (void)ε;
-  while (*s1 == *s2++)
-    if (*s1++ == 0)
-      return (0);
-  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
-static void ε() { (void)cmp; }
