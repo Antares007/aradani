@@ -34,9 +34,9 @@ src/os_run:                  \
 	src/os_run.c               \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \
-	src/os_ada.o               \
 	src/os_bark.o              \
 	src/os_exports.o           \
+	src/os/ada.o               \
 	src/os/new.o               \
 	src/os/next.o              \
 	src/os/queue.o             \

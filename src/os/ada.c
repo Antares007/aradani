@@ -1,4 +1,4 @@
-#include "oars.h"
+#include "../oars.h"
 S(ada_not) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
