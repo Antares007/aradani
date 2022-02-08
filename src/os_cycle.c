@@ -37,4 +37,4 @@ SP(c_not) {}
 SP(mconsumer) { A4(c_or, c_and, c_not, os_new) O; }
 //                 mconsumer, gor, mproducer, os_queue
 SP(counter) { A6(mconsumer, gor, mproducer, and2, os_queue, and) O; }
-N(cycle) { A2(0, counter) O; }
+N(cycle) { A5(0, counter, 0, counter, and2) O; }
