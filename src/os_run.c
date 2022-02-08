@@ -17,8 +17,11 @@ void enderr(αos_t *o) { o->o(o); }
 E(enderr,
 "", 0,                          L)E(L,
 "printf", printf,               L)EN(L,
+os_new,                         L)EN(L,
+os_next,                        L)EN(L,
 os_queue,                    root);
 // clang-format on
+
 static void os_and(αos_t *o, const char *n, void *a,
                    void (*e)(struct αos_t *)) {
   p_t *args = o->d;
@@ -39,11 +42,18 @@ N(os_bark) {
   ε_t e = mapfile(name, root);
   e(&(αos_t){.a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, oο}});
 }
-N(ray_not) { printf("ray_not\n"); }
-N(ray_oor) { printf("ray_oor\n"); }
 
-N(seven) { printf("seven\n"), C(1); }
+N(ray_not) { printf("ray_not\n"); }
 N(cycle);
+N(ada);
+N(ray_oor) {
+  R(p_t *, oο);
+  printf("ray_oor %p\n", oο);
+  A9("mami", cycle, oο, os_queue, god, ο, os_queue, 030, ada)
+  A4("dedi", cycle, ο, os_queue)
+  A2(040, ada)
+  O;
+}
 
 int main(int argc, char **argv) {
   // if (argc < 2)
@@ -59,8 +69,7 @@ int main(int argc, char **argv) {
 
   ο[0].v = ο, ο[1].Q = ρ;
   QUEUE_INIT((QUEUE *)&ο[2]);
-  
-  cycle(T());
-  // A4(argv[1], root, ο, os_bark) O;
+
+  A4(argv[1], root, ο, os_bark) O;
   return 0;
 }

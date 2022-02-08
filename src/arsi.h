@@ -30,7 +30,8 @@ typedef void (*ε_t)(αos_t *);
       t(&(αos_t){                                                              \
           .a = Imports, .o = o->o, .s = o, .mn = __FILE__, .d = Exports});     \
   }
-#define IBS(Head) IB(init, Head)
+#define IBS(Head)                                                              \
+  IB(init, iff) IF(iff, printf, print, Head, int, const char *, ...)
 #define IB(Init, Head)                                                         \
   static int imported = 0;                                                     \
   static void Init();                                                          \

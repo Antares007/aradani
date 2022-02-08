@@ -15,9 +15,11 @@ SP(p_or) {
 S(p_and) {
   R(p_t *, oο);
   R(Q_t, c);
+  R(const char *, n);
   if (c % 100000000 == 0)
-    printf("p_and %p %lu %p %lu %lu\n", σ, α, ο, ρ, c);
-  A5(c + 1, ο, god, oο, os_queue) O;
+    printf("p_and %s %lu %p\n", n, c, ο[0].v);
+  if (c < 500000000) A(n) A5(c + 1, ο, god, oο, os_queue) O;
+  else A3(got, oο, os_queue) O;
 }
 SP(p_not) {}
 SP(mproducer) { A4(p_or, p_and, p_not, os_new) O; }
@@ -29,12 +31,16 @@ SP(c_or) {
 S(c_and) {
   R(p_t *, oο);
   R(Q_t, c);
+  R(const char *, n);
   if (c % 100000000 == 1)
-    printf("c_and %p %lu %p %lu %lu\n", σ, α, ο, ρ, c);
-  A5(c + 1, ο, god, oο, os_queue) O;
+    printf("c_and %s %lu %p\n", n, c, ο[0].v);
+  A(n) A5(c + 1, ο, god, oο, os_queue) O;
 }
 SP(c_not) {}
 SP(mconsumer) { A4(c_or, c_and, c_not, os_new) O; }
 //                 mconsumer, gor, mproducer, os_queue
 SP(counter) { A6(mconsumer, gor, mproducer, and2, os_queue, and) O; }
-N(cycle) { A5(0, counter, 0, counter, and2) O; }
+N(cycle) {
+  R(const char *, name);
+  A3(name, 0, counter) O;
+}
