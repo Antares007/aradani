@@ -43,7 +43,6 @@ static void os_and(αos_t *o, const char *n, void *a,
   p_t *args = o->d;
   p_t *σ = args[0].p, *ο = args[2].p;
   Q_t α = args[1].Q, ρ = args[3].Q;
-  printf("%p %lu %p %lu\n", σ, α, ο, ρ);
   A(a) C(1);
 }
 static void os_or(αos_t *o) {
@@ -70,6 +69,8 @@ SP(ray_not) {}
 SP(ray_oor) {}
 SP(next) {
   R(p_t *, oο);
+  printf("%p\n", oο);
+  //C(1);
   A8("mami", cycle, got, ο, os_queue, anddd, oο, os_queue)
   A4("dedi", cycle, ο, os_queue)
   A2(0040, ada)

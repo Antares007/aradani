@@ -40,7 +40,8 @@ SP(c_not) {}
 SP(mconsumer) { A4(c_or, c_and, c_not, os_new) O; }
 //                 mconsumer, gor, mproducer, os_queue
 SP(counter) { A6(mconsumer, gor, mproducer, and2, os_queue, and) O; }
-N(cycle) {
+NP(cycle) {
   R(const char *, name);
+  printf("%s\n", name);
   A3(name, 0, counter) O;
 }

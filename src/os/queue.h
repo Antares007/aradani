@@ -40,11 +40,7 @@ typedef void *QUEUE[2];
 
 #define QUEUE_HEAD(q) (QUEUE_NEXT(q))
 
-#define QUEUE_INIT(q)                                                          \
-  do {                                                                         \
-    QUEUE_NEXT(q) = (q);                                                       \
-    QUEUE_PREV(q) = (q);                                                       \
-  } while (0)
+#define QUEUE_INIT(q) (QUEUE_NEXT(q) = (q), QUEUE_PREV(q) = (q))
 
 #define QUEUE_ADD(h, n)                                                        \
   do {                                                                         \
