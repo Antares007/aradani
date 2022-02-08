@@ -1,6 +1,6 @@
 #include "arsi.h"
 #include "gotgod.h"
-#include "queue.h"
+#include "os/queue.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -17,7 +17,7 @@ void enderr(αos_t *o) { o->o(o); }
 E(enderr,
 "", 0,                          L)E(L,
 "printf", printf,               L)EN(L,
-os_queue,                 root);
+os_queue,                    root);
 // clang-format on
 static void os_and(αos_t *o, const char *n, void *a,
                    void (*e)(struct αos_t *)) {

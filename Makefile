@@ -30,14 +30,16 @@ src/a_empty2.arsi:           \
 	src/goto.bin
 	cat $^ > $@
 
-src/os:                      \
-	src/os.c                   \
+src/os_run:                  \
+	src/os_run.c               \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \
 	src/os_ada.o               \
 	src/os_bark.o              \
 	src/os_exports.o           \
-	src/os_next.o              \
+	src/os/new.o               \
+	src/os/next.o              \
+	src/os/queue.o             \
 	src/os_cycle.o             \
 	src/os_exports_epoll.o     
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
@@ -69,8 +71,9 @@ clean:
 		src/*.bin         \
 		src/*.oars        \
 		src/*.o           \
+		src/os/*.o        \
 		src/*.arsi        \
-		src/os            \
+		src/os_run        \
 		src/epoll_client  \
 		src/epoll_server  \
 		src/seven         \
