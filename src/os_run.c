@@ -85,3 +85,23 @@ int main(int argc, char **argv) {
   A5(argv[1], root, os_bark, next, and) O;
   return 0;
 }
+// 0x7ffdd0908d20 m 2      502     os_bark:os_run.c
+// 0x7ffdd0908d20 m 1      509     next:os_run.c
+// 0x777777701070
+// 0x7ffdd0908d20 m 7      499     os_queue:queue.c
+// 0x7ffdd0908d20 m 3      509     os_queue:queue.c
+// 0x5579ccc080f0 m 0      509     os_next:next.c
+// 0x5579ccc09100 a 1      500     cycle:os_cycle.c
+// mami
+// 0x5579ccc09100 a 2      500     counter:os_cycle.c
+// 0x5579ccc09100 a 2      485     mconsumer:os_cycle.c
+// 0x5579ccc09100 a 6      485     os_new_n:new.c
+// 0x5579ccc09100 a 4      493     mproducer:os_cycle.c
+// 0x5579ccc09100 a 8      493     os_new_n:new.c
+// 0x5579ccc09100 a 5      500     os_queue:queue.c
+// 0x5579ccc09100 a 2      509     os_queue:queue.c
+// 0x5579ccc080f0 a 0      509     os_next:next.c
+// 0x5579ccc0a100 prod 3   509     p_or:os_cycle.c
+// 0x5579ccc0a100 prod 5   509     os_queue:queue.c
+// 0x5579ccc080f0 a 0      509     os_next:next.c
+// 0x5579ccc09100 m 0      509     ray_not:os_run.c

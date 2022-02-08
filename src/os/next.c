@@ -1,8 +1,8 @@
 #include "../gotgod.h"
 #include "../oars.h"
 #include "queue.h"
-
-N(os_next) {
+#include <stdio.h>
+NP(os_next) {
   QUEUE *q;
   QUEUE *main_queue = (QUEUE *)&ο[2];
   if (main_queue == (q = QUEUE_NEXT(main_queue)))

@@ -28,8 +28,8 @@ static void append_to_parent_queue(p_t *ο) {
 }
 S(ray_gof_and) { append_to_parent_queue(ο), Co(ο[0].p, 1); }
 S(ray_gof_oor) { append_to_parent_queue(ο), Co(ο[0].p, 0); }
-
-N(os_new_n) {
+#include <stdio.h>
+NP(os_new_n) {
   R(const char *, name);
   Q_t nρ = 512;
   p_t *nο = malloc(nρ * sizeof(void *));

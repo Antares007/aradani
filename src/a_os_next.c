@@ -9,7 +9,7 @@ os_next,      imports);
 
 SP(ray_not) {}
 
-static p_t ο[1024];
+static p_t ο[512];
 
 static void init() {
   ο[0].v = ο;

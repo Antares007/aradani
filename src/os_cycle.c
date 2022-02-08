@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 N(os_queue);
-N(os_new);
+N(os_new_n);
 N(ada);
 S(and) { A(010) ada(T()); }
 S(and2) { A(020) ada(T()); }
@@ -22,7 +22,7 @@ S(p_and) {
   else A3(got, oο, os_queue) O;
 }
 SP(p_not) {}
-SP(mproducer) { A4(p_or, p_and, p_not, os_new) O; }
+SP(mproducer) { A5(p_or, p_and, p_not, "prod", os_new_n) O; }
 
 SP(c_or) {
   R(p_t *, oο);
@@ -37,7 +37,7 @@ S(c_and) {
   A(n) A5(c + 1, ο, god, oο, os_queue) O;
 }
 SP(c_not) {}
-SP(mconsumer) { A4(c_or, c_and, c_not, os_new) O; }
+SP(mconsumer) { A5(c_or, c_and, c_not, "cons", os_new_n) O; }
 //                 mconsumer, gor, mproducer, os_queue
 SP(counter) { A6(mconsumer, gor, mproducer, and2, os_queue, and) O; }
 NP(cycle) {
