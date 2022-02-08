@@ -15,6 +15,7 @@ static void init() {
   ο[0].v = ο;
   ο[1].Q = sizeof(ο) / sizeof(*ο);
   QUEUE_INIT((QUEUE *)&ο[2]);
+  ο[4].v = "a";
 
   ο[--ο[1].Q].v = ray_not;
   ο[--ο[1].Q].v = os_next;

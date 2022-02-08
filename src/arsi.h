@@ -63,20 +63,3 @@ static int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 static void ε() { (void)cmp; }
-
-#undef NP
-#define NP(n)                                                                  \
-  N(n##p);                                                                     \
-  N(n) {                                                                       \
-    print("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);      \
-    n##p(T());                                                                 \
-  }                                                                            \
-  N(n##p)
-#undef SP
-#define SP(n)                                                                  \
-  S(n##p);                                                                     \
-  S(n) {                                                                       \
-    print("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);      \
-    n##p(T());                                                                 \
-  }                                                                            \
-  S(n##p)

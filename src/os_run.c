@@ -4,22 +4,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#undef NP
-#undef SP
-#define NP(n)                                                                  \
-  N(n##p);                                                                     \
-  N(n) {                                                                       \
-    printf("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);     \
-    n##p(T());                                                                 \
-  }                                                                            \
-  N(n##p)
-#define SP(n)                                                                  \
-  S(n##p);                                                                     \
-  S(n) {                                                                       \
-    printf("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);     \
-    n##p(T());                                                                 \
-  }                                                                            \
-  S(n##p)
 void os_hrtime_init();
 void init_os_next();
 void *mapfile(const char *filename, void *pith);
@@ -70,7 +54,7 @@ SP(ray_oor) {}
 SP(next) {
   R(p_t *, oο);
   printf("%p\n", oο);
-  //C(1);
+  // C(1);
   A8("mami", cycle, got, ο, os_queue, anddd, oο, os_queue)
   A4("dedi", cycle, ο, os_queue)
   A2(0040, ada)
@@ -88,8 +72,7 @@ int main(int argc, char **argv) {
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
 
-  ο[0].v = ο, ο[1].Q = ρ;
-  QUEUE_INIT((QUEUE *)&ο[2]);
+  ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "m";
 
   // A9(got, 'a', next, 'b', next, 'c', next, 0222, ada) O;
   A5(argv[1], root, os_bark, next, and) O;
