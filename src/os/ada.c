@@ -1,28 +1,28 @@
 #include "../oars.h"
 S(ada_not) {
   ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = nc;
   while (nc)
     nc--, σ[α++].v = ο[ρ++].v;
   ρ += ac + oc;
-  O;
+  f ? O : C(2);
 }
 S(ada_and) {
   ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = ac;
   ρ += nc;
   while (ac)
     ac--, σ[α++].v = ο[ρ++].v;
   ρ += oc;
-  O;
+  f ? O : C(1);
 }
 S(ada_oor) {
   ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = oc;
   ρ += nc + ac;
   while (oc)
     oc--, σ[α++].v = ο[ρ++].v;
-  O;
+  f ? O : C(0);
 }
 N(ada) {
   Q_t j = σ[--α].Q,           //

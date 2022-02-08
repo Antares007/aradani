@@ -4,8 +4,8 @@
       "adapter": "CodeLLDB",
       "configuration": {
         "request": "launch",
-        "program": "src/os",
-        "args": ["src/a_cycle.arsi"],
+        "program": "src/os_run",
+        "args": ["src/a_os_next.arsi"],
         "cwd": "${workspaceRoot}",
         "environment": [  ],
         "externalConsole": true,

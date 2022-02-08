@@ -4,6 +4,22 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#undef NP
+#undef SP
+#define NP(n)                                                                  \
+  N(n##p);                                                                     \
+  N(n) {                                                                       \
+    printf("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);     \
+    n##p(T());                                                                 \
+  }                                                                            \
+  N(n##p)
+#define SP(n)                                                                  \
+  S(n##p);                                                                     \
+  S(n) {                                                                       \
+    printf("%p %p %ld\t%ld\t%s:%s\n", σ, ο, α, ρ, __FILE__, __FUNCTION__);     \
+    n##p(T());                                                                 \
+  }                                                                            \
+  S(n##p)
 void os_hrtime_init();
 void init_os_next();
 void *mapfile(const char *filename, void *pith);
@@ -26,40 +42,44 @@ static void os_and(αos_t *o, const char *n, void *a,
                    void (*e)(struct αos_t *)) {
   p_t *args = o->d;
   p_t *σ = args[0].p, *ο = args[2].p;
-  Q_t α = args[1].Q, ρ = args[2].p[1].Q;
-  A(a) C(0);
+  Q_t α = args[1].Q, ρ = args[3].Q;
+  printf("%p %lu %p %lu\n", σ, α, ο, ρ);
+  A(a) C(1);
 }
 static void os_or(αos_t *o) {
   p_t *args = o->d;
   p_t *σ = args[0].p, *ο = args[2].p;
-  Q_t α = args[1].Q, ρ = args[2].p[1].Q;
+  Q_t α = args[1].Q, ρ = args[3].Q;
   C(0);
 }
-N(os_bark) {
-  R(p_t *, oο);
+SP(os_bark) {
   R(ε_t, root);
   R(const char *, name);
   ε_t e = mapfile(name, root);
-  e(&(αos_t){.a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, oο}});
+  e(&(αos_t){
+      .a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
 }
 
-N(ray_not) { printf("ray_not\n"); }
 N(cycle);
 N(ada);
-N(ray_oor) {
+void init_queue();
+
+S(and) { A(010) ada(T()); }
+S(anddd) { A(030) ada(T()); }
+SP(ray_not) {}
+SP(ray_oor) {}
+SP(next) {
   R(p_t *, oο);
-  printf("ray_oor %p\n", oο);
-  A9("mami", cycle, oο, os_queue, god, ο, os_queue, 030, ada)
+  A8("mami", cycle, got, ο, os_queue, anddd, oο, os_queue)
   A4("dedi", cycle, ο, os_queue)
-  A2(040, ada)
+  A2(0040, ada)
   O;
 }
-
 int main(int argc, char **argv) {
   // if (argc < 2)
   //   return printf("Would you mind adding the 'file_name' as an argument?\n"),
   //   8;
-
+  init_queue();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
 
@@ -70,6 +90,7 @@ int main(int argc, char **argv) {
   ο[0].v = ο, ο[1].Q = ρ;
   QUEUE_INIT((QUEUE *)&ο[2]);
 
-  A4(argv[1], root, ο, os_bark) O;
+  // A9(got, 'a', next, 'b', next, 'c', next, 0222, ada) O;
+  A5(argv[1], root, os_bark, next, and) O;
   return 0;
 }
