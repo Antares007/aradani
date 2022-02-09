@@ -1,20 +1,14 @@
-#include "../oars.h"
-#include "../gotgod.h"
 #include "queue.h"
+#include "../gotgod.h"
+#include "../oars.h"
 
 #define MAXΣ 1024
 
 static p_t σtable[MAXΣ][512];
 static p_t *getσ() {
-  static Q_t last = 0;
-  Q_t i;
-  for (i = last + 1; i < MAXΣ; i++)
-    if (!σtable[i][0].Q)
-      return last = i, σtable[i];
-  for (i = 1; i < last; i++)
-    if (!σtable[i][0].Q)
-      return last = i, σtable[i];
-  return 0;
+  static W_t c = 0;
+  p_t *σ = σtable[c++ % MAXΣ];
+  return (σ[0].Q) ? getσ() : σ;
 }
 
 N(os_queue) {
@@ -23,8 +17,6 @@ N(os_queue) {
   Q_t nα = α;
   if (ρ < ο[1].Q) {
     nσ = getσ();
-    if (!nσ)
-      return C(2);
     while (α)
       α--, nσ[α].v = σ[α].v;
   } else {
