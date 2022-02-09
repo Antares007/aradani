@@ -16,8 +16,8 @@ static p_t *getσ() {
       return last = i, σtable[i];
   return 0;
 }
-#include <stdio.h>
-NP(os_queue) {
+
+N(os_queue) {
   R(p_t *, oο);
   p_t *nσ;
   Q_t nα = α;

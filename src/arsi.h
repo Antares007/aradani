@@ -17,8 +17,8 @@ typedef void (*ε_t)(αos_t *);
 #define TAIL_BODY ;
 #define TAIL_ATTR ;
 #endif
-#define EBS(Tail) EB(head, imports, exports, Tail)
-#define EB(Head, Imports, Exports, Tail)                                       \
+#define EBS(Tail) EB(head, imports, o->cmp, exports, Tail)
+#define EB(Head, Imports, Cmp, Exports, Tail)                                  \
   static void Exports(αos_t *);                                                \
   void Tail(αos_t *o) TAIL_ATTR;                                               \
   void Tail(αos_t *o) TAIL_BODY;                                               \
@@ -33,7 +33,7 @@ typedef void (*ε_t)(αos_t *);
                  .s = o,                                                       \
                  .mn = __FILE__,                                               \
                  .d = Exports,                                                 \
-                 .cmp = o->cmp});                                              \
+                 .cmp = Cmp});                                                 \
   }
 #define IBS(Head)                                                              \
   IB(init, iff) IF(iff, printf, print, Head, int, const char *, ...)

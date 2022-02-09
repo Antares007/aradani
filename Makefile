@@ -5,7 +5,8 @@ OBJCOPY=objcopy
 
 src/a_cycle.arsi:            \
 	src/a_cycle.oars           \
-	src/os.arsi
+	src/a_junctions.oars       \
+	src/goto.bin
 	cat $^ > $@
 
 src/a_parse.arsi:            \
@@ -40,8 +41,7 @@ src/os_run:                  \
 	src/os/new.o               \
 	src/os/next.o              \
 	src/os/queue.o             \
-	src/os_cycle.o             \
-	src/os_exports_epoll.o     
+	src/os_exports_epoll.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src/gui/ui: src/gui/ui.c
