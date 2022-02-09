@@ -28,7 +28,7 @@ static void append_to_parent_queue(p_t *ο) {
 }
 S(ray_gof_and) { append_to_parent_queue(ο), Co(ο[0].p, 1); }
 S(ray_gof_oor) { append_to_parent_queue(ο), Co(ο[0].p, 0); }
-#include <stdio.h>
+
 NP(os_new_n) {
   R(const char *, name);
   Q_t nρ = 512;
@@ -43,4 +43,5 @@ NP(os_new_n) {
 
   A(nο) C(1);
 }
+
 N(os_new) { A2("noname", os_new_n) O; }
