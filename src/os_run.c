@@ -4,36 +4,47 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-N(os_queue);
-N(os_next);
-N(os_new);
-N(ada);
+#define END(Tail, Name, Head)                                                  \
+  N(Name);                                                                     \
+  EN(Tail, Name, Head)
 
 // clang-format off
-void enderr(αos_t *o) { o->o(o); }
-E(enderr,
+void end(αos_t *o) { o->o(o); }
+E(end,
 "", 0,              L)E(L,
 "", 0,              L)E(L,
-"printf", printf,   L)EN(L,
-ada,                L)EN(L,
-os_new,             L)EN(L,
-os_next,            L)EN(L,
-os_queue,        root);
+"printf", printf,   L)END(L,
+ada,                L)END(L,
+l_accept,           L)END(L,
+l_address,          L)END(L,
+l_bind,             L)END(L,
+l_epoll_create,     L)END(L,
+l_epoll_ctl,        L)END(L,
+l_epoll_wait,       L)END(L,
+l_listen,           L)END(L,
+l_read,             L)END(L,
+l_setnoblock,       L)END(L,
+l_socket,           L)END(L,
+os_bark,            L)END(L,
+os_hrtime,          L)END(L,
+os_new,             L)END(L,
+os_next,            L)END(L,
+os_queue,           L)END(L,
+os_wordump,      root);
 // clang-format on
 
 S(and) { A(010) ada(T()); }
 SP(ray_not) {}
 SP(ray_oor) {}
 SP(next) { O; }
-N(os_bark);
 
-void init_queue();
+void os_queue_init();
 void os_hrtime_init();
 
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
-  init_queue();
+  os_queue_init();
   os_hrtime_init();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);

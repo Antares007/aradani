@@ -31,7 +31,7 @@ N(os_queue) {
   C(1);
 }
 
-void init_queue() {
+void os_queue_init() {
   for (Q_t i = 0; i < MAXΣ; i++)
     σtable[i][0].Q = 0;
 }
