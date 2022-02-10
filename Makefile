@@ -3,45 +3,45 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-src/a_cycle.arsi:            \
+src/a_cycle.arsi:                   \
 	src/a_cycle.oars           \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
 
-src/a_parse.arsi:            \
+src/a_parse.arsi:                   \
 	src/a_parse.oars           \
 	src/os.arsi
 	cat $^ > $@
 
-src/a_async.arsi:            \
+src/a_async.arsi:                   \
 	src/a_async.oars           \
 	src/os.arsi
 	cat $^ > $@
 
-src/os.arsi:                 \
+src/os.arsi:                        \
 	src/a_os_extra.oars        \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
 
-src/a_empty2.arsi:           \
+src/a_empty2.arsi:                  \
 	src/a_empty2.oars          \
 	src/a_empty.oars           \
 	src/goto.bin
 	cat $^ > $@
 
-src/os_run:                  \
+src/os_run:                         \
 	src/os_run.c               \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \
 	src/os_bark.o              \
-	src/os_exports.o           \
+	src/os_wordump.o           \
 	src/os/ada.o               \
 	src/os/new.o               \
 	src/os/next.o              \
 	src/os/queue.o             \
-	src/os_exports_epoll.o
+	src/os_epoll.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src/gui/ui: src/gui/ui.c

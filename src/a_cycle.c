@@ -8,7 +8,18 @@ os_queue,           L)IN(L,
 and,                L)IN(L,
 and2,         imports);
 // clang-format on
-void init(){}
+void init() {}
+//p_t ο[512];
+//void init() {
+//  ο[0].v = ο;
+//  ο[1].Q = sizeof(ο) / sizeof(*ο);
+//  QUEUE_INIT((QUEUE *)&ο[2]);
+//  ο[4].v = "a";
+//
+//  ο[--ο[1].Q].v = ray_not;
+//  ο[--ο[1].Q].v = os_next;
+//  ο[--ο[1].Q].v = os_next;
+//}
 
 NP(p_or) {
   R(p_t *, oο);

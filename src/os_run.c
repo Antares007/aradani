@@ -4,10 +4,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-void os_hrtime_init();
-void init_os_next();
-void *mapfile(const char *filename, void *pith);
-
 N(os_queue);
 N(os_next);
 N(os_new);
@@ -32,10 +28,13 @@ SP(next) { O; }
 N(os_bark);
 
 void init_queue();
+void os_hrtime_init();
+
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   init_queue();
+  os_hrtime_init();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
 
