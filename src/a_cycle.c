@@ -48,8 +48,10 @@ NP(c_not) {}
 NP(mconsumer) { A4(c_or, c_and, c_not, os_new) O; }
 //                 mconsumer, gor, mproducer, os_queue
 NP(counter) { A6(mconsumer, gor, mproducer, and2, os_queue, and) O; }
-NP(მთავარი) { A2(0, counter) O; }
 
+N(მთავარი) { 
+  A2(0, counter) O; 
+}
 
 // clang-format off
 EBS(                    L)EN(L,

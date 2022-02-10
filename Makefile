@@ -9,9 +9,10 @@ src/a_cycle.arsi:                   \
 	src/goto.bin
 	cat $^ > $@
 
-src/a_parse.arsi:                   \
-	src/a_parse.oars           \
-	src/os.arsi
+src/a_test_socket.arsi:             \
+	src/a_test_socket.oars     \
+	src/a_junctions.oars       \
+	src/goto.bin
 	cat $^ > $@
 
 src/a_async.arsi:                   \

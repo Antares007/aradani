@@ -1,28 +1,20 @@
 #include "arsi.h"
+#include "gotgod.h"
 // clang-format off
-IN(0,
-ls_export,                  L)IN(L,
-os_new,                     L)IF(L,
-printf, print,              L, int, const char*, ...)IN(L,
+IBS(                L)IN(L,
+os_ls,              L)IN(L,
+os_new,             L)IN(L,
+os_queue,           L)IN(L,
 //
-and,                        L)IN(L,
-and2,                       L)IN(L,
-and3,                       L)IN(L,
-and3or,                     L)IN(L,
-and4,                       L)IN(L,
-not,                        L)IN(L,
-notand,                     L)IN(L,
-or,                         L)IN(L,
-//
-os_queue,                   L)IN(L,
-//
-mkdrain,                    L)IN(L,
-os_bind,                    L)IN(L,
-os_listen,                  L)IN(L,
-os_socket,                  L)IN(L,
-//
-s_pith,                imports);
-
+and,                L)IN(L,
+and2,               L)IN(L,
+and3,               L)IN(L,
+and3or,             L)IN(L,
+and4,               L)IN(L,
+not,                L)IN(L,
+notand,             L)IN(L,
+or,           imports);
+N(mkdrain){C(1);}
 NP(on_data) {
   R(Q_t, nread);
   print("drain_and - α:%ld nread:%ld\n", α, nread);
@@ -34,17 +26,18 @@ NP(on_connection) {
   A7(on_data, mkdrain, gor, cσ, 2, os_queue, and4) O;
 }
 
+void init() {}
+N(მთავარი_test);
+
+// clang-format off
+EBS(                L)EN(L,          
+მთავარი_test, exports);
+
 NP(მთავარი_test) {
-  A2(exports, ls_export) O;
+  A2(exports, os_ls) O;
   //A10(os_socket,
   //    "127.0.0.1", 7000, os_bind, and3,
   //    on_connection, mkdrain, and2,
   //    os_listen, and) O;
 }
 
-N(updater) { A2(მთავარი_test, and) C(1); }
-void init() { updateσ(s_pith, updater); }
-
-// clang-format off
-EN(tail,          
-s_pith,                exports);
