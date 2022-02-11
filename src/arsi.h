@@ -32,6 +32,7 @@ typedef void (*ε_t)(αos_t *);
     else                                                                       \
       t(&(αos_t){.a = imports, .o = o->o, .s = o, .mn = __FILE__});            \
   }
+#define IBS(Head) IB(iff) IF(iff, printf, print, Head, int, const char *, ...)
 #define E(Tail, Name, Addr, Head)                                              \
   static void Head(αos_t *o) { o->a(o, Name, Addr, Tail); }
 #define I(Tail, Name, Addr, Head)                                              \

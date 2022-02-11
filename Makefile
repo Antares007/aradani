@@ -21,7 +21,6 @@ src/a_async.arsi:                   \
 	cat $^ > $@
 
 src/os.arsi:                        \
-	src/a_os_extra.oars        \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
