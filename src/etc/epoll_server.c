@@ -60,12 +60,10 @@ void et_process(struct epoll_event *events, int number, int epoll_fd,
            * that the data has been read completely, after which epoll can
            * trigger the EPOLLIN event on sockfd again to drive the next read
            * operation */
-
           if (errno == EAGAIN || errno == EWOULDBLOCK) {
             printf("read later!\n");
             break;
           }
-
           close(sockfd);
           break;
         } else if (ret == 0) {
@@ -92,32 +90,19 @@ int main() {
   address.sin_port = htons(port);
 
   int listen_fd = socket(PF_INET, SOCK_STREAM, 0);
-  if (listen_fd < 0) {
-    printf("fail to create socket!\n");
-    return -1;
-  }
-
+  if (listen_fd < 0)
+    return printf("fail to create socket!\n"), -1;
   ret = bind(listen_fd, (struct sockaddr *)&address, sizeof(address));
-  if (ret == -1) {
-    printf("fail to bind socket!\n");
-    return -1;
-  }
-
+  if (ret == -1)
+    return printf("fail to bind socket!\n"), -1;
   ret = listen(listen_fd, 5);
-  if (ret == -1) {
-    printf("fail to listen socket!\n");
-    return -1;
-  }
-
+  if (ret == -1)
+    return printf("fail to listen socket!\n"), -1;
   struct epoll_event events[MAX_EVENT_NUMBER];
   int epoll_fd = epoll_create(5); // Event table size 5
-  if (epoll_fd == -1) {
-    printf("fail to create epoll!\n");
-    return -1;
-  }
-
+  if (epoll_fd == -1)
+    return printf("fail to create epoll!\n"), -1;
   AddFd(epoll_fd, listen_fd);
-
   while (1) {
     int ret = epoll_wait(epoll_fd, events, MAX_EVENT_NUMBER, -1);
     if (ret < 0) {
@@ -126,7 +111,6 @@ int main() {
     }
     et_process(events, ret, epoll_fd, listen_fd);
   }
-
   close(listen_fd);
   return 0;
 }
