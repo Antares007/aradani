@@ -45,7 +45,7 @@ N(os_bark) {
 }
 static void os_print(αos_t *o, const char *n, void *a,
                      void (*e)(struct αos_t *)) {
-  printf("%s %p\n", n, a), e(o);
+  printf("%p %s\n", a, n), e(o);
 }
 static int one() { return 1; }
 N(os_ls) {
