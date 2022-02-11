@@ -1,7 +1,8 @@
 #include "arsi.h"
 #include "gotgod.h"
 // clang-format off
-IBS(                L)IN(L,
+IB(                 L)IF(L,
+printf, print,      L, int, const char *, ...)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
 
@@ -54,5 +55,5 @@ N(მთავარი) {
 }
 
 // clang-format off
-EBS(                    L)EN(L,
+EN(tail,
 მთავარი,          exports);

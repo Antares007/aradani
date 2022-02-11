@@ -1,7 +1,7 @@
 #include "arsi.h"
 
 // clang-format off
-IBS(                L)IN(L,
+IB(                 L)IN(L,
 ada,          imports);
 // clang-format on
 void init() {}
@@ -30,7 +30,7 @@ console.log(
     .join("")
 );
 */
-EBS(                L)JUN(L,
+                      JUN(tail,
 and        , 0010,  L)JUN(L,
 and2       , 0020,  L)JUN(L,
 and2or     , 0021,  L)JUN(L,

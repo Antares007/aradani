@@ -28,30 +28,21 @@ static void os_or(αos_t *o) {
   Q_t α = args[1].Q, ρ = args[3].Q;
   C(0);
 }
-static int cmp(const char *s1, const char *s2) {
-  while (*s1 == *s2++)
-    if (*s1++ == 0)
-      return (0);
-  return (*(unsigned char *)s1 - *(unsigned char *)--s2);
-}
 N(os_bark) {
   R(ε_t, root);
   R(const char *, name);
   ε_t e = mapfile(name, root);
   e(&(αos_t){.a = os_and,
              .o = os_or,
-             .cmp = cmp,
              .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
 }
 static void os_print(αos_t *o, const char *n, void *a,
                      void (*e)(struct αos_t *)) {
   printf("%p %s\n", a, n), e(o);
 }
-static int one() { return 1; }
 N(os_ls) {
   R(ε_t, e);
   e(&(αos_t){.a = os_print,
              .o = os_or,
-             .cmp = one,
              .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
 }

@@ -1,7 +1,8 @@
 #include "arsi.h"
 #include "gotgod.h"
 // clang-format off
-IBS(                L)IN(L,
+IB(L)IF(L,
+printf, print,      L, int, const char *, ...)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
@@ -14,7 +15,8 @@ and4,               L)IN(L,
 not,                L)IN(L,
 notand,             L)IN(L,
 or,           imports);
-N(mkdrain){C(1);}
+
+N(mkdrain) { C(1); }
 NP(on_data) {
   R(Q_t, nread);
   print("drain_and - α:%ld nread:%ld\n", α, nread);
@@ -27,12 +29,6 @@ NP(on_connection) {
 }
 
 void init() {}
-N(მთავარი_test);
-
-// clang-format off
-EBS(                L)EN(L,          
-მთავარი_test, exports);
-
 NP(მთავარი_test) {
   A2(exports, os_ls) O;
   //A10(os_socket,
@@ -40,4 +36,8 @@ NP(მთავარი_test) {
   //    on_connection, mkdrain, and2,
   //    os_listen, and) O;
 }
+
+// clang-format off
+EN(tail,          
+მთავარი_test, exports);
 
