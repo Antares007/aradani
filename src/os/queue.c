@@ -9,7 +9,7 @@ static p_t σtable[MAXΣ][512];
 static p_t *getσ() {
   static W_t c = 0;
   p_t *σ = σtable[c++ % MAXΣ];
-  return (σ[0].Q) ? getσ() : σ;
+  return σ[0].Q ? getσ() : σ;
 }
 
 N(os_queue) {
