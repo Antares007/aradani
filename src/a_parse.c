@@ -18,20 +18,10 @@ andor2,             L)IN(L,
 not2and,            L)IN(L,
 or,           imports);
 
-/*
-0xxxxxxx
-110xxxxx 10xxxxxx
-1110xxxx 10xxxxxx 10xxxxxx
-11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-0x0f      1111
-0x1f    1 1111
-0x3f   11 1111
-0x80 1000 0000
-0xc0 1100 0000
-0xe0 1110 0000
-0xf0 1111 0000
-*/
-// clang-format off
+// 0xxxxxxx
+// 110xxxxx 10xxxxxx
+// 1110xxxx 10xxxxxx 10xxxxxx
+// 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
 N(la) {
   R(q_t,          p);
   R(q_t,          l);
@@ -64,9 +54,7 @@ N(la) {
 }
 // clang-format off
 Q_t cslen(const char*cs){
-  Q_t len = 0;
-  while(cs[len]) len++;
-  return len;
+  Q_t len = 0; while(cs[len]) len++; return len;
 }
 N(მთავარი) {
   const char*cs = "აaბb";
