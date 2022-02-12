@@ -5,8 +5,12 @@ OBJCOPY=objcopy
 
 src/a_cycle.arsi:                   \
 	src/a_cycle.oars           \
-	src/a_junctions.oars       \
-	src/goto.bin
+	src/os.arsi
+	cat $^ > $@
+
+src/a_parse.arsi:                   \
+	src/a_parse.oars           \
+	src/os.arsi
 	cat $^ > $@
 
 src/a_test_socket.arsi:             \

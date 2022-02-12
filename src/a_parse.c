@@ -1,25 +1,21 @@
 #include "arsi.h"
 // clang-format off
-IN(iε,
-os_new,                     L)IN(L,
-os_wordump,                 L)IF(L,
-printf, print,              L, int, const char*, ...)IN(L,
+IBS(                L)IN(L,
+os_ls,              L)IN(L,
+os_new,             L)IN(L,
+os_queue,           L)IN(L,
+os_wordump,         L)IN(L,
 //
-os_queue,                   L)p_t *oο;I(L,
-"ο", oο,                    L)IN(L,
-//
-and,                        L)IN(L,
-and2,                       L)IN(L,
-and3,                       L)IN(L,
-and4,                       L)IN(L,
-and5,                       L)IN(L,
-and6,                       L)IN(L,
-and7,                       L)IN(L,
-andor,                      L)IN(L,
-notand,                     L)IN(L,
-or,                         L)IN(L,
-//
-os_ls,                imports);
+and,                L)IN(L,
+and2,               L)IN(L,
+and3,               L)IN(L,
+and4,               L)IN(L,
+and5,               L)IN(L,
+and6,               L)IN(L,
+and7,               L)IN(L,
+andor,              L)IN(L,
+notand,             L)IN(L,
+or,           imports);
 
 // 0xxxxxxx
 // 110xxxxx	10xxxxxx
@@ -60,24 +56,24 @@ os_ls,                imports);
 //  }
 //};
 
-N(Ο);                      
-N(Μ);
-
-N(doctypedecl);
-N(XMLDecl);
-N(Misc);
-
-// STag         ::= '<' Name (S Attribute)* S? '>'
-// EmptyElemTag ::= '<' Name (S Attribute)* S? '/>'
-// element      ::= EmptyElemTag | STag content ETag
-N(element);
-
-// prolog ::= XMLDecl? Misc* (doctypedecl Misc*)?
-N(prolog_n) { A4(doctypedecl, Misc, Μ, and2) O; }
-N(prolog  ) { A8(XMLDecl, Ο, Misc, Μ, and2, prolog_n, Ο, and2) O; }
-
-// document ::= prolog element Misc*
-N(document) { A6(prolog, element, and, Misc, Μ, and2) O; }
+//N(Ο);                      
+//N(Μ);
+//
+//N(doctypedecl);
+//N(XMLDecl);
+//N(Misc);
+//
+//// STag         ::= '<' Name (S Attribute)* S? '>'
+//// EmptyElemTag ::= '<' Name (S Attribute)* S? '/>'
+//// element      ::= EmptyElemTag | STag content ETag
+//N(element);
+//
+//// prolog ::= XMLDecl? Misc* (doctypedecl Misc*)?
+//N(prolog_n) { A4(doctypedecl, Misc, Μ, and2) O; }
+//N(prolog  ) { A8(XMLDecl, Ο, Misc, Μ, and2, prolog_n, Ο, and2) O; }
+//
+//// document ::= prolog element Misc*
+//N(document) { A6(prolog, element, and, Misc, Μ, and2) O; }
 // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
 // S ::= (#x20 | #x9 | #xD | #xA)+
 // NameChar ::= Letter | Digit | '.' | '-' | '_' | ':' | CombiningChar | Extender
@@ -163,11 +159,8 @@ N(document) { A6(prolog, element, and, Misc, Μ, and2) O; }
 // Extender ::= #x00B7 | #x02D0 | #x02D1 | #x0387 | #x0640 | #x0E46 | #x0EC6 | #x3005 | [#x3031-#x3035] | [#x309D-#x309E] | [#x30FC-#x30FE] 
 
 N(მთავარი) { print("hey\n"); A2(exports, os_ls) O; }
-N(init) {
-  print("init\n");
-  oο[oο[1].Q++].v = მთავარი, C(1);
-}
+static void init() {}
 
 // clang-format off
-E(tail,
-"ο", oο,              exports);
+EN(tail,
+მთავარი,     exports);
