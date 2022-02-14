@@ -1,8 +1,7 @@
 #include "arsi.h"
 #include "gotgod.h"
 // clang-format off
-IB(                 L)IF(L,
-printf, print,      L, int, const char *, ...)IN(L,
+IBS(                L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
 
