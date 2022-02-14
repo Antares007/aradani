@@ -16,53 +16,69 @@ and7,               L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
 not2and,            L)IN(L,
+not2and2or2,        L)IN(L,
 or,           imports);
+#define RB R(q_t, pos); R(q_t, len); R(const char *, buf)
+#define AB A3(buf, len, pos)
+S(bor)        { RB; R(Q_t, r); R(Q_t, l); A(l  | r) AB C(1); }
+S(lsh)        { R(Q_t, r); RB;  R(Q_t, l); A(l << r) AB C(1); }
+S(lsh_bor)    { A3(lsh, bor, and) O; }
+#define υ(Name, Ma, Me, Mv)                                                    \
+  SP(Name) {                                                                   \
+    RB;                                                                        \
+    if (len - 1 < pos)                                                         \
+      AB C(2);                                                                 \
+    else if ((buf[pos] & Ma) == Me) A((Q_t)buf[pos] & Mv)                      \
+      A3(buf, len, pos + 1) C(1);                                              \
+    else                                                                       \
+      AB C(0);                                                                 \
+  }
+υ(u0xxxxxxx, 0x80, 0x00, 0xff)
+υ(u10xxxxxx, 0xc0, 0x80, 0x3f)
+υ(u110xxxxx, 0xe0, 0xc0, 0x1f)
+υ(u1110xxxx, 0xf0, 0xe0, 0x0f)
+υ(u11110xxx, 0xf8, 0xf0, 0x07)
+S(la0)          {   A(u0xxxxxxx) O; }
+S(la110)        {  A8(u110xxxxx,
+                     6, lsh_bor, and2,
+                     u10xxxxxx, and,
+                     bor, and) O; }
+S(and_bor)      { A2(bor, and) O; }
+S(and_lsh_bor)  { A2(lsh_bor, and2) O; }
 
-// 0xxxxxxx
-// 110xxxxx 10xxxxxx
-// 1110xxxx 10xxxxxx 10xxxxxx
-// 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-N(la) {
-  R(q_t,          p);
-  R(q_t,          l);
-  R(const char *, b);
-  
-  if (p > l - 1)
-    A3(b, l, p) C(2);
-  else if (p + 0 < l && (b[p + 0] & 0x80) == 0x00)
-    A((Q_t)b[p + 0]) A3(b, l, p + 1) C(1);
-  else if (p > l - 2 || (b[p + 1] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xe0) == 0xc0)
-    A((0x1f & (Q_t)b[p + 0]) << 6
-    | (0x3f & (Q_t)b[p + 1])) A3(b, l, p + 2) C(1);
-  else if (p > l - 3 || (b[p + 2] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xf0) == 0xe0)
-    A((0x0f & (Q_t)b[p + 0]) << 12
-    | (0x3f & (Q_t)b[p + 1]) << 6
-    | (0x3f & (Q_t)b[p + 2])) A3(b, l, p + 3) C(1);
-  else if (p > l - 4 || (b[p + 3] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xf8) == 0xf0)
-    A((0x07 & (Q_t)b[p + 0]) << 18
-    | (0x3f & (Q_t)b[p + 1]) << 12
-    | (0x3f & (Q_t)b[p + 2]) << 6
-    | (0x3f & (Q_t)b[p + 3])) A3(b, l, p + 4) C(1);
-  else
-    A3(b, l, p) C(2);
+SP(la1110)      { A10(u1110xxxx, 12, and_lsh_bor, u10xxxxxx, and, 6, and_lsh_bor, u10xxxxxx, and, and_bor) O; }
+
+S(la11110)      { A18(u11110xxx,
+                      18, lsh_bor, and2,
+                      u10xxxxxx, and,
+                      12, lsh_bor, and2,
+                      u10xxxxxx, and,
+                      6, lsh_bor, and2,
+                      u10xxxxxx, and,
+                      bor, and) O; }
+S(drop)         {  }
+N(lookahead)  { A(0) A7(la0, la110, or, la1110, or, la11110, or) A2(drop, or) O; }
+N(prn) {
+  R(Q_t,         p);
+  R(Q_t,         l);
+  R(const char*, b);
+  R(q_t,         v);
+  print("%s %lu %lu %lx", b, l, p, v);
 }
-// clang-format off
 Q_t cslen(const char*cs){
   Q_t len = 0; while(cs[len]) len++; return len;
 }
 N(მთავარი) {
-  const char*cs = "აaბb";
-  A4(cs, cslen(cs), 0, la)
-  A2(la, and)
-  A2(la, and)
-  A2(la, and)
-  A4(0xabcd, os_wordump, os_wordump, not2and) O;
+  const char*cs = "აბგ";
+  A4( cs, cslen(cs), 0,
+      la1110)
+  A2( la1110, and2)
+  A2( la1110, and2)
+  // A2(la, and)
+  // A2(la, and)
+  // A7("not", prn, "and", prn, " or", prn, not2and2or2)
+  A2( os_wordump, and)
+  O;
 }
 static void init() {}
 
@@ -171,3 +187,35 @@ static void init() {}
 // clang-format off
 EN(tail,
 მთავარი,     exports);
+
+// 0xxx xxxx
+// 110x xxxx 10xxxxxx
+// 1110 xxxx 10xxxxxx 10xxxxxx
+// 1111 0xxx 10xxxxxx 10xxxxxx 10xxxxxx
+N(la) {
+  R(q_t, p); R(q_t, l); R(const char *, b);
+  if (p > l - 1)
+    A3(b, l, p) C(2);
+  else if ((b[p + 0] & 0x80) == 0x00)
+    A((Q_t)b[p + 0]) A3(b, l, p + 1) C(1);
+  else if (p > l - 2 || (b[p + 1] & 0xc0) != 0x80)
+    A3(b, l, p) C(2);
+  else if ((b[p + 0] & 0xe0) == 0xc0)
+    A((0x1f & (Q_t)b[p + 0]) << 6
+    | (0x3f & (Q_t)b[p + 1])) A3(b, l, p + 2) C(1);
+  else if (p > l - 3 || (b[p + 2] & 0xc0) != 0x80)
+    A3(b, l, p) C(2);
+  else if ((b[p + 0] & 0xf0) == 0xe0)
+    A((0x0f & (Q_t)b[p + 0]) << 12
+    | (0x3f & (Q_t)b[p + 1]) << 6
+    | (0x3f & (Q_t)b[p + 2])) A3(b, l, p + 3) C(1);
+  else if (p > l - 4 || (b[p + 3] & 0xc0) != 0x80)
+    A3(b, l, p) C(2);
+  else if ((b[p + 0] & 0xf8) == 0xf0)
+    A((0x07 & (Q_t)b[p + 0]) << 18
+    | (0x3f & (Q_t)b[p + 1]) << 12
+    | (0x3f & (Q_t)b[p + 2]) << 6
+    | (0x3f & (Q_t)b[p + 3])) A3(b, l, p + 4) C(1);
+  else
+    A3(b, l, p) C(2);
+}
