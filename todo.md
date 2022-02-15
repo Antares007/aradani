@@ -1,10 +1,10 @@
 #TODO
 - Patreon page 
-- GitHub page 
+  - update acordingly to programming school content
 - Async programming
-  - timeout
+  - define setTimeout, setInterval primitives
 - Programming school
-  - Lesson 1
+  - Prepare Lesson 1
 - Presentation videos
   - HTTP server demo program
     - Epoll socket / TCP stack
