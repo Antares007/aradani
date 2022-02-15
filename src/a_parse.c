@@ -41,26 +41,27 @@ S(shift)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
 S(lsh)       { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 S(bin_or)    { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 S(lookahead_shift) { A3(lookahead, shift,  and) O; }
-S(uni1) { A(um0xxxxxxx) O; }
-S(uni2) {
-  A4(um110xxxxx,       6, lsh, and2) A2(lookahead_shift, and)
-  A2(um10xxxxxx, and) A2(bin_or, and) O;
+
+S(u8cp_b1) { As(um0xxxxxxx) O; }
+S(u8cp_b2) {
+  As( um110xxxxx,       6, lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and, bin_or, and) O;
 }
-S(uni3) {
-  A4(um1110xxxx,      12, lsh, and2) A2(lookahead_shift, and)
-  A5(um10xxxxxx, and,  6, lsh, and2) A2(lookahead_shift, and)
-  A2(um10xxxxxx, and) A2(bin_or, and) A2(bin_or, and) O;
+S(u8cp_b3) {
+  As( um1110xxxx,      12, lsh, and2, lookahead_shift, and, 
+      um10xxxxxx, and,  6, lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and,  bin_or, and, bin_or, and) O;
 }
-S(uni4) {
-  A4(um11110xxx,      18, lsh, and2) A2(lookahead_shift, and)
-  A5(um10xxxxxx, and, 12, lsh, and2) A2(lookahead_shift, and)
-  A5(um10xxxxxx, and,  6, lsh, and2) A2(lookahead_shift, and)
-  A2(um10xxxxxx, and) A2(bin_or, and) A2(bin_or, and) A2(bin_or, and) O;
+S(u8cp_b4) {
+  As( um11110xxx,      18, lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and, 12, lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and,  6, lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and) O;
 }
-S(uni) { A9(lookahead_shift, uni1, and, uni2, or, uni3, or, uni4, or) O; }
+S(u8cp) { As(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or) O; }
 S(parse) {
   if (ο7 < ο6)
-    A3(uni, parse, and) O;
+    A3(u8cp, parse, and) O;
   else
     A(god) O;
 }

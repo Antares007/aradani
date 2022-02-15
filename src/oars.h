@@ -51,6 +51,7 @@ typedef void (*n_t)(OARS);
 #define CAT(a, b) CAT_(a, b)
 
 #include "oars_a21.h"
+#include "oars_as.h"
 #include "oars_sa21.h"
 
 #define NP_(n, PRN, N)                                                         \
