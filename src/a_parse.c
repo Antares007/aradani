@@ -19,11 +19,81 @@ andor2,             L)IN(L,
 not2and,            L)IN(L,
 not2and2or2,        L)IN(L,
 or,           imports);
+
+#define ο5 ο[5].cs
+#define ο6 ο[6].Q
+#define ο7 ο[7].Q
+
+S(unmask) {
+  R(Q_t, unmask);
+  R(Q_t, check);
+  R(Q_t, mask);
+  R(Q_t, v);
+  if ((v & mask) == check) A(v & unmask) C(1); else C(0);
+}
+NP(um0xxxxxxx) { A4(0x80, 0x00, 0xff, unmask) O; }
+NP(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
+NP(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
+NP(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
+NP(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
+
+SP(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
+
+SP(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
+
+S(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+S(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
+
+SP(uni1) { C(0); }
+SP(uni2) { C(0); }
+SP(uni3) {
+  A4(um1110xxxx,      12, lsh, and2)
+  A4(lookahead, and, shift_,  and)
+  A5(um10xxxxxx, and,  6, lsh, and2)
+  A4(lookahead, and, shift_,  and)
+  A2(um10xxxxxx, and)
+  A2(bin_or, and)
+  A2(bin_or, and)
+  O;
+}
+SP(uni4) { C(0); }
+
+SP(uni) {
+  A11(lookahead,  shift_, and,
+                  uni1, and,
+                  uni2, or,
+                  uni3, or,
+                  uni4, or) O;
+}
+Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
+
+SP(testuni) {
+  ο5 = "აბგ";
+  ο6 = cslen(ο5);
+  ο7 = 0;
+  A7(uni, uni, and, uni, and, os_wordump, and) O;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #define RB R(q_t, pos); R(q_t, len); R(const char *, buf)
 #define AB A3(buf, len, pos)
 
 S(bor)        { RB; R(Q_t, r); R(Q_t, l); A(l  | r) AB C(1); }
-S(lsh)        { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 
 S(lsh_bor)    { A3(lsh, bor, and) O; }
 #define υ(Name, Ma, Me, Mv)                                                    \
@@ -41,8 +111,11 @@ S(lsh_bor)    { A3(lsh, bor, and) O; }
 υ(u110xxxxx, 0xe0, 0xc0, 0x1f)
 υ(u1110xxxx, 0xf0, 0xe0, 0x0f)
 υ(u11110xxx, 0xf8, 0xf0, 0x07)
-S(la0)          {   A(u0xxxxxxx) O; }
-S(la110)        {  A8(u110xxxxx,
+
+
+
+S(la0)          {  A(u0xxxxxxx) O; }
+S(la110)        { A8(u110xxxxx,
                      6, lsh_bor, and2,
                      u10xxxxxx, and,
                      bor, and) O; }
@@ -69,9 +142,7 @@ S(la11110)      { A18(u11110xxx,
                       6, lsh_bor, and2,
                       u10xxxxxx, and,
                       bor, and) O; }
-N(lookahead)    {
-  A7(la0, la110, or, la1110, or, la11110, or) O;
-}
+N(lookahead_)    { A7(la0, la110, or, la1110, or, la11110, or) O; }
 N(prn) {
   R(Q_t,         p);
   R(Q_t,         l);
@@ -79,11 +150,10 @@ N(prn) {
   R(q_t,         v);
   print("%s %lu %lu %lx", b, l, p, v);
 }
-Q_t cslen(const char* cs) {
-  Q_t len = 0; while(cs[len]) len++; return len;
-}
+N(exam1) {}
 N(მთავარი) {
-  const char*cs = "აბგ";
+  return testuni(T());
+  const char *cs = "აბგ";
   A4(cs, cslen(cs), 0, la1110)
   A2(la1110, and)
   A2(la1110, and)
@@ -205,7 +275,7 @@ EN(tail,
 // 110x xxxx 10xxxxxx
 // 1110 xxxx 10xxxxxx 10xxxxxx
 // 1111 0xxx 10xxxxxx 10xxxxxx 10xxxxxx
-N(la) {
+N(lau) {
   R(q_t, p); R(q_t, l); R(const char *, b);
   if (p > l - 1)
     A3(b, l, p) C(2);
