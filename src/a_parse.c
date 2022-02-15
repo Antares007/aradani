@@ -20,16 +20,26 @@ not2and2or2,        L)IN(L,
 or,           imports);
 #define RB R(q_t, pos); R(q_t, len); R(const char *, buf)
 #define AB A3(buf, len, pos)
-S(bor)        { RB; R(Q_t, r); R(Q_t, l); A(l  | r) AB C(1); }
-S(lsh)        { R(Q_t, r); RB;  R(Q_t, l); A(l << r) AB C(1); }
+S(bor)        {
+  RB;
+  R(Q_t, r);
+  R(Q_t, l);
+  A(l  | r) AB C(1);
+}
+S(lsh)        { 
+  R(Q_t, r);
+  RB;
+  R(Q_t, l);
+  A(l << r) AB C(1);
+}
 S(lsh_bor)    { A3(lsh, bor, and) O; }
 #define υ(Name, Ma, Me, Mv)                                                    \
   SP(Name) {                                                                   \
     RB;                                                                        \
     if (len - 1 < pos)                                                         \
       AB C(2);                                                                 \
-    else if ((buf[pos] & Ma) == Me) A((Q_t)buf[pos] & Mv)                      \
-      A3(buf, len, pos + 1) C(1);                                              \
+    else if ((buf[pos] & Ma) == Me)                                            \
+      AB A((Q_t)buf[pos] & Mv) C(1);                                           \
     else                                                                       \
       AB C(0);                                                                 \
   }
@@ -43,11 +53,19 @@ S(la110)        {  A8(u110xxxxx,
                      6, lsh_bor, and2,
                      u10xxxxxx, and,
                      bor, and) O; }
-S(and_bor)      { A2(bor, and) O; }
-S(and_lsh_bor)  { A2(lsh_bor, and2) O; }
-
-SP(la1110)      { A10(u1110xxxx, 12, and_lsh_bor, u10xxxxxx, and, 6, and_lsh_bor, u10xxxxxx, and, and_bor) O; }
-
+S(and_bor)      {  A2(bor, and) O; }
+S(and_lsh_bor)  {  A2(lsh_bor, and2) O; }
+S(shift) {
+  R(void *, a);
+  RB;
+  A4(a, buf, len, pos + 1)  C(1);
+}
+SP(la1110)      { A16(u1110xxxx, shift, and,
+                      12, and_lsh_bor,
+                      u10xxxxxx, and, shift, and,
+                      6, and_lsh_bor,
+                      u10xxxxxx, and, shift, and,
+                      and_bor) O; }
 S(la11110)      { A18(u11110xxx,
                       18, lsh_bor, and2,
                       u10xxxxxx, and,
@@ -56,8 +74,9 @@ S(la11110)      { A18(u11110xxx,
                       6, lsh_bor, and2,
                       u10xxxxxx, and,
                       bor, and) O; }
-S(drop)         {  }
-N(lookahead)  { A(0) A7(la0, la110, or, la1110, or, la11110, or) A2(drop, or) O; }
+N(lookahead)    {
+  A7(la0, la110, or, la1110, or, la11110, or) O;
+}
 N(prn) {
   R(Q_t,         p);
   R(Q_t,         l);
@@ -70,10 +89,9 @@ Q_t cslen(const char*cs){
 }
 N(მთავარი) {
   const char*cs = "აბგ";
-  A4( cs, cslen(cs), 0,
-      la1110)
-  A2( la1110, and2)
-  A2( la1110, and2)
+  A5(0, cs, cslen(cs), 0, la1110)
+  //A2( la1110, and2)
+  //A2( la1110, and2)
   // A2(la, and)
   // A2(la, and)
   // A7("not", prn, "and", prn, " or", prn, not2and2or2)
