@@ -23,6 +23,7 @@ typedef struct p_s {
     struct p_s *p;
     void (*c)(struct p_s *σ, Q_t α, struct p_s *ο, Q_t ρ);
     void *v;
+    const char *cs;
     b_t b; w_t w; d_t d; q_t q;
     B_t B; W_t W; D_t D; Q_t Q;
   };
