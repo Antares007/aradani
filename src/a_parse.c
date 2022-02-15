@@ -29,34 +29,54 @@ S(unmask) {
   R(Q_t, check);
   R(Q_t, mask);
   R(Q_t, v);
-  if ((v & mask) == check) A(v & unmask) C(1); else C(0);
+  if ((v & mask) == check) A(v & unmask) C(1); else A(v) C(0);
 }
 NP(um0xxxxxxx) { A4(0x80, 0x00, 0xff, unmask) O; }
-NP(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
+SP(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
 NP(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
-NP(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
-NP(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
+SP(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
+SP(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
 
 SP(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
 
 SP(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
 
-S(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
-S(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
+SP(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+SP(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 
-SP(uni1) { C(0); }
-SP(uni2) { C(0); }
+SP(uni1) {
+  A(um0xxxxxxx) O;
+}
+SP(uni2) {
+  A4(um110xxxxx,       6, lsh, and2)
+  A4(lookahead, and, shift_,  and)
+  A2(um10xxxxxx, and)
+  A2(bin_or, and)
+  O;
+}
 SP(uni3) {
   A4(um1110xxxx,      12, lsh, and2)
-  A4(lookahead, and, shift_,  and)
+  A4(lookahead,  and,  shift_,  and)
   A5(um10xxxxxx, and,  6, lsh, and2)
-  A4(lookahead, and, shift_,  and)
+  A4(lookahead,  and,  shift_,  and)
   A2(um10xxxxxx, and)
   A2(bin_or, and)
   A2(bin_or, and)
   O;
 }
-SP(uni4) { C(0); }
+SP(uni4) {
+  A4(um11110xxx,      18, lsh, and2)
+  A4(lookahead,  and,  shift_,  and)
+  A5(um10xxxxxx, and, 12, lsh, and2)
+  A4(lookahead,  and,  shift_,  and)
+  A5(um10xxxxxx, and,  6, lsh, and2)
+  A4(lookahead,  and,  shift_,  and)
+  A2(um10xxxxxx, and)
+  A2(bin_or, and)
+  A2(bin_or, and)
+  A2(bin_or, and)
+  O;
+}
 
 SP(uni) {
   A11(lookahead,  shift_, and,
@@ -68,10 +88,16 @@ SP(uni) {
 Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
 
 SP(testuni) {
-  ο5 = "აბგ";
+  ο5 = "aŠა𓅨𓅪";
   ο6 = cslen(ο5);
   ο7 = 0;
-  A7(uni, uni, and, uni, and, os_wordump, and) O;
+  A11(uni,
+      uni, and,
+      uni, and,
+      uni, and,
+      uni, and,
+      os_wordump, and
+  ) O;
 }
 
 
@@ -157,9 +183,6 @@ N(მთავარი) {
   A4(cs, cslen(cs), 0, la1110)
   A2(la1110, and)
   A2(la1110, and)
-  // A2(la, and)
-  // A2(la, and)
-  // A7("not", prn, "and", prn, " or", prn, not2and2or2)
   A2( os_wordump, and)
   O;
 }
