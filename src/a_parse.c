@@ -31,19 +31,19 @@ S(unmask) {
   R(Q_t, v);
   if ((v & mask) == check) A(v & unmask) C(1); else A(v) C(0);
 }
-NP(um0xxxxxxx) { A4(0x80, 0x00, 0xff, unmask) O; }
-SP(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
-NP(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
-SP(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
-SP(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
+S(um0xxxxxxx) { A4(0x80, 0x00, 0xff, unmask) O; }
+S(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
+S(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
+S(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
+S(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
 
 S(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
 
 S(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
 
-SP(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
-SP(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
-SP(lookahead_shift) { A3(lookahead, shift_,  and) O; }
+S(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+S(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
+S(lookahead_shift) { A3(lookahead, shift_,  and) O; }
 SP(uni1) {
   A(um0xxxxxxx) O;
 }
@@ -99,93 +99,7 @@ SP(testuni) {
       os_wordump, and
   ) O;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#define RB R(q_t, pos); R(q_t, len); R(const char *, buf)
-#define AB A3(buf, len, pos)
-
-S(bor)        { RB; R(Q_t, r); R(Q_t, l); A(l  | r) AB C(1); }
-
-S(lsh_bor)    { A3(lsh, bor, and) O; }
-#define υ(Name, Ma, Me, Mv)                                                    \
-  SP(Name) {                                                                   \
-    RB;                                                                        \
-    if (len - 1 < pos)                                                         \
-      AB C(2);                                                                 \
-    else if ((buf[pos] & Ma) == Me)                                            \
-      AB A((Q_t)buf[pos] & Mv) C(1);                                           \
-    else                                                                       \
-      AB C(0);                                                                 \
-  }
-υ(u0xxxxxxx, 0x80, 0x00, 0xff)
-υ(u10xxxxxx, 0xc0, 0x80, 0x3f)
-υ(u110xxxxx, 0xe0, 0xc0, 0x1f)
-υ(u1110xxxx, 0xf0, 0xe0, 0x0f)
-υ(u11110xxx, 0xf8, 0xf0, 0x07)
-
-
-
-S(la0)          {  A(u0xxxxxxx) O; }
-S(la110)        { A8(u110xxxxx,
-                     6, lsh_bor, and2,
-                     u10xxxxxx, and,
-                     bor, and) O; }
-S(shift) {
-  R(void *, a);
-  RB;
-  A4(a, buf, len, pos + 1) C(1);
-}
-
-SP(la1110) {
-  A6(u1110xxxx,      12, lsh, and2, shift, and)
-  A7(u10xxxxxx, and,  6, lsh, and2, shift, and)
-  A4(u10xxxxxx, and,                shift, and)
-  A2(bor, and)
-  A2(bor, and)
-  O;
-}
-
-S(la11110)      { A18(u11110xxx,
-                      18, lsh_bor, and2,
-                      u10xxxxxx, and,
-                      12, lsh_bor, and2,
-                      u10xxxxxx, and,
-                      6, lsh_bor, and2,
-                      u10xxxxxx, and,
-                      bor, and) O; }
-N(lookahead_)    { A7(la0, la110, or, la1110, or, la11110, or) O; }
-N(prn) {
-  R(Q_t,         p);
-  R(Q_t,         l);
-  R(const char*, b);
-  R(q_t,         v);
-  print("%s %lu %lu %lx", b, l, p, v);
-}
-N(exam1) {}
-N(მთავარი) {
-  return testuni(T());
-  const char *cs = "აბგ";
-  A4(cs, cslen(cs), 0, la1110)
-  A2(la1110, and)
-  A2(la1110, and)
-  A2( os_wordump, and)
-  O;
-}
+N(მთავარი) { testuni(T()); }
 static void init() {}
 
 //N(Ο);                      
