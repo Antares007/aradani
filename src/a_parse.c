@@ -51,11 +51,11 @@ S(shift) {
   RB;
   A4(a, buf, len, pos + 1) C(1);
 }
-S(shift_bor)    {  A3(shift, bor, and) O; }
-S(lsh_shift_bor){  A4(lsh, and2, shift_bor, and) O; }
-SP(la1110)      { A11(u1110xxxx,      12, lsh_shift_bor,
-                      u10xxxxxx, and,  6, lsh_shift_bor,
-                      u10xxxxxx, and, shift_bor, and) O; }
+
+SP(la1110)      {  A6(u1110xxxx,      12, lsh, and2, shift, and)
+                   A9(u10xxxxxx, and,  6, lsh, and2, shift, and, bor, and)
+                   A6(u10xxxxxx, and, shift, and, bor, and) O; }
+
 S(la11110)      { A18(u11110xxx,
                       18, lsh_bor, and2,
                       u10xxxxxx, and,
@@ -79,9 +79,9 @@ Q_t cslen(const char* cs) {
 }
 N(მთავარი) {
   const char*cs = "აბგ";
-  A5(0, cs, cslen(cs), 0, la1110)
-  //A2( la1110, and2)
-  //A2( la1110, and2)
+  A4(cs, cslen(cs), 0, la1110)
+  A2(la1110, and)
+  A2(la1110, and)
   // A2(la, and)
   // A2(la, and)
   // A7("not", prn, "and", prn, " or", prn, not2and2or2)
