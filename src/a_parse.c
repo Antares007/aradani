@@ -1,4 +1,5 @@
 #include "arsi.h"
+#include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
 os_ls,              L)IN(L,
@@ -20,18 +21,10 @@ not2and2or2,        L)IN(L,
 or,           imports);
 #define RB R(q_t, pos); R(q_t, len); R(const char *, buf)
 #define AB A3(buf, len, pos)
-S(bor)        {
-  RB;
-  R(Q_t, r);
-  R(Q_t, l);
-  A(l  | r) AB C(1);
-}
-S(lsh)        { 
-  R(Q_t, r);
-  RB;
-  R(Q_t, l);
-  A(l << r) AB C(1);
-}
+
+S(bor)        { RB; R(Q_t, r); R(Q_t, l); A(l  | r) AB C(1); }
+S(lsh)        { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+
 S(lsh_bor)    { A3(lsh, bor, and) O; }
 #define υ(Name, Ma, Me, Mv)                                                    \
   SP(Name) {                                                                   \
@@ -53,19 +46,16 @@ S(la110)        {  A8(u110xxxxx,
                      6, lsh_bor, and2,
                      u10xxxxxx, and,
                      bor, and) O; }
-S(and_bor)      {  A2(bor, and) O; }
-S(and_lsh_bor)  {  A2(lsh_bor, and2) O; }
 S(shift) {
   R(void *, a);
   RB;
-  A4(a, buf, len, pos + 1)  C(1);
+  A4(a, buf, len, pos + 1) C(1);
 }
-SP(la1110)      { A16(u1110xxxx, shift, and,
-                      12, and_lsh_bor,
-                      u10xxxxxx, and, shift, and,
-                      6, and_lsh_bor,
-                      u10xxxxxx, and, shift, and,
-                      and_bor) O; }
+S(shift_bor)    {  A3(shift, bor, and) O; }
+S(lsh_shift_bor){  A4(lsh, and2, shift_bor, and) O; }
+SP(la1110)      { A11(u1110xxxx,      12, lsh_shift_bor,
+                      u10xxxxxx, and,  6, lsh_shift_bor,
+                      u10xxxxxx, and, shift_bor, and) O; }
 S(la11110)      { A18(u11110xxx,
                       18, lsh_bor, and2,
                       u10xxxxxx, and,
@@ -84,7 +74,7 @@ N(prn) {
   R(q_t,         v);
   print("%s %lu %lu %lx", b, l, p, v);
 }
-Q_t cslen(const char*cs){
+Q_t cslen(const char* cs) {
   Q_t len = 0; while(cs[len]) len++; return len;
 }
 N(მთავარი) {
