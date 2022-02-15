@@ -24,46 +24,42 @@ or,           imports);
 #define ο6 ο[6].Q
 #define ο7 ο[7].Q
 Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
-S(unmask) {
-  R(Q_t, unmask);
-  R(Q_t, check);
-  R(Q_t, mask);
-  R(Q_t, v);
-  if ((v & mask) == check) A(v & unmask) C(1); else A(v) C(0);
-}
-S(um0xxxxxxx) { A4(0x80, 0x00, 0xff, unmask) O; }
-S(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
-S(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
-S(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
-S(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
-S(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
+#define U8CP_UM(Name, Mask, Check, Unmask, Ray)                                \
+  S(Name){R(Q_t, v);(v & Mask)==Check?(A(v & Unmask)C(1)):(A(v)C(Ray));}
+U8CP_UM(um0xxxxxxx, 0x80, 0x00, 0xff, 0)
+U8CP_UM(um10xxxxxx, 0xc0, 0x80, 0x3f, 2)
+U8CP_UM(um110xxxxx, 0xe0, 0xc0, 0x1f, 0)
+U8CP_UM(um1110xxxx, 0xf0, 0xe0, 0x0f, 0)
+U8CP_UM(um11110xxx, 0xf8, 0xf0, 0x07, 0)
+
+S(lookahead) { A((Q_t)ο5[ο7]) C(1); }
 S(shift)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
-S(lsh)       { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+S(bin_lsh)       { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 S(bin_or)    { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 S(lookahead_shift) { A3(lookahead, shift,  and) O; }
 
-S(u8cp_b1) { As(um0xxxxxxx) O; }
+S(u8cp_b1) {
+  As( um0xxxxxxx) O;
+}
 S(u8cp_b2) {
-  As( um110xxxxx,       6, lsh, and2, lookahead_shift, and,
+  As( um110xxxxx,       6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and, bin_or, and) O;
 }
 S(u8cp_b3) {
-  As( um1110xxxx,      12, lsh, and2, lookahead_shift, and, 
-      um10xxxxxx, and,  6, lsh, and2, lookahead_shift, and,
+  As( um1110xxxx,      12, bin_lsh, and2, lookahead_shift, and, 
+      um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and,  bin_or, and, bin_or, and) O;
 }
 S(u8cp_b4) {
-  As( um11110xxx,      18, lsh, and2, lookahead_shift, and,
-      um10xxxxxx, and, 12, lsh, and2, lookahead_shift, and,
-      um10xxxxxx, and,  6, lsh, and2, lookahead_shift, and,
+  As( um11110xxx,      18, bin_lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and, 12, bin_lsh, and2, lookahead_shift, and,
+      um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and) O;
 }
 S(u8cp) { As(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or) O; }
 S(parse) {
-  if (ο7 < ο6)
-    A3(u8cp, parse, and) O;
-  else
-    A(god) O;
+  if (ο7 < ο6) A3(u8cp, parse, and) O;
+  else A(god) O;
 }
 S(testuni) {
   ο5 = "aŠა𓅪 α𓅨";
