@@ -52,9 +52,14 @@ S(shift) {
   A4(a, buf, len, pos + 1) C(1);
 }
 
-SP(la1110)      {  A6(u1110xxxx,      12, lsh, and2, shift, and)
-                   A9(u10xxxxxx, and,  6, lsh, and2, shift, and, bor, and)
-                   A6(u10xxxxxx, and, shift, and, bor, and) O; }
+SP(la1110) {
+  A6(u1110xxxx,      12, lsh, and2, shift, and)
+  A7(u10xxxxxx, and,  6, lsh, and2, shift, and)
+  A4(u10xxxxxx, and,                shift, and)
+  A2(bor, and)
+  A2(bor, and)
+  O;
+}
 
 S(la11110)      { A18(u11110xxx,
                       18, lsh_bor, and2,
