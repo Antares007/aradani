@@ -23,7 +23,7 @@ or,           imports);
 #define ο5 ο[5].cs
 #define ο6 ο[6].Q
 #define ο7 ο[7].Q
-
+Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
 S(unmask) {
   R(Q_t, unmask);
   R(Q_t, check);
@@ -36,68 +36,40 @@ S(um10xxxxxx) { A4(0xc0, 0x80, 0x3f, unmask) O; }
 S(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
 S(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
 S(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
-
 S(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
-
-S(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
-
-S(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
-S(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
-S(lookahead_shift) { A3(lookahead, shift_,  and) O; }
-SP(uni1) {
-  A(um0xxxxxxx) O;
+S(shift)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
+S(lsh)       { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
+S(bin_or)    { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
+S(lookahead_shift) { A3(lookahead, shift,  and) O; }
+S(uni1) { A(um0xxxxxxx) O; }
+S(uni2) {
+  A4(um110xxxxx,       6, lsh, and2) A2(lookahead_shift, and)
+  A2(um10xxxxxx, and) A2(bin_or, and) O;
 }
-SP(uni2) {
-  A4(um110xxxxx,       6, lsh, and2)
-  A2(lookahead_shift, and)
-  A2(um10xxxxxx, and)
-  A2(bin_or, and)
-  O;
+S(uni3) {
+  A4(um1110xxxx,      12, lsh, and2) A2(lookahead_shift, and)
+  A5(um10xxxxxx, and,  6, lsh, and2) A2(lookahead_shift, and)
+  A2(um10xxxxxx, and) A2(bin_or, and) A2(bin_or, and) O;
 }
-SP(uni3) {
-  A4(um1110xxxx,      12, lsh, and2)
-  A2(lookahead_shift, and)
-  A5(um10xxxxxx, and,  6, lsh, and2)
-  A2(lookahead_shift, and)
-  A2(um10xxxxxx, and)
-  A2(bin_or, and)
-  A2(bin_or, and)
-  O;
+S(uni4) {
+  A4(um11110xxx,      18, lsh, and2) A2(lookahead_shift, and)
+  A5(um10xxxxxx, and, 12, lsh, and2) A2(lookahead_shift, and)
+  A5(um10xxxxxx, and,  6, lsh, and2) A2(lookahead_shift, and)
+  A2(um10xxxxxx, and) A2(bin_or, and) A2(bin_or, and) A2(bin_or, and) O;
 }
-SP(uni4) {
-  A4(um11110xxx,      18, lsh, and2)
-  A2(lookahead_shift, and)
-  A5(um10xxxxxx, and, 12, lsh, and2)
-  A2(lookahead_shift, and)
-  A5(um10xxxxxx, and,  6, lsh, and2)
-  A2(lookahead_shift, and)
-  A2(um10xxxxxx, and)
-  A2(bin_or, and)
-  A2(bin_or, and)
-  A2(bin_or, and)
-  O;
+S(uni) { A9(lookahead_shift, uni1, and, uni2, or, uni3, or, uni4, or) O; }
+S(parse) {
+  if (ο7 < ο6)
+    A3(uni, parse, and) O;
+  else
+    A(god) O;
 }
-
-SP(uni) {
-  A11(lookahead,  shift_, and,
-                  uni1, and,
-                  uni2, or,
-                  uni3, or,
-                  uni4, or) O;
-}
-Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
-
-SP(testuni) {
-  ο5 = "aŠა𓅨𓅪";
+S(testuni) {
+  ο5 = "aŠა𓅪 α𓅨";
   ο6 = cslen(ο5);
   ο7 = 0;
-  A11(uni,
-      uni, and,
-      uni, and,
-      uni, and,
-      uni, and,
-      os_wordump, and
-  ) O;
+  print("%lu\n", ο6);
+  A3(parse, os_wordump, and) O;
 }
 N(მთავარი) { testuni(T()); }
 static void init() {}
