@@ -69,7 +69,7 @@ S(testuni) {
   ο5 = "aŠა𓅪 α𓅨";
   ο6 = cslen(ο5);
   ο7 = 0;
-  print("%lu\n", ο6);
+  print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
   A3(parse, os_wordump, and) O;
 }
 N(მთავარი) { testuni(T()); }
