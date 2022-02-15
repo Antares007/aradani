@@ -37,28 +37,28 @@ NP(um110xxxxx) { A4(0xe0, 0xc0, 0x1f, unmask) O; }
 SP(um1110xxxx) { A4(0xf0, 0xe0, 0x0f, unmask) O; }
 SP(um11110xxx) { A4(0xf8, 0xf0, 0x07, unmask) O; }
 
-SP(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
+S(lookahead)  { A((Q_t)ο5[ο7]) C(1); }
 
-SP(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
+S(shift_)     { C((ο7 < ο6) ? (ο7++, 1) : 2); }
 
 SP(lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 SP(bin_or)      { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
-
+SP(lookahead_shift) { A3(lookahead, shift_,  and) O; }
 SP(uni1) {
   A(um0xxxxxxx) O;
 }
 SP(uni2) {
   A4(um110xxxxx,       6, lsh, and2)
-  A4(lookahead, and, shift_,  and)
+  A2(lookahead_shift, and)
   A2(um10xxxxxx, and)
   A2(bin_or, and)
   O;
 }
 SP(uni3) {
   A4(um1110xxxx,      12, lsh, and2)
-  A4(lookahead,  and,  shift_,  and)
+  A2(lookahead_shift, and)
   A5(um10xxxxxx, and,  6, lsh, and2)
-  A4(lookahead,  and,  shift_,  and)
+  A2(lookahead_shift, and)
   A2(um10xxxxxx, and)
   A2(bin_or, and)
   A2(bin_or, and)
@@ -66,11 +66,11 @@ SP(uni3) {
 }
 SP(uni4) {
   A4(um11110xxx,      18, lsh, and2)
-  A4(lookahead,  and,  shift_,  and)
+  A2(lookahead_shift, and)
   A5(um10xxxxxx, and, 12, lsh, and2)
-  A4(lookahead,  and,  shift_,  and)
+  A2(lookahead_shift, and)
   A5(um10xxxxxx, and,  6, lsh, and2)
-  A4(lookahead,  and,  shift_,  and)
+  A2(lookahead_shift, and)
   A2(um10xxxxxx, and)
   A2(bin_or, and)
   A2(bin_or, and)
