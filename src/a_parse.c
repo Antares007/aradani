@@ -2,6 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
+ada,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
@@ -16,6 +17,7 @@ and6,               L)IN(L,
 and7,               L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
+not,                L)IN(L,
 not2and,            L)IN(L,
 not2and2or2,        L)IN(L,
 or,           imports);
@@ -57,22 +59,21 @@ S(u8cp_b4) {
       um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and) O;
 }
 S(u8cp) { As(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or) O; }
-S(parse) {
-  if (ο7 < ο6) A3(u8cp, parse, and) O;
-  else A(god) O;
+S(Μ) {
+  R(n_t, nar);
+  As(nar, nar, Μ, and2, god, or) O;
 }
 S(testuni) {
   ο5 = "aŠა𓅪 α𓅨";
   ο6 = cslen(ο5);
   ο7 = 0;
   print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
-  A3(parse, os_wordump, and) O;
+  As(u8cp, Μ, god, not, os_wordump, and) O;
 }
 N(მთავარი) { testuni(T()); }
 static void init() {}
 
 //N(Ο);                      
-//N(Μ);
 //
 //N(doctypedecl);
 //N(XMLDecl);
