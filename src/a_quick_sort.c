@@ -1,15 +1,12 @@
 #include "arsi.h"
 // clang-format off
-IN(0,
-os_wordump,             L)IN(L,
+IBS(                L)IN(L,
+os_wordump,         L)IN(L,
 //
-and,                    L)IN(L,
-//
-os_next,                L)IN(L,
-//
-s_pith,            imports);
-
+and,          imports);
+void init() { }
 N(qsort);
+
 void swap(long *a, long *b) {
   long t = *a;
   *a = *b;
@@ -50,16 +47,12 @@ N(qsort_next) {
 }
 N(qsort) { A3(os_wordump, qsort_next, and) O; }
 N(მთავარი) {
-  void *b = &ο[α];
+  void *b = &σ[α];
   long e;
   A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
   A7(0, 8, b, e, qsort, os_wordump, and) O;
-  // A2(6, 9) C(1);
 }
-
-N(updater) { A2(მთავარი, and) C(1); }
-void init() { updateσ(s_pith, updater); }
 
 // clang-format off
 EN(tail,          
-s_pith,           exports);
+მთავარი,      exports);
