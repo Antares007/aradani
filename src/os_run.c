@@ -33,19 +33,13 @@ os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);
 // clang-format on
-
-S(and) { A(010) ada(T()); }
 SP(ray_not) {}
 SP(ray_oor) {}
-
 void os_queue_init();
 void os_hrtime_init();
-SP(r) {
-  As(root, os_bark, dot, and, ο, os_queue) O;
-}
 int main(int argc, char **argv) {
-  //if (argc < 2)
-  //  return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  if (argc < 2)
+    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_queue_init();
   os_hrtime_init();
   p_t σ[512], ο[512];
@@ -57,6 +51,7 @@ int main(int argc, char **argv) {
 
   ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "m";
 
-  As("src/a_cycle.arsi", r, "src/a_async.arsi", r, 020, ada) O;
+  As(argv[1], root, ο, os_bark) O;
+
   return 0;
 }
