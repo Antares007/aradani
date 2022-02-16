@@ -35,8 +35,8 @@ os_wordump,      root);
 // clang-format on
 SP(ray_not) {}
 SP(ray_oor) {
-  R(const char *,in);
-  R(const char *,mn);
+  R(const char *, in);
+  R(const char *, mn);
   printf("Can't satisfy imports:\n%s\n%s\n\n", mn, in), C(1);
 }
 void os_queue_init();

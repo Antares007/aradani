@@ -1,9 +1,7 @@
 #include "arsi.h"
-
 // clang-format off
 IB(                 L)IN(L,
-ada,                L)IN(L,
-ada2,          imports);
+ada,          imports);
 // clang-format on
 void init() {}
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) ada(T()); } EN(Tail, Name, Head)
