@@ -29,12 +29,6 @@ src/os.arsi:                        \
 	src/goto.bin
 	cat $^ > $@
 
-src/a_empty2.arsi:                  \
-	src/a_empty2.oars          \
-	src/a_empty.oars           \
-	src/goto.bin
-	cat $^ > $@
-
 src/os_run:                         \
 	src/os_run.c               \
 	src/os_hrtime.o            \
@@ -68,7 +62,7 @@ src/gui/ui: src/gui/ui.c
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
-src/a_%.arsi: src/a_%.oars src/goto.bin
+src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
 clean:
 	rm -f                      \
