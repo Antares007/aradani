@@ -9,7 +9,7 @@
   EN(Tail, Name, Head)
 
 // clang-format off
-void end(αos_t *o) { o->o(o); }
+void end(αos_t *o) { o->o(o, 0, 0); }
 E(end,
 "", 0,              L)E(L,
 "", 0,              L)E(L,
@@ -34,7 +34,11 @@ os_queue,           L)END(L,
 os_wordump,      root);
 // clang-format on
 SP(ray_not) {}
-SP(ray_oor) {}
+SP(ray_oor) {
+  R(const char *,in);
+  R(const char *,mn);
+  printf("Can't satisfy imports:\n%s\n%s\n\n", mn, in), C(1);
+}
 void os_queue_init();
 void os_hrtime_init();
 int main(int argc, char **argv) {
