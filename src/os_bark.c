@@ -8,10 +8,11 @@ void *mapfile(const char *filename, void *pith) {
   struct stat sb;
   if (fd == -1 || fstat(fd, &sb) == -1)
     return 0;
-  void *addr =
-      mmap((void *)0x0000777777700000, sb.st_size,
-           PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_FIXED, fd, 0);
+  void *addr = mmap((void *)0x0000777777700000, sb.st_size,
+                    PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, fd, 0);
   close(fd);
+  if (addr == MAP_FAILED)
+    return 0;
   *(void **)((char *)addr + sb.st_size - 10) = pith;
   return addr;
 }
@@ -32,9 +33,11 @@ N(os_bark) {
   R(ε_t, root);
   R(const char *, name);
   ε_t e = mapfile(name, root);
-  e(&(αos_t){.a = os_and,
-             .o = os_or,
-             .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+  if (e)
+    e(&(αos_t){
+        .a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+  else
+    C(2);
 }
 static void os_print(αos_t *o, const char *n, void *a,
                      void (*e)(struct αos_t *)) {
@@ -42,7 +45,6 @@ static void os_print(αos_t *o, const char *n, void *a,
 }
 N(os_ls) {
   R(ε_t, e);
-  e(&(αos_t){.a = os_print,
-             .o = os_or,
-             .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+  e(&(αos_t){
+      .a = os_print, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
 }

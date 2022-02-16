@@ -9,7 +9,7 @@
   - HTTP server demo program
     - Epoll socket / TCP stack
     - Language parsing sample
-      - Simple parser implementation
+      + utf8 parser implementation
       - HTTP parser
   - GUI sample
     - counter example
