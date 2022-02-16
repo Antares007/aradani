@@ -22,6 +22,7 @@ typedef void (*ε_t)(αos_t *);
   static void Head(αos_t *o, const char *n, void *a, void(e)(αos_t *)) {       \
     imported = 1, init(), exports(o->s);                                       \
   }                                                                            \
+  static void error(αos_t *o) { o->s->o(o->s); }                               \
   void tail(αos_t *o) __attribute__((section(".text.end")));                   \
   void tail(αos_t *o){};                                                       \
   void head(αos_t *o) __attribute__((section(".text.begin")));                 \
@@ -30,7 +31,7 @@ typedef void (*ε_t)(αos_t *);
     if (imported)                                                              \
       exports(o);                                                              \
     else                                                                       \
-      t(&(αos_t){.a = imports, .o = o->o, .s = o, .mn = __FILE__});            \
+      t(&(αos_t){.a = imports, .o = error, .s = o, .mn = __FILE__});           \
   }
 #define IBS(Head) IB(iff) IF(iff, printf, print, Head, int, const char *, ...)
 #define E(Tail, Name, Addr, Head)                                              \

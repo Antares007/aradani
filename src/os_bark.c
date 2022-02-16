@@ -36,8 +36,11 @@ S(os_bark_n) {
   R(const char *, name);
   ε_t e = mapfile(name, root);
   if (e)
-    e(&(αos_t){
-        .a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+    // TODO: fix import error reporting
+    e(&(αos_t){.a = os_and,
+               .mn = "os_bark_n",
+               .o = os_or,
+               .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
   else
     C(2);
 }
