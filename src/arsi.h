@@ -4,6 +4,7 @@ typedef struct αos_t {
   void (*a)(struct αos_t *, const char *, void *, void (*)(struct αos_t *));
   void (*o)(struct αos_t *, const char *, const char *);
   struct αos_t *s;
+  const char *mn;
   const char *in;
   void *d;
 } αos_t;
@@ -23,10 +24,7 @@ typedef void (*ε_t)(αos_t *);
     imported = 1, init(), exports(o->s);                                       \
   }                                                                            \
   static void error(αos_t *o, const char *mn, const char *in) {                \
-    if (mn)                                                                    \
       o->s->o(o->s, mn, in);                                                   \
-    else                                                                       \
-      o->s->o(o->s, __FILE__, o->in);                                          \
   }                                                                            \
   void tail(αos_t *o) __attribute__((section(".text.end")));                   \
   void tail(αos_t *o){};                                                       \
@@ -36,7 +34,7 @@ typedef void (*ε_t)(αos_t *);
     if (imported)                                                              \
       exports(o);                                                              \
     else                                                                       \
-      t(&(αos_t){.a = imports, .o = error, .s = o});                           \
+      t(&(αos_t){.a = imports, .o = error, .s = o, .mn = __FILE__});           \
   }
 #define IBS(Head) IB(iff) IF(iff, printf, print, Head, int, const char *, ...)
 #define E(Tail, Name, Addr, Head)                                              \

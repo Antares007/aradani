@@ -9,7 +9,7 @@
   EN(Tail, Name, Head)
 
 // clang-format off
-void end(αos_t *o) { o->o(o, 0, 0); }
+void end(αos_t *o) { o->o(o, o->mn, o->in); }
 E(end,
 "", 0,              L)E(L,
 "", 0,              L)E(L,
