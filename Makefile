@@ -3,33 +3,12 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-src/a_cycle.arsi:                   \
-	src/a_cycle.oars           \
-	src/os.arsi
-	cat $^ > $@
-
-src/a_parse.arsi:                   \
-	src/a_parse.oars           \
-	src/os.arsi
-	cat $^ > $@
-
-src/a_test_socket.arsi:             \
-	src/a_test_socket.oars     \
+src/os.arsi:                 \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
 
-src/a_async.arsi:                   \
-	src/a_async.oars           \
-	src/os.arsi
-	cat $^ > $@
-
-src/os.arsi:                        \
-	src/a_junctions.oars       \
-	src/goto.bin
-	cat $^ > $@
-
-src/os_run:                         \
+src/os_run:                  \
 	src/os_run.c               \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \
@@ -65,7 +44,7 @@ src/gui/ui: src/gui/ui.c
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
 clean:
-	rm -f                      \
+	rm -f               \
 		src/*.bin         \
 		src/*.oars        \
 		src/*.o           \
