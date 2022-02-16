@@ -9,13 +9,15 @@ void *mapfile(const char *filename, void *pith) {
   struct stat sb;
   if (fd == -1 || fstat(fd, &sb) == -1)
     return 0;
-  // TODO: try to map exact addresses
-  void *addr = mmap((void *)0x0000777777700000, sb.st_size,
-                    PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, fd, 0);
+  static Q_t saddr = 0x0000777777700000;
+  void *addr =
+      mmap((void *)saddr, sb.st_size, PROT_READ | PROT_WRITE | PROT_EXEC,
+           MAP_PRIVATE | MAP_FIXED, fd, 0);
   close(fd);
   if (addr == MAP_FAILED)
     return 0;
   *(void **)((char *)addr + sb.st_size - 10) = pith;
+  saddr += ALIGN(sb.st_size, 0x1000);
   return addr;
 }
 static void os_and(αos_t *o, const char *n, void *a,
@@ -36,10 +38,8 @@ S(os_bark_n) {
   R(const char *, name);
   ε_t e = mapfile(name, root);
   if (e)
-    // TODO: fix import error reporting
-    e(&(αos_t){.a = os_and,
-               .o = os_or,
-               .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+    e(&(αos_t){
+        .a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
   else
     C(2);
 }

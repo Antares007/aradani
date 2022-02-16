@@ -42,10 +42,9 @@ typedef void (*n_t)(OARS);
 #define Sa(T, ...) (*((T *)&σ[α]) = ((T)__VA_ARGS__), α += wordCountOf(T)),
 #define Sr(T, n) T *n = (T *)&σ[α -= wordCountOf(T)]
 
-#define wordCountOf(T)                                                         \
-  ((sizeof(T) +                                                                \
-    ((sizeof(void *) - (sizeof(T) % sizeof(void *))) % sizeof(void *))) /      \
-   sizeof(void *))
+
+#define ALIGN(O, A) ((Q_t)(((O) + ((A) - 1)) / (A))) * (A)
+#define wordCountOf(T) ALIGN(sizeof(T), sizeof(void*))
 
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
