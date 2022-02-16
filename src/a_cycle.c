@@ -55,4 +55,4 @@ N(მთავარი) {
 
 // clang-format off
 EN(tail,
-მთავარი,          exports);
+მთავარი,      exports);

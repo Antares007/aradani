@@ -175,7 +175,7 @@ static void init() {}
 
 // clang-format off
 EN(tail,
-მთავარი,     exports);
+მთავარი,      exports);
 
 // 0xxx xxxx
 // 110x xxxx 10xxxxxx
