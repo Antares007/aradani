@@ -16,7 +16,7 @@ S(subQQ)   { R(Q_t, r); R(Q_t, l); A(l - r) C(1); }
 S(ltQQ)    { R(Q_t, r); R(Q_t, l); C(l < r); }
 S(rotate3) { R(void *, c); R(void *, b); R(void *, a); A3(b, c, a) C(1); }
 S(dup)     { R(void *, a); A2(a, a) C(1); }
-S(prnQ)    { R(Q_t, v); print("%lu\n", v); C(1); }
+SP(prnQ)   { R(Q_t, v); print("%lu\n", v); C(1); }
 
 S(setTimeout_n) {
   R(Q_t, time);

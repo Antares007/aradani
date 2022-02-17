@@ -1,7 +1,11 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
+CFLAGS+=-O3 -std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
+
+run: all
+	./src/os_run src/a_epoll.arsi
+all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_epoll.arsi
 
 src/os.arsi:                 \
 	src/a_junctions.oars       \
@@ -55,4 +59,4 @@ clean:
 		src/epoll_server  \
 		src/seven         \
 		src/ui
-.PHONY: clean 
+.PHONY: clean run all
