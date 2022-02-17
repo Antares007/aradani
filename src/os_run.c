@@ -53,9 +53,9 @@ int main(int argc, char **argv) {
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
 
-  ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "m";
+  ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "š";
 
-  As(argv[1], root, ο, os_bark) O;
+  AS(argv[1], root, ο, os_bark) O;
 
   return 0;
 }

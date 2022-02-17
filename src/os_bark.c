@@ -31,7 +31,7 @@ static void os_or(αos_t *o, const char *mn, const char *in) {
   p_t *args = o->d;
   p_t *σ = args[0].p, *ο = args[2].p;
   Q_t α = args[1].Q, ρ = args[3].Q;
-  As(mn, in) C(0);
+  AS(mn, in) C(0);
 }
 S(os_bark_n) {
   R(ε_t, root);
@@ -46,7 +46,7 @@ S(os_bark_n) {
 N(os_queue);
 N(os_bark) {
   R(p_t *, oο);
-  As(os_bark_n, oο, os_queue) O;
+  AS(os_bark_n, oο, os_queue) O;
 }
 static void os_print(αos_t *o, const char *n, void *a,
                      void (*e)(struct αos_t *)) {

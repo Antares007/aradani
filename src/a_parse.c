@@ -41,34 +41,34 @@ S(bin_or)    { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 S(lookahead_shift) { A3(lookahead, shift,  and) O; }
 
 S(u8cp_b1) {
-  As( um0xxxxxxx) O;
+  AS( um0xxxxxxx) O;
 }
 S(u8cp_b2) {
-  As( um110xxxxx,       6, bin_lsh, and2, lookahead_shift, and,
+  AS( um110xxxxx,       6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and, bin_or, and) O;
 }
 S(u8cp_b3) {
-  As( um1110xxxx,      12, bin_lsh, and2, lookahead_shift, and, 
+  AS( um1110xxxx,      12, bin_lsh, and2, lookahead_shift, and, 
       um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and,  bin_or, and, bin_or, and) O;
 }
 S(u8cp_b4) {
-  As( um11110xxx,      18, bin_lsh, and2, lookahead_shift, and,
+  AS( um11110xxx,      18, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and, 12, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
       um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and) O;
 }
-S(u8cp) { As(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or) O; }
+S(u8cp) { AS(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or) O; }
 S(Μ) {
   R(n_t, nar);
-  As(nar, nar, Μ, and2, god, or) O;
+  AS(nar, nar, Μ, and2, god, or) O;
 }
 S(testuni) {
   ο5 = "aŠა𓅪 α𓅨";
   ο6 = cslen(ο5);
   ο7 = 0;
   print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
-  As(u8cp, Μ, god, not, os_wordump, and) O;
+  AS(u8cp, Μ, god, not, os_wordump, and) O;
 }
 N(მთავარი) { testuni(T()); }
 static void init() {}
