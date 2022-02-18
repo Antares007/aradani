@@ -29,6 +29,7 @@ os_bark,            L)END(L,
 os_hrtime,          L)END(L,
 os_ls,              L)END(L,
 os_new,             L)END(L,
+os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);

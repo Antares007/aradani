@@ -2,7 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-os_new,             L)IN(L,
+os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 
 and,                L)IN(L,
@@ -19,7 +19,7 @@ N(p_and) {
   AS(c + 1, ο, god, oο, os_queue) O;
 }
 NP(p_not) {}
-NP(mproducer) { AS(p_or, p_and, p_not, os_new) O; }
+NP(mproducer) { AS(p_or, p_and, p_not, ο, 512, "prod", os_new_psn) O; }
 
 NP(c_or) { R(p_t *, oο); AS(ο, god, oο, os_queue) O; }
 NP(c_and_log) {}
@@ -30,7 +30,7 @@ N(c_and) {
   AS(c + 1, ο, god, oο, os_queue) O;
 }
 NP(c_not) {}
-NP(mconsumer) { AS(c_or, c_and, c_not, os_new) O; }
+NP(mconsumer) { AS(c_or, c_and, c_not, ο, 512, "cons", os_new_psn) O; }
 
 NP(counter) { AS(mconsumer, gor, mproducer, and2, os_queue, and) O; }
 N(მთავარი) { AS(0, counter) O; }
