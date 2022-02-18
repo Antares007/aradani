@@ -3,6 +3,7 @@
   - update acordingly to programming school content
 - Async programming
   - define setTimeout, setInterval primitives
+    - implement timeouts more efficiently with lookup tables.
 - Programming school
   - Prepare Lesson 1
 - Presentation videos
