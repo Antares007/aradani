@@ -9,7 +9,7 @@
 RAY_ALG(2)
 RAY_ALG(1)
 RAY_ALG(0)
-S(ray_gof_not) {
+S(rgof_not) {
   p_t *pο = ο[0].p;
   free(ο);
   Co(pο, 2);
@@ -22,16 +22,16 @@ static void append_to_parent_queue(p_t *ο) {
     QUEUE_PREV(q) = QUEUE_PREV(parent_q), QUEUE_PREV_NEXT(my_q) = parent_q,
     QUEUE_PREV_NEXT(parent_q) = q, QUEUE_PREV(parent_q) = QUEUE_PREV(my_q), QUEUE_INIT(my_q);
 }
-S(ray_gof_and) { append_to_parent_queue(ο), Co(ο[0].p, 1); }
-S(ray_gof_oor) { append_to_parent_queue(ο), Co(ο[0].p, 0); }
+S(rgof_and) { append_to_parent_queue(ο), Co(ο[0].p, 1); }
+S(rgof_oor) { append_to_parent_queue(ο), Co(ο[0].p, 0); }
 
-NP(os_new_psn) {
+N(os_new_psn) {
   R(const char *, name);
   R(Q_t, nρ);
   R(p_t *, oο);
   p_t *nο = malloc(nρ * sizeof(void *));
 
-  nο[--nρ].c = ray_gof_not, nο[--nρ].c = ray_gof_and, nο[--nρ].c = ray_gof_oor;
+  nο[--nρ].c = rgof_not, nο[--nρ].c = rgof_and, nο[--nρ].c = rgof_oor;
   nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c;
   nο[--nρ].c = ray_al_2, nο[--nρ].c = ray_al_1, nο[--nρ].c = ray_al_0;
 
