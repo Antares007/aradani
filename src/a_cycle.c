@@ -2,6 +2,9 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
+nar,                L)IN(L,
+os_co,              L)IN(L,
+os_co_psn,          L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 
@@ -58,22 +61,18 @@ NP(counter2) { AS(
 NP(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }
 NP(მთავარი) { AS(0, counter) O; }
 
-S(start_n) {
-  R(p_t *, pο);
-  ο[7].p = pο;
-  C(1);
+NP(pgot) { C(2); }
+NP(pgod) { C(1); }
+NP(pgor) { C(0); }
+N(test_co) {
+  Α(
+    god,
+    pgot,
+    pgod, pgod, and,
+    pgor,
+    0131, os_co, os_queue, and) O;
 }
-S(start) {
-  R(p_t *, os);
-  ο[5].p = os;
-  AS(მთავარი, start_n, and) O;
-}
-S(next) { C(1); }
-S(stop) {}
 
 // clang-format off
 EN(tail, 
-start,              L)EN(L,
-next,               L)EN(L,
-stop,               L)EN(L,
-მთავარი,      exports);
+test_co,      exports);
