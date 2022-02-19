@@ -1,6 +1,6 @@
 #include "../oars.h"
 
-S(ada_not) {
+S(nar_not) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = nc;
   while (nc)
@@ -8,7 +8,7 @@ S(ada_not) {
   ρ += ac + oc;
   f ? O : C(2);
 }
-S(ada_and) {
+S(nar_and) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = ac;
   ρ += nc;
@@ -17,7 +17,7 @@ S(ada_and) {
   ρ += oc;
   f ? O : C(1);
 }
-S(ada_oor) {
+S(nar_oor) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = oc;
   ρ += nc + ac;
@@ -26,7 +26,7 @@ S(ada_oor) {
   f ? O : C(0);
 }
 
-N(ada) {
+N(nar) {
   Q_t j = σ[--α].Q,           //
       nc = ((j & 0700) >> 6), //
       ac = ((j & 0070) >> 3), //
@@ -35,6 +35,6 @@ N(ada) {
   while (tc)
     tc--, ο[--ρ].v = σ[--α].v;
   ο[--ρ].Q = nc, ο[--ρ].Q = ac, ο[--ρ].Q = oc;
-  ο[--ρ].c = ada_not, ο[--ρ].c = ada_and, ο[--ρ].c = ada_oor;
+  ο[--ρ].c = nar_not, ο[--ρ].c = nar_and, ο[--ρ].c = nar_oor;
   O;
 }

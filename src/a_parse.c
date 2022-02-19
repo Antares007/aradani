@@ -2,7 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-ada,                L)IN(L,
+nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,

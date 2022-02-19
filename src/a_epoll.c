@@ -2,7 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-ada,                L)IN(L,
+nar,                L)IN(L,
 //
 l_accept,           L)IN(L,
 l_address,          L)IN(L,
@@ -32,9 +32,9 @@ S(მთავარი) {
   const char* cc3 = "src/a_parse.arsi";
   AS(
     god,
-    cc1, exports, ο, os_bark, 040, ada,
-    cc2, exports, ο, os_bark, 040, ada,
-    cc3, exports, ο, os_bark, 040, ada
+    cc1, exports, ο, os_bark, 040, nar,
+    cc2, exports, ο, os_bark, 040, nar,
+    cc3, exports, ο, os_bark, 040, nar
   ) O;
 }
 

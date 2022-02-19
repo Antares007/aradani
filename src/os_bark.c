@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-N(ada);
+N(nar);
 N(os_queue);
 
 static void *mapfile(const char *filename, void *pith) {
@@ -54,11 +54,11 @@ S(os_bark_import_first) {
 S(os_bark_seed_and_import_first) {
   R(ε_t, root);
   R(const char *, name);
-  AS(name, root, os_seed, os_bark_import_first, 010, ada) O;
+  AS(name, root, os_seed, os_bark_import_first, 010, nar) O;
 }
 N(os_bark) {
   R(p_t *, oο);
-  AS(os_bark_seed_and_import_first, dot, 010, ada, oο, os_queue) O;
+  AS(os_bark_seed_and_import_first, dot, 010, nar, oο, os_queue) O;
 }
 static void os_print(αos_t *o, const char *n, void *a,
                      void (*e)(struct αos_t *)) {

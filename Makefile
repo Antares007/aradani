@@ -18,7 +18,7 @@ src/os_run:                  \
 	src/os_mc21.o              \
 	src/os_bark.o              \
 	src/os_wordump.o           \
-	src/os/ada.o               \
+	src/os/nar.o               \
 	src/os/new.o               \
 	src/os/next.o              \
 	src/os/queue.o             \

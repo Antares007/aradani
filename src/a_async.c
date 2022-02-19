@@ -2,7 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-ada,                L)IN(L,
+nar,                L)IN(L,
 os_hrtime,          L)IN(L,
 os_new,             L)IN(L,
 os_new_psn,         L)IN(L,
@@ -70,7 +70,7 @@ N(setρ) {
     god, god, and, god, and, god, and,
     god, god, and, god, and, god, and,
     god, god, and, god, and, god, and,
-    0777, ada
+    0777, nar
   ) O;
 }
 S(setTimer_n) {
