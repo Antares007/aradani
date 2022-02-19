@@ -1,6 +1,6 @@
 #include "../oars.h"
 
-S(nar_not) {
+N(nar_not) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = nc;
   while (nc)
@@ -8,7 +8,7 @@ S(nar_not) {
   ρ += ac + oc;
   f ? O : C(2);
 }
-S(nar_and) {
+N(nar_and) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = ac;
   ρ += nc;
@@ -17,7 +17,7 @@ S(nar_and) {
   ρ += oc;
   f ? O : C(1);
 }
-S(nar_oor) {
+N(nar_oor) {
   ρ += 3;
   Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = oc;
   ρ += nc + ac;

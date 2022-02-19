@@ -2,8 +2,6 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-nar,                L)IN(L,
-//
 l_accept,           L)IN(L,
 l_address,          L)IN(L,
 l_bind,             L)IN(L,
@@ -14,7 +12,7 @@ l_listen,           L)IN(L,
 l_read,             L)IN(L,
 l_setnoblock,       L)IN(L,
 l_socket,           L)IN(L,
-//
+nar,                L)IN(L,
 os_bark,            L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
