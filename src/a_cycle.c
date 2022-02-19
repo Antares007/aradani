@@ -10,31 +10,70 @@ and2,         imports);
 // clang-format on
 void init() {}
 
-NP(p_or) { R(p_t *, oο); AS(ο, gor, oο, os_queue) O; }
+NP(p_or) {
+  R(p_t *, oο);
+  AS(ο, gor, oο, os_queue) O;
+}
 NP(p_and_log) {}
 N(p_and) {
   R(p_t *, oο);
   R(Q_t, c);
-  if (c % 100000000 == 0) p_and_log(T());
+  if (c % 100000000 == 0)
+    p_and_log(T());
   AS(c + 1, ο, god, oο, os_queue) O;
 }
 NP(p_not) {}
 NP(mproducer) { AS(p_or, p_and, p_not, ο, 512, "prod", os_new_psn) O; }
 
-NP(c_or) { R(p_t *, oο); AS(ο, god, oο, os_queue) O; }
+NP(c_or) {
+  R(p_t *, oο);
+  AS(ο, god, oο, os_queue) O;
+}
 NP(c_and_log) {}
 N(c_and) {
   R(p_t *, oο);
   R(Q_t, c);
-  if (c % 100000000 == 1) c_and_log(T());
+  if (c % 100000000 == 1)
+    c_and_log(T());
   AS(c + 1, ο, god, oο, os_queue) O;
 }
 NP(c_not) {}
 NP(mconsumer) { AS(c_or, c_and, c_not, ο, 512, "cons", os_new_psn) O; }
 
-NP(counter) { AS(mconsumer, gor, mproducer, and2, os_queue, and) O; }
-N(მთავარი) { AS(0, counter) O; }
+N(counter_n) {
+  R(p_t *, pο);
+  R(p_t *, cο);
+  AS(cο, gor, pο, os_queue, pο, god, and2) O;
+}
+
+N(bt) { C(1); }
+
+NP(counter2) { AS(
+  mconsumer,
+  gor, mproducer, and2,
+  os_queue, and,
+  bt, and
+) O; }
+
+NP(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }
+NP(მთავარი) { AS(0, counter) O; }
+
+S(start_n) {
+  R(p_t *, pο);
+  ο[7].p = pο;
+  C(1);
+}
+S(start) {
+  R(p_t *, os);
+  ο[5].p = os;
+  AS(მთავარი, start_n, and) O;
+}
+S(next) { C(1); }
+S(stop) {}
 
 // clang-format off
-EN(tail,
+EN(tail, 
+start,              L)EN(L,
+next,               L)EN(L,
+stop,               L)EN(L,
 მთავარი,      exports);
