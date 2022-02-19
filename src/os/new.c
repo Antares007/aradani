@@ -41,9 +41,35 @@ N(os_new_psn) {
   A(nο) C(1);
 }
 N(os_new) { A4(ο[0].p, 512, "os_new", os_new_psn) O; }
-N(nar_not);
-N(nar_and);
-N(nar_oor);
+
+N(os_co_not) {
+  ρ += 3;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = nc;
+  while (nc)
+    nc--, σ[α++].v = ο[ρ++].v;
+  ρ += ac + oc;
+  ρ = ο[1].Q;
+  f ? O : C(2);
+}
+N(os_co_and) {
+  ρ += 3;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = ac;
+  ρ += nc;
+  while (ac)
+    ac--, σ[α++].v = ο[ρ++].v;
+  ρ += oc;
+  ρ = ο[1].Q;
+  f ? O : C(1);
+}
+N(os_co_oor) {
+  ρ += 3;
+  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = oc;
+  ρ += nc + ac;
+  while (oc)
+    oc--, σ[α++].v = ο[ρ++].v;
+  ρ = ο[1].Q;
+  f ? O : C(0);
+}
 N(os_co_psn) {
   R(const char *, name);
   R(Q_t, nρ);
@@ -60,7 +86,7 @@ N(os_co_psn) {
     tc--, nο[--nρ].v = σ[--α].v;
 
   nο[--nρ].Q = nc, nο[--nρ].Q = ac, nο[--nρ].Q = oc;
-  nο[--nρ].c = nar_not, nο[--nρ].c = nar_and, nο[--nρ].c = nar_oor;
+  nο[--nρ].c = os_co_not, nο[--nρ].c = os_co_and, nο[--nρ].c = os_co_oor;
 
   nο[0].p = oο, nο[1].Q = nρ, QUEUE_INIT((QUEUE *)&nο[2]),
   nο[4].v = (void *)name;
