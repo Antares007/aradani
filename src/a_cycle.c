@@ -62,36 +62,6 @@ NP(counter2) { AS(
 
 NP(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }
 NP(მთავარი) { AS(0, counter) O; }
-
-NP(pgot) { C(2); }
-NP(pgod) { C(1); }
-NP(pgor) { C(0); }
-NP(cgot) { C(2); }
-NP(cgod) { C(1); }
-NP(cgor) { C(0); }
-// AS(ο, god, oο, os_queue) O;
-NP(rotate3) {
-  R(void *, c);
-  R(void *, b);
-  R(void *, a);
-  Α(b, c, a) C(1);
-}
-NP(tο) { A(ο) C(1); }
-NP(mprod) {
-  Α(got,
-    tο, pgod, rotate3, and2, os_queue, and,
-    tο, pgor, rotate3, and2, os_queue, and,
-    0166, ο, 512, "prod", os_co_psn) O; }
-NP(mcons) {
-  Α(got,
-    tο, cgod, rotate3, and2, os_queue, and,
-    tο, cgod, rotate3, and2, os_queue, and,
-    0166, ο, 512, "cons", os_co_psn) O; }
-
-NP(test_co) {
-  Α(mcons, gor, mprod, and2, os_queue, and) O;
-}
-
 // clang-format off
 EN(tail, 
-test_co,      exports);
+მთავარი,      exports);
