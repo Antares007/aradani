@@ -11,8 +11,8 @@
 // clang-format off
 void end(αos_t *o) { o->o(o, o->mn, o->in); }
 E(end,
-"", 0,              L)E(L,
-"", 0,              L)E(L,
+"0", 0,             L)E(L,
+"0", 0,             L)E(L,
 "printf", printf,   L)END(L,
 l_accept,           L)END(L,
 l_address,          L)END(L,
