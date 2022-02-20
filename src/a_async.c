@@ -79,17 +79,12 @@ S(setTimer_n) {
   (void)q;
   C(1);
 }
-S(setTimer) {
-  Α(
-    os_hrtime, addQQ, and,
-    makeTimer, and,
-    setTimer_n, and
-  ) O;
-}
-// oor exec sentence,  stop timer & C(1)
+Nar(setTimer, os_hrtime, addQQ, and, makeTimer, and, setTimer_n, and)
+
+// oor exec sentence,  stop timer & C(0)
 // and exec sentence, renew timer & C(1)
 // not                 stop timer & C(2)
-N(s11) { Α(hello, gor, and, 1000, setTimer) O; }
+Nar(s11, hello, gor, and, 1000, setTimer)
 
 S(setTimeout_n) {
   R(Q_t, time);
@@ -99,20 +94,17 @@ S(setTimeout_n) {
       dot,
       and3or, oο, os_queue) O;
 }
-N(setTimeout1) { Α(os_hrtime, addQQ, and, setTimeout_n, and) O; }
+Nar(setTimeout1, os_hrtime, addQQ, and, setTimeout_n, and)
 
-S(s10) {
-  Α(
+Sar(s10,
     os_hrtime, dup, and,
     rotate3, and,
     subQQ, and,
     prnQ, and,
     s10, and,
     ο, 1000, setTimeout1
-  ) O;
-}
-
-S(მთავარი) { Α(os_hrtime, s10, and) O; }
+  )
+Sar(მთავარი, os_hrtime, s10, and)
 
 // clang-format off
 EN(tail,
