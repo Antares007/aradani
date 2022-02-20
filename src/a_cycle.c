@@ -3,8 +3,6 @@
 // clang-format off
 IBS(                L)IN(L,
 nar,                L)IN(L,
-os_co,              L)IN(L,
-os_co_psn,          L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 
@@ -51,17 +49,9 @@ N(counter_n) {
   AS(cο, gor, pο, os_queue, pο, god, and2) O;
 }
 
-N(bt) { C(1); }
-
-NP(counter2) { AS(
-  mconsumer,
-  gor, mproducer, and2,
-  os_queue, and,
-  bt, and
-) O; }
-
 NP(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }
 NP(მთავარი) { AS(0, counter) O; }
+
 // clang-format off
 EN(tail, 
 მთავარი,      exports);

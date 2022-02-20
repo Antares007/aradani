@@ -1,7 +1,7 @@
 #include "../oars.h"
 #include "queue.h"
 #include <stdlib.h>
-
+// clang-format off
 #define RAY_ALG(Index)                                                         \
   S(ray_al_##Index) { ρ += 6, ο[ρ - 3 + Index].c(T()); }
 #define Co(o, r) (o)[(o)[1].Q + r].c(σ, α, (o), (o)[1].Q)
@@ -9,29 +9,27 @@
 RAY_ALG(2)
 RAY_ALG(1)
 RAY_ALG(0)
-S(rgof_not) {
+S(raygof_2) {
   p_t *pο = ο[0].p;
   free(ο);
   Co(pο, 2);
 }
-static void append_to_parent_queue(p_t *ο) {
+static void append_to_parent_queue(QUEUE *my_q, QUEUE *parent_q) {
   QUEUE *q;
-  QUEUE *my_q = (QUEUE *)&ο[2];
-  QUEUE *parent_q = (QUEUE *)&ο[0].p[2];
   if (my_q != (q = QUEUE_NEXT(my_q)))
     QUEUE_PREV(q) = QUEUE_PREV(parent_q), QUEUE_PREV_NEXT(my_q) = parent_q,
     QUEUE_PREV_NEXT(parent_q) = q, QUEUE_PREV(parent_q) = QUEUE_PREV(my_q),
     QUEUE_INIT(my_q);
 }
-S(rgof_and) { append_to_parent_queue(ο), Co(ο[0].p, 1); }
-S(rgof_oor) { append_to_parent_queue(ο), Co(ο[0].p, 0); }
+S(raygof_1) { append_to_parent_queue((QUEUE *)&ο[2], (QUEUE *)&ο[0].p[2]), Co(ο[0].p, 1); }
+S(raygof_0) { append_to_parent_queue((QUEUE *)&ο[2], (QUEUE *)&ο[0].p[2]), Co(ο[0].p, 0);  }
 N(os_new_psn) {
   R(const char *, name);
   R(Q_t, nρ);
   R(p_t *, oο);
   p_t *nο = malloc(nρ * sizeof(void *));
 
-  nο[--nρ].c = rgof_not, nο[--nρ].c = rgof_and, nο[--nρ].c = rgof_oor;
+  nο[--nρ].c = raygof_2, nο[--nρ].c = raygof_1, nο[--nρ].c = raygof_0;
   nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c;
   nο[--nρ].c = ray_al_2, nο[--nρ].c = ray_al_1, nο[--nρ].c = ray_al_0;
 
@@ -40,57 +38,51 @@ N(os_new_psn) {
 
   A(nο) C(1);
 }
+
 N(os_new) { A4(ο[0].p, 512, "os_new", os_new_psn) O; }
+#define OS_CREATE_RAY_TEMPLATE(Ray, Off)                                       \
+  N(os_create_##Ray##_r) {                                                     \
+    ο[ρ + 0].c = os_create_0_s;                                                \
+    ο[ρ + 1].c = os_create_1_s;                                                \
+    ο[ρ + 2].c = os_create_2_s;                                                \
+    raygof_##Ray(T());                                                         \
+  }                                                                            \
+  N(os_create_##Ray##_s) {                                                     \
+    Q_t count = ο[ρ + 3 + Ray].Q;                                              \
+    for (Q_t i = 0; i < count; i++)                                            \
+      σ[α++].v = ο[ρ + i + (Off)].v;                                           \
+    if (count) {                                                               \
+      ο[ρ + 0].c = os_create_0_r;                                              \
+      ο[ρ + 1].c = os_create_1_r;                                              \
+      ο[ρ + 2].c = os_create_2_r;                                              \
+      O;                                                                       \
+    } else                                                                     \
+      raygof_##Ray(T());                                                       \
+  }
 
-N(os_co_not) {
-  ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = nc;
-  while (nc)
-    nc--, σ[α++].v = ο[ρ++].v;
-  ρ += ac + oc;
-  ρ = ο[1].Q;
-  f ? O : C(2);
-}
-N(os_co_and) {
-  ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = ac;
-  ρ += nc;
-  while (ac)
-    ac--, σ[α++].v = ο[ρ++].v;
-  ρ += oc;
-  ρ = ο[1].Q;
-  f ? O : C(1);
-}
-N(os_co_oor) {
-  ρ += 3;
-  Q_t oc = ο[ρ++].Q, ac = ο[ρ++].Q, nc = ο[ρ++].Q, f = oc;
-  ρ += nc + ac;
-  while (oc)
-    oc--, σ[α++].v = ο[ρ++].v;
-  ρ = ο[1].Q;
-  f ? O : C(0);
-}
-N(os_co_psn) {
-  R(const char *, name);
-  R(Q_t, nρ);
-  R(p_t *, oο);
-  R(Q_t, j);
-  Q_t nc = ((j & 0700) >> 6), //
-      ac = ((j & 0070) >> 3), //
-      oc = ((j & 0007) >> 0), //
-      tc = nc + ac + oc;
+N(os_create_2_s); N(os_create_1_s); N(os_create_0_s);
+N(os_create_2_r); N(os_create_1_r); N(os_create_0_r);
+
+OS_CREATE_RAY_TEMPLATE(2, 6);
+OS_CREATE_RAY_TEMPLATE(1, 6 + ο[ρ + 3 + 2].Q);
+OS_CREATE_RAY_TEMPLATE(0, 6 + ο[ρ + 3 + 1].Q + ο[ρ + 3 + 2].Q);
+
+N(os_create_psn) {
+  R(const char *, name); R(Q_t, nρ); R(p_t *, oο); R(Q_t, j);
+  Q_t nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0), tc = nc + ac + oc;
   p_t *nο = malloc(nρ * sizeof(void *));
-  nο[--nρ].c = rgof_not, nο[--nρ].c = rgof_and, nο[--nρ].c = rgof_oor;
-
-  while (tc)
-    tc--, nο[--nρ].v = σ[--α].v;
-
-  nο[--nρ].Q = nc, nο[--nρ].Q = ac, nο[--nρ].Q = oc;
-  nο[--nρ].c = os_co_not, nο[--nρ].c = os_co_and, nο[--nρ].c = os_co_oor;
-
-  nο[0].p = oο, nο[1].Q = nρ, QUEUE_INIT((QUEUE *)&nο[2]),
+  while (tc) tc--, nο[--nρ].v = σ[--α].v;
+  nο[--nρ].Q = nc;
+  nο[--nρ].Q = ac;
+  nο[--nρ].Q = oc;
+  nο[--nρ].c = os_create_2_s;
+  nο[--nρ].c = os_create_1_s;
+  nο[--nρ].c = os_create_0_s;
+  nο[0].p = oο;
+  nο[1].Q = nρ;
+  QUEUE_INIT((QUEUE *)&nο[2]);
   nο[4].v = (void *)name;
-
   A(nο) C(1);
 }
-N(os_co) { Α(ο[0].p, 512, "os_co", os_co_psn) O; }
+
+N(os_create) { Α(ο[0].p, 512, "os_create", os_create_psn) O; }
