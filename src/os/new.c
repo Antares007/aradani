@@ -41,13 +41,13 @@ N(os_new_psn) {
 
 N(os_new) { A4(ο[0].p, 512, "os_new", os_new_psn) O; }
 #define OS_CREATE_RAY_TEMPLATE(Ray, Off)                                       \
-  N(os_create_##Ray##_r) {                                                     \
+  S(os_create_##Ray##_r) {                                                     \
     ο[ρ + 0].c = os_create_0_s;                                                \
     ο[ρ + 1].c = os_create_1_s;                                                \
     ο[ρ + 2].c = os_create_2_s;                                                \
     raygof_##Ray(T());                                                         \
   }                                                                            \
-  N(os_create_##Ray##_s) {                                                     \
+  S(os_create_##Ray##_s) {                                                     \
     Q_t count = ο[ρ + 3 + Ray].Q;                                              \
     for (Q_t i = 0; i < count; i++)                                            \
       σ[α++].v = ο[ρ + i + (Off)].v;                                           \
@@ -60,8 +60,8 @@ N(os_new) { A4(ο[0].p, 512, "os_new", os_new_psn) O; }
       raygof_##Ray(T());                                                       \
   }
 
-N(os_create_2_s); N(os_create_1_s); N(os_create_0_s);
-N(os_create_2_r); N(os_create_1_r); N(os_create_0_r);
+S(os_create_2_s); S(os_create_1_s); S(os_create_0_s);
+S(os_create_2_r); S(os_create_1_r); S(os_create_0_r);
 
 OS_CREATE_RAY_TEMPLATE(2, 6);
 OS_CREATE_RAY_TEMPLATE(1, 6 + ο[ρ + 3 + 2].Q);
