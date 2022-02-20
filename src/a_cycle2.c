@@ -47,6 +47,22 @@ N(tc) {
     c_and_log(T());
   Α(c + 1, a, ο) C(1);
 }
+/*
+mprod
+got
+tp pgod rotate3 and2 os_queue and
+to pgor rotate3 and2 os_queue and
+0166 ο 512 "prod" os_create_psn.
+
+mcons
+got
+tc cgod rotate3 and2 os_queue and
+to cgod rotate3 and2 os_queue and
+0166 ο 512 "cons" os_create_psn.
+
+მთავარი
+0 mcons sgor mprod and2 os_queue and.
+*/
 N(mprod) {
   Α(got,
     tp, pgod, rotate3, and2, os_queue, and,
