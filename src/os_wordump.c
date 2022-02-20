@@ -1,7 +1,7 @@
 #include "oars.h"
 #include <stdio.h>
 
-NP(os_wordump) {
+N(os_wordump) {
   long i = 0;
   while (i < α) {
     printf("%016lx ", σ[i].Q);

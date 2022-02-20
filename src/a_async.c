@@ -7,6 +7,7 @@ os_hrtime,          L)IN(L,
 os_new,             L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
+os_wordump,         L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
@@ -29,29 +30,37 @@ typedef struct timeout_t {
 } timeout_t;
 static timeout_t timeouts[MAX_TIMEOUTS];
 static Q_t timeouts_count;
-Q_t binary_search_rightmost(Q_t t) {
+
+S(binary_search_rightmost) {
+  R(Q_t, t);
   Q_t l = 0;
   Q_t r = timeouts_count;
   while (l < r) {
     Q_t m = (l + r) / 2;
-    if (t < timeouts[m].due_time)
-      r = m;
-    else
-      l = m + 1;
+    if (t < timeouts[m].due_time) r = m;
+    else l = m + 1;
   }
-  return r - 1;
+  A(r - 1) C(1);
 }
-static void insert_timeout(Q_t due_time, p_t ο) {
-}
+
+static void insert_timeout(Q_t due_time, p_t ο) {}
 static void init() {
   print("\nInit %s\n", __FILE__); 
-  for(Q_t i = 0; i < MAX_TIMEOUTS; i++)
-    timeouts[i].due_time = 0;
-
-  // timeouts_count = 0;
-  // print("aaa\n");
+  timeouts_count = 0;
+  for(Q_t i = 0; i < MAX_TIMEOUTS; i++) timeouts[i].due_time = 0;
+  timeouts[0].due_time = 0;
+  timeouts[1].due_time = 0;
+  timeouts[2].due_time = 0;
+  timeouts[3].due_time = 2;
+  timeouts_count = 4;
 }
+N(drop) { α--, C(1); }
+NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test1) { Α(1, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and) O; }
 
+NP(test) { Α(test0, test1, and, test2, and, test3, and) O; }
 
 S(timerNot) { C(1); }
 S(timerAnd) { C(1); }
@@ -104,8 +113,7 @@ Sar(s10,
     s10, and,
     ο, 1000, setTimeout1
   )
-Sar(მთავარი, os_hrtime, s10, and)
-
+Nar(მთავარი, os_hrtime, s10, and)
 // clang-format off
 EN(tail,
 მთავარი,      exports);
