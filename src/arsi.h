@@ -10,12 +10,6 @@ typedef struct αos_t {
 } αos_t;
 typedef void (*ε_t)(αos_t *);
 #define IB(Head)                                                               \
-  static int cmp(const char *s1, const char *s2) {                             \
-    while (*s1 == *s2++)                                                       \
-      if (*s1++ == 0)                                                          \
-        return (0);                                                            \
-    return (*(unsigned char *)s1 - *(unsigned char *)--s2);                    \
-  }                                                                            \
   static void exports(αos_t *);                                                \
   static void imports(αos_t *, const char *, void *, void (*)(αos_t *));       \
   static int imported = 0;                                                     \
@@ -24,7 +18,7 @@ typedef void (*ε_t)(αos_t *);
     imported = 1, init(), exports(o->s);                                       \
   }                                                                            \
   static void error(αos_t *o, const char *mn, const char *in) {                \
-      o->s->o(o->s, mn, in);                                                   \
+    o->s->o(o->s, mn, in);                                                     \
   }                                                                            \
   void tail(αos_t *o) __attribute__((section(".text.end")));                   \
   void tail(αos_t *o){};                                                       \
@@ -36,7 +30,14 @@ typedef void (*ε_t)(αos_t *);
     else                                                                       \
       t(&(αos_t){.a = imports, .o = error, .s = o, .mn = __FILE__});           \
   }
-#define IBS(Head) IB(iff) IF(iff, printf, print, Head, int, const char *, ...)
+#define IBS(Head)                                                              \
+  static int cmp(const char *s1, const char *s2) {                             \
+    while (*s1 == *s2++)                                                       \
+      if (*s1++ == 0)                                                          \
+        return (0);                                                            \
+    return (*(unsigned char *)s1 - *(unsigned char *)--s2);                    \
+  }                                                                            \
+  IB(iff) IF(iff, printf, print, Head, int, const char *, ...)
 #define E(Tail, Name, Addr, Head)                                              \
   static void Head(αos_t *o) { o->a(o, Name, Addr, Tail); }
 #define I(Tail, Name, Addr, Head)                                              \

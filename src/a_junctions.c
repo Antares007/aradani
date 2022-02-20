@@ -1,6 +1,6 @@
 #include "arsi.h"
 // clang-format off
-IB(                 L)IN(L,
+IBS(                L)IN(L,
 nar,          imports);
 // clang-format on
 void init() {}
