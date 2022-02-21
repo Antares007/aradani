@@ -1,6 +1,6 @@
-#include "oars.h"
 #include "arsi_ie.h"
 #include "gotgod.h"
+#include "oars.h"
 #include "os/queue.h"
 #include <stdarg.h>
 #include <stdio.h>
@@ -33,7 +33,7 @@ os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);
-SP(ray_not) {}
+SP(ray_not) { if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); } }
 SP(ray_oor) {
   R(const char *, in);
   R(const char *, mn);

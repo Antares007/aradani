@@ -1,27 +1,32 @@
 #include "arsi.h"
 #include "gotgod.h"
 // clang-format off
-IBS(          imports);
+IBS(                L)IN(L,
+and,                L)IN(L,
+notand,       imports);
 // clang-format on
 static void *names[2048][2];
 static Q_t count;
-static void add_name(αos_t *o, const char *n, void *a, void (*nexp)(αos_t *)) {
-  void **na = names[count++];
-  na[0] = (void *)n;
-  na[1] = a;
-  nexp(o);
-}
-static void add_name_done(αos_t *o, const char *mn, const char *in) { count--; }
-static void init() {}
 static const char *find_name(void *a) {
-  for (Q_t i = 0; i < count; i++)
-    if (names[i][1] == a)
-      return names[i][0];
+  for (Q_t i = 0; i < count; i++) if (names[i][1] == a) return names[i][0];
   return 0;
 }
-static void debug_init(ε_t e) {
-  count = 0;
-  e(&(αos_t){.a = add_name, .o = add_name_done});
+SP(init) { C(1); }
+S(debug_init_end) {
+  R(Q_t, c);
+  count = c, C(1);
+}
+S(debug_init_n) {
+  R(n_t, e);
+  R(void*, addr);
+  R(const char*, name);
+  R(Q_t, c);
+  names[c][0] = (void*)name, names[c][1] = addr;
+  Α(c + 1, e, debug_init_end, debug_init_n, notand) O;
+}
+S(debug_init) { 
+  R(n_t, e);
+  Α(0, e, debug_init_n, and) O;
 }
 S(debug_σdump) {
   print("debug_σdump:\n");
@@ -47,8 +52,10 @@ S(debug_οdump) {
   print("\n");
   C(1);
 }
+SP(Main) { Α(exports, debug_init) O; }
 // clang-format off
 EN(tail,
 debug_init,         L)EN(L,
 debug_οdump,        L)EN(L,
-debug_σdump,  exports)
+debug_σdump,        L)EN(L,
+Main,         exports)

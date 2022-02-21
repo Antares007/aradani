@@ -12,7 +12,10 @@ os_wordump,         L)IN(L,
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
-and5,         imports)
+and5,               L)IN(L,
+debug_init,         L)IN(L,
+debug_οdump,        L)IN(L,
+debug_σdump,  imports)
 
 S(addQQ)   { R(Q_t, r); R(Q_t, l); Α(l + r) C(1); }
 S(subQQ)   { R(Q_t, r); R(Q_t, l); Α(l - r) C(1); }
@@ -52,7 +55,7 @@ SP(init) {
   timeouts[2].due_time = 0;
   timeouts[3].due_time = 2;
   timeouts_count = 4;
-  C(1);
+  Α(exports, debug_init) O;
 }
 N(drop) { α--, C(1); }
 NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and) O; }
@@ -107,12 +110,13 @@ S(setTimeout_n) {
 Nar(setTimeout1, os_hrtime, addQQ, and, setTimeout_n, and)
 
 Sar(s10,
-    os_hrtime, dup, and,
+    debug_οdump, os_hrtime, and,
+    dup, and,
     rotate3, and,
     subQQ, and,
     prnQ, and,
     s10, and,
-    ο, 1000, setTimeout1
+    ο, 3000, setTimeout1
   )
 Nar(მთავარი, os_hrtime, s10, and)
 // მთავარი
