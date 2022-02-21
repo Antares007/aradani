@@ -13,8 +13,7 @@ and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
 and5,               L)IFN(L,
-debug_init,         L, ε_t
-                     )IN(L,
+debug_init,         L, ε_t)IN(L,
 debug_οdump,        L)IN(L,
 debug_σdump,  imports)
 
