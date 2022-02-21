@@ -1,16 +1,9 @@
 #include "oars.h"
+#include "arsi_ie.h"
 #include "gotgod.h"
 #include "os/queue.h"
 #include <stdarg.h>
 #include <stdio.h>
-
-#define L CAT(expimp_, __LINE__)
-#define E(Ta, Na, Ad, He) S(He) { Α(Na,  Ad, Ta) C(1); }
-#define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
-#define END(Tail, Name, Head)                                                  \
-  N(Name);                                                                     \
-  EN(Tail, Name, Head)
-
 // clang-format off
 E(got,
 "0", 0,             L)E(L,
@@ -40,18 +33,14 @@ os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);
-
-// clang-format on
 SP(ray_not) {}
 SP(ray_oor) {
   R(const char *, in);
   R(const char *, mn);
   printf("Can't satisfy imports:\n%s\n%s\n\n", mn, in), C(1);
 }
-
 void os_queue_init();
 void os_hrtime_init();
-
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
@@ -59,16 +48,10 @@ int main(int argc, char **argv) {
   os_hrtime_init();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
-
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
-
   ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "š";
-
-  ο[5].c = nar;
-
   Α(argv[1], root, ο, os_bark) O;
-
   return 0;
 }
