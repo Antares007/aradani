@@ -37,7 +37,7 @@ S(მთავარი) {
 }
 
 
-void init() { print("\ninit %s\n", __FILE__); }
+SP(init) { C(1); }
 // clang-format off
 EN(tail,
 მთავარი,      exports);

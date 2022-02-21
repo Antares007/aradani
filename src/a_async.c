@@ -12,10 +12,7 @@ os_wordump,         L)IN(L,
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
-and5,               L)IFN(L,
-debug_init,         L, ε_t)IN(L,
-debug_οdump,        L)IN(L,
-debug_σdump,  imports)
+and5,         imports)
 
 S(addQQ)   { R(Q_t, r); R(Q_t, l); Α(l + r) C(1); }
 S(subQQ)   { R(Q_t, r); R(Q_t, l); Α(l - r) C(1); }
@@ -47,8 +44,7 @@ S(binary_search_rightmost) {
 }
 
 static void insert_timeout(Q_t due_time, p_t ο) {}
-static void init() {
-  print("\nInit %s\n", __FILE__); 
+SP(init) {
   timeouts_count = 0;
   for(Q_t i = 0; i < MAX_TIMEOUTS; i++) timeouts[i].due_time = 0;
   timeouts[0].due_time = 0;
@@ -56,16 +52,16 @@ static void init() {
   timeouts[2].due_time = 0;
   timeouts[3].due_time = 2;
   timeouts_count = 4;
-  debug_init(exports);
+  C(1);
 }
 N(drop) { α--, C(1); }
-NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
-NP(test1) { Α(1, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
-NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
-NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
+NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test1) { Α(1, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and) O; }
 
-NP(test_n) { Α(debug_οdump, test0, and, test1, and, test2, and, test3, and, debug_σdump) O; }
-NP(test9) { Α( test_n) O; }
+NP(test_n) { Α(test0, test1, and, test2, and, test3, and) O; }
+NP(test9 ) { Α(test_n) O; }
 
 S(timerNot) { C(1); }
 S(timerAnd) { C(1); }
@@ -129,4 +125,5 @@ test0,              L)EN(L,
 test1,              L)EN(L,
 test2,              L)EN(L,
 test3,              L)EN(L,
-test9,        exports)
+test9,              L)EN(L,
+მთავარი,      exports)

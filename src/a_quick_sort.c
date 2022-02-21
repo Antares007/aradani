@@ -4,7 +4,7 @@ IBS(                L)IN(L,
 os_wordump,         L)IN(L,
 //
 and,          imports);
-void init() { }
+SP(init) { C(1); }
 N(qsort);
 
 void swap(long *a, long *b) {

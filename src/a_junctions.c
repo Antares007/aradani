@@ -3,7 +3,7 @@
 IBS(                L)IN(L,
 nar,          imports);
 // clang-format on
-void init() {}
+SP(init) { C(1); }
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) nar(T()); } EN(Tail, Name, Head)
 /*
 const nao = ["", "or", "and", "not"];

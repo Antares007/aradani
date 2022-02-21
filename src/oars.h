@@ -13,6 +13,8 @@
                  M                .     σ[α]   M ο[ρ]
                                   .
         ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
+
+1cor15:10
 */
 // clang-format off
 #include <stdint.h>

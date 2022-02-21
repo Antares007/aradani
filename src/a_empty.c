@@ -1,7 +1,11 @@
 #include "arsi.h"
-#include "gotgod.h"
-IBS(          imports)
-static void init() {}
-SP(Main) { C(1); }
+// clang-format off
+IBS(imports)
+// clang-format on
+
+S(init) { C(1); }
+SP(Main) { A(7) C(1); }
+
+// clang-format off
 EN(tail,
-Main,         exports)
+Main, exports)

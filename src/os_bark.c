@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+
 N(nar);
 N(os_queue);
 
@@ -25,47 +26,32 @@ static void *mapfile(const char *filename, void *pith) {
   return addr;
 }
 N(os_seed) {
-  R(ε_t, root);
+  R(n_t, root);
   R(const char *, filename);
-  ε_t e = mapfile(filename, root);
+  n_t e = mapfile(filename, root);
   if (e)
     A(e) C(1);
   else
     C(2);
 }
-static void os_and(αos_t *o, const char *n, void *a,
-                   void (*e)(struct αos_t *)) {
-  p_t *args = o->d;
-  p_t *σ = args[0].p, *ο = args[2].p;
-  Q_t α = args[1].Q, ρ = args[3].Q;
-  A(a) C(1);
+S(os_bark_import_first_n) {
+  --α;
+  R(n_t, n);
+  --α;
+  A(n) C(1);
 }
-static void os_or(αos_t *o, const char *mn, const char *in) {
-  p_t *args = o->d;
-  p_t *σ = args[0].p, *ο = args[2].p;
-  Q_t α = args[1].Q, ρ = args[3].Q;
-  AS(mn, in) C(0);
-}
-S(os_bark_import_first) {
-  R(ε_t, e);
-  e(&(αos_t){
-      .a = os_and, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
+N(os_bark_import_first) {
+  R(n_t, e);
+  Α(e, os_bark_import_first_n, 0010, nar) O;
 }
 S(os_bark_seed_and_import_first) {
-  R(ε_t, root);
+  R(n_t, root);
   R(const char *, name);
   AS(name, root, os_seed, os_bark_import_first, 010, nar) O;
 }
-N(os_bark) {
+NP(os_bark) {
   R(p_t *, oο);
   AS(os_bark_seed_and_import_first, dot, 010, nar, oο, os_queue) O;
 }
-static void os_print(αos_t *o, const char *n, void *a,
-                     void (*e)(struct αos_t *)) {
-  printf("%p %s\n", a, n), e(o);
-}
-N(os_ls) {
-  R(ε_t, e);
-  e(&(αos_t){
-      .a = os_print, .o = os_or, .d = (void *[]){σ, (void *)α, ο, (void *)ρ}});
-}
+// TODO: implement this
+N(os_ls) { C(1); }

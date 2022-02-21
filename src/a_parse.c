@@ -63,7 +63,7 @@ S(testuni) {
   AS(u8cp, Μ, god, not, os_wordump, and) O;
 }
 Nar(მთავარი, testuni)
-static void init() {}
+S(init) { C(1); }
 
 //N(Ο);                      
 //

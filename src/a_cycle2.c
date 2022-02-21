@@ -13,7 +13,7 @@ and2,               L)IN(L,
 not,                L)IN(L,
 or,           imports);
 // clang-format on
-void init() {}
+SP(init) { C(1); }
 
 S(pgod) { C(1); }
 S(pgor) { C(0); }
