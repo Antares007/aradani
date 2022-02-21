@@ -49,15 +49,15 @@ src/gui/ui: src/gui/ui.c
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
 clean:
-	rm -f               \
-		src/*.bin         \
-		src/*.oars        \
-		src/*.o           \
-		src/os/*.o        \
-		src/*.arsi        \
-		src/os_run        \
-		src/epoll_client  \
-		src/epoll_server  \
-		src/seven         \
-		src/ui
+	rm -f                   \
+		src/*.bin             \
+		src/*.oars            \
+		src/*.o               \
+		src/*.arsi            \
+		src/os/*.o            \
+		src/os_run            \
+		src/etc/epoll_client  \
+		src/etc/epoll_server  \
+		src/etc/epoll_stdin   \
+		src/gui/ui
 .PHONY: clean run all
