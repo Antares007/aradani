@@ -13,7 +13,8 @@ and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
 and5,               L)IFN(L,
-debug_init,         L, ε_t)IN(L,
+debug_init,         L, ε_t
+                     )IN(L,
 debug_οdump,        L)IN(L,
 debug_σdump,  imports)
 
@@ -59,10 +60,10 @@ static void init() {
   debug_init(exports);
 }
 N(drop) { α--, C(1); }
-NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and) O; }
-NP(test1) { Α(1, binary_search_rightmost, os_wordump, and, drop, and) O; }
-NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and) O; }
-NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and) O; }
+NP(test0) { Α(0, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
+NP(test1) { Α(1, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
+NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
+NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and, debug_σdump) O; }
 
 NP(test_n) { Α(debug_οdump, test0, and, test1, and, test2, and, test3, and, debug_σdump) O; }
 NP(test9) { Α( test_n) O; }
@@ -122,6 +123,9 @@ Nar(მთავარი, os_hrtime, s10, and)
 // მთავარი
 // clang-format off
 EN(tail,
+binary_search_rightmost,
+                    L)EN(L,
+drop,               L)EN(L,
 test0,              L)EN(L,
 test1,              L)EN(L,
 test2,              L)EN(L,
