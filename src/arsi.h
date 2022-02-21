@@ -55,3 +55,4 @@ typedef void (*ε_t)(αos_t *);
 #define IF(Tail, IName, Name, Head, Ret, ...)                                  \
   static Ret (*Name)(__VA_ARGS__);                                             \
   I(Tail, #IName, Name, Head)
+#define IFN(Tail, Name, Head, Ret, ...) IF(Tail, Name, Name, Head, Ret, __VA_ARGS__)
