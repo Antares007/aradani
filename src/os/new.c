@@ -29,7 +29,7 @@ N(os_new_psn) { // TODO: change os_new to be more composable word
   R(Q_t, nρ);
   R(p_t *, oο);
   p_t *nο = malloc(nρ * sizeof(void *));
-
+  nο[Σ].Q = nρ; 
   nο[--nρ].c = raygof_2, nο[--nρ].c = raygof_1, nο[--nρ].c = raygof_0;
   nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c;
   nο[--nρ].c = ray_al_2, nο[--nρ].c = ray_al_1, nο[--nρ].c = ray_al_0;
@@ -72,6 +72,7 @@ N(os_create_psn) { // TODO: use os_new to create pith
   R(const char *, name); R(Q_t, nρ); R(p_t *, oο); R(Q_t, j);
   Q_t nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0), tc = nc + ac + oc;
   p_t *nο = malloc(nρ * sizeof(void *));
+  nο[Σ].Q = nρ; 
   while (tc) tc--, nο[--nρ].v = σ[--α].v;
   nο[--nρ].Q = nc;
   nο[--nρ].Q = ac;
@@ -79,10 +80,7 @@ N(os_create_psn) { // TODO: use os_new to create pith
   nο[--nρ].c = os_create_2_s;
   nο[--nρ].c = os_create_1_s;
   nο[--nρ].c = os_create_0_s;
-  nο[Φ].p = oο;
-  nο[Ρ].Q = nρ;
-  QUEUE_INIT((QUEUE *)&nο[Ψ]);
-  nο[Ν].cs = name;
+  nο[Φ].p = oο, nο[Ρ].Q = nρ, QUEUE_INIT((QUEUE *)&nο[Ψ]), nο[Ν].cs = name;
   A(nο) C(1);
 }
 

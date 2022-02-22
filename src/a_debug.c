@@ -42,7 +42,7 @@ S(debug_σdump) {
 }
 S(debug_οdump) {
   print("<debug_οdump>");
-  for (Q_t i = ρ; i < 512; i++) {
+  for (Q_t i = ρ; i < ο[Σ].Q; i++) {
     const char *n = find_name(ο[i].v);
     if (n)
       print("%s ", n);

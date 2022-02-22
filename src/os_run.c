@@ -47,11 +47,11 @@ int main(int argc, char **argv) {
   os_queue_init();
   os_hrtime_init();
   p_t σ[512], ο[512];
-  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο);
+  Q_t α = 0, ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
-  ο[Φ].v = ο, ο[Ρ].Q = ρ, QUEUE_INIT((QUEUE *)&ο[Ψ]), ο[Ν].v = "š";
+  ο[Φ].p = ο, ο[Ρ].Q = ρ, QUEUE_INIT((QUEUE *)&ο[Ψ]), ο[Ν].v = "š";
   Α(argv[1], root, ο, os_bark) O;
   return 0;
 }
