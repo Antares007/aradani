@@ -34,16 +34,16 @@ os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);
-SP(ray_not) { if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); } }
-SP(ray_oor) {
-  R(const char *, in);R(const char *, mn);
-  printf("Can't satisfy imports:\n%s\n%s\n\n", mn, in), C(1);
+SP(ray_not) {
+  if(α == 3) {
+    R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
+  }
 }
+SP(ray_oor) {}
 void os_queue_init();
 void os_hrtime_init();
 int main(int argc, char **argv) {
-  if (argc < 2)
-    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_queue_init();
   os_hrtime_init();
   p_t σ[512], ο[512];
