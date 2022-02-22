@@ -1,6 +1,7 @@
 #include "arsi_ie.h"
 #include "gotgod.h"
 #include "oars.h"
+#include "os/pith_coords.h"
 #include "os/queue.h"
 #include <stdarg.h>
 #include <stdio.h>
@@ -35,8 +36,7 @@ os_queue,           L)END(L,
 os_wordump,      root);
 SP(ray_not) { if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); } }
 SP(ray_oor) {
-  R(const char *, in);
-  R(const char *, mn);
+  R(const char *, in);R(const char *, mn);
   printf("Can't satisfy imports:\n%s\n%s\n\n", mn, in), C(1);
 }
 void os_queue_init();
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
-  ο[0].v = ο, ο[1].Q = ρ, QUEUE_INIT((QUEUE *)&ο[2]), ο[4].v = "š";
+  ο[Φ].v = ο, ο[Ρ].Q = ρ, QUEUE_INIT((QUEUE *)&ο[Ψ]), ο[Ν].v = "š";
   Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

@@ -1,4 +1,5 @@
 #include "../oars.h"
+#include "pith_coords.h"
 #include "queue.h"
 #include <stdlib.h>
 // clang-format off
@@ -10,7 +11,7 @@ RAY_ALG(2)
 RAY_ALG(1)
 RAY_ALG(0)
 S(raygof_2) {
-  p_t *pο = ο[0].p;
+  p_t *pο = ο[Φ].p;
   free(ο);
   Co(pο, 2);
 }
@@ -21,9 +22,9 @@ static void append_to_parent_queue(QUEUE *my_q, QUEUE *parent_q) {
     QUEUE_PREV_NEXT(parent_q) = q, QUEUE_PREV(parent_q) = QUEUE_PREV(my_q),
     QUEUE_INIT(my_q);
 }
-S(raygof_1) { append_to_parent_queue((QUEUE *)&ο[2], (QUEUE *)&ο[0].p[2]), Co(ο[0].p, 1); }
-S(raygof_0) { append_to_parent_queue((QUEUE *)&ο[2], (QUEUE *)&ο[0].p[2]), Co(ο[0].p, 0);  }
-N(os_new_psn) {
+S(raygof_1) { append_to_parent_queue((QUEUE *)&ο[Ψ], (QUEUE *)&ο[Φ].p[Ψ]), Co(ο[Φ].p, 1); }
+S(raygof_0) { append_to_parent_queue((QUEUE *)&ο[Ψ], (QUEUE *)&ο[Φ].p[Ψ]), Co(ο[Φ].p, 0);  }
+N(os_new_psn) { // TODO: change os_new to be more composable word
   R(const char *, name);
   R(Q_t, nρ);
   R(p_t *, oο);
@@ -33,13 +34,13 @@ N(os_new_psn) {
   nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c, nο[--nρ].c = σ[--α].c;
   nο[--nρ].c = ray_al_2, nο[--nρ].c = ray_al_1, nο[--nρ].c = ray_al_0;
 
-  nο[0].p = oο, nο[1].Q = nρ, QUEUE_INIT((QUEUE *)&nο[2]),
-  nο[4].v = (void *)name;
+  nο[Φ].p = oο, nο[Ρ].Q = nρ, QUEUE_INIT((QUEUE *)&nο[Ψ]),
+  nο[Ν].cs = name;
 
   A(nο) C(1);
 }
 
-N(os_new) { A4(ο[0].p, 512, "os_new", os_new_psn) O; }
+N(os_new) { A4(ο[Φ].p, 512, "os_new", os_new_psn) O; }
 #define OS_CREATE_RAY_TEMPLATE(Ray, Off)                                       \
   S(os_create_##Ray##_r) {                                                     \
     ο[ρ + 0].c = os_create_0_s;                                                \
@@ -67,7 +68,7 @@ OS_CREATE_RAY_TEMPLATE(2, 6);
 OS_CREATE_RAY_TEMPLATE(1, 6 + ο[ρ + 3 + 2].Q);
 OS_CREATE_RAY_TEMPLATE(0, 6 + ο[ρ + 3 + 1].Q + ο[ρ + 3 + 2].Q);
 
-N(os_create_psn) {
+N(os_create_psn) { // TODO: use os_new to create pith
   R(const char *, name); R(Q_t, nρ); R(p_t *, oο); R(Q_t, j);
   Q_t nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0), tc = nc + ac + oc;
   p_t *nο = malloc(nρ * sizeof(void *));
@@ -78,11 +79,11 @@ N(os_create_psn) {
   nο[--nρ].c = os_create_2_s;
   nο[--nρ].c = os_create_1_s;
   nο[--nρ].c = os_create_0_s;
-  nο[0].p = oο;
-  nο[1].Q = nρ;
-  QUEUE_INIT((QUEUE *)&nο[2]);
-  nο[4].v = (void *)name;
+  nο[Φ].p = oο;
+  nο[Ρ].Q = nρ;
+  QUEUE_INIT((QUEUE *)&nο[Ψ]);
+  nο[Ν].cs = name;
   A(nο) C(1);
 }
 
-N(os_create) { Α(ο[0].p, 512, "os_create", os_create_psn) O; }
+N(os_create) { Α(ο[Φ].p, 512, "ξ", os_create_psn) O; }

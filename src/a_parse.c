@@ -22,9 +22,9 @@ not2and,            L)IN(L,
 not2and2or2,        L)IN(L,
 or,           imports);
 
-#define ο5 ο[5].cs
-#define ο6 ο[6].Q
-#define ο7 ο[7].Q
+#define ο5 ο[15].cs
+#define ο6 ο[16].Q
+#define ο7 ο[17].Q
 Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
 #define U8CP_UM(Name, Mask, Check, Unmask, Ray) \
   S(Name){R(Q_t, v);(v & Mask)==Check?(A(v & Unmask)C(1)):(A(v)C(Ray));}

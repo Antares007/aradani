@@ -3,6 +3,8 @@
 // clang-format off
 IBS(                L)IN(L,
 nar,                L)IN(L,
+os_create,          L)IN(L,
+os_create_psn,      L)IN(L,
 os_hrtime,          L)IN(L,
 os_new,             L)IN(L,
 os_new_psn,         L)IN(L,
@@ -13,10 +15,15 @@ and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
 and5,               L)IN(L,
+not,                L)IN(L,
+or,                 L)IN(L,
+//
 debug_init,         L)IN(L,
 debug_οdump,        L)IN(L,
 debug_σdump,  imports)
-
+NP(got_p) { C(2); }
+NP(god_p) { C(1); }
+NP(gor_p) { C(0); }
 S(addQQ)   { R(Q_t, r); R(Q_t, l); Α(l + r) C(1); }
 S(subQQ)   { R(Q_t, r); R(Q_t, l); Α(l - r) C(1); }
 S(ltQQ)    { R(Q_t, r); R(Q_t, l); C(l < r); }
@@ -64,7 +71,19 @@ NP(test2) { Α(2, binary_search_rightmost, os_wordump, and, drop, and) O; }
 NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and) O; }
 
 NP(test_n) { Α(test0, test1, and, test2, and, test3, and) O; }
-NP(test9 ) { Α(test_n) O; }
+
+// oor exec sentence,  stop timer & C(0)
+// and exec sentence, renew timer & C(1)
+// not                 stop timer & C(2)
+NP(test9) {
+  Α(
+    got,
+    got_p, got_p, not, got_p, not, got_p, not,
+    god_p, god_p, and, god_p, and, god_p, and,
+    gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
+    0777, ο, 512, "α", os_create_psn, os_queue, and
+  ) O;
+}
 
 S(timerNot) { C(1); }
 S(timerAnd) { C(1); }
@@ -94,9 +113,6 @@ S(setTimer_n) {
 }
 Nar(setTimer, os_hrtime, addQQ, and, makeTimer, and, setTimer_n, and)
 
-// oor exec sentence,  stop timer & C(0)
-// and exec sentence, renew timer & C(1)
-// not                 stop timer & C(2)
 Nar(s11, hello, gor, and, 1000, setTimer)
 
 S(setTimeout_n) {

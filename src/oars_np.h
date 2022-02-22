@@ -1,8 +1,10 @@
 #pragma once
+#include "os/pith_coords.h"
 #define NP_(n, PRN, N)                                                         \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    PRN("%p %s %ld\t%ld\t%s\t:%s\n", σ, (char*)ο[4].v, α, ρ, __FUNCTION__, __FILE__); \
+    PRN("%p %s %ld\t%ld\t%s\t:%s\n", σ, ο[Ν].cs, α, ρ, __FUNCTION__,           \
+        __FILE__);                                                             \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
@@ -15,4 +17,3 @@
 #define SP(n) NP_(n, print, S)
 #endif
 #undef PRN
-

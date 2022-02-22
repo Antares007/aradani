@@ -7,13 +7,13 @@ run: all
 	./src/os_run src/a_epoll.arsi
 all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_epoll.arsi
 
-src/os.arsi:                        \
+src/os.arsi:                 \
 	src/a_debug.oars           \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
 
-src/os_run:                         \
+src/os_run:                  \
 	src/os_run.c               \
 	src/os_hrtime.o            \
 	src/os_mc21.o              \

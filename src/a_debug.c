@@ -29,7 +29,7 @@ S(debug_init) {
   Α(0, e, debug_init_n, and) O;
 }
 S(debug_σdump) {
-  print("debug_σdump:\n");
+  print("<debug_σdump>");
   for (Q_t i = 0; i < α; i++) {
     const char *n = find_name(σ[i].v);
     if (n)
@@ -37,11 +37,11 @@ S(debug_σdump) {
     else
       print("%016lx ", σ[i].q);
   }
-  print("\n");
+  print("</debug_σdump>\n");
   O;
 }
 S(debug_οdump) {
-  print("debug_οdump:\n");
+  print("<debug_οdump>");
   for (Q_t i = ρ; i < 512; i++) {
     const char *n = find_name(ο[i].v);
     if (n)
@@ -49,7 +49,7 @@ S(debug_οdump) {
     else
       print("%016lx ", ο[i].q);
   }
-  print("\n");
+  print("</debug_οdump>\n");
   C(1);
 }
 SP(Main) { Α(exports, debug_init) O; }

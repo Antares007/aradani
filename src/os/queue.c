@@ -1,7 +1,7 @@
 #include "queue.h"
 #include "../gotgod.h"
 #include "../oars.h"
-
+#include "pith_coords.h"
 #define MAXΣ 1024
 
 static p_t σtable[MAXΣ][512];
@@ -16,7 +16,7 @@ N(os_queue) {
   R(p_t *, oο);
   p_t *nσ;
   Q_t nα = α;
-  if (ρ < ο[1].Q) {
+  if (ρ < ο[Ρ].Q) {
     nσ = getσ();
     while (α)
       α--, nσ[α].v = σ[α].v;
@@ -25,7 +25,7 @@ N(os_queue) {
     static p_t emptyσ[1];
     σ = emptyσ, α = 0;
   }
-  QUEUE_INSERT_TAIL((QUEUE *)&ο[2], (QUEUE *)&nσ[nα + 0]);
+  QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&nσ[nα + 0]);
   nσ[nα + 2].Q = nα;
   nσ[nα + 3].v = oο;
   C(1);
