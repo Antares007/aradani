@@ -21,17 +21,6 @@ or,                 L)IN(L,
 debug_init,         L)IN(L,
 debug_οdump,        L)IN(L,
 debug_σdump,  imports)
-NP(got_p) { C(2); }
-NP(god_p) { C(1); }
-NP(gor_p) { C(0); }
-S(addQQ)   { R(Q_t, r); R(Q_t, l); Α(l + r) C(1); }
-S(subQQ)   { R(Q_t, r); R(Q_t, l); Α(l - r) C(1); }
-S(ltQQ)    { R(Q_t, r); R(Q_t, l); C(l < r); }
-S(rotate3) { R(void *, c); R(void *, b); R(void *, a); Α(b, c, a) C(1); }
-S(dup)     { R(void *, a); Α(a, a) C(1); }
-SP(prnQ)   { R(Q_t, v); print("%lu\n", v); C(1); }
-
-S(hello) { print("hello\n"), C(1); }
 
 #define MAX_TIMEOUTS 1024
 typedef struct timeout_t {
@@ -53,7 +42,7 @@ S(binary_search_rightmost) {
   A(r - 1) C(1);
 }
 
-static void insert_timeout(Q_t due_time, p_t ο) {}
+N(insert_timeout) {}
 SP(init) {
   timeouts_count = 0;
   for(Q_t i = 0; i < MAX_TIMEOUTS; i++) timeouts[i].due_time = 0;
@@ -72,48 +61,50 @@ NP(test3) { Α(3, binary_search_rightmost, os_wordump, and, drop, and) O; }
 
 NP(test_n) { Α(test0, test1, and, test2, and, test3, and) O; }
 
+NP(got_p) { C(2); }
+NP(god_p) { C(1); }
+NP(gor_p) { C(0); }
 // oor exec sentence,  stop timer & C(0)
 // and exec sentence, renew timer & C(1)
 // not                 stop timer & C(2)
-NP(test9) {
-  Α(
-    got,
-    got_p, got_p, not, got_p, not, got_p, not,
-    god_p, god_p, and, god_p, and, god_p, and,
-    gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
-    0777, ο, 512, "α", os_create_psn, os_queue, and
-  ) O;
-}
+Sar(
+  timer,
+  gor,
+  got_p, got_p, not, got_p, not, got_p, not,
+  god_p, god_p, and, god_p, and, god_p, and,
+  gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
+  0777, os_create, os_queue, and
+)
+S(hello) { print("hello\n"), C(1); }
+Nar(test9, hello, gor, and, 1000, timer)
 
-S(timerNot) { C(1); }
-S(timerAnd) { C(1); }
-S(timerOor) { C(1); }
-S(makeTimer) {
-  Α(
-    timerNot,
-    timerAnd,
-    timerOor,
-    ο, 512, "timer",
-    os_new_psn
-  ) O;
-}
-N(setρ) {
-  Α(
-    god, god, and, god, and, god, and,
-    god, god, and, god, and, god, and,
-    god, god, and, god, and, god, and,
-    0777, nar
-  ) O;
-}
-S(setTimer_n) {
-  R(Q_t, q);
-  (void)insert_timeout;
-  (void)q;
-  C(1);
-}
-Nar(setTimer, os_hrtime, addQQ, and, makeTimer, and, setTimer_n, and)
 
-Nar(s11, hello, gor, and, 1000, setTimer)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+S(addQQ)   { R(Q_t, r); R(Q_t, l); Α(l + r) C(1); }
+S(subQQ)   { R(Q_t, r); R(Q_t, l); Α(l - r) C(1); }
+S(ltQQ)    { R(Q_t, r); R(Q_t, l); C(l < r); }
+S(rotate3) { R(void *, c); R(void *, b); R(void *, a); Α(b, c, a) C(1); }
+S(dup)     { R(void *, a); Α(a, a) C(1); }
+SP(prnQ)   { R(Q_t, v); print("%lu\n", v); C(1); }
 
 S(setTimeout_n) {
   R(Q_t, time);
@@ -123,7 +114,7 @@ S(setTimeout_n) {
       dot,
       and3or, oο, os_queue) O;
 }
-Nar(setTimeout1, os_hrtime, addQQ, and, setTimeout_n, and)
+Nar(setTimeout, os_hrtime, addQQ, and, setTimeout_n, and)
 
 Sar(s10,
     debug_οdump, os_hrtime, and,
@@ -132,7 +123,7 @@ Sar(s10,
     subQQ, and,
     prnQ, and,
     s10, and,
-    ο, 3000, setTimeout1
+    ο, 3000, setTimeout
   )
 Nar(მთავარი, os_hrtime, s10, and)
 // მთავარი
@@ -145,5 +136,5 @@ test0,              L)EN(L,
 test1,              L)EN(L,
 test2,              L)EN(L,
 test3,              L)EN(L,
-test9,              L)EN(L,
-მთავარი,      exports)
+მთავარი,            L)EN(L,
+test9,        exports)
