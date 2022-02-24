@@ -41,6 +41,8 @@ typedef void (*n_t)(OARS);
 #define C(r) G(r)
 #define Sar(Name, ...) S(Name) {Α(__VA_ARGS__) O;}
 #define Nar(Name, ...) N(Name) {Α(__VA_ARGS__) O;}
+#define SarP(Name, ...) SP(Name) {Α(__VA_ARGS__) O;}
+#define NarP(Name, ...) NP(Name) {Α(__VA_ARGS__) O;}
 
 #define Sa(T, ...) (*((T *)&σ[α]) = ((T)__VA_ARGS__), α += wordCountOf(T)),
 #define Sr(T, n) T *n = (T *)&σ[α -= wordCountOf(T)]

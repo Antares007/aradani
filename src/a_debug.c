@@ -40,6 +40,7 @@ S(debug_σdump) {
   print("</debug_σdump>\n");
   O;
 }
+// TODO: detect junctions and print them formatted
 S(debug_οdump) {
   print("<debug_οdump>");
   for (Q_t i = ρ; i < ο[Σ].Q; i++) {
