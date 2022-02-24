@@ -128,7 +128,8 @@ S(hello) { R(Q_t, i); print("hello %lu\n", i); C(1); }
 S(prnQ) { R(Q_t, v); print("%lu\n", v); C(1); }
 
 NarP(test9,
-    1, hello, god, and, 1000, timer,
+    debug_οdump,
+    1, hello, god, and, 1000, timer, and6,
     2, hello, god, and, 2000, timer, and6,
     3, hello, god, and, 3000, timer, and6,
     4, hello, god, and, 4000, timer, and6,
@@ -174,7 +175,10 @@ Nar(ls, exports, os_ls)
 EN(tail,
 binary_search_rightmost,  L)EN(L,
 drop,                     L)EN(L,
+god,                      L)EN(L,
+hello,                    L)EN(L,
 insert_timeout,           L)EN(L,
 printtimeouts,            L)EN(L,
+timer,                    L)EN(L,
 მთავარი,                  L)EN(L,
 test9,              exports)
