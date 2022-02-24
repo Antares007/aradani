@@ -39,7 +39,7 @@ SP(ray_not) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
   }
 }
-SP(ray_oor) {}
+SP(ray_oor) { os_next(T()); }
 void os_queue_init();
 void os_hrtime_init();
 int main(int argc, char **argv) {
