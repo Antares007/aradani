@@ -53,5 +53,14 @@ NP(os_bark) {
   R(p_t *, oο);
   AS(os_bark_seed_and_import_first, dot, 010, nar, oο, os_queue) O;
 }
-// TODO: implement this
-N(os_ls) { C(1); }
+S(os_ls_n) {
+  R(n_t, export);
+  R(void*, addr);
+  R(const char*, name);
+  printf("%p %s\n", addr, name);
+  Α(export, god, os_ls_n, 0110, nar) O;
+}
+N(os_ls) {
+  R(n_t, export);
+  Α(export, os_ls_n, 010, nar) O;
+}

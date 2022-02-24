@@ -6,6 +6,7 @@ nar,                L)IN(L,
 os_create,          L)IN(L,
 os_create_psn,      L)IN(L,
 os_hrtime,          L)IN(L,
+os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
@@ -168,7 +169,7 @@ Nar(setTimeout, os_hrtime, addQQ, and, setTimeout_n, and)
 Sar(s10, debug_οdump, os_hrtime, and, dup, and, rotate3, and, subQQ, and,
     prnQ, and, s10, and, ο, 3000, setTimeout)
     Nar(მთავარი, os_hrtime, s10, and)
-
+Nar(ls, exports, os_ls)
 // clang-format off
 EN(tail,
 binary_search_rightmost,  L)EN(L,
