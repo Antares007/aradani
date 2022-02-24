@@ -138,38 +138,6 @@ NarP(test9,
     7, hello, god, and, 7000, timer, and6,
     printtimeouts, and)
 
-S(subQQ) {
-  R(Q_t, r);
-  R(Q_t, l);
-  Α(l - r) C(1);
-}
-S(ltQQ) {
-  R(Q_t, r);
-  R(Q_t, l);
-  C(l < r);
-}
-S(rotate3) {
-  R(void *, c);
-  R(void *, b);
-  R(void *, a);
-  Α(b, c, a) C(1);
-}
-S(dup) {
-  R(void *, a);
-  Α(a, a) C(1);
-}
-S(setTimeout_n) {
-  R(Q_t, time);
-  R(p_t *, oο);
-  Α(os_hrtime, time, ltQQ, and2, oο, time, setTimeout_n, dot, and3or, oο,
-    os_queue)
-  O;
-}
-Nar(setTimeout, os_hrtime, addQQ, and, setTimeout_n, and)
-
-Sar(s10, debug_οdump, os_hrtime, and, dup, and, rotate3, and, subQQ, and,
-    prnQ, and, s10, and, ο, 3000, setTimeout)
-    Nar(მთავარი, os_hrtime, s10, and)
 Nar(ls, exports, os_ls)
 // clang-format off
 EN(tail,
@@ -180,5 +148,4 @@ hello,                    L)EN(L,
 insert_timeout,           L)EN(L,
 printtimeouts,            L)EN(L,
 timer,                    L)EN(L,
-მთავარი,                  L)EN(L,
 test9,              exports)
