@@ -64,20 +64,17 @@ S(srun) {
   α--;
   Α(oο, os_queue) O;
 }
-// S(timer_n) {
-//   R(p_t *, oο);
-//   Q_t oρ = 7;
-//   oο[oρ++].Q = α;
-//   while (α) oο[oρ++].v = σ[--α].v;
-//   A(oο) C(1);
-// }
 S(run_timeouts_n) {
   R(Q_t, time);
   q_t pos = binary_search_rightmost(time) + 1;
-  for(Q_t i = pos; i < timeouts_count; i++) timeouts[i - pos] = timeouts[i];
-  for(Q_t i = pos; i < timeouts_count; i++)    piths[i - pos] = piths[i];
+  A(god) 0;
+  for(Q_t i = 0; i < pos; i++)
+    A3(piths[i], srun, and2) 0;
+  for(Q_t i = pos; i < timeouts_count; i++)
+    timeouts[i - pos] = timeouts[i];
+  for(Q_t i = pos; i < timeouts_count; i++)
+    piths[i - pos] = piths[i];
   timeouts_count -= pos;
-  A(god) 0; for(Q_t i = 0; i < pos; i++) A3(piths[i], srun, and2) 0;
   O;
 }
 Sar(run_timeouts, os_hrtime, run_timeouts_n, and)
@@ -126,17 +123,17 @@ S(insert_timer_pith) {
 SarP(timer, (Q_t)(timeouts_count < MAX_TIMEOUTS), switch_ray, got, or,
      create_timer_pith, and, timer_n, and, insert_timer_pith, and)
 
-S(hello) { print("hello\n"); C(1); }
+S(hello) { R(Q_t, i); print("hello %lu\n", i); C(1); }
 S(prnQ) { R(Q_t, v); print("%lu\n", v); C(1); }
 
 Nar(test9,
-    hello, 1000, timer,
-    hello, 2000, timer, and3,
-    hello, 3000, timer, and3,
-    hello, 4000, timer, and3,
-    hello, 5000, timer, and3,
-    hello, 6000, timer, and3,
-    hello, 7000, timer, and3,
+    1, hello, 1000, timer,
+    2, hello, 2000, timer, and4,
+    3, hello, 3000, timer, and4,
+    4, hello, 4000, timer, and4,
+    5, hello, 5000, timer, and4,
+    6, hello, 6000, timer, and4,
+    7, hello, 7000, timer, and4,
     printtimeouts, and)
 
 S(subQQ) {
