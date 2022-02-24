@@ -14,7 +14,7 @@
                                   .
         ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
 
-                                                1cor15:10 */
+                                                          */
 // clang-format off
 #include <stdint.h>
 typedef  int8_t  b_t; typedef  int16_t w_t; typedef  int32_t d_t; typedef  int64_t q_t;
