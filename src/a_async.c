@@ -79,10 +79,9 @@ S(run_timeouts_n) {
 }
 Sar(run_timeouts, os_hrtime, run_timeouts_n, and)
 S(queue_timeout_run  );
-S(check_queue_timeout) { A(0 < timeouts_count ? queue_timeout_run : god) O; }
+S(check_queue_timeout) { A(timeouts_count ? queue_timeout_run : god) O; }
 S(queue_timeout_run  ) { A5(run_timeouts, check_queue_timeout, and, ο, os_queue) O; }
-Sar(check2, 1 == timeouts_count ? queue_timeout_run : god)
-S(insert_timeout     ) { A3(insert_timeout_n, check2, and) O; }
+S(insert_timeout     ) { A3(insert_timeout_n, timeouts_count ? god : queue_timeout_run, and) O; }
 
 S(printtimeouts) {
   for (Q_t i = 0; i < timeouts_count; i++)
@@ -108,7 +107,7 @@ S(addQQ) {
 }
 
 S(insert_timer_pith);
-S(reset_timer) { Α(ο, insert_timer_pith, ο[0].p, os_queue) O; }
+Sar(reset_timer, ο, insert_timer_pith, ο[0].p, os_queue) 
 Sar(create_timer_pith, reset_timer, 0010, ο, 512, "timer1", os_create_psn)
 S(timer_n) {
   R(p_t *, oο);
@@ -125,7 +124,6 @@ S(insert_timer_pith) {
 Sar(timer, create_timer_pith, timer_n, and, insert_timer_pith, and)
 
 S(hello) { R(Q_t, i); print("hello %lu\n", i); C(1); }
-S(prnQ) { R(Q_t, v); print("%lu\n", v); C(1); }
 
 NarP(test9,
     debug_οdump,
