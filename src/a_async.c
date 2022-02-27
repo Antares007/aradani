@@ -3,12 +3,9 @@
 // clang-format off
 IBS(                L)IN(L,
 nar,                L)IN(L,
-os_create,          L)IN(L,
-os_create_psn,      L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_wordump,         L)IN(L,
 //
@@ -105,7 +102,8 @@ S(addQQ) {
   R(Q_t, l);
   Α(l + r) C(1);
 }
-
+N(os_create){}
+N(os_create_psn){}
 S(insert_timer_pith);
 Sar(reset_timer, ο, insert_timer_pith, ο[0].p, os_queue) 
 Sar(create_timer_pith, reset_timer, 0010, ο, 512, "timer1", os_create_psn)
@@ -125,7 +123,7 @@ Sar(timer, create_timer_pith, timer_n, and, insert_timer_pith, and)
 
 S(hello) { R(Q_t, i); print("hello %lu\n", i); C(1); }
 
-NarP(test9,
+NarP(test9_,
     debug_οdump,
     1, hello, god, and, 1000, timer, and6,
     2, hello, god, and, 2000, timer, and6,
@@ -136,14 +134,31 @@ NarP(test9,
     7, hello, god, and, 7000, timer, and6,
     printtimeouts, and)
 
+SarP(mkpith0, gor_p, god_p, got_p, os_new)
+
+Sar(mkpith,
+  got_p, got_p, not, got_p, not, got_p, not,
+  god_p, god_p, and, god_p, and, god_p, and,
+  gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
+  0777,
+  os_create)
+
+SP(test99) {
+  R(p_t *, oο);
+  Α(
+    god, oο, os_queue
+  ) O;
+}
+NarP(test9, mkpith0, test99, and)
+
 Nar(ls, exports, os_ls)
 // clang-format off
 EN(tail,
-binary_search_rightmost,  L)EN(L,
-drop,                     L)EN(L,
-god,                      L)EN(L,
-hello,                    L)EN(L,
-insert_timeout,           L)EN(L,
-printtimeouts,            L)EN(L,
-timer,                    L)EN(L,
+// binary_search_rightmost,  L)EN(L,
+// drop,                     L)EN(L,
+// god,                      L)EN(L,
+// hello,                    L)EN(L,
+// insert_timeout,           L)EN(L,
+// printtimeouts,            L)EN(L,
+// timer,                    L)EN(L,
 test9,              exports)

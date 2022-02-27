@@ -12,8 +12,8 @@ static p_t *getσ() {
   return σ[0].Q ? getσ() : σ;
 }
 
-N(os_queue) {
-  R(p_t *, oο);
+NP(os_queue) {
+  R(p_t *, nο);
   p_t *nσ;
   Q_t nα = α;
   if (ρ < ο[Ρ].Q) {
@@ -27,7 +27,8 @@ N(os_queue) {
   }
   QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&nσ[nα + 0]);
   nσ[nα + 2].Q = nα;
-  nσ[nα + 3].v = oο;
+  nσ[nα + 3].v = nο;
+  nσ[nα + 4].Q = nο[Ρ].Q;
   C(1);
 }
 

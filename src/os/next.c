@@ -2,16 +2,24 @@
 #include "../oars.h"
 #include "pith_coords.h"
 #include "queue.h"
+
 N(os_next) {
   QUEUE *q;
-  QUEUE *main_queue = (QUEUE *)&ο[Ψ];
-  if (main_queue == (q = QUEUE_NEXT(main_queue)))
+  if ((QUEUE *)&ο[Ψ] == (q = QUEUE_NEXT((QUEUE *)&ο[Ψ])))
     return C(2);
+  // if (ρ < ο[Ρ].Q) {
+  //   A(god) QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&σ[α + 0]);
+  //   σ[α + 2].Q = α;
+  //   σ[α + 3].v = ο;
+  //   σ[α + 4].Q = ρ;
+  // } else
   σ[0].Q = 0;
+
   QUEUE_REMOVE(q);
   p_t *nσ = ((p_t *)q);
   Q_t nα = nσ[2].Q;
-  p_t *oο = nσ[3].p;
+  p_t *nο = nσ[3].p;
+  Q_t nρ = nσ[4].Q;
   nσ -= nα;
-  dot(nσ, nα, oο, oο[Ρ].Q);
+  dot(nσ, nα, nο, nρ);
 }

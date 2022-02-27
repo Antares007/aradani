@@ -3,9 +3,9 @@
 // clang-format off
 IBS(                L)IN(L,
 nar,                L)IN(L,
-os_create,          L)IN(L,
-os_create_psn,      L)IN(L,
+os_new,             L)IN(L,
 os_new_psn,         L)IN(L,
+os_next,            L)IN(L,
 os_queue,           L)IN(L,
 
 and,                L)IN(L,

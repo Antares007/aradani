@@ -5,7 +5,7 @@
       "configuration": {
         "request": "launch",
         "program": "src/os_run",
-        "args": ["src/a_epoll.arsi"],
+        "args": ["src/a_async.arsi"],
         "cwd": "${workspaceRoot}",
         "environment": [  ],
         "externalConsole": true,

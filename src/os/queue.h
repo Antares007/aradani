@@ -79,12 +79,8 @@ typedef void *QUEUE[2];
   } while (0)
 
 #define QUEUE_INSERT_TAIL(h, q)                                                \
-  do {                                                                         \
-    QUEUE_NEXT(q) = (h);                                                       \
-    QUEUE_PREV(q) = QUEUE_PREV(h);                                             \
-    QUEUE_PREV_NEXT(q) = (q);                                                  \
-    QUEUE_PREV(h) = (q);                                                       \
-  } while (0)
+  QUEUE_NEXT(q) = (h), QUEUE_PREV(q) = QUEUE_PREV(h),                          \
+  QUEUE_PREV_NEXT(q) = (q), QUEUE_PREV(h) = (q);
 
 #define QUEUE_REMOVE(q)                                                        \
   do {                                                                         \
