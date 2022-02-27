@@ -55,24 +55,25 @@ S(insert_timeout_n) {
   piths[pos + 1] = oο;
   C(1);
 }
-S(srun) {
-  R(p_t *, oο);
-  Q_t oρ = oο[7].Q;
-  while(oρ) σ[α++].v = oο[--oρ + 8].v;
-  α--;
-  Α(oο, os_queue) O;
-}
+//S(srun) {
+//  R(p_t *, oο);
+//  Q_t oρ = oο[7].Q;
+//  while(oρ) σ[α++].v = oο[--oρ + 8].v;
+//  α--;
+//  Α(oο, os_queue) O;
+//}
 //      5
 // 01234
 S(run_timeouts_n) {
   R(Q_t, time);
-  q_t pos = binary_search_rightmost(time) + 1;
-  A(god) 0;
-  for(Q_t i = 0  ; i < pos           ; i++) A3(piths[i], srun, and2) 0;
-  for(Q_t i = pos; i < timeouts_count; i++) timeouts[i - pos] = timeouts[i];
-  for(Q_t i = pos; i < timeouts_count; i++)    piths[i - pos] =    piths[i];
-  timeouts_count -= pos;
-  O;
+  (void)time;
+  //  q_t pos   = binary_search_rightmost(time) + 1;
+  //  σ[α++].c  = god;
+  //  for(Q_t i = 0  ; i < pos           ; i++) A3(piths[i], srun, and2) 0;
+  //  for(Q_t i = pos; i < timeouts_count; i++) timeouts[i - pos] = timeouts[i];
+  //  for(Q_t i = pos; i < timeouts_count; i++)    piths[i - pos] =    piths[i];
+  //  timeouts_count -= pos;
+  //  O;
 }
 Sar(run_timeouts, os_hrtime, run_timeouts_n, and)
 S(queue_timeout_run  );
@@ -134,21 +135,30 @@ NarP(test9_,
     7, hello, god, and, 7000, timer, and6,
     printtimeouts, and)
 
-SarP(mkpith0, gor_p, god_p, got_p, os_new)
 
-Sar(mkpith,
-  got_p, got_p, not, got_p, not, got_p, not,
-  god_p, god_p, and, god_p, and, god_p, and,
-  gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
-  0777,
-  os_create)
-
+// Sar(mkpith,
+//   got_p, got_p, not, got_p, not, got_p, not,
+//   god_p, god_p, and, god_p, and, god_p, and,
+//   gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
+//   0777,
+//   os_create)
+static Q_t counter[3];
+SP(n0) { counter[0]++, C(1); }
+SP(n1) { counter[1]++, C(1); }
+SP(n2) { counter[2]++, C(1); }
+Sar(mkpith0, n0, n1, n2, os_new)
 SP(test99) {
   R(p_t *, oο);
-  Α(
-    god, oο, os_queue
+  Α(gor_p, oο, os_queue,
+    god_p, oο, os_queue, and3,
+    got_p, oο, os_queue, and3,
   ) O;
+  print("0. %lu\n", counter[0] == 1);
+  print("1. %lu\n", counter[1] == 1);
+  print("2. %lu\n", counter[2] == 1);
 }
+
+
 NarP(test9, mkpith0, test99, and)
 
 Nar(ls, exports, os_ls)

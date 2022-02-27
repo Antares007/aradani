@@ -32,10 +32,10 @@ os_new_wpsn,        L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_wordump,      root);
-SP(ray_not) {
+static Q_t c = 0; SP(ray_not) {
   if(α == 3) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
-  }
+  } if(c++<3)os_next(T());
 }
 SP(ray_oor) { os_next(T()); }
 void os_queue_init();
