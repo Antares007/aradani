@@ -16,7 +16,7 @@ N(init) { C(1); }
 
 SP(p_or) {
   R(p_t *, oο);
-  Α(ο, gor, oο, os_queue, os_next, and) O;
+  Α(ο, gor, oο, os_queue) O;
 }
 SP(p_and_log) {}
 S(p_and) {
@@ -24,14 +24,14 @@ S(p_and) {
   R(Q_t, c);
   if (c % 100000000 == 0)
     p_and_log(T());
-  Α(c + 1, ο, god, oο, os_queue, os_next, and) O;
+  Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(p_not) {}
 SP(mproducer) { Α(p_or, p_and, p_not, os_new) O; }
 
 SP(c_or) {
   R(p_t *, oο);
-  Α(ο, god, oο, os_queue, os_next, and) O;
+  Α(ο, god, oο, os_queue) O;
 }
 SP(c_and_log) {}
 S(c_and) {
@@ -39,7 +39,7 @@ S(c_and) {
   R(Q_t, c);
   if (c % 100000000 == 1)
     c_and_log(T());
-  Α(c + 1, ο, god, oο, os_queue, os_next, and) O;
+  Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(c_not) {}
 SP(mconsumer) { Α(c_or, c_and, c_not, os_new) O; }

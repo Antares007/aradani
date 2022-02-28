@@ -12,7 +12,7 @@ static p_t *getσ() {
   return σ[0].Q ? getσ() : σ;
 }
 
-NP(os_queue) {
+N(os_queue) {
   R(p_t *, nο);
   p_t *nσ;
   Q_t nα = α;

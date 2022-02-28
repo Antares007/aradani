@@ -6,6 +6,7 @@ nar,                L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
+os_new_j,           L)IN(L,
 os_queue,           L)IN(L,
 os_wordump,         L)IN(L,
 //
@@ -134,8 +135,6 @@ NarP(test9_,
     6, hello, god, and, 6000, timer, and6,
     7, hello, god, and, 7000, timer, and6,
     printtimeouts, and)
-
-
 // Sar(mkpith,
 //   got_p, got_p, not, got_p, not, got_p, not,
 //   god_p, god_p, and, god_p, and, god_p, and,
@@ -146,21 +145,24 @@ static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }
 SP(n1) { counter[1]++, C(1); }
 SP(n2) { counter[2]++, C(1); }
-Sar(mkpith0, n0, n1, n2, os_new)
+S(mkpith0) {
+  Α(
+    n2, n2, and, n2, and, n2, and,
+    n1, n1, and, n1, and, n1, and,
+    n0, n0, and, n0, and, n0, and,
+    0777, os_new_j) O; 
+}
 SP(test99) {
   R(p_t *, oο);
   Α(gor_p, oο, os_queue,
     god_p, oο, os_queue, and3,
     got_p, oο, os_queue, and3,
   ) O;
-  print("0. %lu\n", counter[0] == 1);
-  print("1. %lu\n", counter[1] == 1);
-  print("2. %lu\n", counter[2] == 1);
+  print("0. %lu\n", counter[0] == 4);
+  print("1. %lu\n", counter[1] == 4);
+  print("2. %lu\n", counter[2] == 4);
 }
-
-
 NarP(test9, mkpith0, test99, and)
-
 Nar(ls, exports, os_ls)
 // clang-format off
 EN(tail,
