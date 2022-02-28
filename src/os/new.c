@@ -56,5 +56,6 @@ N(os_new_psnj) {
   A(nο) C(1);
 }
 N(os_new_j) { R(Q_t, j); Α(ο[Φ].p, 512, "os_new_j", j, os_new_psnj) O; }
+N(os_new_nj) { R(Q_t, j); R(const char*, n); Α(ο[Φ].p, 512, n, j, os_new_psnj) O; }
 
 N(os_new) { Α(ο[Φ].p, 512, "os_new", 0111, os_new_psnj) O; }

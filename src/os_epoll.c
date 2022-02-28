@@ -4,7 +4,11 @@
 #include <fcntl.h>
 #include <strings.h>
 #include <sys/epoll.h>
-
+#include <unistd.h>
+N(l_close) {
+  R(Q_t, fd);
+  close(fd), C(1);
+}
 N(l_read) {
   R(Q_t, connfd);
   R(Q_t, nread);
@@ -84,7 +88,7 @@ N(l_setnoblock) {
   if (flags < 0)
     return C(2);
   flags |= O_NONBLOCK;
-  A(fd) C(fcntl(fd, F_SETFL, flags) != -1 ? 1 : 2);
+  C(fcntl(fd, F_SETFL, flags) != -1 ? 1 : 2);
 }
 N(l_socket) {
   long fd = socket(PF_INET, SOCK_STREAM, 0);
