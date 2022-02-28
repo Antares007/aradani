@@ -23,8 +23,8 @@ static void append_to_parent_queue(QUEUE* my_q, QUEUE* parent_q) {
     }                                                                          \
   }
 SR(2, 0, )
-SR(1, ο[ρ + 3].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
-SR(0, ο[ρ + 3].Q + ο[ρ + 4].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+SR(1, ο[ρ + 5].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+SR(0, ο[ρ + 4].Q + ο[ρ + 5].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
 N(os_new_psnj) {
   Q_t j = σ[--α].Q,           //
       nc = ((j & 0700) >> 6), //

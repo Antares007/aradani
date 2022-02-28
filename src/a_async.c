@@ -147,10 +147,10 @@ SP(n1) { counter[1]++, C(1); }
 SP(n2) { counter[2]++, C(1); }
 S(mkpith0) {
   Α(
-    n2, n2, and, n2, and, n2, and,
-    n1, n1, and, n1, and, n1, and,
+    n2, n2, and,
+    n1, n1, and, n1, and,
     n0, n0, and, n0, and, n0, and,
-    0777, os_new_j) O; 
+    0357, os_new_j) O; 
 }
 SP(test99) {
   R(p_t *, oο);
@@ -159,8 +159,8 @@ SP(test99) {
     got_p, oο, os_queue, and3,
   ) O;
   print("0. %lu\n", counter[0] == 4);
-  print("1. %lu\n", counter[1] == 4);
-  print("2. %lu\n", counter[2] == 4);
+  print("1. %lu\n", counter[1] == 3);
+  print("2. %lu\n", counter[2] == 2);
 }
 NarP(test9, mkpith0, test99, and)
 Nar(ls, exports, os_ls)
