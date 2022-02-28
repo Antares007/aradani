@@ -2,26 +2,14 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-nar,                L)IN(L,
-os_hrtime,          L)IN(L,
-os_ls,              L)IN(L,
-os_new,             L)IN(L,
 os_new_j,           L)IN(L,
 os_queue,           L)IN(L,
-os_wordump,         L)IN(L,
 //
 and,                L)IN(L,
-and2,               L)IN(L,
-and2or,             L)IN(L,
-and3,               L)IN(L,
-and3or,             L)IN(L,
-and4,               L)IN(L,
-and5,               L)IN(L,
-and6,               L)IN(L,
-andor,              L)IN(L,
-not,                L)IN(L,
-or,           imports)
+and3,         imports)
+
 S(init) {C(1);}
+
 static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }
 SP(n1) { counter[1]++, C(1); }
