@@ -56,25 +56,23 @@ S(insert_timeout_n) {
   piths[pos + 1] = oο;
   C(1);
 }
-//S(srun) {
-//  R(p_t *, oο);
-//  Q_t oρ = oο[7].Q;
-//  while(oρ) σ[α++].v = oο[--oρ + 8].v;
-//  α--;
-//  Α(oο, os_queue) O;
-//}
-//      5
-// 01234
+S(srun) {
+  R(p_t *, oο);
+  Q_t oρ = oο[7].Q;
+  while(oρ) σ[α++].v = oο[--oρ + 8].v;
+  α--;
+  Α(oο, os_queue) O;
+}
 S(run_timeouts_n) {
   R(Q_t, time);
   (void)time;
-  //  q_t pos   = binary_search_rightmost(time) + 1;
-  //  σ[α++].c  = god;
-  //  for(Q_t i = 0  ; i < pos           ; i++) A3(piths[i], srun, and2) 0;
-  //  for(Q_t i = pos; i < timeouts_count; i++) timeouts[i - pos] = timeouts[i];
-  //  for(Q_t i = pos; i < timeouts_count; i++)    piths[i - pos] =    piths[i];
-  //  timeouts_count -= pos;
-  //  O;
+  q_t pos   = binary_search_rightmost(time) + 1;
+  σ[α++].c  = god;
+  for(Q_t i = 0  ; i < pos           ; i++) σ[α++].p = piths[i], σ[α++].c = srun, σ[α++].c = and2;
+  for(Q_t i = pos; i < timeouts_count; i++) timeouts[i - pos] = timeouts[i];
+  for(Q_t i = pos; i < timeouts_count; i++)    piths[i - pos] =    piths[i];
+  timeouts_count -= pos;
+  O;
 }
 Sar(run_timeouts, os_hrtime, run_timeouts_n, and)
 S(queue_timeout_run  );
@@ -89,13 +87,12 @@ S(printtimeouts) {
 }
 SP(init) {
   timeouts_count = 0;
-
   Α(exports, debug_init) O;
 }
-N(drop) { α--, C(1); }
-NP(got_p) { C(2); }
-NP(god_p) { C(1); }
-NP(gor_p) { C(0); }
+S(drop) { α--, C(1); }
+SP(got_p) { C(2); }
+SP(god_p) { C(1); }
+SP(gor_p) { C(0); }
 // oor exec sentence,  stop timer & C(0)
 // and exec sentence, renew timer & C(1)
 // not                 stop timer & C(2)
@@ -104,11 +101,9 @@ S(addQQ) {
   R(Q_t, l);
   Α(l + r) C(1);
 }
-N(os_create){}
-N(os_create_psn){}
 S(insert_timer_pith);
 Sar(reset_timer, ο, insert_timer_pith, ο[0].p, os_queue) 
-Sar(create_timer_pith, reset_timer, 0010, ο, 512, "timer1", os_create_psn)
+Sar(create_timer_pith, reset_timer, 0010, os_new_j)
 S(timer_n) {
   R(p_t *, oο);
   Q_t oρ = 7;
@@ -121,9 +116,14 @@ S(insert_timer_pith) {
   R(p_t *, oο);
   Α(oο[8].Q, os_hrtime, addQQ, and, oο, insert_timeout, and2) O;
 }
-Sar(timer, create_timer_pith, timer_n, and, insert_timer_pith, and)
+Sar(timer,
+    create_timer_pith, timer_n, and,
+    insert_timer_pith, and)
 
-S(hello) { R(Q_t, i); print("hello %lu\n", i); C(1); }
+S(hello) {
+  R(Q_t, i);
+  print("hello %lu\n", i), C(1);
+}
 
 NarP(test9_,
     debug_οdump,
@@ -135,12 +135,6 @@ NarP(test9_,
     6, hello, god, and, 6000, timer, and6,
     7, hello, god, and, 7000, timer, and6,
     printtimeouts, and)
-// Sar(mkpith,
-//   got_p, got_p, not, got_p, not, got_p, not,
-//   god_p, god_p, and, god_p, and, god_p, and,
-//   gor_p, gor_p,  or, gor_p,  or, gor_p,  or,
-//   0777,
-//   os_create)
 static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }
 SP(n1) { counter[1]++, C(1); }
@@ -164,13 +158,14 @@ SP(test99) {
 }
 NarP(test9, mkpith0, test99, and)
 Nar(ls, exports, os_ls)
+
 // clang-format off
 EN(tail,
-// binary_search_rightmost,  L)EN(L,
-// drop,                     L)EN(L,
-// god,                      L)EN(L,
-// hello,                    L)EN(L,
-// insert_timeout,           L)EN(L,
-// printtimeouts,            L)EN(L,
-// timer,                    L)EN(L,
-test9,              exports)
+binary_search_rightmost,  L)EN(L,
+drop,                     L)EN(L,
+god,                      L)EN(L,
+hello,                    L)EN(L,
+insert_timeout,           L)EN(L,
+printtimeouts,            L)EN(L,
+timer,                    L)EN(L,
+test9_,              exports)
