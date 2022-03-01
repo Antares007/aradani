@@ -10,6 +10,16 @@ N(l_close) {
   close(fd), C(1);
 }
 N(l_read) {
+  R(Q_t, nbyte);
+  R(void *, buf);
+  R(Q_t, fd);
+  Q_t num = read(fd, buf, nbyte);
+  if (num < 0)
+    C(2);
+  else
+    A(num) C(1);
+}
+N(l_read2) {
   R(Q_t, connfd);
   R(Q_t, nread);
   ssize_t ret = recv(connfd, ((char *)ο) + nread, sizeof(void *), 0);

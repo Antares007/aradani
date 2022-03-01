@@ -27,25 +27,55 @@ not,                L)IN(L,
 debug_init,         L)IN(L,
 debug_οdump,  imports);
 #include "unistd.h"
+#include <sys/epoll.h>
 
 static p_t* stdinο;
+static p_t* stdoutο;
 static Q_t  epoll_fd;
-SP(stdin_oor) {
-  R(p_t*, oο);
-  Α(ο, gor, oο, os_queue) O;
-}
-SarP(mk_stdin,  got, god, stdin_oor, "≫", 0111, os_new_nj,  STDIN_FILENO, l_setnoblock, and2)
-SarP(mk_stdout, god, god,       god, "≪", 0111, os_new_nj, STDOUT_FILENO, l_setnoblock, and2)
-SP(set) {
-  R(p_t*, oο);
-  R(Q_t, fd);
-  epoll_fd = fd;
-  stdinο = oο;
+static Q_t c;
+static char buffer[0x1000];
+struct epoll_event events[2];
+
+Sar(epollwait, epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+S(prn) {
+  R(Q_t, num);
+  print("%ld %ld\n", c, num);
   C(1);
 }
-SarP(init, 5, l_epoll_create, mk_stdin, and, set, and)
+S(processevents) {
+  R(Q_t, num);
+  if (num > 0) Α(0, buffer, sizeof(buffer), l_read, prn, and) O;
+  else c++, C(1);
+}
+Sar(queuewait, epollwait, processevents, and, queuewait, and, ο[Φ].p, os_queue)
 
-Nar(example, mk_stdout, gor, stdinο, os_queue, and3);
+SarP(epoll_ctl_add_in, epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET, l_epoll_ctl)
+
+SP(stdin_oor) {
+  R(p_t*, oο);
+  Α(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O;
+}
+SP(stdout_oor) {
+  R(p_t*, oο);
+  (void)oο;
+  C(1);
+}
+SarP(mk_stdin,  got, god,  stdin_oor, "≫", 0111, os_new_nj,  STDIN_FILENO, l_setnoblock, and2)
+SarP(mk_stdout, god, god, stdout_oor, "≪", 0111, os_new_nj, STDOUT_FILENO, l_setnoblock, and2)
+
+SP(set) {
+  R(p_t*, outο);
+  R(p_t*, inο);
+  R(Q_t, fd);
+  epoll_fd = fd, stdinο = inο, stdoutο = outο, C(1);
+}
+
+SarP(init, 5, l_epoll_create, mk_stdin, and,
+                             mk_stdout, and,
+                                   set, and)
+
+Nar(example, stdoutο, gor, stdinο, os_queue);
+
 Nar(ls, exports, os_ls)
 
 // clang-format off
