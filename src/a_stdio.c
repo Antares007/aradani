@@ -32,36 +32,42 @@ debug_οdump,  imports);
 static p_t* stdinο;
 static p_t* stdoutο;
 static Q_t  epoll_fd;
-static Q_t c;
+static Q_t  c;
 static char buffer[0x1000];
 struct epoll_event events[2];
 
-Sar(epollwait, epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+Sar(epollwait,
+    epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
 S(prn) {
   R(Q_t, num);
-  print("%ld %ld\n", c, num);
-  C(1);
+  print("%ld %ld\n", c, num), C(1);
 }
+S(process_in) { A6(0, buffer, sizeof(buffer), l_read, prn, and) O; }
 S(processevents) {
   R(Q_t, num);
-  if (num > 0) Α(0, buffer, sizeof(buffer), l_read, prn, and) O;
-  else c++, C(1);
+  if (num) A6(events[num - 1].data.ptr, ο[Φ].p, os_queue, num - 1, processevents, and2) O;
+  else C(1);
 }
-Sar(queuewait, epollwait, processevents, and, queuewait, and, ο[Φ].p, os_queue)
+Sar(queuewait,
+    epollwait, processevents, and, queuewait, and, ο[Φ].p, os_queue)
 
-SarP(epoll_ctl_add_in, epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET, l_epoll_ctl)
+Sar(epoll_ctl_add_in,
+    epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, process_in, EPOLLIN | EPOLLET, l_epoll_ctl)
 
-SP(stdin_oor) {
-  R(p_t*, oο);
-  Α(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O;
-}
+SP(stdin_oor) { R(p_t*, oο); A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O; }
+SP(stdin_and) { C(1); }
+SP(stdin_not) { C(1); }
+SarP(mk_stdin,
+     got, god,  stdin_oor, "≫", 0111, os_new_nj,
+     STDIN_FILENO, l_setnoblock, and2)
 SP(stdout_oor) {
   R(p_t*, oο);
   (void)oο;
   C(1);
 }
-SarP(mk_stdin,  got, god,  stdin_oor, "≫", 0111, os_new_nj,  STDIN_FILENO, l_setnoblock, and2)
-SarP(mk_stdout, god, god, stdout_oor, "≪", 0111, os_new_nj, STDOUT_FILENO, l_setnoblock, and2)
+SarP(mk_stdout,
+     god, god, stdout_oor, "≪", 0111, os_new_nj,
+     STDOUT_FILENO, l_setnoblock, and2)
 
 SP(set) {
   R(p_t*, outο);

@@ -13,6 +13,7 @@ N(l_read) {
   R(Q_t, nbyte);
   R(void *, buf);
   R(Q_t, fd);
+  printf("EAGAIN:%d\n",EAGAIN);
   Q_t num = read(fd, buf, nbyte);
   if (num < 0)
     C(2);

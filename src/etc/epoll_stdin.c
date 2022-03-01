@@ -1,5 +1,7 @@
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/epoll.h>
 #include <unistd.h>
 
@@ -11,7 +13,7 @@ int SetNonblocking(int fd) {
 }
 
 int main(void) {
-  char buffer[4096];
+  char buffer[0x10000];
   int fd = epoll_create(5);
 
   struct epoll_event event;
@@ -26,7 +28,7 @@ int main(void) {
   epoll_ctl(fd, EPOLL_CTL_ADD, STDOUT_FILENO, &event);
   SetNonblocking(STDOUT_FILENO);
 
-  backpressure unsigned long c = 0;
+  unsigned long c = 0;
   struct epoll_event events[10];
   for (;;) {
     // fprintf(stderr, "Going into epoll_wait\n");
@@ -34,8 +36,21 @@ int main(void) {
     // fprintf(stderr, "Going into read: %d\n", event.data.fd);
     for (long i = 0; i < num; i++) {
       int fd = events[i].data.fd;
-      if      (fd == STDIN_FILENO) printf("%ld %ld\n", c, read(0, buffer, sizeof(buffer)));
-      else if (fd == STDOUT_FILENO) c++;
+      if (fd == STDIN_FILENO)
+        while (1) {
+          long ret = read(0, buffer, sizeof(buffer));
+          if (ret < 0) {
+            if (errno == EAGAIN) {
+              printf("EAGAIN\n");
+              break;
+            } else
+              printf("error\n"), exit(0);
+          } else if (ret == 0)
+            continue;
+          printf("%ld %ld\n", c, ret);
+        }
+      else if (fd == STDOUT_FILENO)
+        c++;
     }
   }
 }
