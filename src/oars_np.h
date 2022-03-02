@@ -3,8 +3,8 @@
 #define NP_(n, PRN, N)                                                         \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    PRN("%p %s %ld\t%ld\t%s\t:%s\n", σ, ο[Ν].cs, α, ρ, __FUNCTION__,           \
-        __FILE__);                                                             \
+    PRN("%lx %s %ld\t%ld\t%s:%s\n", ((Q_t)((void *)σ)) >> 16, ο[Ν].cs, α, ρ,   \
+        __FUNCTION__, __FILE__);                                               \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
