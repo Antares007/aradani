@@ -59,5 +59,6 @@ clean:
 		src/etc/epoll_client  \
 		src/etc/epoll_server  \
 		src/etc/epoll_stdin   \
+		src/etc/epoll_server_oneshot   \
 		src/gui/ui
 .PHONY: clean run all
