@@ -23,6 +23,7 @@ and2,               L)IN(L,
 and3,               L)IN(L,
 and6,               L)IN(L,
 not,                L)IN(L,
+notand3or,          L)IN(L,
 //
 debug_init,         L)IN(L,
 debug_οdump,  imports);
@@ -32,41 +33,62 @@ debug_οdump,  imports);
 static p_t* stdinο;
 static p_t* stdoutο;
 static Q_t  epoll_fd;
-static Q_t  c;
-static char buffer[0x1000];
+static char buffer[0x10000];
 struct epoll_event events[2];
 
 Sar(epollwait,
     epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
 S(prn) {
   R(Q_t, num);
-  print("%ld %ld\n", c, num), C(1);
+  if (num) C(1);
+  else C(2);
 }
-S(process_in) { A6(0, buffer, sizeof(buffer), l_read, prn, and) O; }
+Sar(epoll_ctl_reset_in,
+    epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+S(process_in) {
+  Α(STDIN_FILENO, buffer, sizeof(buffer), l_read,
+     got,
+     prn, process_in, and,
+     epoll_ctl_reset_in,
+     notand3or) O;
+}
 S(processevents) {
   R(Q_t, num);
-  if (num) A6(events[num - 1].data.ptr, ο[Φ].p, os_queue, num - 1, processevents, and2) O;
-  else C(1);
+  if (num) {
+    p_t *oο = events[num - 1].data.ptr;
+    A6(oο[7].c, oο, os_queue, num - 1, processevents, and2) O;
+  } else C(1);
 }
 Sar(queuewait,
     epollwait, processevents, and, queuewait, and, ο[Φ].p, os_queue)
 
-Sar(epoll_ctl_add_in,
-    epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, process_in, EPOLLIN | EPOLLET, l_epoll_ctl)
+SarP(epoll_ctl_add_in,
+     epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-SP(stdin_oor) { R(p_t*, oο); A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O; }
+SP(stdin_oor) {
+  R(p_t*, oο);
+  A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O;
+}
 SP(stdin_and) { C(1); }
 SP(stdin_not) { C(1); }
+SP(stdin_set) {
+  R(p_t *, oο);
+  oο[7].c = process_in, A(oο) C(1);
+}
 SarP(mk_stdin,
-     got, god,  stdin_oor, "≫", 0111, os_new_nj,
+     stdin_not, stdin_and, stdin_oor, "≫", 0111, os_new_nj,
+     stdin_set, and,
      STDIN_FILENO, l_setnoblock, and2)
+
 SP(stdout_oor) {
   R(p_t*, oο);
   (void)oο;
   C(1);
 }
+SP(stdout_and) { C(1); }
+SP(stdout_not) { C(1); }
 SarP(mk_stdout,
-     god, god, stdout_oor, "≪", 0111, os_new_nj,
+     stdout_not, stdout_and, stdout_oor, "≪", 0111, os_new_nj,
      STDOUT_FILENO, l_setnoblock, and2)
 
 SP(set) {

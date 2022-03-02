@@ -2,9 +2,9 @@
 #include "../gotgod.h"
 #include "../oars.h"
 #include "pith_coords.h"
-#define MAXΣ 1024
+#define MAXΣ 0x1000
 
-static p_t σtable[MAXΣ][512];
+static p_t σtable[MAXΣ][0x10000 / sizeof(void *)];
 
 static p_t *getσ() {
   static W_t c = 0;

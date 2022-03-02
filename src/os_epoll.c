@@ -13,11 +13,13 @@ N(l_read) {
   R(Q_t, nbyte);
   R(void *, buf);
   R(Q_t, fd);
-  printf("EAGAIN:%d\n",EAGAIN);
-  Q_t num = read(fd, buf, nbyte);
-  if (num < 0)
-    C(2);
-  else
+  q_t num = read(fd, buf, nbyte);
+  if (num < 0) {
+    if (errno == EAGAIN)
+      C(0);
+    else
+      C(2);
+  } else
     A(num) C(1);
 }
 N(l_read2) {
