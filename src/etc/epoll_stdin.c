@@ -39,15 +39,20 @@ int main(void) {
       if (fd == STDIN_FILENO)
         while (1) {
           long ret = read(0, buffer, sizeof(buffer));
-          if (ret < 0) {
+          if (ret == 0) {
+            printf("EOF\n");
+            break;
+          } else if (ret < 0) {
             if (errno == EAGAIN) {
               printf("EAGAIN\n");
               break;
-            } else
-              printf("error\n"), exit(0);
-          } else if (ret == 0)
-            continue;
-          printf("%ld %ld\n", c, ret);
+            } else {
+              printf("ERROR\n");
+              exit(0);
+            }
+          } else {
+            printf("%ld %ld\n", c, ret);
+          }
         }
       else if (fd == STDOUT_FILENO)
         c++;
