@@ -36,7 +36,7 @@ static Q_t  epoll_fd;
 static char buffer[0x10000];
 struct epoll_event events[2];
 
-Sar(epollwait,
+Sar(epoll_get_events,
     epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
 S(prn) {
   R(Q_t, num);
@@ -52,22 +52,22 @@ S(process_in) {
      epoll_ctl_reset_in,
      notand3or) O;
 }
-S(processevents) {
+S(process_events) {
   R(Q_t, num);
   if (num) {
     p_t *oο = events[num - 1].data.ptr;
-    A6(oο[7].c, oο, os_queue, num - 1, processevents, and2) O;
+    A6(oο[7].c, oο, os_queue, num - 1, process_events, and2) O;
   } else C(1);
 }
-Sar(queuewait,
-    epollwait, processevents, and, queuewait, and, ο[Φ].p, os_queue)
+Sar(loop_in_queue,
+    epoll_get_events, process_events, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
 SarP(epoll_ctl_add_in,
      epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 SP(stdin_oor) {
   R(p_t*, oο);
-  A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, queuewait, and) O;
+  A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, loop_in_queue, and) O;
 }
 SP(stdin_and) { C(1); }
 SP(stdin_not) { C(1); }
