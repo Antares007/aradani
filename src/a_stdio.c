@@ -41,7 +41,7 @@ Sar(epollwait,
 S(prn) {
   R(Q_t, num);
   if (num) C(1);
-  else C(2);
+  else Error;
 }
 Sar(epoll_ctl_reset_in,
     epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)

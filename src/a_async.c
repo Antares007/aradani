@@ -74,7 +74,7 @@ SP(init) {
 S(drop) { α--, C(1); }
 // oor exec sentence,  stop timer & C(0)
 // and exec sentence, renew timer & C(1)
-// not                 stop timer & C(2)
+// not                 stop timer & Error
 S(addQQ) {
   R(Q_t, r);
   R(Q_t, l);

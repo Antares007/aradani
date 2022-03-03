@@ -35,7 +35,7 @@ U8CP_UM(um1110xxxx, 0xf0, 0xe0, 0x0f, 0)
 U8CP_UM(um11110xxx, 0xf8, 0xf0, 0x07, 0)
 
 S(lookahead)       { A((Q_t)ο5[ο7]) C(1); }
-S(shift)           { C((ο7 < ο6) ? (ο7++, 1) : 2); }
+S(shift)           { if (ο7 < ο6) ο7++, C(1); else Error; }
 S(bin_lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 S(bin_or)          { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 S(lookahead_shift) { A3(lookahead, shift,  and) O; }
@@ -169,35 +169,3 @@ S(init) { C(1); }
 // clang-format off
 EN(tail,
 მთავარი,      exports);
-
-// 0xxx xxxx
-// 110x xxxx 10xxxxxx
-// 1110 xxxx 10xxxxxx 10xxxxxx
-// 1111 0xxx 10xxxxxx 10xxxxxx 10xxxxxx
-N(lau) {
-  R(q_t, p); R(q_t, l); R(const char *, b);
-  if (p > l - 1)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0x80) == 0x00)
-    A((Q_t)b[p + 0]) A3(b, l, p + 1) C(1);
-  else if (p > l - 2 || (b[p + 1] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xe0) == 0xc0)
-    A((0x1f & (Q_t)b[p + 0]) << 6
-    | (0x3f & (Q_t)b[p + 1])) A3(b, l, p + 2) C(1);
-  else if (p > l - 3 || (b[p + 2] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xf0) == 0xe0)
-    A((0x0f & (Q_t)b[p + 0]) << 12
-    | (0x3f & (Q_t)b[p + 1]) << 6
-    | (0x3f & (Q_t)b[p + 2])) A3(b, l, p + 3) C(1);
-  else if (p > l - 4 || (b[p + 3] & 0xc0) != 0x80)
-    A3(b, l, p) C(2);
-  else if ((b[p + 0] & 0xf8) == 0xf0)
-    A((0x07 & (Q_t)b[p + 0]) << 18
-    | (0x3f & (Q_t)b[p + 1]) << 12
-    | (0x3f & (Q_t)b[p + 2]) << 6
-    | (0x3f & (Q_t)b[p + 3])) A3(b, l, p + 4) C(1);
-  else
-    A3(b, l, p) C(2);
-}
