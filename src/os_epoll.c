@@ -2,9 +2,22 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <strings.h>
 #include <sys/epoll.h>
 #include <unistd.h>
+N(l_malloc) {
+  R(Q_t, s);
+  void *m = malloc(s);
+  if (m)
+    A(m) C(1);
+  else
+    C(2);
+}
+N(l_free) {
+  R(void *, m);
+  free(m), C(1);
+}
 N(l_close) {
   R(Q_t, fd);
   close(fd), C(1);
@@ -21,18 +34,6 @@ N(l_read) {
       C(2);
   } else
     A(num) C(1);
-}
-N(l_read2) {
-  R(Q_t, connfd);
-  R(Q_t, nread);
-  ssize_t ret = recv(connfd, ((char *)ο) + nread, sizeof(void *), 0);
-  if (ret < 0)
-    A(nread) C((errno == EAGAIN || errno == EWOULDBLOCK) ? 0 : 2);
-  else if (ret == 0)
-    A(nread) C(1);
-  else
-    α = (nread + ret + sizeof(void *) - 1) / sizeof(void *),
-    A3(nread + ret, connfd, l_read) O;
 }
 N(l_accept) {
   R(q_t, fd);

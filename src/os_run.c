@@ -17,7 +17,9 @@ l_close,            L)END(L,
 l_epoll_create,     L)END(L,
 l_epoll_ctl,        L)END(L,
 l_epoll_wait,       L)END(L,
+l_free,             L)END(L,
 l_listen,           L)END(L,
+l_malloc,           L)END(L,
 l_read,             L)END(L,
 l_setnoblock,       L)END(L,
 l_socket,           L)END(L,
@@ -40,11 +42,9 @@ SP(ray_not) {
   }
 }
 SP(ray_oor) { os_next(T()); }
-
 void os_hrtime_init();
 int main(int argc, char **argv) {
-  if (argc < 2)
-    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);
