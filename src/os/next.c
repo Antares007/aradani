@@ -10,7 +10,7 @@ N(os_next) {
     return C(2);
 
   QUEUE_REMOVE(q);
-  free(σ);
+  if (σ) free(σ);
 
   p_t *nσ = ((p_t *)q);
   Q_t nα = nσ[2].Q;
