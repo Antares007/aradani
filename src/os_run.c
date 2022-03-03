@@ -40,11 +40,11 @@ SP(ray_not) {
   }
 }
 SP(ray_oor) { os_next(T()); }
-void os_queue_init();
+
 void os_hrtime_init();
 int main(int argc, char **argv) {
-  if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
-  os_queue_init();
+  if (argc < 2)
+    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();
   p_t σ[512], ο[512];
   Q_t α = 0, ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);

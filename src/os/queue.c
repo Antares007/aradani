@@ -2,37 +2,24 @@
 #include "../gotgod.h"
 #include "../oars.h"
 #include "pith_coords.h"
-#define MAXΣ 0x1000
-
-static p_t σtable[MAXΣ][0x10000 / sizeof(void *)];
-
-static p_t *getσ() {
-  static W_t c = 0;
-  p_t *σ = σtable[c++ % MAXΣ];
-  return σ[0].Q ? getσ() : σ;
-}
+#include <stdlib.h>
 
 N(os_queue) {
   R(p_t *, nο);
   p_t *nσ;
   Q_t nα = α;
   if (ρ < ο[Ρ].Q) {
-    nσ = getσ();
+    nσ = malloc(0x1000);
     while (α)
       α--, nσ[α].v = σ[α].v;
   } else {
     nσ = σ;
-    static p_t emptyσ[1];
-    σ = emptyσ, α = 0;
+    σ = 0;
+    α = 0;
   }
   QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&nσ[nα + 0]);
   nσ[nα + 2].Q = nα;
   nσ[nα + 3].v = nο;
   nσ[nα + 4].Q = nο[Ρ].Q;
   C(1);
-}
-
-void os_queue_init() {
-  for (Q_t i = 0; i < MAXΣ; i++)
-    σtable[i][0].Q = 0;
 }
