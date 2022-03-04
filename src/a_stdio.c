@@ -25,6 +25,7 @@ and,                L)IN(L,
 and2,               L)IN(L,
 and3,               L)IN(L,
 and6,               L)IN(L,
+andor,              L)IN(L,
 not,                L)IN(L,
 notand4or,          L)IN(L,
 //
@@ -38,33 +39,35 @@ static p_t* stdoutο;
 static Q_t  epoll_fd;
 struct epoll_event events[2];
 typedef struct stdin_t {
-  n_t process_in;
+  n_t epollin;
   p_t *sink;
 } stdin_t;
 
 Sar(epoll_get_events,
     epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
-S(epoll_ctl_reset_in) {
-  Α(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl) O;
-}
+
+Sar(reset_in, epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+
+S(eagain) { Α(reset_in) O; }
+
 SP(sent_chunk_to_sink) {
   R(void*, buffer);
   R(q_t, num);
   stdin_t *s = (stdin_t*)&ο[7];
   Α(num, buffer, 'CNK', god, s->sink, os_queue) O;
 }
-S(process_in);
-SarP(queue_process_in, process_in, ο, os_queue)
+S(epollin);
+SarP(queue_process_in, epollin, ο, os_queue)
 S(process_in_n) {
   R(void*, buffer);
   R(Q_t,   size);
   Α(STDIN_FILENO, buffer, size, l_read,
     buffer, l_free,
     buffer, sent_chunk_to_sink, queue_process_in, and,
-    epoll_ctl_reset_in,
+    eagain,
     0241, nar) O;
 }
-SP(process_in) {
+SP(epollin) {
   Q_t size = 0x10000;
   A5(size, size, l_malloc, process_in_n, and) O;
 }
@@ -78,20 +81,22 @@ S(process_events) {
 Sar(loop_in_queue,
     epoll_get_events, process_events, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
-SarP(epoll_ctl_add_in,
-     epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SP(stdin_oor) {
-  R(p_t *, oο);
-  stdin_t *s = (stdin_t*)&ο[7];
-  s->sink = oο;
-  A8(ο, gor, oο, os_queue, epoll_ctl_add_in, and, loop_in_queue, and) O;
-}
+S(welcome) { R(p_t *, oο); ο[8].p = oο; A4(ο, gor, ο[8].p, os_queue) O; }
+S(bye) { A4(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
+S(is_active) { C(ο[8].p != 0); }
+Sar(epoll_ctl_add_in,
+    epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+
+SarP(stdin_oor,
+     is_active, bye, epoll_ctl_add_in, andor,
+                                welcome, and)
+
 SP(stdin_and) { α = 0, C(1); }
 SP(stdin_not) { C(1); }
 SP(stdin_set) {
   R(p_t *, oο);
   stdin_t *s = (stdin_t*)&oο[7];
-  s->process_in = process_in;
+  s->epollin = epollin;
   A(oο) C(1);
 }
 SarP(mk_stdin,
@@ -128,7 +133,8 @@ SP(set) {
 
 SarP(init, 5, l_epoll_create, mk_stdin, and,
                              mk_stdout, and,
-                                   set, and)
+                                   set, and,
+                         loop_in_queue, and)
 
 Nar(example, stdoutο, gor, stdinο, os_queue);
 
