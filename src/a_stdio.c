@@ -92,8 +92,8 @@ S(is_unmuted ) { C(ο[9].Q != 0); }
  ******************************************************************************/
 SarP(stdin_oor,
      is_active, bye, epoll_ctl_add_in, andor, welcome, and)
-Sar(mute, god);
-Sar(unmute, god);
+SarP(mute, god);
+SarP(unmute, god);
 Sar(stdin_and_n,
     'NOP', god, match,  
     'MUT', mute,  match, or3,
@@ -125,7 +125,7 @@ SarP(mk_stdin,
 SP(stdout_oor) {
   R(p_t*, oο);
   ο[8].p = oο;
-  C(1);
+  Α('UNM', god, ο[8].p, os_queue) O;
 }
 SP(stdout_and) {
   R(Q_t, m);
