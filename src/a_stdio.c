@@ -82,14 +82,14 @@ Sar(epoll_ctl_add_in,
 Sar(epoll_ctl_del_in,
     epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-SP(match       ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-SP(hi          ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
-SP(welcome     ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
-SP(bye         ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
-SP(is_readable ) { C(ο[7].Q != 0); }
-SP(is_active   ) { C(ο[8].p != 0); }
-SP(is_unmuted  ) { C(ο[9].Q != 0); }
-SP(set_unmuted ) { ο[9].Q = 1, C(1); }
+S(match       ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+S(hi          ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
+S(welcome     ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
+S(bye         ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
+S(is_readable ) { C(ο[7].Q != 0); }
+S(is_active   ) { C(ο[8].p != 0); }
+S(is_unmuted  ) { C(ο[9].Q != 0); }
+S(set_unmuted ) { ο[9].Q = 1, C(1); }
 /****************************************************************************** 
  *                       pith of STDIN                                        *
  ******************************************************************************/
