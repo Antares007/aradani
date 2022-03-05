@@ -46,10 +46,6 @@ static p_t* stdinο;
 static p_t* stdoutο;
 static Q_t  epoll_fd;
 struct epoll_event events[2];
-typedef struct stdin_t {
-  n_t epollin;
-  p_t *sink;
-} stdin_t;
 
 S(epoll_get_events);
 S(reset_in);
@@ -77,6 +73,7 @@ S(process_events) {
 Sar(loop_in_queue,
     epoll_get_events, process_events, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
+S(hi) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
 S(welcome) { R(p_t *, oο); ο[8].p = oο; A4(ο, gor, ο[8].p, os_queue) O; }
 S(bye) { A4(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
 S(is_active) { C(ο[8].p != 0); }
@@ -85,12 +82,14 @@ Sar(epoll_ctl_add_in,
 Sar(epoll_ctl_del_in,
     epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
+S(Match) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+
+/****************************************************************************** 
+ *                       pith of STDIN                                        *
+ ******************************************************************************/
 SarP(stdin_oor,
      is_active, bye, epoll_ctl_add_in, andor,
                                 welcome, and)
-
-S(Match) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-
 Sar(mute, god);
 Sar(unmute, god);
 Sar(stdin_and_n,
@@ -100,21 +99,27 @@ Sar(stdin_and_n,
                         got, or)
 SarP(stdin_and,
     is_active, stdin_and_n, got, andor)
-
 SarP(stdin_not,
     epoll_ctl_del_in)
-
-SP(stdin_set) {
-  R(p_t *, oο);
-  stdin_t *s = (stdin_t*)&oο[7];
-  s->epollin = epollin;
-  A(oο) C(1);
+S(stdin_set) {
+  R(p_t *, o_ο);
+  o_ο[7].Q = 0; // 0) Readable can read until EAGAIN
+                // 1) EAGAIN no more data to read register epoll event
+                // 2) waiting EPOLLIN event
+  o_ο[8].p = 0; // 0) Unactive
+                // *) Pith (p_t*) of active consumer
+  o_ο[9].Q = 0; // 0) Muted
+                // 1) Unmute
+  A(o_ο) C(1);
 }
 SarP(mk_stdin,
      stdin_not, stdin_and, stdin_oor, "≫", 0111, os_new_nj,
      stdin_set, and,
      STDIN_FILENO, l_setnoblock, and2)
 
+/****************************************************************************** 
+ *                       pith of STDOUT                                       *
+ ******************************************************************************/
 SP(stdout_oor) {
   R(p_t*, oο);
   ο[8].p = oο;
@@ -147,8 +152,7 @@ SarP(init, 5, l_epoll_create, mk_stdin, and,
                                    set, and,
                          loop_in_queue, and,
                    exports, debug_init, and2)
-
-Nar(example, stdoutο, gor, stdinο, os_queue);
+Nar(example, stdoutο, stdinο, hi);
 
 Nar(ls, exports, os_ls)
 
