@@ -23,6 +23,7 @@ os_queue,           L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
+and2or,             L)IN(L,
 and2or3,            L)IN(L,
 and3,               L)IN(L,
 and3or,             L)IN(L,
@@ -69,7 +70,8 @@ S(process_events) {
   R(q_t, num);
   if (num) {
     p_t *oο = events[num - 1].data.ptr;
-    Α(oο[7].c, oο, os_queue, num - 1, process_events, and2) O;
+    oο[7].Q = 1;
+    Α('UNM', god, oο, os_queue, num - 1, process_events, and2) O;
   } else C(1);
 }
 Sar(loop_in_queue,
@@ -80,21 +82,28 @@ Sar(epoll_ctl_add_in,
 Sar(epoll_ctl_del_in,
     epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-S(match      ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-S(hi         ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
-S(welcome    ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
-S(bye        ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
-S(is_readable) { C(ο[7].Q != 0); }
-S(is_active  ) { C(ο[8].p != 0); }
-S(is_unmuted ) { C(ο[9].Q != 0); }
+SP(match       ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+SP(hi          ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
+SP(welcome     ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
+SP(bye         ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
+SP(is_readable ) { C(ο[7].Q != 0); }
+SP(is_active   ) { C(ο[8].p != 0); }
+SP(is_unmuted  ) { C(ο[9].Q != 0); }
+SP(set_unmuted ) { ο[9].Q = 1, C(1); }
 /****************************************************************************** 
  *                       pith of STDIN                                        *
  ******************************************************************************/
 SarP(stdin_oor,
-     is_active, bye, epoll_ctl_add_in, andor, welcome, and)
+     is_active, bye, god, andor, welcome, and)
 SarP(mute, god);
-SarP(unmute, god);
-Sar(stdin_and_n,
+
+SarP(unmute_n,
+    is_readable, set_unmuted, epollin, and, epoll_ctl_add_in, and3or)
+
+SarP(unmute,
+    is_unmuted, god, unmute_n, andor)
+
+SarP(stdin_and_n,
     'NOP', god, match,  
     'MUT', mute,  match, or3,
     'UNM', unmute,  match, or3,
@@ -111,7 +120,7 @@ S(stdin_set) {
                 // *) Pith (p_t*) of active consumer
   o_ο[9].Q = 0; // 0) Muted
                 // 1) Unmuted
-  o_ο[7].c = epollin;
+  //o_ο[7].c = epollin;
   A(o_ο) C(1);
 }
 SarP(mk_stdin,
@@ -134,7 +143,7 @@ SP(stdout_and) {
     R(Q_t,   len);
     buff[len - 1] = 0;
     print("%p %lu\n", buff, len);
-    Α('MUT', god, ο[8].p, os_queue, buff, l_free, and2) O;
+    Α(buff, l_free) O;
   } else C(2);
 }
 SP(stdout_not) { C(1); }
