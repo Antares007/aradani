@@ -52,10 +52,12 @@ S(reset_in);
 S(epollin);
 S(read_stdin);
 S(is_eof);
-S(eagain) { Α(reset_in) O; }
 
-Sar(queue_chunk_send, 'CNK', god, ο[8].p, os_queue)
-Sar(queue_epollin, epollin, ο, os_queue)
+S(eagain) { Α(reset_in) O; }
+Sar(queue_chunk_send,
+   'CNK', god, ο[8].p, os_queue)
+Sar(queue_epollin,
+    epollin, ο, os_queue)
 Sar(epollin,
     read_stdin,
     is_eof, queue_chunk_send,
@@ -73,29 +75,29 @@ S(process_events) {
 Sar(loop_in_queue,
     epoll_get_events, process_events, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
-S(hi) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
-S(welcome) { R(p_t *, oο); ο[8].p = oο; A4(ο, gor, ο[8].p, os_queue) O; }
-S(bye) { A4(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
-S(is_active) { C(ο[8].p != 0); }
 Sar(epoll_ctl_add_in,
     epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 Sar(epoll_ctl_del_in,
     epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-S(Match) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-
+S(match      ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+S(hi         ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
+S(welcome    ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
+S(bye        ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
+S(is_readable) { C(ο[7].Q != 0); }
+S(is_active  ) { C(ο[8].p != 0); }
+S(is_unmuted ) { C(ο[9].Q != 0); }
 /****************************************************************************** 
  *                       pith of STDIN                                        *
  ******************************************************************************/
 SarP(stdin_oor,
-     is_active, bye, epoll_ctl_add_in, andor,
-                                welcome, and)
+     is_active, bye, epoll_ctl_add_in, andor, welcome, and)
 Sar(mute, god);
 Sar(unmute, god);
 Sar(stdin_and_n,
-    'NOP', god, Match,  
-    'MUT', mute,  Match, or3,
-    'UNM', unmute,  Match, or3,
+    'NOP', god, match,  
+    'MUT', mute,  match, or3,
+    'UNM', unmute,  match, or3,
                         got, or)
 SarP(stdin_and,
     is_active, stdin_and_n, got, andor)
@@ -103,13 +105,13 @@ SarP(stdin_not,
     epoll_ctl_del_in)
 S(stdin_set) {
   R(p_t *, o_ο);
-  o_ο[7].Q = 0; // 0) Readable can read until EAGAIN
-                // 1) EAGAIN no more data to read register epoll event
-                // 2) waiting EPOLLIN event
+  o_ο[7].Q = 0; // 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
+                // 1) Readable can read until EAGAIN
   o_ο[8].p = 0; // 0) Unactive
                 // *) Pith (p_t*) of active consumer
   o_ο[9].Q = 0; // 0) Muted
-                // 1) Unmute
+                // 1) Unmuted
+  o_ο[7].c = epollin;
   A(o_ο) C(1);
 }
 SarP(mk_stdin,
