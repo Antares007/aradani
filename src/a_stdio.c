@@ -23,14 +23,22 @@ os_queue,           L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
+and2or3,            L)IN(L,
 and3,               L)IN(L,
+and3or,             L)IN(L,
 and6,               L)IN(L,
 andor,              L)IN(L,
+andor3,             L)IN(L,
 not,                L)IN(L,
+not2,               L)IN(L,
+not2and2,           L)IN(L,
 notand4or,          L)IN(L,
+or,                 L)IN(L,
+or3,                L)IN(L,
 //
 debug_init,         L)IN(L,
-debug_οdump,  imports);
+debug_οdump,        L)IN(L,
+debug_σdump,  imports);
 #include "unistd.h"
 #include <sys/epoll.h>
 
@@ -43,34 +51,22 @@ typedef struct stdin_t {
   p_t *sink;
 } stdin_t;
 
-Sar(epoll_get_events,
-    epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
-
-Sar(reset_in, epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-
+S(epoll_get_events);
+S(reset_in);
+S(epollin);
+S(read_stdin);
+S(is_eof);
 S(eagain) { Α(reset_in) O; }
 
-SP(sent_chunk_to_sink) {
-  R(void*, buffer);
-  R(q_t, num);
-  stdin_t *s = (stdin_t*)&ο[7];
-  Α(num, buffer, 'CNK', god, s->sink, os_queue) O;
-}
-S(epollin);
-SarP(queue_process_in, epollin, ο, os_queue)
-S(process_in_n) {
-  R(void*, buffer);
-  R(Q_t,   size);
-  Α(STDIN_FILENO, buffer, size, l_read,
-    buffer, l_free,
-    buffer, sent_chunk_to_sink, queue_process_in, and,
+Sar(queue_chunk_send, 'CNK', god, ο[8].p, os_queue)
+Sar(queue_epollin, epollin, ο, os_queue)
+Sar(epollin,
+    read_stdin,
+    is_eof, queue_chunk_send,
+            queue_chunk_send, queue_epollin, and, andor3,
     eagain,
-    0241, nar) O;
-}
-SP(epollin) {
-  Q_t size = 0x10000;
-  A5(size, size, l_malloc, process_in_n, and) O;
-}
+    0061, nar, 'NOP', god, and2)
+
 S(process_events) {
   R(q_t, num);
   if (num) {
@@ -86,13 +82,28 @@ S(bye) { A4(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
 S(is_active) { C(ο[8].p != 0); }
 Sar(epoll_ctl_add_in,
     epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_in,
+    epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 SarP(stdin_oor,
      is_active, bye, epoll_ctl_add_in, andor,
                                 welcome, and)
 
-SP(stdin_and) { α = 0, C(1); }
-SP(stdin_not) { C(1); }
+S(Match) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+
+Sar(mute, god);
+Sar(unmute, god);
+Sar(stdin_and_n,
+    'NOP', god, Match,  
+    'MUT', mute,  Match, or3,
+    'UNM', unmute,  Match, or3,
+                        got, or)
+SarP(stdin_and,
+    is_active, stdin_and_n, got, andor)
+
+SarP(stdin_not,
+    epoll_ctl_del_in)
+
 SP(stdin_set) {
   R(p_t *, oο);
   stdin_t *s = (stdin_t*)&oο[7];
@@ -109,14 +120,14 @@ SP(stdout_oor) {
   ο[8].p = oο;
   C(1);
 }
-S(stdout_and) {
+SP(stdout_and) {
   R(Q_t, m);
   if (m == 'CNK') {
     R(char*, buff);
     R(Q_t,   len);
     buff[len-1] = 0;
     print("%p %lu\n", buff, len);
-    Α(buff, l_free) O;
+    Α('MUT', god, ο[8].p, os_queue, buff, l_free, and2) O;
   } else C(2);
 }
 SP(stdout_not) { C(1); }
@@ -134,7 +145,8 @@ SP(set) {
 SarP(init, 5, l_epoll_create, mk_stdin, and,
                              mk_stdout, and,
                                    set, and,
-                         loop_in_queue, and)
+                         loop_in_queue, and,
+                   exports, debug_init, and2)
 
 Nar(example, stdoutο, gor, stdinο, os_queue);
 
@@ -144,3 +156,17 @@ Nar(ls, exports, os_ls)
 EN(tail,
 ls,                 L)EN(L,
 example,      exports)
+
+S(read_stdin_n) {
+  R(void *, buffer);
+  Α(STDIN_FILENO, buffer, 0x10000, l_read, buffer, l_free, buffer, god, not2and2) O;
+}
+Sar(read_stdin, 0x10000, l_malloc, read_stdin_n, and)
+S(is_eof) {
+  R(void*, buff);
+  R(Q_t, num);
+  Α(num, buff) C(num == 0);
+};
+Sar(epoll_get_events,
+    epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+Sar(reset_in, epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
