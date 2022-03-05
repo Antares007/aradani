@@ -132,7 +132,7 @@ SP(stdout_and) {
   if (m == 'CNK') {
     R(char*, buff);
     R(Q_t,   len);
-    buff[len-1] = 0;
+    buff[len - 1] = 0;
     print("%p %lu\n", buff, len);
     Α('MUT', god, ο[8].p, os_queue, buff, l_free, and2) O;
   } else C(2);
