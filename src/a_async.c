@@ -61,11 +61,11 @@ S(run_timeouts_n) {
   timeouts_count -= pos;
   O;
 }
-Sar(run_timeouts, os_hrtime, run_timeouts_n, and)
+Sar(run_timeouts)(os_hrtime, run_timeouts_n, and)
 S(queue_timeout_run);
-Sar(check_queue_timeout, timeouts_count ? queue_timeout_run : god)
-Sar(queue_timeout_run, run_timeouts, check_queue_timeout, and, ο, os_queue)
-Sar(insert_timeout, insert_timeout_n, timeouts_count ? god : queue_timeout_run, and)
+Sar(check_queue_timeout)(timeouts_count ? queue_timeout_run : god)
+Sar(queue_timeout_run)(run_timeouts, check_queue_timeout, and, ο, os_queue)
+Sar(insert_timeout)(insert_timeout_n, timeouts_count ? god : queue_timeout_run, and)
 
 SP(init) {
   timeouts_count = 0;
@@ -81,8 +81,8 @@ S(addQQ) {
   Α(l + r) C(1);
 }
 S(insert_timer_pith);
-Sar(reset_timer, ο, insert_timer_pith, ο[0].p, os_queue)
-Sar(create_timer_pith, reset_timer, 0010, os_new_j)
+Sar(reset_timer)(ο, insert_timer_pith, ο[0].p, os_queue)
+Sar(create_timer_pith)(reset_timer, 0010, os_new_j)
 S(timer_n) {
   R(p_t *, oο);
   Q_t oρ = 7;
@@ -95,11 +95,11 @@ S(insert_timer_pith) {
   R(p_t *, oο);
   Α(oο[8].Q, os_hrtime, addQQ, and, oο, insert_timeout, and2) O;
 }
-Sar(timer, create_timer_pith, timer_n, and, insert_timer_pith, and)
+Sar(timer)(create_timer_pith, timer_n, and, insert_timer_pith, and)
 
 S(printtimeouts) { for (Q_t i = 0; i < timeouts_count; i++) print("%lu %p\n", timeouts[i], piths[i]); C(1); }
 S(hello) { R(Q_t, i); print("hello %lu\n", i), C(1); }
-NarP(timers,
+NarP(timers)(
   debug_οdump,
   1, hello, god, and, 1000, timer, and6,
   2, hello, god, and, 2000, timer, and6,
@@ -110,7 +110,7 @@ NarP(timers,
   7, hello, god, and, 7000, timer, and6,
   printtimeouts, and)
 
-Nar(ls, exports, os_ls)
+Nar(ls)(exports, os_ls)
 
 // clang-format off
 EN(tail,

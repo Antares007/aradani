@@ -30,7 +30,7 @@ SP(test1) {
   print("1. %lu\n", counter[1] == 3);
   print("2. %lu\n", counter[2] == 2);
 }
-NarP(os_new_test, make_pith, test1, and)
+NarP(os_new_test)(make_pith, test1, and)
 
 // clang-format off
 EN(tail,

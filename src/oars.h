@@ -39,10 +39,6 @@ typedef void (*n_t)(OARS);
 #define S(n) static N(n)
 #define T(n) n##σ, n##α, n##ο, n##ρ
 #define C(r) G(r)
-#define Sar(Name, ...) S(Name) {Α(__VA_ARGS__) O;}
-#define Nar(Name, ...) N(Name) {Α(__VA_ARGS__) O;}
-#define SarP(Name, ...) SP(Name) {Α(__VA_ARGS__) O;}
-#define NarP(Name, ...) NP(Name) {Α(__VA_ARGS__) O;}
 
 #define Sa(T, ...) (*((T *)&σ[α]) = ((T)__VA_ARGS__), α += wordCountOf(T)),
 #define Sr(T, n) T *n = (T *)&σ[α -= wordCountOf(T)]
@@ -56,6 +52,7 @@ typedef void (*n_t)(OARS);
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
 
+#include "oars_nars.h"
 #include "oars_a21.h"
 #include "oars_as.h"
 #include "oars_sa21.h"
