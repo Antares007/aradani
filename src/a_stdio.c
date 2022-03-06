@@ -96,29 +96,18 @@ SP(set_readable) { ο[7].Q = 1, C(1); }
 /****************************************************************************** 
  *                       pith of STDIN                                        *
  ******************************************************************************/
-SarP(stdin_oor)(
-     is_active, bye, god, andor, welcome, and)
-
-SarP(mute)(
-    is_unmuted, set_muted, god, andor);
-
-SarP(unmute_continue)(
-    set_unmuted, epollin, and)
-SarP(unmute_n)(
-    is_readable, unmute_continue, epoll_ctl_add_in, andor)
-SarP(unmute)(
-    is_unmuted, god, unmute_n, andor)
-
-SarP(stdin_and_n)(
-    'NOP', god, match,  
-    'MUT', mute,  match, or3,
-    'UNM', unmute,  match, or3,
-                        got, or)
-SarP(stdin_and)(
-    is_active, stdin_and_n, got, andor)
-SarP(stdin_not)(
-    epoll_ctl_del_in)
-SarP(on_epollin)(set_readable, epollin, and)
+SarP(stdin_oor      )(is_active, bye, god, andor, welcome, and)
+SarP(mute           )(is_unmuted, set_muted, god, andor);
+SarP(unmute_continue)(set_unmuted, epollin, and)
+SarP(unmute_n       )(is_readable, unmute_continue, epoll_ctl_add_in, andor)
+SarP(unmute         )(is_unmuted, god, unmute_n, andor)
+SarP(stdin_and_n    )('NOP', god, match,  
+                      'MUT', mute,  match, or3,
+                      'UNM', unmute,  match, or3,
+                                          got, or)
+SarP(stdin_and      )(is_active, stdin_and_n, got, andor)
+SarP(stdin_not      )(epoll_ctl_del_in)
+SarP(on_epollin     )(set_readable, epollin, and)
   //7 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
   //  1) Readable can read until EAGAIN
   //8 0) Unactive
