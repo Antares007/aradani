@@ -24,6 +24,7 @@ l_malloc,           L)END(L,
 l_read,             L)END(L,
 l_setnoblock,       L)END(L,
 l_socket,           L)END(L,
+l_write,            L)END(L,
 nar,                L)END(L,
 nar_and,            L)END(L,
 nar_not,            L)END(L,
@@ -41,7 +42,6 @@ SP(ray_not) {
   if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); }
 }
 SP(ray_oor) { os_next(T()); }
-
 void os_hrtime_init();
 int main(int argc, char **argv) {
   if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
