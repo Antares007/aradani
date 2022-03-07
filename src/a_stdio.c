@@ -48,57 +48,53 @@ static p_t* stdoutο;
 static Q_t  epoll_fd;
 struct epoll_event events[2];
 
-S(epoll_get_events);
-S(reset_in);
-S(epollin);
-S(read_stdin);
-S(is_eof);
+S(epoll_on_wait) {
+  R(q_t, num);
+  if (num) {
+    print("\n\n*** num: %ld\n", num);
+    p_t *oο = events[num - 1].data.ptr;
+    Α(oο[7].c, oο, os_queue, num - 1, epoll_on_wait, and2) O;
+  } else C(1);
+}
+Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+Sar(epoll_ctl_add_in)(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_in)(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_in)(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(loop_in_queue   )(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, os_queue)
+S(read_stdin_n) {
+  R(void *, buffer);
+  Α(STDIN_FILENO, buffer, 0x1000, l_read, buffer, l_free, buffer, god, not2and2) O;
+}
+Sar(read_stdin)(0x1000, l_malloc, read_stdin_n, and)
 
+S(is_eof) { R(void*, buff); R(Q_t, num); Α(num, buff) C(num == 0); };
 S(match       ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
 S(hi          ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
 S(welcome     ) { R(p_t *, oο); ο[8].p = oο; Α(ο, gor, ο[8].p, os_queue) O; }
 S(bye         ) { Α(ο, got, ο[8].p, os_queue) ο[8].p = 0, O; }
-S(is_readable ) { C(ο[7].Q != 0); }
+S(is_readable ) { C(ο[10].Q != 0); }
 S(is_active   ) { C(ο[8].p != 0); }
 S(is_unmuted  ) { C(ο[9].Q != 0); }
 SP(set_unmuted ) { ο[9].Q = 1, C(1); }
 SP(set_muted   ) { ο[9].Q = 0, C(1); }
-SP(set_readable) { ο[7].Q = 1, C(1); }
-SP(set_unreadable) { ο[7].Q = 0, C(1); }
-S(eagain) { Α(set_unreadable, reset_in, and) O; }
+SP(set_readable) { ο[10].Q = 1, C(1); }
+SP(set_unreadable) { ο[10].Q = 0, C(1); }
 Sar(queue_chunk_send)(
    'CNK', god, ο[8].p, os_queue)
+S(epollin);
 Sar(queue_epollin)(
     epollin, ο, os_queue)
 Sar(epollin_n)(
     read_stdin,
     is_eof, queue_chunk_send,
             queue_chunk_send, queue_epollin, and, andor3,
-    eagain,
-    0061, nar)
+    set_unreadable, epoll_ctl_mod_in, and,
+    0063, nar)
 Sar(epollin)(is_unmuted, epollin_n, god, andor)
-
-S(process_events) {
-  R(q_t, num);
-  if (num) {
-    print("\n\n***\n");
-    p_t *oο = events[num - 1].data.ptr;
-    Α(oο[10].c, oο, os_queue, num - 1, process_events, and2) O;
-  } else C(1);
-}
-Sar(loop_in_queue)(
-    epoll_get_events, process_events, and, loop_in_queue, and, ο[Φ].p, os_queue)
-
-Sar(epoll_ctl_add_in)(
-    epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Sar(epoll_ctl_del_in)(
-    epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-
-
 /****************************************************************************** 
  *                       pith of STDIN                                        *
  ******************************************************************************/
-S(is_alfa_zero     ) { C(α == 0); }
+S(is_alfa_zero     ){ C(α == 0); }
 Sar(stdin_oor      )(is_active, bye, god, andor, welcome, and)
 Sar(mute           )(is_unmuted, set_muted, god, andor);
 Sar(unmute_n       )(set_unmuted, is_readable, and, epollin, epoll_ctl_add_in, andor)
@@ -110,14 +106,15 @@ Sar(stdin_and_n    )(is_alfa_zero,
 Sar(stdin_and      )(is_active, stdin_and_n, got, andor)
 Sar(stdin_not      )(epoll_ctl_del_in)
 Sar(on_epollin     )(set_readable, epollin, and)
-  //7 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
-  //  1) Readable can read until EAGAIN
-  //8 0) Unactive
-  //  *) Pith (p_t*) of active consumer
-  //9 0) Muted
-  //  1) Unmuted
+  //7   ) epoll on wait word
+  //8  0) Unactive
+  //   *) Pith (p_t*) of active consumer
+  //9  0) Muted
+  //   1) Unmuted
+  //10 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
+  //   1) Readable can read until EAGAIN
 S(stdin_set) {
-  R(p_t *, oο); oο[7].Q = 0, oο[8].p = 0, oο[9].Q = 0, oο[10].c = on_epollin, A(oο) C(1);
+  R(p_t *, oο); oο[7].c = on_epollin, oο[8].p = 0, oο[9].Q = 0, oο[10].Q = 0, A(oο) C(1);
 }
 Sar(mk_stdin)(
      stdin_not, stdin_and, stdin_oor, "≫", 0111, os_new_nj,
@@ -155,10 +152,11 @@ S(set) {
 }
 
 Sar(init)(5, l_epoll_create, mk_stdin, and,
-                             mk_stdout, and,
-                                   set, and,
-                         loop_in_queue, and,
-                   exports, debug_init, and2)
+                            mk_stdout, and,
+                                  set, and,
+                        loop_in_queue, and,
+                  exports, debug_init, and2)
+
 Nar(example)(stdoutο, stdinο, hi);
 
 Nar(ls)(exports, os_ls)
@@ -167,17 +165,3 @@ Nar(ls)(exports, os_ls)
 EN(tail,
 ls,                 L)EN(L,
 example,      exports)
-
-S(read_stdin_n) {
-  R(void *, buffer);
-  Α(STDIN_FILENO, buffer, 0x1000, l_read, buffer, l_free, buffer, god, not2and2) O;
-}
-Sar(read_stdin)(0x1000, l_malloc, read_stdin_n, and)
-S(is_eof) {
-  R(void*, buff);
-  R(Q_t, num);
-  Α(num, buff) C(num == 0);
-};
-Sar(epoll_get_events)(
-    epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
-Sar(reset_in)(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
