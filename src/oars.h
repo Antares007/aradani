@@ -14,7 +14,10 @@
                                   .
         ο[ρ+2] = არა/not | ο[ρ+1] = და/and | ο[ρ+0] = ან/or
 
-                                                          */
+"Notandor/არადანი" gives us the power to specify everything
+in the M-language. We need to do so because the M-language
+is the only language we have from the beginning. */
+
 // clang-format off
 #include <stdint.h>
 typedef  int8_t  b_t; typedef  int16_t w_t; typedef  int32_t d_t; typedef  int64_t q_t;
