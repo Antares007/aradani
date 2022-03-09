@@ -177,24 +177,44 @@ Sar(mk_stdin)(
 NP(is_writeable  ){ C(ο[9].Q != 0); }
 NP(set_writeable ){ ο[9].Q = 1; C(1); }
 S(set_notwriteable) { ο[9].Q = 0, C(1); }
-NarP(unmute      )('UNM', god, ο[8].p, os_queue)
+NarP(unmute_producer)(
+  'UNM', god, ο[8].p, os_queue)
 
 SarP(stdout_oor)(
     is_active,
       got,
-      activate, unmute, and, andor3)
-SP(chunk_free) {
+      activate, unmute_producer, and, andor3)
+NP(chunk_free) {
   R(Q_t,   len);
   R(char*, buff);
   buff[len - 1] = 0;
   print("%p %lu\n", buff, len);
   Α(buff, l_free) O;
 }
-SarP(on_chunk)(
-  chunk_free) //(is_writeable, dowrite, add_to_queue, epoll_ctl_mod_out, andor)
+S(dequeue_chunk) {
+  p_t *q;
+  if (&ο[10] == (q = (p_t *)QUEUE_NEXT((QUEUE *)&ο[10]))) C(0);
+  else Α(q[2].v, q[3].Q, q[4].Q, q, l_free) C(1);
+}
+S(queue_chunk_n) {
+  R(p_t *, q);
+  R(Q_t, off);
+  R(Q_t, len);
+  R(void*, buff);
+  QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q);
+  q[2].v = buff, q[3].Q = len, q[4].Q = off, C(1);
+}
+Sar(queue_chunk)(5, l_malloc, queue_chunk_n)
+
+S(is_overflow){}
+S(mute_producer){}
+NarP(on_chunk)(
+  queue_chunk, is_overflow, and,
+    mute_producer,
+    god, andor)
 SarP(stdout_and_n)(
   is_alfa_zero,
-  'CNK', on_chunk,  match, or3,
+  'CNK', chunk_free,  match, or3,
   got, or)
 SarP(stdout_and)(
   is_active,
@@ -203,15 +223,13 @@ SarP(stdout_and)(
 
 SP(stdout_not) { C(1); }
 
-S(queue_pop) {}
-
 S(loop_write);
 Sar(loop_write_n)(
   STDOUT_FILENO, l_write,
     loop_write, ο, os_queue,
     set_notwriteable, epoll_ctl_mod_out, and, and3or3)
 Sar(loop_write)(
-  queue_pop,
+  dequeue_chunk,
     loop_write_n,
     god, andor)
 Nar(on_epoll_out)(
@@ -227,7 +245,7 @@ S(stdout_set) {
   oο[7].c = on_epoll_out;
   oο[8].p = 0;
   oο[9].Q = 0;
-  //QUEUE_INIT((QUEUE*)&oο[10]);
+  QUEUE_INIT((QUEUE*)&oο[10]);
   A(oο) C(1); }
 Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", 0111, os_new_nj,
