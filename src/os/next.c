@@ -7,7 +7,7 @@
 N(os_next) {
   QUEUE *q;
   if ((QUEUE *)&ο[Ψ] == (q = QUEUE_NEXT((QUEUE *)&ο[Ψ])))
-    return Error;
+    return C(2);
 
   QUEUE_REMOVE(q);
   if (σ) free(σ);

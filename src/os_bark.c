@@ -32,7 +32,7 @@ N(os_seed) {
   if (e)
     A(e) C(1);
   else
-    Error;
+    C(2);
 }
 S(os_bark_import_first_n) {
   --α;

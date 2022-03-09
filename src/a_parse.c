@@ -35,7 +35,7 @@ U8CP_UM(um1110xxxx, 0xf0, 0xe0, 0x0f, 0)
 U8CP_UM(um11110xxx, 0xf8, 0xf0, 0x07, 0)
 
 S(lookahead)       { A((Q_t)ο5[ο7]) C(1); }
-S(shift)           { if (ο7 < ο6) ο7++, C(1); else Error; }
+S(shift)           { if (ο7 < ο6) ο7++, C(1); else C(2); }
 S(bin_lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
 S(bin_or)          { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
 S(lookahead_shift) { A3(lookahead, shift,  and) O; }

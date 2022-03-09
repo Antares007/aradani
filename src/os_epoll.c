@@ -12,7 +12,7 @@ N(l_malloc) {
   if (m)
     A(m) C(1);
   else
-    Error;
+    C(2);
 }
 N(l_free) {
   R(void *, m);
@@ -31,7 +31,7 @@ N(l_read) {
     if (errno == EAGAIN || errno == EWOULDBLOCK)                             
       C(0);                                                                  
     else                                                                     
-      Error;                                                                 
+      C(2);                                                                 
   } else                                                                     
     A2(buf, num) C(1);                                                             
 }
@@ -45,7 +45,7 @@ N(l_write) {
     if (errno == EAGAIN || errno == EWOULDBLOCK)                             
       C(0);                                                                  
     else                                                                     
-      Error;                                                                 
+      C(2);                                                                 
   } else                                                                     
     A3(buf, nbyte - num, off + num) C(1);                                                             
 }
@@ -55,7 +55,7 @@ N(l_accept) {
   socklen_t clnt_addr_len = sizeof(clnt_addr);
   q_t rez = accept(fd, (struct sockaddr *)&clnt_addr, &clnt_addr_len);
   if (rez < 0)
-    Error;
+    C(2);
   else
     A(rez) C(1);
 }
@@ -76,7 +76,7 @@ N(l_bind) {
   R(Q_t, fd);
   long r = bind(fd, (struct sockaddr *)address, sizeof(*address));
   if (r == -1)
-    Error;
+    C(2);
   else
     A(fd) C(1);
 }
@@ -84,7 +84,7 @@ N(l_epoll_create) {
   R(Q_t, size);
   q_t fd = epoll_create(size);
   if (fd < 0)
-    Error;
+    C(2);
   else
     A(fd) C(1);
 }
@@ -98,7 +98,7 @@ N(l_epoll_ctl) {
   event.data.ptr = ptr;
   event.events = events;
   if (epoll_ctl(epoll_fd, op, fd, &event) < 0)
-    Error;
+    C(2);
   else
     C(1);
 }
@@ -109,7 +109,7 @@ N(l_epoll_wait) {
   R(Q_t, epfd);
   q_t ret = epoll_wait(epfd, events, maxevents, timeout);
   if (ret < 0)
-    Error;
+    C(2);
   else
     A(ret) C(1);
 }
@@ -117,17 +117,17 @@ N(l_setnoblock) {
   R(q_t, fd);
   int flags = fcntl(fd, F_GETFL, 0);
   if (flags < 0)
-    return Error;
+    return C(2);
   flags |= O_NONBLOCK;
   if (fcntl(fd, F_SETFL, flags) != -1)
     C(1);
   else
-    Error;
+    C(2);
 }
 N(l_socket) {
   long fd = socket(PF_INET, SOCK_STREAM, 0);
   if (fd < 0)
-    Error;
+    C(2);
   else
     A(fd) C(1);
 }
@@ -135,7 +135,7 @@ N(l_listen) {
   R(q_t, fd);
   q_t rez = listen(fd, 101);
   if (rez < 0)
-    Error;
+    C(2);
   else
     C(1);
 }
