@@ -2,43 +2,24 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-l_accept,           L)IN(L,
-l_address,          L)IN(L,
-l_bind,             L)IN(L,
-l_close,            L)IN(L,
 l_epoll_create,     L)IN(L,
 l_epoll_ctl,        L)IN(L,
 l_epoll_wait,       L)IN(L,
 l_free,             L)IN(L,
-l_listen,           L)IN(L,
 l_malloc,           L)IN(L,
 l_read,             L)IN(L,
 l_setnoblock,       L)IN(L,
-l_socket,           L)IN(L,
 l_write,            L)IN(L,
 nar,                L)IN(L,
-os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new_nj,          L)IN(L,
 os_queue,           L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
-and2or,             L)IN(L,
-and2or3,            L)IN(L,
-and3,               L)IN(L,
-and3or,             L)IN(L,
-and3or3,            L)IN(L,
-and4,               L)IN(L,
-and6,               L)IN(L,
 andor,              L)IN(L,
-andor2,             L)IN(L,
 andor3,             L)IN(L,
-not,                L)IN(L,
-not2,               L)IN(L,
-not2and2,           L)IN(L,
 not3,               L)IN(L,
-notand4or,          L)IN(L,
 or,                 L)IN(L,
 or3,                L)IN(L,
 //
@@ -66,19 +47,19 @@ Sar(epoll_ctl_add_in)(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO, ο, EPOLLIN | EPOLL
 Sar(epoll_ctl_del_in)(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 Sar(epoll_ctl_mod_in)(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-Nar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Nar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Nar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
 S(drop) { α--, C(1); }
 S(read_stdin_n) {
   R(void *, buffer);
-  Α(buffer, 0x1000, STDIN_FILENO, l_read,
+  Α(buffer, 0x10000, STDIN_FILENO, l_read,
     drop, l_free, and, not3) O;
 }
-Sar(read_stdin)(0x1000, l_malloc, read_stdin_n, and)
+Sar(read_stdin)(0x10000, l_malloc, read_stdin_n, and)
 
 S(is_eof             ) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
 S(match              ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
@@ -182,13 +163,16 @@ S(unset_writeable       ) {   ο[9].Q = 0, C(1); }
 
 S(is_overflow           ) { C(ο[13].Q > 15); }
 
-S(try_mute_producer     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
-S(try_unmute_producer   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
+S(ensure_producer_is_muted     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
+S(ensure_producer_is_unmuted   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
 
+SarP(stdout_oor_n)(
+  activate, ensure_producer_is_unmuted, and,
+  epoll_ctl_add_out, and)
 SarP(stdout_oor)(
     is_active,
       got,
-      activate, try_unmute_producer, and, andor3)
+      stdout_oor_n, andor)
 S(chunk_free) {
   R(Q_t,   len);
   R(char*, buff);
@@ -201,8 +185,8 @@ S(dequeue_chunk) {
   if (&ο[10] == (q = (p_t *)QUEUE_NEXT((QUEUE *)&ο[10]))) C(0);
   else ο[13].Q--, Α(q[2].v, q[3].Q, q[4].Q, q, l_free) C(1);
 }
-S(queue_chunk_tail_and_cpp) { R(p_t *, q); QUEUE_INSERT_TAIL((QUEUE *)&ο[10], ο[13].Q++, (QUEUE *)q), C(1); }
-S(queue_chunk_head_and_cpp) { R(p_t *, q); QUEUE_INSERT_HEAD((QUEUE *)&ο[10], ο[13].Q++, (QUEUE *)q), C(1); }
+S(queue_chunk_tail_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
+S(queue_chunk_head_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_HEAD((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
 S(make_queue_item_n) {
   R(p_t *, q);
   R(Q_t, off);
@@ -210,18 +194,19 @@ S(make_queue_item_n) {
   R(void*, buff);
   q[2].v = buff, q[3].Q = len, q[4].Q = off, A(q) C(1);
 }
-Sar(make_queue_item)(5, l_malloc, make_queue_item_n, and)
+Sar(make_queue_item)(5 * 8, l_malloc, make_queue_item_n, and)
 Sar(queue_chunk_tail)(make_queue_item, queue_chunk_tail_and_cpp, and)
 Sar(queue_chunk_head)(make_queue_item, queue_chunk_head_and_cpp, and)
 
-S(loop_write);
+S(queue_loop_write);
 NarP(on_chunk)(
   0, queue_chunk_tail, is_overflow, and,
-    try_mute_producer,
-    god, andor)
+    ensure_producer_is_muted,
+    god, andor,
+  queue_loop_write, and)
 SarP(stdout_and_n)(
   is_alfa_zero,
-  'CNK', chunk_free,  match, or3,
+  'CNK', on_chunk,  match, or3,
   got, or)
 SarP(stdout_and)(
   is_active,
@@ -245,6 +230,7 @@ S(is_fully_written) {
 S(drop_chunk) { α -= 3, C(1); }
 Sar(cant_write_eagain)(
   unset_writeable, epoll_ctl_mod_out, and)
+S(loop_write);
 Sar(queue_loop_write)(
   loop_write, ο, os_queue)
 Sar(loop_write_nnn)(
@@ -259,7 +245,7 @@ Sar(loop_write_nn)(
 Sar(loop_write_n)(
   dequeue_chunk, 
     loop_write_nn,
-    try_unmute_producer, andor)
+    ensure_producer_is_unmuted, andor)
 Sar(loop_write)(
   is_writeable,
     loop_write_n,
