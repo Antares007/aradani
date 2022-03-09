@@ -37,19 +37,18 @@ struct epoll_event events[2];
 S(epoll_on_wait) {
   R(q_t, num);
   if (num) {
-    print("\n\n*** num: %ld\n", num);
     p_t *oο = events[num - 1].data.ptr;
     Α(oο[7].c, oο, os_queue, num - 1, epoll_on_wait, and2) O;
   } else C(1);
 }
 Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
-SarP(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-SarP(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
@@ -73,10 +72,10 @@ S(stop_and_deactivate) { Α(bye, deactivate, and) O; }
 S(is_readable        ) { C(ο[10].Q != 0); }
 S(is_active          ) { C(ο[8].p != 0); }
 S(is_unmuted         ) { C(ο[9].Q != 0); }
-SP(set_unmuted       ) { ο[9].Q = 1, C(1); }
-SP(set_muted         ) { ο[9].Q = 0, C(1); }
-SP(set_readable      ) { ο[10].Q = 1, C(1); }
-SP(set_unreadable    ) { ο[10].Q = 0, C(1); }
+S(set_unmuted       ) { ο[9].Q = 1, C(1); }
+S(set_muted         ) { ο[9].Q = 0, C(1); }
+S(set_readable      ) { ο[10].Q = 1, C(1); }
+S(set_unreadable    ) { ο[10].Q = 0, C(1); }
 
 
 S(loop_read_send_chunks);
@@ -157,100 +156,100 @@ Sar(mk_stdin)(
  *                       pith of STDOUT                                       *
  ******************************************************************************/
 #include "os/queue.h"
-SP(is_writeable          ) { C(ο[9].Q != 0); }
-SP(set_writeable         ) {   ο[9].Q = 1, C(1); }
-SP(unset_writeable       ) {   ο[9].Q = 0, C(1); }
+S(is_writeable          ) { C(ο[9].Q != 0); }
+S(set_writeable         ) {   ο[9].Q = 1, C(1); }
+S(unset_writeable       ) {   ο[9].Q = 0, C(1); }
 
-SP(is_overflow           ) { C(ο[13].Q > 15); }
+S(is_overflow           ) { C(ο[13].Q > 15); }
 
-SP(ensure_producer_is_muted     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
-SP(ensure_producer_is_unmuted   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
+S(ensure_producer_is_muted     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
+S(ensure_producer_is_unmuted   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
 
-SarP(stdout_oor_n)(
+Sar(stdout_oor_n)(
   activate, ensure_producer_is_unmuted, and,
   epoll_ctl_add_out, and)
-SarP(stdout_oor)(
+Sar(stdout_oor)(
     is_active,
       got,
       stdout_oor_n, andor)
 N(chunk_free) {
+  R(Q_t,   off);
   R(Q_t,   len);
   R(char*, buff);
-  buff[len - 1] = 0;
-  print("%p %lu\n", buff, len);
+  (void)len, (void)off;
+  //print("%p %lu/%lu\n", buff, len, off);
   Α(buff, l_free) O;
 }
-SP(dequeue_chunk) {
+S(dequeue_chunk) {
   p_t *q;
   if (&ο[10] == (q = (p_t *)QUEUE_NEXT((QUEUE *)&ο[10]))) C(0);
   else ο[13].Q--, QUEUE_REMOVE((QUEUE*)q), Α(q[2].v, q[3].Q, q[4].Q, q, l_free) O;
 }
-SP(queue_chunk_tail_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
-SP(queue_chunk_head_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_HEAD((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
-SP(make_queue_item_n) {
+S(queue_chunk_tail_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
+S(queue_chunk_head_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_HEAD((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
+S(make_queue_item_n) {
   R(p_t *, q);
   R(Q_t, off);
   R(Q_t, len);
   R(void*, buff);
   q[2].v = buff, q[3].Q = len, q[4].Q = off, A(q) C(1);
 }
-SarP(make_queue_item)(5 * 8, l_malloc, make_queue_item_n, and)
-SarP(queue_chunk_tail)(make_queue_item, queue_chunk_tail_and_cpp, and)
-SarP(queue_chunk_head)(make_queue_item, queue_chunk_head_and_cpp, and)
+Sar(make_queue_item)(5 * 8, l_malloc, make_queue_item_n, and)
+Sar(queue_chunk_tail)(make_queue_item, queue_chunk_tail_and_cpp, and)
+Sar(queue_chunk_head)(make_queue_item, queue_chunk_head_and_cpp, and)
 
 S(queue_loop_write);
-NarP(on_chunk)(
+Sar(on_chunk)(
   0, queue_chunk_tail, is_overflow, and,
     ensure_producer_is_muted,
     god, andor,
   queue_loop_write, and)
-SarP(stdout_and_n)(
+Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
   got, or)
-SarP(stdout_and)(
+Sar(stdout_and)(
   is_active,
     stdout_and_n,
     got, andor)
 
-SarP(stdout_not_n)(
+Sar(stdout_not_n)(
   is_alfa_zero,
     bye,
     god, andor,
   epoll_ctl_del_out, and)
-SarP(stdout_not)(
+Sar(stdout_not)(
   is_active,
     stdout_not_n,
     got, andor)
-SP(is_fully_written) {
+S(is_fully_written) {
   R(Q_t, off);
   R(Q_t, len);
   A2(len, off) C(len == 0);
 }
-SP(drop_chunk) { α -= 3, C(1); }
-SarP(cant_write_eagain)(
+Sar(cant_write_eagain)(
   unset_writeable, epoll_ctl_mod_out, and)
 S(loop_write);
-SarP(queue_loop_write)(
+Sar(queue_loop_write)(
   loop_write, ο, os_queue)
-SarP(loop_write_nnn)(
+Sar(loop_write_nnn)(
   is_fully_written,
-    drop_chunk,
+    chunk_free,
     queue_chunk_head, andor,
   queue_loop_write, and)
-SarP(loop_write_nn)(
+Sar(loop_write_nn)(
   STDOUT_FILENO, l_write,
     loop_write_nnn,
     cant_write_eagain, andor)
-SarP(loop_write_n)(
+Sar(loop_write_n)(
   dequeue_chunk, 
     loop_write_nn,
     ensure_producer_is_unmuted, andor)
-SarP(loop_write)(
+Sar(loop_write)(
   is_writeable,
     loop_write_n,
     epoll_ctl_mod_out, andor)
-SarP(on_epoll_out)(
+Sar(on_epoll_out)(
   set_writeable, loop_write, and)
   // 7   ) epoll on wait word
   // 8  0) Unactive
