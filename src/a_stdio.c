@@ -28,6 +28,7 @@ and2or,             L)IN(L,
 and2or3,            L)IN(L,
 and3,               L)IN(L,
 and3or,             L)IN(L,
+and3or3,            L)IN(L,
 and4,               L)IN(L,
 and6,               L)IN(L,
 andor,              L)IN(L,
@@ -36,6 +37,7 @@ andor3,             L)IN(L,
 not,                L)IN(L,
 not2,               L)IN(L,
 not2and2,           L)IN(L,
+not3,               L)IN(L,
 notand4or,          L)IN(L,
 or,                 L)IN(L,
 or3,                L)IN(L,
@@ -65,13 +67,15 @@ Sar(epoll_ctl_del_in)(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO, ο, EPOLLIN | EPOLL
 Sar(epoll_ctl_mod_in)(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO, ο, EPOLLIN | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 Nar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Nar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Nar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+
 Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, os_queue)
-S(rotate) { R(void*, b); R(void*, a); Α(b, a) C(1); }
+
+S(drop) { α--, C(1); }
 S(read_stdin_n) {
   R(void *, buffer);
-  Α(STDIN_FILENO, buffer, 0x1000, l_read,
-    buffer, l_free,
-    buffer, rotate, not2and2) O;
+  Α(buffer, 0x1000, STDIN_FILENO, l_read, drop, l_free, and, not3) O;
 }
 Sar(read_stdin)(0x1000, l_malloc, read_stdin_n, and)
 
@@ -172,9 +176,9 @@ Sar(mk_stdin)(
 #include "os/queue.h"
 NP(is_writeable  ){ C(ο[9].Q != 0); }
 NP(set_writeable ){ ο[9].Q = 1; C(1); }
+S(set_notwriteable) { ο[9].Q = 0, C(1); }
 NarP(unmute      )('UNM', god, ο[8].p, os_queue)
 
-SarP(on_epoll_out)(god)
 SarP(stdout_oor)(
     is_active,
       got,
@@ -198,6 +202,20 @@ SarP(stdout_and)(
     got, andor)
 
 SP(stdout_not) { C(1); }
+
+S(queue_pop) {}
+
+S(loop_write);
+Sar(loop_write_n)(
+  STDOUT_FILENO, l_write,
+    loop_write, ο, os_queue,
+    set_notwriteable, epoll_ctl_mod_out, and, and3or3)
+Sar(loop_write)(
+  queue_pop,
+    loop_write_n,
+    god, andor)
+Nar(on_epoll_out)(
+  set_writeable, loop_write, and)
 
   //7   ) epoll on wait word
   //8  0) Unactive

@@ -22,22 +22,33 @@ N(l_close) {
   R(Q_t, fd);
   close(fd), C(1);
 }
-#define ReadWrite(Name)                                                        \
-  N(l_##Name) {                                                                \
-    R(Q_t, nbyte);                                                             \
-    R(void *, buf);                                                            \
-    R(Q_t, fd);                                                                \
-    q_t num = Name(fd, buf, nbyte);                                            \
-    if (num < 0) {                                                             \
-      if (errno == EAGAIN || errno == EWOULDBLOCK)                             \
-        C(0);                                                                  \
-      else                                                                     \
-        Error;                                                                 \
-    } else                                                                     \
-      A(num) C(1);                                                             \
-  }
-ReadWrite(read);
-ReadWrite(write);
+N(l_read) {                                                                
+  R(Q_t, fd);                                                                
+  R(Q_t, nbyte);                                                             
+  R(void *, buf);                                                            
+  q_t num = read(fd, buf, nbyte);                                            
+  if (num < 0) {                                                             
+    if (errno == EAGAIN || errno == EWOULDBLOCK)                             
+      C(0);                                                                  
+    else                                                                     
+      Error;                                                                 
+  } else                                                                     
+    A2(buf, num) C(1);                                                             
+}
+N(l_write) {                                                                
+  R(Q_t, fd);                                                                
+  R(Q_t, off);                                                             
+  R(Q_t, nbyte);                                                             
+  R(char *, buf);                                                            
+  q_t num = write(fd, buf + off, nbyte);                                            
+  if (num < 0) {                                                             
+    if (errno == EAGAIN || errno == EWOULDBLOCK)                             
+      C(0);                                                                  
+    else                                                                     
+      Error;                                                                 
+  } else                                                                     
+    A3(buf, nbyte - num, off + num) C(1);                                                             
+}
 N(l_accept) {
   R(q_t, fd);
   struct sockaddr_in clnt_addr;
