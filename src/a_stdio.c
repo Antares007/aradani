@@ -75,7 +75,8 @@ Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[
 S(drop) { α--, C(1); }
 S(read_stdin_n) {
   R(void *, buffer);
-  Α(buffer, 0x1000, STDIN_FILENO, l_read, drop, l_free, and, not3) O;
+  Α(buffer, 0x1000, STDIN_FILENO, l_read,
+    drop, l_free, and, not3) O;
 }
 Sar(read_stdin)(0x1000, l_malloc, read_stdin_n, and)
 
@@ -154,7 +155,8 @@ Sar(stdin_not)(
     stdin_not_n,
     got, andor)
 
-Sar(on_epoll_in    )(set_readable, loop_read_send_chunks, and)
+Sar(on_epoll_in)(
+  set_readable, loop_read_send_chunks, and)
   //7   ) epoll on wait word
   //8  0) Unactive
   //   *) Pith (p_t*) of active consumer
@@ -174,17 +176,20 @@ Sar(mk_stdin)(
  *                       pith of STDOUT                                       *
  ******************************************************************************/
 #include "os/queue.h"
-NP(is_writeable  ){ C(ο[9].Q != 0); }
-NP(set_writeable ){ ο[9].Q = 1; C(1); }
-S(set_notwriteable) { ο[9].Q = 0, C(1); }
-NarP(unmute_producer)(
-  'UNM', god, ο[8].p, os_queue)
+S(is_writeable          ) { C(ο[9].Q != 0); }
+S(set_writeable         ) {   ο[9].Q = 1, C(1); }
+S(unset_writeable       ) {   ο[9].Q = 0, C(1); }
+
+S(is_overflow           ) { C(ο[13].Q > 15); }
+
+S(try_mute_producer     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
+S(try_unmute_producer   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
 
 SarP(stdout_oor)(
     is_active,
       got,
-      activate, unmute_producer, and, andor3)
-NP(chunk_free) {
+      activate, try_unmute_producer, and, andor3)
+S(chunk_free) {
   R(Q_t,   len);
   R(char*, buff);
   buff[len - 1] = 0;
@@ -194,23 +199,25 @@ NP(chunk_free) {
 S(dequeue_chunk) {
   p_t *q;
   if (&ο[10] == (q = (p_t *)QUEUE_NEXT((QUEUE *)&ο[10]))) C(0);
-  else Α(q[2].v, q[3].Q, q[4].Q, q, l_free) C(1);
+  else ο[13].Q--, Α(q[2].v, q[3].Q, q[4].Q, q, l_free) C(1);
 }
-S(queue_chunk_n) {
+S(queue_chunk_tail_and_cpp) { R(p_t *, q); QUEUE_INSERT_TAIL((QUEUE *)&ο[10], ο[13].Q++, (QUEUE *)q), C(1); }
+S(queue_chunk_head_and_cpp) { R(p_t *, q); QUEUE_INSERT_HEAD((QUEUE *)&ο[10], ο[13].Q++, (QUEUE *)q), C(1); }
+S(make_queue_item_n) {
   R(p_t *, q);
   R(Q_t, off);
   R(Q_t, len);
   R(void*, buff);
-  QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q);
-  q[2].v = buff, q[3].Q = len, q[4].Q = off, C(1);
+  q[2].v = buff, q[3].Q = len, q[4].Q = off, A(q) C(1);
 }
-Sar(queue_chunk)(5, l_malloc, queue_chunk_n)
+Sar(make_queue_item)(5, l_malloc, make_queue_item_n, and)
+Sar(queue_chunk_tail)(make_queue_item, queue_chunk_tail_and_cpp, and)
+Sar(queue_chunk_head)(make_queue_item, queue_chunk_head_and_cpp, and)
 
-S(is_overflow){}
-S(mute_producer){}
+S(loop_write);
 NarP(on_chunk)(
-  queue_chunk, is_overflow, and,
-    mute_producer,
+  0, queue_chunk_tail, is_overflow, and,
+    try_mute_producer,
     god, andor)
 SarP(stdout_and_n)(
   is_alfa_zero,
@@ -221,32 +228,64 @@ SarP(stdout_and)(
     stdout_and_n,
     got, andor)
 
-SP(stdout_not) { C(1); }
-
-S(loop_write);
-Sar(loop_write_n)(
+Sar(stdout_not_n)(
+  is_alfa_zero,
+    bye,
+    god, andor,
+  epoll_ctl_del_out, and)
+SarP(stdout_not)(
+  is_active,
+    stdout_not_n,
+    got, andor)
+S(is_fully_written) {
+  R(Q_t, off);
+  R(Q_t, len);
+  A2(len, off) C(len == 0);
+}
+S(drop_chunk) { α -= 3, C(1); }
+Sar(cant_write_eagain)(
+  unset_writeable, epoll_ctl_mod_out, and)
+Sar(queue_loop_write)(
+  loop_write, ο, os_queue)
+Sar(loop_write_nnn)(
+  is_fully_written,
+    drop_chunk,
+    queue_chunk_head, andor,
+  queue_loop_write, and)
+Sar(loop_write_nn)(
   STDOUT_FILENO, l_write,
-    loop_write, ο, os_queue,
-    set_notwriteable, epoll_ctl_mod_out, and, and3or3)
+    loop_write_nnn,
+    cant_write_eagain, andor)
+Sar(loop_write_n)(
+  dequeue_chunk, 
+    loop_write_nn,
+    try_unmute_producer, andor)
 Sar(loop_write)(
-  dequeue_chunk,
+  is_writeable,
     loop_write_n,
-    god, andor)
-Nar(on_epoll_out)(
+    epoll_ctl_mod_out, andor)
+Sar(on_epoll_out)(
   set_writeable, loop_write, and)
-
-  //7   ) epoll on wait word
-  //8  0) Unactive
-  //   *) Pith (p_t*) of active consumer
-  //9  0) EAGAIN no more data can be written. register epoll event and wait EPOLLOUT event
-  //   1) Writable can write until EAGAIN
+  // 7   ) epoll on wait word
+  // 8  0) Unactive
+  //    *) Pith (p_t*) of active consumer
+  // 9  0) EAGAIN no more data can be written. register epoll event and wait EPOLLOUT event
+  //    1) Writable can write until EAGAIN
+  // 10    QUEUE
+  // 11    QUEUE
+  // 12 0) producer unmuted
+  //    1) producer muted
+  // 13    queue length
 S(stdout_set) {
   R(p_t*, oο);
   oο[7].c = on_epoll_out;
   oο[8].p = 0;
   oο[9].Q = 0;
   QUEUE_INIT((QUEUE*)&oο[10]);
-  A(oο) C(1); }
+  oο[12].Q = 1;
+  oο[13].Q = 0;
+  A(oο) C(1);
+}
 Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", 0111, os_new_nj,
   STDOUT_FILENO, l_setnoblock, and2,

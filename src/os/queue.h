@@ -71,16 +71,12 @@ typedef void *QUEUE[2];
   } while (0)
 
 #define QUEUE_INSERT_HEAD(h, q)                                                \
-  do {                                                                         \
-    QUEUE_NEXT(q) = QUEUE_NEXT(h);                                             \
-    QUEUE_PREV(q) = (h);                                                       \
-    QUEUE_NEXT_PREV(q) = (q);                                                  \
-    QUEUE_NEXT(h) = (q);                                                       \
-  } while (0)
+  (QUEUE_NEXT(q) = QUEUE_NEXT(h), QUEUE_PREV(q) = (h),                         \
+   QUEUE_NEXT_PREV(q) = (q), QUEUE_NEXT(h) = (q))
 
 #define QUEUE_INSERT_TAIL(h, q)                                                \
-  QUEUE_NEXT(q) = (h), QUEUE_PREV(q) = QUEUE_PREV(h),                          \
-  QUEUE_PREV_NEXT(q) = (q), QUEUE_PREV(h) = (q);
+  (QUEUE_NEXT(q) = (h), QUEUE_PREV(q) = QUEUE_PREV(h),                         \
+   QUEUE_PREV_NEXT(q) = (q), QUEUE_PREV(h) = (q))
 
 #define QUEUE_REMOVE(q)                                                        \
   do {                                                                         \
