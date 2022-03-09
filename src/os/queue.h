@@ -79,9 +79,6 @@ typedef void *QUEUE[2];
    QUEUE_PREV_NEXT(q) = (q), QUEUE_PREV(h) = (q))
 
 #define QUEUE_REMOVE(q)                                                        \
-  do {                                                                         \
-    QUEUE_PREV_NEXT(q) = QUEUE_NEXT(q);                                        \
-    QUEUE_NEXT_PREV(q) = QUEUE_PREV(q);                                        \
-  } while (0)
+  (QUEUE_PREV_NEXT(q) = QUEUE_NEXT(q), QUEUE_NEXT_PREV(q) = QUEUE_PREV(q))
 
 #endif /* QUEUE_H_ */

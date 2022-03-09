@@ -14,7 +14,7 @@ N(l_malloc) {
   else
     C(2);
 }
-N(l_free) {
+NP(l_free) {
   R(void *, m);
   free(m), C(1);
 }
