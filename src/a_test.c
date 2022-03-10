@@ -2,7 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-os_new_j,           L)IN(L,
+os_new,             L)IN(L,
 os_queue,           L)IN(L,
 //
 and,                L)IN(L,
@@ -19,7 +19,7 @@ Sar(pgod)(n1, n1, and, n1, and)
 Sar(pgor)(n0, n0, and, n0, and, n0, and)
 S(make_pith) {
   A5(pgot, pgod, pgor,
-      0111, os_new_j) O; 
+      os_new_j) O; 
 }
 SP(test1) {
   R(p_t *, oο);

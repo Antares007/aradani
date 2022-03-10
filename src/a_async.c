@@ -4,7 +4,7 @@
 IBS(                L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
-os_new_j,           L)IN(L,
+os_new,             L)IN(L,
 os_queue,           L)IN(L,
 //
 and,                L)IN(L,
@@ -79,7 +79,7 @@ S(addQQ) {
 }
 S(insert_timer_pith);
 Sar(reset_timer)(ο, insert_timer_pith, ο[0].p, os_queue)
-Sar(create_timer_pith)(got, reset_timer, gor, 0111, os_new_j)
+Sar(create_timer_pith)(got, reset_timer, gor, os_new)
 S(timer_n) {
   R(p_t *, oο);
   Q_t oρ = 7;

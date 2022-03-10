@@ -12,7 +12,7 @@ l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
-os_new_nj,          L)IN(L,
+os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 //
@@ -128,7 +128,7 @@ Sar(on_epoll_in)(
   //   1) Readable can read until EAGAIN
 S(stdin_set) { R(p_t *, oο); oο[7].c = on_epoll_in, oο[8].p = 0, oο[9].Q = 0, oο[10].Q = 0, A(oο) C(1); }
 Sar(mk_stdin)(
-     stdin_not, stdin_and, stdin_oor, "≫", 0111, os_new_nj,
+     stdin_not, stdin_and, stdin_oor, "≫", os_new_n,
      stdin_set, and,
      STDIN_FILENO, l_setnoblock, and2)
 Nar(ls)(

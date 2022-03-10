@@ -12,7 +12,7 @@ l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
-os_new_nj,          L)IN(L,
+os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 //
@@ -165,7 +165,7 @@ S(stdout_set) {
   A(oο) C(1);
 }
 Sar(mk_stdout)(
-  stdout_not, stdout_and, stdout_oor, "≪", 0111, os_new_nj,
+  stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
   STDOUT_FILENO, l_setnoblock, and2,
   stdout_set, and)
 

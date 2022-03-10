@@ -32,8 +32,7 @@ os_bark,            L)END(L,
 os_hrtime,          L)END(L,
 os_ls,              L)END(L,
 os_new,             L)END(L,
-os_new_j,           L)END(L,
-os_new_nj,          L)END(L,
+os_new_n,           L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
@@ -43,6 +42,7 @@ SP(ray_not) {
 }
 SP(ray_oor) { os_next(T()); }
 void os_hrtime_init();
+
 int main(int argc, char **argv) {
   if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();

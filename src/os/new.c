@@ -10,27 +10,19 @@ static void append_to_parent_queue(QUEUE* my_q, QUEUE* parent_q) {
     QUEUE_PREV_NEXT(parent_q) = q, QUEUE_PREV(parent_q) = QUEUE_PREV(my_q),
     QUEUE_INIT(my_q);
 }
-#define SR(RAY, OFF, PRE)                                                      \
-  S(s##RAY) {                                                                  \
-    Q_t wc = ο[ρ + 3 + RAY].Q;                                                 \
-    if (wc && (ο[ρ + 6].Q = !ο[ρ + 6].Q)) {                                    \
-      for (Q_t i = 0; i < wc; i++)                                             \
-        σ[α++].v = ο[ρ + i + 7 + OFF].v;                                       \
-      O;                                                                       \
-    } else {                                                                   \
+#define SSR(RAY, PRE)                                                          \
+  S(ss##RAY) {                                                                 \
+    if ((ο[ρ + 7].Q = !ο[ρ + 7].Q))                                            \
+      ο[ρ + 3 + RAY].c(T());                                                   \
+    else {                                                                     \
       PRE;                                                                     \
       ο[Φ].p[ο[Φ].p[Ρ].Q + RAY].c(σ, α, ο[Φ].p, ο[Φ].p[Ρ].Q);                  \
     }                                                                          \
   }
-SR(2, 0, )
-SR(1, ο[ρ + 5].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
-SR(0, ο[ρ + 4].Q + ο[ρ + 5].Q, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
-N(os_new_psnj) {
-  Q_t j = σ[--α].Q,           //
-      nc = ((j & 0700) >> 6), //
-      ac = ((j & 0070) >> 3), //
-      oc = ((j & 0007) >> 0), //
-      tc = nc + ac + oc;
+SSR(2, )
+SSR(1, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+SSR(0, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+NP(os_new_psn) { 
   R(const char *, name);
   R(Q_t,          nρ);
   R(p_t *,        oο);
@@ -38,15 +30,15 @@ N(os_new_psnj) {
   p_t *nο         = malloc(nρ * sizeof(void *));
   nο[Σ].Q         = nρ; 
 
-  while (tc)
-    nο[--nρ].c    = σ[--α].c, --tc;
   nο[--nρ].Q      = 0;
-  nο[--nρ].Q      = nc;
-  nο[--nρ].Q      = ac;
-  nο[--nρ].Q      = oc;
-  nο[--nρ].c      = s2;
-  nο[--nρ].c      = s1;
-  nο[--nρ].c      = s0;
+  nρ             -= 4;
+  α              -= 3;
+  nο[nρ+2].c      = σ[α+0].c;
+  nο[nρ+1].c      = σ[α+1].c;
+  nο[nρ+0].c      = σ[α+2].c;
+  nο[--nρ].c      = ss2;
+  nο[--nρ].c      = ss1;
+  nο[--nρ].c      = ss0;
 
   nο[Φ].p         = oο;
   nο[Ρ].Q         = nρ;
@@ -55,7 +47,5 @@ N(os_new_psnj) {
 
   A(nο) C(1);
 }
-N(os_new_j) { R(Q_t, j); Α(ο[Φ].p, 512, "os_new_j", j, os_new_psnj) O; }
-N(os_new_nj) { R(Q_t, j); R(const char*, n); Α(ο[Φ].p, 512, n, j, os_new_psnj) O; }
-
-N(os_new) { Α(ο[Φ].p, 512, "os_new", 0111, os_new_psnj) O; }
+N(os_new_n) { R(const char*, n);  Α(ο[Φ].p, 512,  n,  os_new_psn) O; }
+N(os_new  ) {                     Α(ο[Φ].p, 512, "n", os_new_psn) O; }
