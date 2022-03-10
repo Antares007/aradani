@@ -2,35 +2,20 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-l_accept,           L)IN(L,
-l_address,          L)IN(L,
-l_bind,             L)IN(L,
 l_epoll_create,     L)IN(L,
 l_epoll_ctl,        L)IN(L,
 l_epoll_wait,       L)IN(L,
-l_listen,           L)IN(L,
-l_read,             L)IN(L,
-l_setnoblock,       L)IN(L,
-l_socket,           L)IN(L,
-nar,                L)IN(L,
-os_bark,            L)IN(L,
-os_hrtime,          L)IN(L,
-os_ls,              L)IN(L,
-os_new,             L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 //
 and,                L)IN(L,
-and2,               L)IN(L,
-and3or,             L)IN(L,
-and5,         imports);
+and2,         imports)
 
 #include "unistd.h"
 #include <sys/epoll.h>
 
 static Q_t  epoll_fd;
-struct epoll_event events[2];
-
+struct epoll_event events[50];
 
 S(epoll_on_wait) {
   R(q_t, num);
@@ -40,6 +25,7 @@ S(epoll_on_wait) {
   } else C(1);
 }
 Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+
 Sar(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 Sar(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 Sar(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
@@ -52,22 +38,7 @@ Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[
 
 SP(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
 
-SarP(init)(
-  5, l_epoll_create, set, and,
-  loop_in_queue, and)
-
-
-S(მთავარი) {
-  const char* cc1 = "src/a_cycle.arsi";
-  const char* cc2 = "src/a_async.arsi";
-  const char* cc3 = "src/a_parse.arsi";
-  AS(
-    god,
-    cc1, exports, ο, os_bark, 040, nar,
-    cc2, exports, ο, os_bark, 040, nar,
-    cc3, exports, ο, os_bark, 040, nar
-  ) O;
-}
+SarP(init)(5, l_epoll_create, set, and, loop_in_queue, and)
 
 // clang-format off
 EN(tail,
@@ -77,4 +48,4 @@ epoll_ctl_del_in,  L)EN(L,
 epoll_ctl_del_out, L)EN(L,
 epoll_ctl_mod_in,  L)EN(L,
 epoll_ctl_mod_out, L)EN(L,
-მთავარი,     exports);
+god,         exports);
