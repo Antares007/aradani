@@ -48,8 +48,8 @@ S(debug_οdump) {
   print("<debug_οdump>");
   for (Q_t i = ρ; i < ο[Σ].Q; i++) {
     if (ο[i].v == nar_oor) {
-      print("%01lx%01lx%01lxΨ ", ο[i+3+2].Q, ο[i+3+1].Q, ο[i+3+0].Q);
-      i += 5;
+      print("%04loΨ ", ο[i+3].Q);
+      i += 3;
     } else {
       const char *n = find_name(ο[i].v);
       if (n)
