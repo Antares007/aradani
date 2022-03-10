@@ -2,19 +2,14 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
-l_epoll_create,     L)IN(L,
-l_epoll_ctl,        L)IN(L,
-l_epoll_wait,       L)IN(L,
 l_free,             L)IN(L,
 l_malloc,           L)IN(L,
 l_read,             L)IN(L,
 l_setnoblock,       L)IN(L,
-l_write,            L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
-os_queue_n,         L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
@@ -24,15 +19,9 @@ not3,               L)IN(L,
 or,                 L)IN(L,
 or3,                L)IN(L,
 //
-debug_init,         L)IN(L,
-debug_οdump,        L)IN(L,
-debug_σdump,        L)IN(L,
 epoll_ctl_add_in,   L)IN(L,
-epoll_ctl_add_out,  L)IN(L,
 epoll_ctl_del_in,   L)IN(L,
-epoll_ctl_del_out,  L)IN(L,
-epoll_ctl_mod_in,   L)IN(L,
-epoll_ctl_mod_out, imports);
+epoll_ctl_mod_in, imports);
 #include "unistd.h"
 N(greet              ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
 SarP(init)(god)
