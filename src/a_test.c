@@ -14,12 +14,12 @@ static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }
 SP(n1) { counter[1]++, C(1); }
 SP(n2) { counter[2]++, C(1); }
-
+Sar(pgot)(n2, n2, and)
+Sar(pgod)(n1, n1, and, n1, and)
+Sar(pgor)(n0, n0, and, n0, and, n0, and)
 S(make_pith) {
-  A17(n2, n2, and,
-      n1, n1, and, n1, and,
-      n0, n0, and, n0, and, n0, and,
-      0357, os_new_j) O; 
+  A5(pgot, pgod, pgor,
+      0111, os_new_j) O; 
 }
 SP(test1) {
   R(p_t *, oο);

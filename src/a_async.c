@@ -79,7 +79,7 @@ S(addQQ) {
 }
 S(insert_timer_pith);
 Sar(reset_timer)(ο, insert_timer_pith, ο[0].p, os_queue)
-Sar(create_timer_pith)(reset_timer, 0010, os_new_j)
+Sar(create_timer_pith)(got, reset_timer, gor, 0111, os_new_j)
 S(timer_n) {
   R(p_t *, oο);
   Q_t oρ = 7;
