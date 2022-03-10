@@ -2,10 +2,12 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
+l_close,            L)IN(L,
 l_free,             L)IN(L,
 l_malloc,           L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
+nar,                L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 //
@@ -104,18 +106,26 @@ Sar(cant_write_eagain)(
 S(loop_write);
 Sar(queue_loop_write)(
   loop_write, ο, os_queue)
-Sar(loop_write_nnn)(
+Sar(loop_write_4)(
   is_fully_written,
     chunk_free,
     queue_chunk_head, andor,
   queue_loop_write, and)
-Sar(loop_write_nn)(
+Sar(loop_write_3)(
   STDOUT_FILENO, l_write,
-    loop_write_nnn,
+    loop_write_4,
     cant_write_eagain, andor)
+
+S(close_stdout) { Α(STDOUT_FILENO, l_close, got, and) O; }
+S(is_eof) { R(Q_t, off); R(Q_t, len); Α(len, off) C(len == 0 && off == 0); }
+
+Sar(loop_write_2)(
+  is_eof,
+    close_stdout, chunk_free, and,
+    loop_write_3, 0031, nar)
 Sar(loop_write_n)(
   dequeue_chunk, 
-    loop_write_nn,
+    loop_write_2,
     ensure_producer_is_unmuted, andor)
 Sar(loop_write)(
   is_writeable,
