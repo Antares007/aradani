@@ -14,6 +14,7 @@ nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_nj,          L)IN(L,
 os_queue,           L)IN(L,
+os_queue_n,         L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
@@ -25,32 +26,18 @@ or3,                L)IN(L,
 //
 debug_init,         L)IN(L,
 debug_οdump,        L)IN(L,
-debug_σdump,  imports);
+debug_σdump,        L)IN(L,
+epoll_ctl_add_in,   L)IN(L,
+epoll_ctl_add_out,  L)IN(L,
+epoll_ctl_del_in,   L)IN(L,
+epoll_ctl_del_out,  L)IN(L,
+epoll_ctl_mod_in,   L)IN(L,
+epoll_ctl_mod_out, imports);
 #include "unistd.h"
 #include <sys/epoll.h>
 
 static p_t* stdinο;
 static p_t* stdoutο;
-static Q_t  epoll_fd;
-struct epoll_event events[2];
-
-S(epoll_on_wait) {
-  R(q_t, num);
-  if (num) {
-    p_t *oο = events[num - 1].data.ptr;
-    Α(oο[7].c, oο, os_queue, num - 1, epoll_on_wait, and2) O;
-  } else C(1);
-}
-Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
-Sar(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Sar(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Sar(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-
-Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-
-Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, os_queue)
 
 S(drop) { α--, C(1); }
 S(read_stdin_n) {
@@ -279,15 +266,12 @@ Sar(mk_stdout)(
 S(set) {
   R(p_t*, outο);
   R(p_t*, inο);
-  R(Q_t, fd);
-  epoll_fd = fd, stdinο = inο, stdoutο = outο, C(1);
+  stdinο = inο, stdoutο = outο, C(1);
 }
 
 Sar(init)(
-  5, l_epoll_create, mk_stdin, and,
-  mk_stdout, and,
+  mk_stdin, mk_stdout, and,
   set, and,
-  loop_in_queue, and,
   exports, debug_init, and2)
 
 Nar(example)(

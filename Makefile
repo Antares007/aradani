@@ -6,6 +6,11 @@ OBJCOPY=objcopy
 run: all
 	./src/os_run src/a_epoll.arsi
 all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_epoll.arsi
+src/a_stdio.arsi:            \
+	src/a_stdio.oars           \
+	src/a_epoll.oars           \
+	src/os.arsi                
+	cat $^ > $@
 
 src/os.arsi:                 \
 	src/a_debug.oars           \

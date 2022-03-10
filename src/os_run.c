@@ -7,8 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 // clang-format off
-E(got,
-"0", 0,             L)E(L,
+E(got, "0", 0,      L)E(L,
 "0", 0,             L)E(L,
 "printf", printf,   L)END(L,
 l_accept,           L)END(L,
@@ -37,6 +36,7 @@ os_new_j,           L)END(L,
 os_new_nj,          L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
+os_queue_n,         L)END(L,
 os_wordump,      root);
 SP(ray_not) {
   if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); }

@@ -18,11 +18,44 @@ os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
+os_queue_n,         L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,
 and5,         imports);
+
+#include "unistd.h"
+#include <sys/epoll.h>
+
+static Q_t  epoll_fd;
+struct epoll_event events[2];
+
+
+S(epoll_on_wait) {
+  R(q_t, num);
+  if (num) {
+    p_t *oο = events[num - 1].data.ptr;
+    Α(oο[7].c, oο, os_queue, num - 1, epoll_on_wait, and2) O;
+  } else C(1);
+}
+Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
+Sar(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, STDIN_FILENO,  ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+
+Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, STDOUT_FILENO, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+
+Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, 5, os_queue_n)
+
+SP(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
+
+SarP(init)(
+  5, l_epoll_create, set, and,
+  loop_in_queue, and)
+
 
 S(მთავარი) {
   const char* cc1 = "src/a_cycle.arsi";
@@ -36,8 +69,12 @@ S(მთავარი) {
   ) O;
 }
 
-
-SP(init) { C(1); }
 // clang-format off
 EN(tail,
-მთავარი,      exports);
+epoll_ctl_add_in,  L)EN(L,
+epoll_ctl_add_out, L)EN(L,
+epoll_ctl_del_in,  L)EN(L,
+epoll_ctl_del_out, L)EN(L,
+epoll_ctl_mod_in,  L)EN(L,
+epoll_ctl_mod_out, L)EN(L,
+მთავარი,     exports);
