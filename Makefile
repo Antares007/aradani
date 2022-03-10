@@ -7,9 +7,10 @@ run: all
 	./src/os_run src/a_dynamic.arsi
 all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_dynamic.arsi
 
-src/a_stdout.arsi:           \
-	src/a_stdout.oars          \
+src/a_stdio.arsi:            \
 	src/a_stdio.oars           \
+	src/a_stdout.oars          \
+	src/a_stdin.oars           \
 	src/a_epoll.oars           \
 	src/os.arsi                
 	cat $^ > $@

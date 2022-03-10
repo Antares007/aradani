@@ -6,7 +6,6 @@ l_free,             L)IN(L,
 l_malloc,           L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
-os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 //
@@ -16,29 +15,19 @@ andor,              L)IN(L,
 or,                 L)IN(L,
 or3,                L)IN(L,
 //
-debug_init,         L)IN(L,
-debug_οdump,        L)IN(L,
-debug_σdump,        L)IN(L,
-//
 epoll_ctl_add_out,  L)IN(L,
 epoll_ctl_del_out,  L)IN(L,
 epoll_ctl_mod_out,  L)IN(L,
 //
 activate,           L)IN(L,
 bye,                L)IN(L,
-greet,              L)IN(L,
 is_active,          L)IN(L,
 is_alfa_zero,       L)IN(L,
-match,              L)IN(L,
-mk_stdin,     imports)
+match,        imports)
 
 #include "unistd.h"
-#include <sys/epoll.h>
-
-static p_t* stdinο;
-static p_t* stdoutο;
-
 #include "os/queue.h"
+
 S(is_writeable          ) { C(ο[9].Q != 0); }
 S(set_writeable         ) {   ο[9].Q = 1, C(1); }
 S(unset_writeable       ) {   ο[9].Q = 0, C(1); }
@@ -158,25 +147,8 @@ Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
   STDOUT_FILENO, l_setnoblock, and2,
   stdout_set, and)
-
-S(set) {
-  R(p_t*, outο);
-  R(p_t*, inο);
-  stdinο = inο, stdoutο = outο, C(1);
-}
-
-Sar(init)(
-  mk_stdin, mk_stdout, and,
-  set, and,
-  exports, debug_init, and2)
-
-Nar(example)(
-  stdoutο, stdinο, greet);
-
-Nar(ls)(
-  exports, os_ls)
+Sar(init)(god)
 
 // clang-format off
 EN(tail,
-ls,                 L)EN(L,
-example,      exports)
+mk_stdout,      exports)
