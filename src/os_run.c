@@ -10,6 +10,7 @@
 E(got, "0", 0,      L)E(L,
 "0", 0,             L)E(L,
 "printf", printf,   L)END(L,
+debugger,           L)END(L,
 l_accept,           L)END(L,
 l_address,          L)END(L,
 l_bind,             L)END(L,
@@ -42,7 +43,6 @@ SP(ray_not) {
 }
 SP(ray_oor) { os_next(T()); }
 void os_hrtime_init();
-
 int main(int argc, char **argv) {
   if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();

@@ -40,9 +40,10 @@ S(os_bark_import_first_n) {
   --α;
   A(n) C(1);
 }
+N(os_debug_init);
 N(os_bark_import_first) {
   R(n_t, e);
-  Α(e, os_bark_import_first_n, 0010, nar) O;
+  Α(e, e, os_debug_init, 0020, nar, os_bark_import_first_n, 0010, nar) O;
 }
 S(os_bark_seed_and_import_first) {
   R(n_t, root);

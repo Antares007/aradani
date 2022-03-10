@@ -2,6 +2,7 @@
 #include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
+debugger,           L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
@@ -62,7 +63,7 @@ S(testuni) {
   print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
   AS(u8cp, Μ, god, not, os_wordump, and) O;
 }
-Nar(მთავარი)(testuni)
+Nar(მთავარი)(debugger, testuni, and)
 S(init) { C(1); }
 
 //N(Ο);                      
@@ -168,4 +169,21 @@ S(init) { C(1); }
 
 // clang-format off
 EN(tail,
+bin_lsh,            L)EN(L,
+bin_or,             L)EN(L,
+lookahead,          L)EN(L,
+lookahead_shift,    L)EN(L,
+shift,              L)EN(L,
+testuni,            L)EN(L,
+u8cp,               L)EN(L,
+u8cp_b1,            L)EN(L,
+u8cp_b2,            L)EN(L,
+u8cp_b3,            L)EN(L,
+u8cp_b4,            L)EN(L,
+um0xxxxxxx,         L)EN(L,
+um10xxxxxx,         L)EN(L,
+um110xxxxx,         L)EN(L,
+um1110xxxx,         L)EN(L,
+um11110xxx,         L)EN(L,
+Μ,                  L)EN(L,
 მთავარი,      exports);
