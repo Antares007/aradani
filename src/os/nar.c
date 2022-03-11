@@ -6,11 +6,6 @@ static Q_t is_debugging = 0;
 static char pchr = 0xa;
 N(debugger) { is_debugging = 1, C(1); }
 const char *os_debug_find_name(void *a);
-#define DESTRUCTJ                                                              \
-  nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0)
-#define DESTRUCT                                                               \
-  ρ += 3;                                                                      \
-  Q_t j = ο[ρ++].Q, DESTRUCTJ
 #define DEBUGGING(WC)                                                          \
   if (WC) {                                                                    \
     while (WC) {                                                               \
@@ -28,7 +23,8 @@ const char *os_debug_find_name(void *a);
       Q_t line_size = 1024;                                                    \
       q_t chars_count = 0;                                                     \
       char *buffer = malloc(line_size);                                        \
-      while ((chars_count = getline(&buffer, &line_size, stdin))) {            \
+      while ((chars_count = (printf("\n%s %3lu/%3lu a/o/s/c>", ο[Ν].cs, α, ρ), \
+                             getline(&buffer, &line_size, stdin)))) {          \
         chr = buffer[0];                                                       \
         if (chr == 0xa)                                                        \
           chr = pchr;                                                          \
@@ -42,6 +38,19 @@ const char *os_debug_find_name(void *a);
             else                                                               \
               printf("%016lx ", σ[i].q);                                       \
           }                                                                    \
+        } else if (chr == 'o') {                                               \
+          for (Q_t i = ρ; i < ο[Σ].Q; i++) {                                   \
+            if (ο[i].v == nar_oor) {                                           \
+              printf("%04loΨ ", ο[i + 3].Q);                                   \
+              i += 3;                                                          \
+            } else {                                                           \
+              const char *n = os_debug_find_name(ο[i].v);                      \
+              if (n)                                                           \
+                printf("%s ", n);                                              \
+              else                                                             \
+                printf("%016lx ", ο[i].q);                                     \
+            }                                                                  \
+          }                                                                    \
         } else if (chr == 's') {                                               \
           break;                                                               \
         } else if (chr == 'c') {                                               \
@@ -52,6 +61,12 @@ const char *os_debug_find_name(void *a);
       free(buffer);                                                            \
     }                                                                          \
   }
+#define DESTRUCTJ                                                              \
+  nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0)
+#define DESTRUCT                                                               \
+  ρ += 3;                                                                      \
+  Q_t j = ο[ρ++].Q, DESTRUCTJ
+N(nar_oor);
 N(nar_not) {
   DESTRUCT, f = nc;
   DEBUGGING(nc);
