@@ -11,6 +11,9 @@ E(got, "0", 0,      L)E(L,
 "0", 0,             L)E(L,
 "printf", printf,   L)END(L,
 debugger,           L)END(L,
+god,                L)END(L,
+gor,                L)END(L,
+got,                L)END(L,
 l_accept,           L)END(L,
 l_address,          L)END(L,
 l_bind,             L)END(L,
@@ -38,13 +41,20 @@ os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
 os_wordump,      root);
+
 SP(ray_not) {
-  if(α == 3) { R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e); }
+  if(α == 3) {
+    R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
+  }
 }
+
 SP(ray_oor) { os_next(T()); }
+
 void os_hrtime_init();
+
 int main(int argc, char **argv) {
-  if (argc < 2) return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  if (argc < 2)
+    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();
   p_t *σ = malloc(0x1000), ο[512];
   Q_t α = 0, ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);

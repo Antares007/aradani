@@ -1,8 +1,10 @@
 #include "arsi.h"
-#include "gotgod.h"
 // clang-format off
 IBS(                L)IN(L,
 debugger,           L)IN(L,
+god,                L)IN(L,
+gor,                L)IN(L,
+got,                L)IN(L,
 os_new,             L)IN(L,
 os_queue_n,         L)IN(L,
 //
