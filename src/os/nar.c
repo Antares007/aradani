@@ -28,14 +28,13 @@ const char *os_debug_find_name(void *a);
       Q_t line_size = 1024;                                                    \
       q_t chars_count = 0;                                                     \
       char *buffer = malloc(line_size);                                        \
-      printf("α: %lu ρ: %lu>", α, ρ);                                          \
       while ((chars_count = getline(&buffer, &line_size, stdin))) {            \
         chr = buffer[0];                                                       \
         if (chr == 0xa)                                                        \
           chr = pchr;                                                          \
         else                                                                   \
           pchr = chr;                                                          \
-        if (chr == 'a')                                                        \
+        if (chr == 'a') {                                                      \
           for (Q_t i = 0; i < α; i++) {                                        \
             const char *n = os_debug_find_name(σ[i].v);                        \
             if (n)                                                             \
@@ -43,8 +42,12 @@ const char *os_debug_find_name(void *a);
             else                                                               \
               printf("%016lx ", σ[i].q);                                       \
           }                                                                    \
-        else if (chr == 's')                                                   \
+        } else if (chr == 's') {                                               \
           break;                                                               \
+        } else if (chr == 'c') {                                               \
+          is_debugging = 0;                                                    \
+          break;                                                               \
+        }                                                                      \
       }                                                                        \
       free(buffer);                                                            \
     }                                                                          \
