@@ -1,6 +1,7 @@
 #include "arsi.h"
 // clang-format off
 IBS(                L)IN(L,
+debugger,           L)IN(L,
 os_wordump,         L)IN(L,
 //
 and,          imports);
@@ -52,7 +53,8 @@ N(მთავარი) {
   A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
   A7(0, 8, b, e, qsort, os_wordump, and) O;
 }
+Nar(deb)(debugger, მთავარი, and)
 
 // clang-format off
 EN(tail,          
-მთავარი,      exports);
+deb,          exports);
