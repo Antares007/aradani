@@ -10,10 +10,7 @@ os_queue,           L)IN(L,
 and,                L)IN(L,
 and2,               L)IN(L,
 and6,               L)IN(L,
-not,                L)IN(L,
-//
-debug_init,         L)IN(L,
-debug_οdump,  imports);
+not,          imports);
 
 #define MAX_TIMEOUTS 1024
 
@@ -69,7 +66,7 @@ Sar(insert_timeout)(insert_timeout_n, timeouts_count ? god : queue_timeout_run, 
 
 SP(init) {
   timeouts_count = 0;
-  Α(exports, debug_init) O;
+  C(1);
 }
 S(drop) { α--, C(1); }
 S(addQQ) {
@@ -97,8 +94,7 @@ Sar(timer)(create_timer_pith, timer_n, and, insert_timer_pith, and)
 S(printtimeouts) { for (Q_t i = 0; i < timeouts_count; i++) print("%lu %p\n", timeouts[i], piths[i]); C(1); }
 S(hello) { R(Q_t, i); print("hello %lu\n", i), C(1); }
 NarP(timers)(
-  debug_οdump,
-  1, hello, god, and, 1000, timer, and6,
+  1, hello, god, and, 1000, timer,
   2, hello, god, and, 2000, timer, and6,
   3, hello, god, and, 3000, timer, and6,
   4, hello, god, and, 4000, timer, and6,
