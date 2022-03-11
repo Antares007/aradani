@@ -48,7 +48,7 @@ N(მთავარი) {
   A8(800, 600, "mami", rl_InitWindow, mn, rl_CloseWindow, or, and3) O;
 }
 
-N(init) {
+SP(init) {
   print("init\n");
   oο[oο[1].Q++].v = მთავარი, C(1);
 }

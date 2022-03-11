@@ -11,7 +11,7 @@ os_queue_n,         L)IN(L,
 and,                L)IN(L,
 and4,         imports)
 
-S(init) {C(1);}
+SarP(init)(god)
 
 static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }

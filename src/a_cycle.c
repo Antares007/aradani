@@ -14,7 +14,7 @@ and2,               L)IN(L,
 not,                L)IN(L,
 or,           imports);
 // clang-format on
-N(init) { C(1); }
+SarP(init)(god)
 
 SP(p_or) {
   R(p_t *, oο);

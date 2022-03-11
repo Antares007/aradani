@@ -1,9 +1,13 @@
 #include "arsi.h"
 // clang-format off
-IBS(imports)
+IBS(                L)IN(L,
+god,                L)IN(L,
+gor,                L)IN(L,
+got,          imports)IN(L,
+
 // clang-format on
 
-S(init) { C(1); }
+SarP(init)(god)
 SP(Main) { A(7) C(1); }
 
 // clang-format off

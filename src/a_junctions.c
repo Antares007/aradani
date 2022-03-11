@@ -1,9 +1,12 @@
 #include "arsi.h"
 // clang-format off
 IBS(                L)IN(L,
+god,                L)IN(L,
+gor,                L)IN(L,
+got,                L)IN(L,
 nar,          imports);
 // clang-format on
-SP(init) { C(1); }
+SarP(init)(god)
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) nar(T()); } EN(Tail, Name, Head)
 /*
 const nao = ["", "or", "and", "not"];

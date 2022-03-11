@@ -29,7 +29,7 @@ os_ls,                imports);
 // clang-format on
 #include <raylib.h>
 
-N(init) { C(1); }
+SarP(init)(god)
 
 // clang-format off
 E(tail,

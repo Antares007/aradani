@@ -159,7 +159,7 @@ Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
   STDOUT_FILENO, l_setnoblock, and2,
   stdout_set, and)
-Sar(init)(god)
+SarP(init)(god)
 
 // clang-format off
 EN(tail,

@@ -66,7 +66,7 @@ S(testuni) {
   AS(u8cp, Μ, god, not, os_wordump, and) O;
 }
 Nar(მთავარი)(debugger, testuni, and)
-S(init) { C(1); }
+SarP(init)(god)
 
 //N(Ο);                      
 //

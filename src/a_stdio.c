@@ -18,7 +18,7 @@ S(set) {
   R(p_t*, inο);
   stdinο = inο, stdoutο = outο, C(1);
 }
-Sar(init)(
+SarP(init)(
   mk_stdin, mk_stdout, and,
   set, and)
 
