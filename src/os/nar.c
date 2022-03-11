@@ -1,6 +1,9 @@
 #include "../oars.h"
 #include <stdio.h>
+#include <stdlib.h>
+
 static Q_t is_debugging = 0;
+static char pchr = 0xa;
 N(debugger) { is_debugging = 1, C(1); }
 const char *os_debug_find_name(void *a);
 #define DESTRUCTJ                                                              \
@@ -8,22 +11,47 @@ const char *os_debug_find_name(void *a);
 #define DESTRUCT                                                               \
   ρ += 3;                                                                      \
   Q_t j = ο[ρ++].Q, DESTRUCTJ
-#define DEBUGGING(ac)                                                          \
-  while (ac) {                                                                 \
-    if (is_debugging) {                                                        \
-      const char *n = os_debug_find_name(ο[ρ].v);                              \
-      if (n)                                                                   \
-        printf("%s ", n);                                                      \
-      else                                                                     \
-        printf("%p ", ο[ρ].v);                                                 \
+#define DEBUGGING(WC)                                                          \
+  if (WC) {                                                                    \
+    while (WC) {                                                               \
+      if (is_debugging) {                                                      \
+        const char *n = os_debug_find_name(ο[ρ].v);                            \
+        if (n)                                                                 \
+          printf("%s ", n);                                                    \
+        else                                                                   \
+          printf("%p ", ο[ρ].v);                                               \
+      }                                                                        \
+      WC--, σ[α++].v = ο[ρ++].v;                                               \
     }                                                                          \
-    ac--, σ[α++].v = ο[ρ++].v;                                                 \
-  }                                                                            \
-  if (is_debugging) printf("...\n"), getchar();
+    if (is_debugging) {                                                        \
+      char chr;                                                                \
+      Q_t line_size = 1024;                                                    \
+      q_t chars_count = 0;                                                     \
+      char *buffer = malloc(line_size);                                        \
+      printf("α: %lu ρ: %lu>", α, ρ);                                          \
+      while ((chars_count = getline(&buffer, &line_size, stdin))) {            \
+        chr = buffer[0];                                                       \
+        if (chr == 0xa)                                                        \
+          chr = pchr;                                                          \
+        else                                                                   \
+          pchr = chr;                                                          \
+        if (chr == 'a')                                                        \
+          for (Q_t i = 0; i < α; i++) {                                        \
+            const char *n = os_debug_find_name(σ[i].v);                        \
+            if (n)                                                             \
+              printf("%s ", n);                                                \
+            else                                                               \
+              printf("%016lx ", σ[i].q);                                       \
+          }                                                                    \
+        else if (chr == 's')                                                   \
+          break;                                                               \
+      }                                                                        \
+      free(buffer);                                                            \
+    }                                                                          \
+  }
 N(nar_not) {
   DESTRUCT, f = nc;
-  while (nc)
-    nc--, σ[α++].v = ο[ρ++].v;
+  DEBUGGING(nc);
   ρ += ac + oc;
   f ? O : C(2);
 }
@@ -37,8 +65,7 @@ N(nar_and) {
 N(nar_oor) {
   DESTRUCT, f = oc;
   ρ += nc + ac;
-  while (oc)
-    oc--, σ[α++].v = ο[ρ++].v;
+  DEBUGGING(oc);
   f ? O : C(0);
 }
 
