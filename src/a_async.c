@@ -95,15 +95,14 @@ Sar(timer)(create_timer_pith, timer_n, and, insert_timer_pith, and)
 
 S(printtimeouts) { for (Q_t i = 0; i < timeouts_count; i++) print("%lu %p\n", timeouts[i], piths[i]); C(1); }
 S(hello) { R(Q_t, i); print("hello %lu\n", i), C(1); }
-NarP(timers)(
+Nar(timers)(
   1, hello, god, and, 1000, timer,
   2, hello, god, and, 2000, timer, and6,
   3, hello, god, and, 3000, timer, and6,
   4, hello, god, and, 4000, timer, and6,
   5, hello, god, and, 5000, timer, and6,
   6, hello, god, and, 6000, timer, and6,
-  7, hello, god, and, 7000, timer, and6,
-  printtimeouts, and)
+  7, hello, god, and, 7000, timer, and6)
 
 Nar(ls)(exports, os_ls)
 
