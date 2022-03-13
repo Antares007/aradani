@@ -49,7 +49,8 @@ SP(ray_not) {
   }
 }
 
-SP(ray_oor) {}
+SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
+NP(ray_and) { os_next(T()); }
 
 void os_hrtime_init();
 
