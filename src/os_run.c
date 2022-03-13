@@ -48,7 +48,7 @@ SP(ray_not) {
   }
 }
 
-SP(ray_oor) { os_next(T()); }
+SP(ray_oor) {}
 
 void os_hrtime_init();
 
