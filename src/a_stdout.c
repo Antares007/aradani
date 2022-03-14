@@ -25,7 +25,6 @@ epoll_ctl_mod_out,  L)IN(L,
 //
 activate,           L)IN(L,
 bye,                L)IN(L,
-is_active,          L)IN(L,
 is_alfa_zero,       L)IN(L,
 match,        imports)
 
@@ -40,21 +39,33 @@ typedef struct writable_t {
   Q_t is_readable_muted:1;
 } writable_t;
 
-SS(is_writeable, writable_t )( C(s->is_writeable != 0); )
-SS(set_writeable, writable_t)( s->is_writeable = 1, C(1); )
-SS(unset_writeable, writable_t)( s->is_writeable = 0, C(1); )
-SS(is_overflow, writable_t)( C(s->queue_length > 15); )
+SS(set_writeable, writable_t)(
+  s->is_writeable = 1, C(1);
+)
+SS(unset_writeable, writable_t)(
+  s->is_writeable = 0, C(1);
+)
+SS(is_overflow, writable_t)(
+  C(s->queue_length > 15);
+)
 
-SS(ensure_producer_is_muted,   writable_t)( if (!s->is_readable_muted) s->is_readable_muted = 1, Α('MUT', god, s->readable, os_queue) O; else C(1); )
-SS(ensure_producer_is_unmuted, writable_t)( if ( s->is_readable_muted) s->is_readable_muted = 0, Α('UNM', god, s->readable, os_queue) O; else C(1); )
+SS(ensure_producer_is_muted,   writable_t)(
+  if (!s->is_readable_muted)
+    s->is_readable_muted = 1, Α('MUT', god, s->readable, os_queue) O;
+  else
+    C(1);
+)
+SS(ensure_producer_is_unmuted, writable_t)(
+  if ( s->is_readable_muted)
+    s->is_readable_muted = 0, Α('UNM', god, s->readable, os_queue) O;
+  else
+    C(1);
+)
 
 Sar(stdout_oor_n)(
   activate, ensure_producer_is_unmuted, and,
   epoll_ctl_add_out, and)
-Sar(stdout_oor)(
-    is_active,
-      got,
-      stdout_oor_n, andor)
+SarS(stdout_oor, writable_t)(s->readable ? got: stdout_oor_n)
 N(chunk_free) {
   R(Q_t,   off);
   R(Q_t,   len);
@@ -97,20 +108,16 @@ Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
   got, or)
-Sar(stdout_and)(
-  is_active,
-    stdout_and_n,
-    got, andor)
+SarS(stdout_and, writable_t)(s->is_writeable ? stdout_and_n : got)
 
 Sar(stdout_not_n)(
   is_alfa_zero,
     bye,
     god, andor,
   epoll_ctl_del_out, and)
-Sar(stdout_not)(
-  is_active,
-    stdout_not_n,
-    got, andor)
+
+SarS(stdout_not, writable_t)(s->readable ? stdout_not_n: got)
+
 S(is_fully_written) {
   R(Q_t, off);
   R(Q_t, len);
@@ -142,10 +149,7 @@ Sar(loop_write_n)(
   dequeue_chunk, 
     loop_write_2,
     ensure_producer_is_unmuted, andor)
-Sar(loop_write)(
-  is_writeable,
-    loop_write_n,
-    epoll_ctl_mod_out, andor)
+SarS(loop_write, writable_t)(s->is_writeable ? loop_write_n : epoll_ctl_mod_out)
 Sar(on_epoll_out)(
   set_writeable, loop_write, and)
 N(stdout_set){
