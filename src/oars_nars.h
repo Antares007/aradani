@@ -7,12 +7,11 @@
 
 #define NS_(...) {__VA_ARGS__}}
 #define NarS_(...) Α(__VA_ARGS__) O; }
-#define NS(Name, T) N(Name) { T*s = ο[7].v; NS_
-#define NSP(Name, T) NP(Name) { T*s = ο[7].v; NS_
-#define NarS(Name, T) N(Name) { T*s = ο[7].v; NarS_
-#define NarSP(Name, T) NP(Name) { T*s = ο[7].v; NarS_
-#define SS(Name, T) S(Name) { T*s = ο[7].v; NS_
-#define SSP(Name, T) SP(Name) { T*s = ο[7].v; NS_
-#define SarS(Name, T) S(Name) { T*s = ο[7].v; NarS_
-#define SarSP(Name, T) SP(Name) { T*s = ο[7].v; NarS_
-
+#define NS(Name, T) N(Name) { T*s = (T*)&ο[7]; NS_
+#define NSP(Name, T) NP(Name) { T*s = (T*)&ο[7]; NS_
+#define NarS(Name, T) N(Name) { T*s = (T*)&ο[7]; NarS_
+#define NarSP(Name, T) NP(Name) { T*s = (T*)&ο[7]; NarS_
+#define SS(Name, T) S(Name) { T*s = (T*)&ο[7]; NS_
+#define SSP(Name, T) SP(Name) { T*s = (T*)&ο[7]; NS_
+#define SarS(Name, T) S(Name) { T*s = (T*)&ο[7]; NarS_
+#define SarSP(Name, T) SP(Name) { T*s = (T*)&ο[7]; NarS_

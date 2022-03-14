@@ -31,15 +31,32 @@ match,        imports)
 
 #include "unistd.h"
 #include "os/queue.h"
+typedef struct writable_t {
+  n_t on_epoll_event;
+  p_t* readable;
+  Q_t is_writeable;
+  QUEUE q;
+  Q_t is_readable_muted;
+  Q_t queue_length;
+} writable_t;
+  // 7   ) epoll on wait word
+  // 8  0) Unactive
+  //    *) Pith (p_t*) of active consumer
+  // 9  0) EAGAIN no more data can be written. register epoll event and wait EPOLLOUT event
+  //    1) Writable can write until EAGAIN
+  // 10    QUEUE
+  // 11    QUEUE
+  // 12 0) producer unmuted
+  //    1) producer muted
+  // 13    queue length
 
-S(is_writeable          ) { C(ο[9].Q != 0); }
-S(set_writeable         ) {   ο[9].Q = 1, C(1); }
-S(unset_writeable       ) {   ο[9].Q = 0, C(1); }
+SS(is_writeable, writable_t )( C(s->is_writeable != 0); )
+SS(set_writeable, writable_t)( s->is_writeable = 1, C(1); )
+SS(unset_writeable, writable_t)( s->is_writeable = 0, C(1); )
+SS(is_overflow, writable_t)( C(s->queue_length > 15); )
 
-S(is_overflow           ) { C(ο[13].Q > 15); }
-
-S(ensure_producer_is_muted     ) { if (!ο[12].Q) ο[12].Q = 1, Α('MUT', god, ο[8].p, os_queue) O; else C(1); }
-S(ensure_producer_is_unmuted   ) { if ( ο[12].Q) ο[12].Q = 0, Α('UNM', god, ο[8].p, os_queue) O; else C(1); }
+SS(ensure_producer_is_muted,   writable_t)( if (!s->is_readable_muted) s->is_readable_muted = 1, Α('MUT', god, s->readable, os_queue) O; else C(1); )
+SS(ensure_producer_is_unmuted, writable_t)( if ( s->is_readable_muted) s->is_readable_muted = 0, Α('UNM', god, s->readable, os_queue) O; else C(1); )
 
 Sar(stdout_oor_n)(
   activate, ensure_producer_is_unmuted, and,
@@ -56,13 +73,19 @@ N(chunk_free) {
   //print("%p %lu/%lu\n", buff, len, off);
   Α(buff, l_free) O;
 }
-S(dequeue_chunk) {
+SS(dequeue_chunk, writable_t)(
   p_t *q;
-  if (&ο[10] == (q = (p_t *)QUEUE_NEXT((QUEUE *)&ο[10]))) C(0);
-  else ο[13].Q--, QUEUE_REMOVE((QUEUE*)q), Α(q[2].v, q[3].Q, q[4].Q, q, l_free) O;
-}
-S(queue_chunk_tail_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_TAIL((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
-S(queue_chunk_head_and_cpp) { R(p_t *, q); ο[13].Q++, QUEUE_INSERT_HEAD((QUEUE *)&ο[10], (QUEUE *)q), C(1); }
+  if ((p_t*)&s->q == (q = (p_t *)QUEUE_NEXT(&s->q))) C(0);
+  else s->queue_length--, QUEUE_REMOVE((QUEUE*)q), Α(q[2].v, q[3].Q, q[4].Q, q, l_free) O;
+)
+SS(queue_chunk_tail_and_cpp, writable_t)(
+  R(QUEUE*, q);
+  s->queue_length++, QUEUE_INSERT_TAIL(&s->q, q), C(1);
+)
+SS(queue_chunk_head_and_cpp, writable_t)(
+  R(QUEUE*, q);
+  s->queue_length++, QUEUE_INSERT_HEAD(&s->q, q), C(1);
+)
 S(make_queue_item_n) {
   R(p_t *, q);
   R(Q_t, off);
@@ -135,24 +158,15 @@ Sar(loop_write)(
     epoll_ctl_mod_out, andor)
 Sar(on_epoll_out)(
   set_writeable, loop_write, and)
-  // 7   ) epoll on wait word
-  // 8  0) Unactive
-  //    *) Pith (p_t*) of active consumer
-  // 9  0) EAGAIN no more data can be written. register epoll event and wait EPOLLOUT event
-  //    1) Writable can write until EAGAIN
-  // 10    QUEUE
-  // 11    QUEUE
-  // 12 0) producer unmuted
-  //    1) producer muted
-  // 13    queue length
-S(stdout_set) {
+N(stdout_set){
   R(p_t*, oο);
-  oο[7].c = on_epoll_out;
-  oο[8].p = 0;
-  oο[9].Q = 0;
-  QUEUE_INIT((QUEUE*)&oο[10]);
-  oο[12].Q = 1;
-  oο[13].Q = 0;
+  writable_t *s = (writable_t *)&oο[7];
+  s->on_epoll_event = on_epoll_out;
+  s->readable = 0;
+  s->is_writeable = 0;
+  QUEUE_INIT(&s->q);
+  s->is_readable_muted = 1;
+  s->queue_length = 0;
   A(oο) C(1);
 }
 Sar(mk_stdout)(
