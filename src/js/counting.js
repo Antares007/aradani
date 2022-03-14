@@ -3,7 +3,7 @@ const { Readable } = require("stream");
 class Counter extends Readable {
   constructor(opt) {
     super(opt);
-    this._max = 10;
+    this._max = 9;
     this._index = 1;
   }
 
@@ -18,5 +18,6 @@ class Counter extends Readable {
     }
   }
 }
-const c = new Counter();
-c.on("data", (chunk) => console.log(chunk.toString()));
+const c1 = new Counter();
+c1.on("data", (chunk) => console.log("\n " + chunk.toString()));
+c1.pipe(process.stdout);
