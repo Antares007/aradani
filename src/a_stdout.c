@@ -34,21 +34,11 @@ match,        imports)
 typedef struct writable_t {
   n_t on_epoll_event;
   p_t* readable;
-  Q_t is_writeable;
   QUEUE q;
-  Q_t is_readable_muted;
   Q_t queue_length;
+  Q_t is_writeable:1;
+  Q_t is_readable_muted:1;
 } writable_t;
-  // 7   ) epoll on wait word
-  // 8  0) Unactive
-  //    *) Pith (p_t*) of active consumer
-  // 9  0) EAGAIN no more data can be written. register epoll event and wait EPOLLOUT event
-  //    1) Writable can write until EAGAIN
-  // 10    QUEUE
-  // 11    QUEUE
-  // 12 0) producer unmuted
-  //    1) producer muted
-  // 13    queue length
 
 SS(is_writeable, writable_t )( C(s->is_writeable != 0); )
 SS(set_writeable, writable_t)( s->is_writeable = 1, C(1); )
