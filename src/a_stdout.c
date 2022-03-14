@@ -108,7 +108,7 @@ Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
   got, or)
-SarS(stdout_and, writable_t)(s->is_writeable ? stdout_and_n : got)
+SarS(stdout_and, writable_t)(s->readable ? stdout_and_n : got)
 
 Sar(stdout_not_n)(
   is_alfa_zero,

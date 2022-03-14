@@ -3,7 +3,7 @@
 IBS(                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
-got,          imports)IN(L,
+got,          imports)
 
 // clang-format on
 
