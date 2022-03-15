@@ -44,10 +44,10 @@ Sar(read_stdin)(0x10000, l_malloc, read_stdin_n, and)
   //   1) Readable can read until EAGAIN
 typedef struct readable_t {
   n_t on_epoll_event;
-  p_t* writeable;
-  Q_t is_unmuted;
-  Q_t is_readable;
   Q_t fd;
+  p_t* writeable;
+  Q_t is_unmuted:1;
+  Q_t is_readable:1;
 } readable_t;
 
 S(is_eof               ) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
@@ -128,6 +128,7 @@ S(stdin_set) {
   R(p_t *, oο);
   readable_t *s = (readable_t *)&oο[7];
   s->on_epoll_event = on_epoll_in;
+  s->fd = STDIN_FILENO;
   s->writeable = 0;
   s->is_unmuted = 0;
   s->is_readable = 0;
