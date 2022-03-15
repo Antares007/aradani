@@ -12,12 +12,12 @@ typedef struct win_t {
 } win_t;
 #define State(T, O) T *s = (T *)&(O)[7]
 
-S(win_oor) {
+SP(win_oor) {
   R(p_t *, oο);
   ο[8].p = oο;
   Α(ο, gor, oο, 2, os_queue_n) O;
 }
-S(win_and) {
+SP(win_and) {
   R(Q_t, m);
   switch (m) {
   case 'beg':
@@ -37,11 +37,13 @@ S(win_and) {
     break;
   }
 }
-S(win_not) {}
-S(win_set) {
+SP(win_not) {}
+SP(win_set) {
   R(p_t *, oο);
+  SetTraceLogLevel(LOG_ERROR | LOG_WARNING | LOG_DEBUG); //LOG_INFO
   InitWindow(800, 450, "Window");
+
   SetTargetFPS(0);
   Α(oο) C(1);
 }
-Nar(os_win)(win_not, win_and, win_oor, ο, 512, "ωin", os_new_psn, win_set, and);
+NarP(os_win)(win_not, win_and, win_oor, ο, 512, "ω", os_new_psn, win_set, and);

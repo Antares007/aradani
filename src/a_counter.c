@@ -8,18 +8,20 @@ os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 os_win,             L)IN(L,
 //
+and2,               L)IN(L,
 and5,         imports)
 Sar(init)(god)
-S(counter_oor) {
+
+SP(c_oor) {
   R(p_t *, oο);
-  ο[7].p = oο;
+  ο[8].p = oο;
+  C(1);
   //Α(Inc, Dec, and, Sum, and) O;
 }
-S(counter_and) { C(1); }
-S(counter_not) { C(1); }
-Nar(counter)(counter_not, counter_and, counter_oor, ο, 512, "counter",
-             os_new_psn);
-Sar(expample)(god)
+SP(c_and) { C(1); }
+SP(c_not) { C(1); }
+NarP(c)(c_not, c_and, c_oor, ο, 512, "c", os_new_psn);
+Sar(expample)(c, gor, os_win, and2, 2, os_queue_n, and2)
 
 Sar(Increase)('+', 'txt', god, ο, os_queue)
 Sar(Decrease)('-', 'txt', god, ο, os_queue)
