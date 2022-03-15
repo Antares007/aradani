@@ -53,7 +53,6 @@ SS(bye, readable_t        )( Α(ο, got, s->writeable, os_queue) O; )
 S(activate_and_greet ) { Α(activate, hi, and) O; }
 S(stop_and_deactivate) { Α(bye, deactivate, and) O; }
 SS(is_readable, readable_t   )( C(s->is_readable != 0); )
-SS(is_active, readable_t     )( C(s->writeable != 0); )
 SS(is_unmuted, readable_t    )( C(s->is_unmuted != 0); )
 SS(set_unmuted, readable_t   )( s->is_unmuted = 1, C(1); )
 SS(set_muted, readable_t     )( s->is_unmuted = 0, C(1); )
@@ -80,11 +79,8 @@ Sar(loop_read_send_chunks)(
     god, andor)
 S(is_alfa_zero) { C(α == 0); }
 
-Sar(stdin_oor)(
-  is_active,
-    stop_and_deactivate,
-    epoll_ctl_add_in, andor,
-  activate_and_greet, and)
+SarS(stdin_oor, readable_t)(
+  s->writeable ? stop_and_deactivate : epoll_ctl_add_in, activate_and_greet, and)
 
 Sar(stdin_mute)(
   is_unmuted,
@@ -103,20 +99,16 @@ Sar(stdin_and_n)(
   'MUT', stdin_mute,  match, or3,
   'UNM', stdin_unmute,  match, or3,
   got, or)
-Sar(stdin_and)(
-  is_active,
-    stdin_and_n,
-    got, andor)
+SarS(stdin_and, readable_t)(
+  s->writeable ? stdin_and_n : got)
 
 Sar(stdin_not_n)(
   is_alfa_zero,
     bye,
     god, andor,
   epoll_ctl_del_in, and)
-Sar(stdin_not)(
-  is_active,
-    stdin_not_n,
-    got, andor)
+SarS(stdin_not, readable_t)(
+  s->writeable ? stdin_not_n : got)
 
 Sar(on_epoll_in)(
   set_readable, loop_read_send_chunks, and)
@@ -141,7 +133,6 @@ EN(tail,
 activate,           L)EN(L,
 bye,                L)EN(L,
 greet,              L)EN(L,
-is_active,          L)EN(L,
 is_alfa_zero,       L)EN(L,
 match,              L)EN(L,
 mk_stdin,     exports);
