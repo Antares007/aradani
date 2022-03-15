@@ -32,6 +32,7 @@ match,        imports)
 #include "os/queue.h"
 typedef struct writable_t {
   n_t on_epoll_event;
+  Q_t fd;
   p_t* readable;
   QUEUE q;
   Q_t queue_length;
@@ -156,6 +157,7 @@ N(stdout_set){
   R(p_t*, oο);
   writable_t *s = (writable_t *)&oο[7];
   s->on_epoll_event = on_epoll_out;
+  s->fd = STDOUT_FILENO;
   s->readable = 0;
   s->is_writeable = 0;
   QUEUE_INIT(&s->q);

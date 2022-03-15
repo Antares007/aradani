@@ -35,13 +35,7 @@ S(read_stdin_n) {
     drop, l_free, and, not3) O;
 }
 Sar(read_stdin)(0x10000, l_malloc, read_stdin_n, and)
-  //7   ) epoll on wait word
-  //8  0) Unactive
-  //   *) Pith (p_t*) of active consumer
-  //9  0) Muted
-  //   1) Unmuted
-  //10 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
-  //   1) Readable can read until EAGAIN
+
 typedef struct readable_t {
   n_t on_epoll_event;
   Q_t fd;
