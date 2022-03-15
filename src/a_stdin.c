@@ -66,12 +66,14 @@ Sar(queue_loop_read_send_chunks)(
   loop_read_send_chunks, ο, os_queue)
 
 SarS(queue_chunk_send, readable_t)('CNK', god, s->writeable, os_queue)
-
+Sar(cont_or_stop_reading)(
+  is_eof,
+    queue_chunk_send,
+    queue_chunk_send, queue_loop_read_send_chunks, and, andor3)
 Sar(loop_read_send_chunks_n)(
   read_stdin,
-    is_eof, queue_chunk_send, queue_chunk_send, queue_loop_read_send_chunks, and, andor3,
-    set_unreadable, epoll_ctl_mod_in, and,
-    0063, nar)
+    cont_or_stop_reading,
+    set_unreadable, epoll_ctl_mod_in, and, andor3)
 Sar(loop_read_send_chunks)(
   is_unmuted,
     loop_read_send_chunks_n,
