@@ -35,29 +35,43 @@ S(read_stdin_n) {
     drop, l_free, and, not3) O;
 }
 Sar(read_stdin)(0x10000, l_malloc, read_stdin_n, and)
+  //7   ) epoll on wait word
+  //8  0) Unactive
+  //   *) Pith (p_t*) of active consumer
+  //9  0) Muted
+  //   1) Unmuted
+  //10 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
+  //   1) Readable can read until EAGAIN
+typedef struct readable_t {
+  n_t on_epoll_event;
+  p_t* writeable;
+  Q_t is_unmuted;
+  Q_t is_readable;
+  Q_t fd;
+} readable_t;
 
-S(is_eof             ) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
-S(match              ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-S(activate           ) { R(p_t *, oο); ο[8].p = oο, C(1); }
-S(deactivate         ) { ο[8].p = 0, C(1); }
-S(hi                 ) { Α(ο, gor, ο[8].p, os_queue) O; }
-S(bye                ) { Α(ο, got, ο[8].p, os_queue) O; }
+S(is_eof               ) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
+S(match                ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
+SS(activate, readable_t   )( R(p_t *, oο); s->writeable = oο, C(1); )
+SS(deactivate, readable_t )( s->writeable = 0, C(1); )
+SS(hi, readable_t         )( Α(ο, gor, s->writeable, os_queue) O; )
+SS(bye, readable_t        )( Α(ο, got, s->writeable, os_queue) O; )
 S(activate_and_greet ) { Α(activate, hi, and) O; }
 S(stop_and_deactivate) { Α(bye, deactivate, and) O; }
-S(is_readable        ) { C(ο[10].Q != 0); }
-S(is_active          ) { C(ο[8].p != 0); }
-S(is_unmuted         ) { C(ο[9].Q != 0); }
-S(set_unmuted       ) { ο[9].Q = 1, C(1); }
-S(set_muted         ) { ο[9].Q = 0, C(1); }
-S(set_readable      ) { ο[10].Q = 1, C(1); }
-S(set_unreadable    ) { ο[10].Q = 0, C(1); }
+SS(is_readable, readable_t   )( C(s->is_readable != 0); )
+SS(is_active, readable_t     )( C(s->writeable != 0); )
+SS(is_unmuted, readable_t    )( C(s->is_unmuted != 0); )
+SS(set_unmuted, readable_t   )( s->is_unmuted = 1, C(1); )
+SS(set_muted, readable_t     )( s->is_unmuted = 0, C(1); )
+SS(set_readable, readable_t  )( s->is_readable = 1, C(1); )
+SS(set_unreadable, readable_t)( s->is_readable = 0, C(1); )
 
 
 S(loop_read_send_chunks);
 Sar(queue_loop_read_send_chunks)(
   loop_read_send_chunks, ο, os_queue)
 
-Sar(queue_chunk_send)('CNK', god, ο[8].p, os_queue)
+SarS(queue_chunk_send, readable_t)('CNK', god, s->writeable, os_queue)
 
 Sar(loop_read_send_chunks_n)(
   read_stdin,
@@ -110,14 +124,15 @@ Sar(stdin_not)(
 
 Sar(on_epoll_in)(
   set_readable, loop_read_send_chunks, and)
-  //7   ) epoll on wait word
-  //8  0) Unactive
-  //   *) Pith (p_t*) of active consumer
-  //9  0) Muted
-  //   1) Unmuted
-  //10 0) EAGAIN no more data to read register epoll event  waiting EPOLLIN event
-  //   1) Readable can read until EAGAIN
-S(stdin_set) { R(p_t *, oο); oο[7].c = on_epoll_in, oο[8].p = 0, oο[9].Q = 0, oο[10].Q = 0, A(oο) C(1); }
+S(stdin_set) {
+  R(p_t *, oο);
+  readable_t *s = (readable_t *)&oο[7];
+  s->on_epoll_event = on_epoll_in;
+  s->writeable = 0;
+  s->is_unmuted = 0;
+  s->is_readable = 0;
+  A(oο) C(1);
+}
 Sar(mk_stdin)(
      stdin_not, stdin_and, stdin_oor, "≫", os_new_n,
      stdin_set, and,
