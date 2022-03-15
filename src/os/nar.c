@@ -61,7 +61,6 @@ const char *os_debug_find_name(void *a);
       }                                                                        \
       WC--, σ[α++].v = ο[ρ++].v;                                               \
     }                                                                          \
-    pchr = 0xa;                                                                \
     SCLOOP                                                                     \
   }
 #define SCLOOP2 is_debugging = 0;
