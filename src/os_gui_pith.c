@@ -44,14 +44,4 @@ S(win_set) {
   SetTargetFPS(0);
   Α(oο) C(1);
 }
-Nar(win)(win_not, win_and, win_oor, ο, 512, "ωin", os_new_psn, win_set, and);
-
-S(counter_oor) {
-  R(p_t *, oο);
-  ο[7].p = oο;
-  //Α(Inc, Dec, and, Sum, and) O;
-}
-S(counter_and) { C(1); }
-S(counter_not) { C(1); }
-Nar(counter)(counter_not, counter_and, counter_oor, ο, 512, "counter",
-             os_new_psn);
+Nar(os_win)(win_not, win_and, win_oor, ο, 512, "ωin", os_new_psn, win_set, and);

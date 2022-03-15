@@ -32,7 +32,7 @@ src/os_run:                  \
 	src/os/next.o              \
 	src/os/queue.o             \
 	src/os_epoll.o             \
-	src/os_gui.o
+	src/os_gui_pith.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src/gui/ui: src/gui/ui.c

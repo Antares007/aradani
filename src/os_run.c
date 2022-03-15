@@ -41,6 +41,7 @@ os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
+os_win,             L)END(L,
 os_wordump,      root);
 
 SP(ray_not) {
