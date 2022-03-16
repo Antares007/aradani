@@ -1,0 +1,87 @@
+#include "arsi.h"
+// clang-format off
+IBS(                L)IN(L,
+god,                L)IN(L,
+gor,                L)IN(L,
+got,                L)IN(L,
+l_free,             L)IN(L,
+l_malloc,           L)IN(L,
+os_wordump,         L)IN(L,
+//
+and,                L)IN(L,
+and2,               L)IN(L,
+and4,         imports);
+#include "os/queue.h"
+S(queue_insert_tail) {
+  R(QUEUE *, qσ);
+  R(QUEUE *, h);
+  QUEUE_INSERT_TAIL(h, qσ), C(1);
+}
+S(queue_insert_head) {
+  R(QUEUE *, qσ);
+  R(QUEUE *, h);
+  QUEUE_INSERT_HEAD(h, qσ), C(1);
+}
+S(roll_out) {
+  R(p_t *, qσ);
+  R(QUEUE *, h);
+  qσ[2].Q = α;
+  while (α)
+    --α, qσ[α + 3].v = σ[α].v;
+  Α(h, qσ) C(1);
+}
+S(roll_in) {
+  R(QUEUE *, q);
+  R(QUEUE *, h);
+  if (q == h)
+    return C(0);
+  QUEUE_REMOVE(q);
+  p_t *qσ = (p_t *)q;
+  Q_t qα = qσ[2].Q;
+  for (Q_t i = 0; i < qα; i++)
+    σ[α + i].v = qσ[i + 3].v;
+  α += qα, A(q) l_free(T());
+}
+S(q_push) {
+  R(QUEUE *, h);
+  Q_t β = α + 3;
+  A7(h, β * sizeof(void *), l_malloc, roll_out, and, queue_insert_tail, and) O;
+}
+S(q_unshift) {
+  R(QUEUE *, h);
+  Q_t β = α + 3;
+  A7(h, β * sizeof(void *), l_malloc, roll_out, and, queue_insert_head, and) O;
+}
+S(q_pop) {
+  R(QUEUE *, h);
+  QUEUE *q = QUEUE_PREV(h);
+  A3(h, q, roll_in) O;
+}
+S(q_shift) {
+  R(QUEUE *, h);
+  QUEUE *q = QUEUE_NEXT(h);
+  A3(h, q, roll_in) O;
+}
+
+SarP(init)(god)
+
+SP(Main_n) {
+  R(QUEUE *, h);
+  Α(6, 3, h, q_push,
+    3, 6, h, q_push, and4,
+          h, q_shift, and2,
+          h, q_shift, and2,
+    os_wordump, and)
+  O;
+}
+SP(Main) {
+  QUEUE h;
+  QUEUE_INIT(&h), Α(&h, Main_n) O;
+}
+
+EN(tail,
+q_pop,              L)EN(L,
+q_push,             L)EN(L,
+q_shift,            L)EN(L,
+q_unshift,          L)EN(L,
+Main,         exports)
