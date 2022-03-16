@@ -10,7 +10,9 @@ os_wordump,         L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
+and3,               L)IN(L,
 and4,         imports);
+// clang-format off
 #include "os/queue.h"
 S(queue_insert_tail) {
   R(QUEUE *, qσ);
@@ -31,16 +33,19 @@ S(roll_out) {
   Α(h, qσ) C(1);
 }
 S(roll_in) {
+  R(p_t *, qσ);
+  Q_t qα = qσ[2].Q;
+  for (Q_t i = 0; i < qα; i++)
+    σ[α + i].v = qσ[i + 3].v;
+  α += qα, C(1);
+}
+S(roll_in_and_free) {
   R(QUEUE *, q);
   R(QUEUE *, h);
   if (q == h)
     return C(0);
   QUEUE_REMOVE(q);
-  p_t *qσ = (p_t *)q;
-  Q_t qα = qσ[2].Q;
-  for (Q_t i = 0; i < qα; i++)
-    σ[α + i].v = qσ[i + 3].v;
-  α += qα, A(q) l_free(T());
+  A5(q, roll_in, q, l_free, and2) O;
 }
 S(q_push) {
   R(QUEUE *, h);
@@ -55,30 +60,49 @@ S(q_unshift) {
 S(q_pop) {
   R(QUEUE *, h);
   QUEUE *q = QUEUE_PREV(h);
-  A3(h, q, roll_in) O;
+  Α(h, q, roll_in_and_free) O;
 }
 S(q_shift) {
   R(QUEUE *, h);
   QUEUE *q = QUEUE_NEXT(h);
-  A3(h, q, roll_in) O;
+  Α(h, q, roll_in_and_free) O;
+}
+S(q_for_each_n) {
+  R(QUEUE *, q);
+  R(QUEUE *, h);
+  R(n_t, n);
+  if (q == h)
+    C(1);
+  else
+    A9(q, roll_in, n, and, n, h, QUEUE_NEXT(q), q_for_each_n, and4) O;
 }
 
-SarP(init)(god)
+S(q_for_each) {
+  R(QUEUE *, h);
+  R(n_t, n);
+  A4(n, h, QUEUE_NEXT(h), q_for_each_n) O;
+}
 
+SarP(init)(god);
+SP(pgod) {
+  R(Q_t, a);
+  R(Q_t, b);
+  A(a + b) C(1);
+}
 SP(Main_n) {
   R(QUEUE *, h);
   Α(6, 3, h, q_push,
     3, 6, h, q_push, and4,
+    pgod, h, q_for_each, and3,
           h, q_shift, and2,
           h, q_shift, and2,
-    os_wordump, and)
-  O;
+          os_wordump, and) O;
 }
 SP(Main) {
   QUEUE h;
   QUEUE_INIT(&h), Α(&h, Main_n) O;
 }
-
+// clang-format off
 EN(tail,
 q_pop,              L)EN(L,
 q_push,             L)EN(L,
