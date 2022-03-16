@@ -15,9 +15,10 @@ os_queue,           L)IN(L,
 //
 and,                L)IN(L,
 and2,               L)IN(L,
+and3or3,            L)IN(L,
 andor,              L)IN(L,
 andor3,             L)IN(L,
-not3,               L)IN(L,
+not,                L)IN(L,
 or,                 L)IN(L,
 or3,                L)IN(L,
 //
@@ -25,16 +26,8 @@ epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   L)IN(L,
 epoll_ctl_mod_in, imports);
 #include "unistd.h"
-N(greet              ) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
-SarP(init)(god)
 
-S(drop) { α--, C(1); }
-S(read_stdin_n) {
-  R(void *, buffer);
-  Α(buffer, 0x10000, STDIN_FILENO, l_read,
-    drop, l_free, and, not3) O;
-}
-Sar(read_stdin)(0x10000, l_malloc, read_stdin_n, and)
+SarP(init)(god)
 
 typedef struct readable_t {
   n_t on_epoll_event;
@@ -43,9 +36,6 @@ typedef struct readable_t {
   Q_t is_unmuted:1;
   Q_t is_readable:1;
 } readable_t;
-
-S(match                      ) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
-S(is_eof                     ) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
 
 SS(activate, readable_t      )( R(p_t *, oο); s->writeable = oο, C(1); )
 SS(deactivate, readable_t    )( s->writeable = 0, C(1); )
@@ -64,24 +54,8 @@ SarS(queue_chunk_send, readable_t)('CNK', god, s->writeable, os_queue)
 
 Sar(activate_and_greet)(activate, hi, and)
 Sar(bye_and_deactivate)(bye, deactivate, and)
-
-S(loop_read_send_chunks);
-Sar(queue_loop_read_send_chunks)(
-  loop_read_send_chunks, ο, os_queue)
-
-Sar(cont_or_stop_reading)(
-  is_eof,
-    queue_chunk_send,
-    queue_chunk_send, queue_loop_read_send_chunks, and, andor3)
-Sar(loop_read_send_chunks_n)(
-  read_stdin,
-    cont_or_stop_reading,
-    set_unreadable, epoll_ctl_mod_in, and, andor3)
-Sar(loop_read_send_chunks)(
-  is_unmuted,
-    loop_read_send_chunks_n,
-    god, andor)
 S(is_alfa_zero) { C(α == 0); }
+
 
 Sar(stdin_oor)(
   is_active,
@@ -89,13 +63,15 @@ Sar(stdin_oor)(
     epoll_ctl_add_in, andor,
   activate_and_greet, and)
 
+S(loop_read_if_unmuted);
 Sar(unmute_n)(
   set_unmuted, is_readable, and,
-    loop_read_send_chunks,
+    loop_read_if_unmuted,
     epoll_ctl_mod_in, andor)
 Sar(unmute)(
     is_unmuted, unmute_n, or)
 
+S(match) { R(n_t, n); R(Q_t, m); R(Q_t, l); if (l == m) n(T()); else A(l) C(0); }
 Sar(stdin_and_n)(
   is_alfa_zero,
   'MUT', set_muted, match, or3,
@@ -115,13 +91,37 @@ Sar(stdin_not_n)(
   is_alfa_zero, and,
     bye_and_deactivate,
     stdin_not_nn, andor)
-Sar(stdin_not)(
+SarP(stdin_not)(
   is_active,
     stdin_not_n,
     got, andor)
 
+S(drop) { α--, C(1); }
+Sar(free_chunk)(drop, l_free, and)
+S(read_chunk_n) {
+  R(void *, buffer);
+  Α(buffer, 0x10000, ο[8].Q, l_read, free_chunk, not) O; // o[8].Q == fd
+}
+Sar(read_chunk)(0x10000, l_malloc, read_chunk_n, and)
+S(is_eof) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
+
+Sar(queue_loop_read_if_unmuted)(
+  loop_read_if_unmuted, ο, os_queue)
+Sar(cont_or_stop_reading)(
+  is_eof,
+    free_chunk, got, and,
+    queue_chunk_send, queue_loop_read_if_unmuted, and, and3or3)
+Sar(loop_read_send_chunks_n)(
+  read_chunk,
+    cont_or_stop_reading,
+    set_unreadable, epoll_ctl_mod_in, and, andor3)
+Sar(loop_read_if_unmuted)(
+  is_unmuted,
+    loop_read_send_chunks_n,
+    god, andor)
 Sar(on_epoll_in)(
-  set_readable, loop_read_send_chunks, and)
+  set_readable, loop_read_if_unmuted, and)
+
 S(stdin_set) {
   R(p_t *, oο);
   readable_t *s = (readable_t *)&oο[7];
@@ -142,7 +142,6 @@ Nar(ls)(
 EN(tail,
 activate,           L)EN(L,
 bye,                L)EN(L,
-greet,              L)EN(L,
 is_alfa_zero,       L)EN(L,
 match,              L)EN(L,
 mk_stdin,     exports);

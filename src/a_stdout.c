@@ -111,13 +111,22 @@ Sar(stdout_and_n)(
   got, or)
 SarS(stdout_and, writable_t)(s->readable ? stdout_and_n : got)
 
-Sar(stdout_not_n)(
-  is_alfa_zero,
+SSP(is_goodbye, writable_t)(R(p_t*, arg); A(arg) C(arg == s->readable);)
+SarP(goot)(got)
+SP(close_stdout) { Α(ο[8].Q, l_close, goot, and) O; }
+SarP(stdout_not_nn)(
+  is_goodbye,
+    close_stdout,
+    got, andor)
+SarP(stdout_not_n)(
+  epoll_ctl_del_out,
+  is_alfa_zero, and,
     bye,
-    god, andor,
-  epoll_ctl_del_out, and)
-
-SarS(stdout_not, writable_t)(s->readable ? stdout_not_n: got)
+    stdout_not_nn, andor)
+SarSP(stdout_not, writable_t)(
+  s->readable
+    ? stdout_not_n
+    : got)
 
 S(is_fully_written) {
   R(Q_t, off);
@@ -139,16 +148,9 @@ Sar(loop_write_3)(
     loop_write_4,
     cant_write_eagain, andor)
 
-S(close_stdout) { Α(STDOUT_FILENO, l_close, got, and) O; }
-S(is_eof) { R(Q_t, off); R(Q_t, len); Α(len, off) C(len == 0 && off == 0); }
-
-Sar(loop_write_2)(
-  is_eof,
-    close_stdout, chunk_free, and,
-    loop_write_3, 0031, nar)
 Sar(loop_write_n)(
   dequeue_chunk, 
-    loop_write_2,
+    loop_write_3,
     ensure_producer_is_unmuted, andor)
 SarS(loop_write, writable_t)(s->is_writeable ? loop_write_n : epoll_ctl_mod_out)
 Sar(on_epoll_out)(

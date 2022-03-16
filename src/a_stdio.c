@@ -4,9 +4,10 @@ IBS(                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
+os_queue,           L)IN(L,
+//
 and,                L)IN(L,
 //
-greet,              L)IN(L,
 mk_stdin,           L)IN(L,
 mk_stdout,    imports)
 
@@ -22,6 +23,7 @@ SarP(init)(
   mk_stdin, mk_stdout, and,
   set, and)
 
+S(greet) { R(p_t*, pο); R(p_t*, cο); Α(cο, gor, pο, os_queue) O; }
 Nar(example)(stdoutο, stdinο, greet);
 
 // clang-format off
