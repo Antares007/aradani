@@ -89,24 +89,22 @@ Sar(stdin_oor)(
     epoll_ctl_add_in, andor,
   activate_and_greet, and)
 
-Sar(stdin_mute)(
-  is_unmuted,
-    set_muted,
-    god, andor);
-
-Sar(stdin_unmute_n)(
+Sar(unmute_n)(
   set_unmuted, is_readable, and,
     loop_read_send_chunks,
     epoll_ctl_mod_in, andor)
-Sar(stdin_unmute)(
-    is_unmuted, stdin_unmute_n, or)
+Sar(unmute)(
+    is_unmuted, unmute_n, or)
 
 Sar(stdin_and_n)(
   is_alfa_zero,
-  'MUT', stdin_mute,  match, or3,
-  'UNM', stdin_unmute,  match, or3,
+  'MUT', set_muted, match, or3,
+  'UNM', unmute, match, or3,
   got, or)
-Sar(stdin_and)(is_active, stdin_and_n, got, andor)
+Sar(stdin_and)(
+  is_active,
+    stdin_and_n,
+    got, andor)
 
 Sar(stdin_not_nn)(
   is_goodbye,
