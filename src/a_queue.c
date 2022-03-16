@@ -104,6 +104,7 @@ SP(Main) {
 }
 // clang-format off
 EN(tail,
+q_for_each,         L)EN(L,
 q_pop,              L)EN(L,
 q_push,             L)EN(L,
 q_shift,            L)EN(L,
