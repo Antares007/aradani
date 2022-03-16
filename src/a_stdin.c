@@ -29,28 +29,28 @@ epoll_ctl_mod_in, imports);
 
 SarP(init)(god)
 
-typedef struct readable_t {
+typedef struct rd_t {
   n_t on_epoll_event;
   Q_t fd;
   p_t* writeable;
   Q_t is_unmuted:1;
   Q_t is_readable:1;
-} readable_t;
+} rd_t;
 
-SS(activate, readable_t      )( R(p_t *, oο); s->writeable = oο, C(1); )
-SS(deactivate, readable_t    )( s->writeable = 0, C(1); )
-SS(hi, readable_t            )( Α(ο, gor, s->writeable, os_queue) O; )
-SS(bye, readable_t           )( Α(ο, got, s->writeable, os_queue) O; )
-SS(is_active, readable_t     )( C(s->writeable != 0); )
-SS(is_readable, readable_t   )( C(s->is_readable != 0); )
-SS(is_unmuted, readable_t    )( C(s->is_unmuted != 0); )
-SS(set_unmuted, readable_t   )( s->is_unmuted = 1, C(1); )
-SS(set_muted, readable_t     )( s->is_unmuted = 0, C(1); )
-SS(set_readable, readable_t  )( s->is_readable = 1, C(1); )
-SS(set_unreadable, readable_t)( s->is_readable = 0, C(1); )
-SS(is_goodbye, readable_t    )(R(p_t*, arg); A(arg) C(arg == s->writeable);)
+SS(activate,           rd_t)( R(p_t *, oο); s->writeable = oο, C(1); )
+SS(deactivate,         rd_t)( s->writeable = 0, C(1); )
+SS(hi,                 rd_t)( Α(ο, gor, s->writeable, os_queue) O; )
+SS(bye,                rd_t)( Α(ο, got, s->writeable, os_queue) O; )
+SS(is_active,          rd_t)( C(s->writeable != 0); )
+SS(is_readable,        rd_t)( C(s->is_readable != 0); )
+SS(is_unmuted,         rd_t)( C(s->is_unmuted != 0); )
+SS(set_unmuted,        rd_t)( s->is_unmuted = 1, C(1); )
+SS(set_muted,          rd_t)( s->is_unmuted = 0, C(1); )
+SS(set_readable,       rd_t)( s->is_readable = 1, C(1); )
+SS(set_unreadable,     rd_t)( s->is_readable = 0, C(1); )
+SS(is_goodbye,         rd_t)( R(p_t*, arg); A(arg) C(arg == s->writeable); )
 
-SarS(queue_chunk_send, readable_t)('CNK', god, s->writeable, os_queue)
+SarS(queue_chunk_send, rd_t)('CNK', god, s->writeable, os_queue)
 
 Sar(activate_and_greet)(activate, hi, and)
 Sar(bye_and_deactivate)(bye, deactivate, and)
@@ -124,7 +124,7 @@ Sar(on_epoll_in)(
 
 S(stdin_set) {
   R(p_t *, oο);
-  readable_t *s = (readable_t *)&oο[7];
+  rd_t *s = (rd_t *)&oο[7];
   s->on_epoll_event = on_epoll_in;
   s->fd = STDIN_FILENO;
   s->writeable = 0;
