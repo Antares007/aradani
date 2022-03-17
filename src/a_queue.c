@@ -7,6 +7,9 @@ gor,                L)IN(L,
 got,                L)IN(L,
 l_free,             L)IN(L,
 l_malloc,           L)IN(L,
+os_new_psn,         L)IN(L,
+os_queue,           L)IN(L,
+os_queue_n,         L)IN(L,
 os_wordump,         L)IN(L,
 //
 and,                L)IN(L,
@@ -53,22 +56,22 @@ S(roll_in_and_free) {
   A5(q, roll_in, q, q_remove, and2) O;
 }
 S(q_push) {
-  R(QUEUE *, h);
+  QUEUE *h = (QUEUE*)&ο[7];
   Q_t β = α + 3;
   A7(h, β * sizeof(void *), l_malloc, roll_out, and, queue_insert_tail, and) O;
 }
 S(q_unshift) {
-  R(QUEUE *, h);
+  QUEUE *h = (QUEUE*)&ο[7];
   Q_t β = α + 3;
   A7(h, β * sizeof(void *), l_malloc, roll_out, and, queue_insert_head, and) O;
 }
 S(q_pop) {
-  R(QUEUE *, h);
+  QUEUE *h = (QUEUE*)&ο[7];
   QUEUE *q = QUEUE_PREV(h);
   Α(h, q, roll_in_and_free) O;
 }
 S(q_shift) {
-  R(QUEUE *, h);
+  QUEUE *h = (QUEUE*)&ο[7];
   QUEUE *q = QUEUE_NEXT(h);
   Α(h, q, roll_in_and_free) O;
 }
@@ -79,37 +82,38 @@ S(q_for_each_n) {
   if (q == h)
     C(1);
   else
-    A10(q, q, roll_in, n, and, n, h, QUEUE_NEXT(q), q_for_each_n, and4) O;
+    A9(q, roll_in, n, and, n, h, QUEUE_NEXT(q), q_for_each_n, and4) O;
 }
 S(q_for_each) {
-  R(QUEUE *, h);
+  QUEUE *h = (QUEUE*)&ο[7];
   R(n_t, n);
   A4(n, h, QUEUE_NEXT(h), q_for_each_n) O;
 }
+Sar(q_not)(got)
+Sar(q_and)(god)
+S(q_oor) { R(p_t*, oο); ο[9].p = oο, C(1); }
+S(q_set) { R(p_t*, oο); ο[9].p =  0, QUEUE_INIT((QUEUE*)&oο[7]), A(oο) C(1); }
+S(q_new) { Α(q_not, q_and, q_oor, ο, 512, "q", os_new_psn, q_set, and) O; }
 
 SarP(init)(god);
-SP(pgod) {
+NP(pgod) {
   R(Q_t, a);
   R(Q_t, b);
-  R(QUEUE*, q);
-  (void)q;
-  //A3(a + b, q, q_remove) O;
-  A2(a + b, god) O;
+  A(a + b) C(1);
 }
 SP(Main_n) {
-  R(QUEUE *, h);
+  R(p_t *, qο);
   Α(debugger, 
-    6, 3, h, q_push, and4,
-    3, 6, h, q_push, and4,
-    pgod, h, q_for_each, and3,
-          h, q_shift, and2,
-          h, q_shift, and2,
-          os_wordump,
-          os_wordump, andor) O;
+    6, 3, q_push, and3,
+    3, 6, q_push, and3,
+    pgod, q_for_each, and2,
+          q_shift, and,
+          q_shift, and,
+          os_wordump, os_wordump, andor,
+          qο, os_queue) O;
 }
 SP(Main) {
-  QUEUE h;
-  QUEUE_INIT(&h), Α(&h, Main_n) O;
+  Α(q_new, Main_n, and) O;
 }
 // clang-format off
 EN(tail,
