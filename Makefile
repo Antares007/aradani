@@ -16,6 +16,7 @@ src/a_stdio.arsi:            \
 	cat $^ > $@
 
 src/os.arsi:                 \
+	src/a_queue.oars           \
 	src/a_junctions.oars       \
 	src/goto.bin
 	cat $^ > $@
