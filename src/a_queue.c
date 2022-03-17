@@ -19,14 +19,14 @@ andor,        imports);
 #include "a_queue.h"
 // clang-format off
 SarP(init)(god);
-S(q_roll_out) {
+S(q_unroll) {
   R(p_t *, qσ);
   Q_t wc = qσ[-1].Q;
   for (Q_t i = 0; i < wc; i++)
     σ[α + i].v = qσ[i].v;
   α += wc, C(1);
 }
-S(q_roll_in_n) {
+S(q_roll_n) {
   R(Q_t, wc);
   R(p_t *, qσ);
   qσ[0].Q = 0, qσ[2].Q = wc, qσ += 3, α -= wc;
@@ -34,9 +34,9 @@ S(q_roll_in_n) {
     qσ[i].v = σ[α + i].v;
   A(qσ) C(1);
 }
-S(q_roll_in) {
+S(q_roll) {
   R(Q_t, wc);
-  Α((wc + 3) * sizeof(p_t), l_malloc, wc, q_roll_in_n, and2) O;
+  Α((wc + 3) * sizeof(p_t), l_malloc, wc, q_roll_n, and2) O;
 }
 S(q_roll_free) {
   R(p_t *, qσ);
@@ -65,7 +65,7 @@ S(q_roll_remove) {
 }
 S(q_roll_ruf) {
   R(p_t *, qσ);
-  Α(qσ, q_roll_remove, qσ, q_roll_out, and2, qσ, q_roll_free, and2) O;
+  Α(qσ, q_roll_remove, qσ, q_unroll, and2, qσ, q_roll_free, and2) O;
 }
 S(q_roll_push) {
   R(p_t *, h);
@@ -80,12 +80,12 @@ S(q_roll_unshift) {
 S(q_push) {
   R(p_t *, h);
   Q_t wc = α;
-  Α(wc, q_roll_in, h, q_roll_push, and2) O;
+  Α(wc, q_roll, h, q_roll_push, and2) O;
 }
 S(q_unshift) {
   R(p_t *, h);
   Q_t wc = α;
-  Α(wc, q_roll_in, h, q_roll_unshift, and2) O;
+  Α(wc, q_roll, h, q_roll_unshift, and2) O;
 }
 S(q_pop) {
   R(p_t *, h);
@@ -115,7 +115,7 @@ S(q_shift) {
 //  (void)qσ;
 //  A(god) O;
 //}
-S(Main_n) {
+S(მთავარი_n) {
   R(p_t *, h);
   Α(debugger,
     6, 3, h, q_push, and4,
@@ -131,25 +131,25 @@ S(Main_n) {
          +0, os_wordump, and2or2)
   O;
 }
-S(Main) {
+S(მთავარი) {
   p_t h[3];
-  (QUEUE_INIT((QUEUE *)h), Α(h + 3, Main_n) O);
+  (QUEUE_INIT((QUEUE *)h), Α(h + 3, მთავარი_n) O);
 }
 // clang-format off
 EN(tail,
-q_roll_out,         L)EN(L,
-q_roll_in_n,        L)EN(L,
-q_roll_in,          L)EN(L,
-q_roll_free,        L)EN(L,
-q_prev_roll,        L)EN(L,
 q_next_roll,        L)EN(L,
+q_pop,              L)EN(L,
+q_prev_roll,        L)EN(L,
+q_push,             L)EN(L,
+q_roll,             L)EN(L,
+q_roll_free,        L)EN(L,
+q_roll_n,           L)EN(L,
+q_roll_push,        L)EN(L,
 q_roll_remove,      L)EN(L,
 q_roll_ruf,         L)EN(L,
-q_roll_push,        L)EN(L,
 q_roll_unshift,     L)EN(L,
-q_push,             L)EN(L,
-q_unshift,          L)EN(L,
-q_pop,              L)EN(L,
 q_shift,            L)EN(L,
-Main_n,             L)EN(L,
-Main,         exports);
+q_unroll,           L)EN(L,
+q_unshift,          L)EN(L,
+მთავარი_n,          L)EN(L,
+მთავარი,      exports);
