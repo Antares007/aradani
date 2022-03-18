@@ -19,6 +19,8 @@ andor,        imports);
 #include "a_queue.h"
 // clang-format on
 SarP(init)(god);
+// TODO: Define os_rollσ os_unrollσ and use those in q_roll/unroll.
+// TODO: In addition, define os_rollο and os_unrollο.
 S(q_unroll) {
   R(p_t *, qσ);
   Q_t wc = qσ[-1].Q;
@@ -109,6 +111,14 @@ S(q_for_each) {
   p_t *qσ = Q_NEXT(h);
   Α(nar, h, qσ, q_for_each_n) O;
 }
+S(q_make_n) {
+  R(p_t *, qσ);
+  QUEUE_INIT((QUEUE *)qσ);
+  qσ[2].Q = 0;
+  A(qσ + 3) C(1);
+}
+Sar(q_make)(sizeof(void *) * 3, l_malloc, q_make_n, and);
+
 Q_t i = 0;
 SP(pgod) {
   R(p_t *, qσ);
@@ -132,14 +142,13 @@ S(show_n) {
          +0, os_wordump, and2or2)
   O;
 }
-S(show) {
-  p_t h[3];
-  (QUEUE_INIT((QUEUE *)h), Α(h + 3, show_n) O);
-}
+Sar(show)(q_make, show_n, and)
 // clang-format off
 EN(tail,
 q_for_each,         L)EN(L,
 q_for_each_n,       L)EN(L,
+q_make,             L)EN(L,
+q_make_n,           L)EN(L,
 q_pop,              L)EN(L,
 q_push,             L)EN(L,
 q_roll,             L)EN(L,
