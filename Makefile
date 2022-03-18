@@ -28,6 +28,7 @@ src/os_run:                  \
 	src/os_bark.o              \
 	src/os_wordump.o           \
 	src/os/nar.o               \
+	src/os/soll.o              \
 	src/os/debugger.o          \
 	src/os/new.o               \
 	src/os/next.o              \
