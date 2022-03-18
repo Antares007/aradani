@@ -14,10 +14,15 @@ and,                L)IN(L,
 and2,               L)IN(L,
 and2or2,            L)IN(L,
 and3,               L)IN(L,
-and4,         imports);
+and4,               L)IN(L,
+and4or2,            L)IN(L,
+and5,         imports);
+
 #include "os/queue.h"
+
 #define S2Q(s) ((QUEUE*)((s) + (s)[-1].Q - 3))
 #define Q2S(q) (((p_t*)(q)) - ((p_t*)(q))[2].Q)
+
 // clang-format on
 Sar(init)(god);
 S(drop3) { α -= 3, C(1); }
@@ -78,22 +83,23 @@ S(q_shift) {
   R(p_t *, h);
   Α(h, q_soll_shift, q_soll_unsoll_free, and) O;
 }
+S(dot) { O; }
 S(q_for_each_n) {
   R(p_t *, qσ);
   R(p_t *, h);
-  R(n_t, nar);
+  R(p_t *, sοll);
   if (h == qσ)
-    C(1);
-  else {
-    p_t *nqσ = Q2S(QUEUE_NEXT(S2Q(qσ)));
-    Α(qσ, nar, nar, h, nqσ, q_for_each_n, and4) O;
-  }
+    A2(sοll, os_soll_free) O;
+  else 
+    A12(qσ, sοll, os_unsoll, dot, and,
+        sοll, h, Q2S(QUEUE_NEXT(S2Q(qσ))), q_for_each_n,
+        sοll, os_soll_free, and4or2) O;
 }
 S(q_for_each) {
+  R(Q_t, wc);
   R(p_t *, h);
-  R(n_t, nar);
-  p_t *qσ = Q2S(QUEUE_NEXT(S2Q(h)));
-  Α(nar, h, qσ, q_for_each_n) O;
+  A6(wc, os_soll_n,
+     h, Q2S(QUEUE_NEXT(S2Q(h))), q_for_each_n, and3) O;
 }
 S(q_make_n) {
   R(p_t *, qσ);
@@ -104,29 +110,30 @@ Sar(q_make)(0, 0, 0, 3, os_soll_n, q_make_n, and);
 
 Q_t i = 0;
 S(pgod) {
+  R(Q_t, off);
   R(p_t *, sοll);
   //Α(sοll, q_soll_remove, sοll, q_soll_free, and2) O;
-  A2(i++, (sοll[0].Q << 32) | sοll[1].Q) C(1);
+  A2(off+i++, (sοll[0].Q << 32) | sοll[1].Q) C(1);
 }
+
 // clang-format off
 S(show) {
   R(p_t *, h);
-  Α(
-    6, 3, h, q_push,
-    2, 3, h, q_unshift, and4,
-    3, 6, h, q_push, and4,
-    1, 2, h, q_unshift, and4,
-    debugger, and,
-    pgod, h, q_for_each, and3,
-          h, q_pop, and2,
-          h, q_pop, and2,
-          h, q_shift, and2,
-          h, q_shift, and2,
-         -1, os_wordump,
-         +0, os_wordump, and2or2)
-  O;
+          Α(6, 3, h, q_push,
+            2, 3, h, q_unshift, and4,
+            3, 6, h, q_push, and4,
+            1, 2, h, q_unshift, and4,
+                     debugger, and,
+     0x100, pgod, h, 2, q_for_each, and5,
+                  h, q_pop, and2,
+                  h, q_pop, and2,
+                  h, q_shift, and2,
+                  h, q_shift, and2,
+                 -1, os_wordump,
+                 +0, os_wordump, and2or2) O;
 }
 Sar(მთავარი)(q_make, show, and)
+
 // clang-format off
 EN(tail,
 q_for_each,         L)EN(L,
