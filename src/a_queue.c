@@ -17,7 +17,7 @@ and3or,             L)IN(L,
 and4,               L)IN(L,
 andor,        imports);
 #include "a_queue.h"
-// clang-format off
+// clang-format on
 SarP(init)(god);
 S(q_unroll) {
   R(p_t *, qσ);
@@ -42,31 +42,6 @@ S(q_roll_free) {
   R(p_t *, qσ);
   Α(qσ - 3, l_free) O;
 }
-S(q_prev_roll) {
-  R(p_t *, h);
-  p_t *q = Q_PREV(h);
-  if (q == h)
-    C(0);
-  else
-    A(q) C(1);
-}
-S(q_next_roll) {
-  R(p_t *, h);
-  p_t *q = Q_NEXT(h);
-  if (q == h)
-    C(0);
-  else
-    A(q) C(1);
-}
-S(q_roll_remove) {
-  R(p_t *, qσ);
-  if (qσ[-3].Q) Q_REMOVE(qσ), C(1);
-  else C(2);
-}
-S(q_roll_ruf) {
-  R(p_t *, qσ);
-  Α(qσ, q_roll_remove, qσ, q_unroll, and2, qσ, q_roll_free, and2) O;
-}
 S(q_roll_push) {
   R(p_t *, h);
   R(p_t *, qσ);
@@ -87,42 +62,68 @@ S(q_unshift) {
   Q_t wc = α;
   Α(wc, q_roll, h, q_roll_unshift, and2) O;
 }
+S(q_roll_ruf) {
+  R(p_t *, qσ);
+  Α(qσ, q_unroll, qσ, q_roll_free, and2) O;
+}
+S(q_roll_remove) {
+  R(p_t *, qσ);
+  R(p_t *, h);
+  if (h == qσ)
+    C(0);
+  else if (qσ[-3].Q)
+    Q_REMOVE(qσ), A(qσ) C(1);
+  else
+    C(2);
+}
+S(q_roll_pop) {
+  R(p_t *, h);
+  A3(h, Q_PREV(h), q_roll_remove) O;
+}
+S(q_roll_shift) {
+  R(p_t *, h);
+  A3(h, Q_NEXT(h), q_roll_remove) O;
+}
 S(q_pop) {
   R(p_t *, h);
-  Α(h, q_prev_roll, q_roll_ruf, and) O;
+  Α(h, q_roll_pop, q_roll_ruf, and) O;
 }
 S(q_shift) {
   R(p_t *, h);
-  Α(h, q_next_roll, q_roll_ruf, and) O;
+  Α(h, q_roll_shift, q_roll_ruf, and) O;
 }
-//S(q_for_each);
-//S(q_for_each_n) {
-//  R(p_t *, qσ);
-//  R(p_t *, h);
-//  R(n_t, nar);
-//  Α(qσ, nar, nar, h, q_for_each, god, and3or) O;
-//}
-//S(q_for_each) {
-//  R(p_t *, h);
-//  R(n_t, nar);
-//  Α(nar, h, h, q_next_roll,
-//      q_for_each_n,
-//      god, andor) O;
-//}
-//
-//SP(pgod) {
-//  R(p_t *, qσ);
-//  (void)qσ;
-//  A(god) O;
-//}
-S(მთავარი_n) {
+S(q_for_each_n) {
+  R(p_t *, qσ);
   R(p_t *, h);
-  Α(debugger,
-    6, 3, h, q_push, and4,
+  R(n_t, nar);
+  if (h == qσ)
+    C(1);
+  else {
+    p_t *nqσ = Q_NEXT(qσ);
+    Α(qσ, nar, nar, h, nqσ, q_for_each_n, and4) O;
+  }
+}
+S(q_for_each) {
+  R(p_t *, h);
+  R(n_t, nar);
+  p_t *qσ = Q_NEXT(h);
+  Α(nar, h, qσ, q_for_each_n) O;
+}
+Q_t i = 0;
+SP(pgod) {
+  R(p_t *, qσ);
+  A2(i++, (qσ[0].Q << 32) | qσ[1].Q) C(1);
+}
+// clang-format off
+S(show_n) {
+  R(p_t *, h);
+  Α(
+    6, 3, h, q_push,
     2, 3, h, q_unshift, and4,
     3, 6, h, q_push, and4,
     1, 2, h, q_unshift, and4,
-  //pgod, h, q_for_each, and3,
+    debugger, and,
+    pgod, h, q_for_each, and3,
           h, q_pop, and2,
           h, q_pop, and2,
           h, q_shift, and2,
@@ -131,15 +132,15 @@ S(მთავარი_n) {
          +0, os_wordump, and2or2)
   O;
 }
-S(მთავარი) {
+S(show) {
   p_t h[3];
-  (QUEUE_INIT((QUEUE *)h), Α(h + 3, მთავარი_n) O);
+  (QUEUE_INIT((QUEUE *)h), Α(h + 3, show_n) O);
 }
 // clang-format off
 EN(tail,
-q_next_roll,        L)EN(L,
+q_for_each,         L)EN(L,
+q_for_each_n,       L)EN(L,
 q_pop,              L)EN(L,
-q_prev_roll,        L)EN(L,
 q_push,             L)EN(L,
 q_roll,             L)EN(L,
 q_roll_free,        L)EN(L,
@@ -151,5 +152,5 @@ q_roll_unshift,     L)EN(L,
 q_shift,            L)EN(L,
 q_unroll,           L)EN(L,
 q_unshift,          L)EN(L,
-მთავარი_n,          L)EN(L,
-მთავარი,      exports);
+show_n,             L)EN(L,
+show,         exports);
