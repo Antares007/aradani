@@ -30,7 +30,7 @@ const char *os_debug_find_name(void *a);
       } else if (chr == 'o') {                                                 \
         for (Q_t i = ρ; i < ο[Σ].Q; i++) {                                     \
           if (ο[i].v == nar_oor) {                                             \
-            printf("%04loΨ ", ο[i + 3].Q);                                     \
+            printf("\n%04loΨ ", ο[i + 3].Q);                                   \
             i += 3;                                                            \
           } else {                                                             \
             const char *n = os_debug_find_name(ο[i].v);                        \
