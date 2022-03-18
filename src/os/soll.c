@@ -33,7 +33,7 @@ N(os_soll_n) {
     rso[i].v = σ[α + i].v;
   A(rso) C(1);
 }
-N(os_rsoll_free) {
+N(os_soll_free) {
   R(p_t*, rso);
   free(rso - 1), C(1);
 }

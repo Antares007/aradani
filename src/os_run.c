@@ -41,6 +41,11 @@ os_new_psn,         L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
+os_roll_n,          L)END(L,
+os_soll_free,       L)END(L,
+os_soll_n,          L)END(L,
+os_unroll,          L)END(L,
+os_unsoll,          L)END(L,
 os_win,             L)END(L,
 os_wordump,      root);
 
