@@ -4,12 +4,9 @@ IBS(                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
-l_close,            L)IN(L,
 l_free,             L)IN(L,
-l_malloc,           L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
-nar,                L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 //
@@ -20,14 +17,12 @@ and3or,             L)IN(L,
 andor,              L)IN(L,
 andor3,             L)IN(L,
 or,                 L)IN(L,
-or2,                L)IN(L,
 or3,                L)IN(L,
 //
 q_for_each,         L)IN(L,
-q_pop,              L)IN(L,
 q_push,             L)IN(L,
-q_remove,           L)IN(L,
 q_shift,            L)IN(L,
+q_soll_free,        L)IN(L,
 q_unshift,          L)IN(L,
 //
 epoll_ctl_add_out,  L)IN(L,
@@ -43,54 +38,88 @@ match,        imports)
 typedef struct wr_t {
   n_t on_epoll_event;
   Q_t fd;
-  QUEUE readables_queue;
-  QUEUE chunks_queue;
+  p_t readables_queue[4];
+  p_t chunks_queue[4];
   Q_t queue_length;
   Q_t is_writeable:1;
   Q_t is_readables_unmuted:1;
 } wr_t;
 
-SS(set_writeable,   wr_t)( s->is_writeable = 1, C(1); )
-SS(unset_writeable, wr_t)( s->is_writeable = 0, C(1); )
-SS(is_overflow,     wr_t)( C(s->queue_length > 15); )
+S(on_epoll_out);
+N(stdout_set) {
+  R(p_t*, oο);
+  wr_t *s = (wr_t *)&oο[7];
+  for(Q_t i = 0; i < wordCountOf(wr_t); i++)
+    oο[7 + i].Q = 0;
+  s->on_epoll_event = on_epoll_out;
+  s->fd = STDOUT_FILENO;
+  s->readables_queue[0].Q = 3;
+  QUEUE_INIT((QUEUE*)&s->readables_queue[1]);
+  s->chunks_queue[0].Q = 3;
+  QUEUE_INIT((QUEUE*)&s->chunks_queue[1]);
+  A(oο) C(1);
+}
+SS(is_writeable,              wr_t)( C(s->is_writeable != 0); )
+SS(set_writeable,             wr_t)(   s->is_writeable = 1,   C(1); )
+SS(unset_writeable,           wr_t)(   s->is_writeable = 0,   C(1); )
+SS(readables_queue,           wr_t)(A(&s->readables_queue[1]) C(1); )
+SS(chunks_queue,              wr_t)(A(&s->chunks_queue[1])    C(1); )
+SS(is_active,                 wr_t)( C((QUEUE*)&s->readables_queue[1] ==
+                            QUEUE_NEXT((QUEUE*)&s->readables_queue[1])); )
+SS(is_overflow,               wr_t)( C(s->queue_length > 15); )
+SS(q_cpp,                     wr_t)(   s->queue_length++, C(1); )
+SS(q_cmm,                     wr_t)(   s->queue_length--, C(1); )
+SS(is_readables_unmuted,      wr_t)( C(s->is_readables_unmuted != 0); )
+SS(toggle_readables_unmuted,  wr_t)(   s->is_readables_unmuted =
+                                      !s->is_readables_unmuted, C(1); )
+S(bye) { R(p_t *, oο); Α(ο, got, oο, os_queue) O; }
+S(bye_nar) {
+  R(p_t *, sοll);
+  Α(sοll[0].p, bye,
+    sοll, q_soll_remove, and2,
+    sοll, q_soll_free, and2) O;
+}
+Sar(bye_all)(
+  bye_nar, readables_queue, 1, q_for_each, and2)
+S(rem_nar) {
+  R(p_t *, oο);
+  R(p_t *, sοll);
+  if (oο == sοll[0].p) A3(bye_nar, gor, and) O;
+  else C(1);
+}
+Sar(remove_readable)(
+  rem_nar, readables_queue,
+    2, q_for_each,
+    god, and2or)
 
-Sar(bye_all)(god) // remove all readables from queue
-Sar(is_writeable)(god) // if is_writable
-Sar(is_active)(god) // if readables queue is not empty
-Sar(add_to_readables_queue)(god) // add to queue
-Sar(remove_readable)(god) // remove from queue if it is in queue
- 
-S(unmute_reader) { R(p_t*, rο); Α('UNM', god, rο, os_queue) O; }
+Sar(add_to_readables_queue)(readables_queue, q_push, and)
 
-Sar(mute_readable)(god)
-Sar(unmute_readable)(god)
+Sar(chunk_shift  )(chunks_queue,   q_shift, and, q_cmm, and)
+Sar(chunk_push   )(chunks_queue,    q_push, and, q_cpp, and)
+Sar(chunk_unshift)(chunks_queue, q_unshift, and, q_cpp, and)
+S(chunk_free     ){ α -= 2; R(char*, buff); Α(buff, l_free) O; }
 
-// Α(unmute_reader, &s->readables_queue, q_for_each) O;
-SS(q_cpp,                     wr_t)( s->queue_length++, C(1); )
-SS(q_cmm,                     wr_t)( s->queue_length--, C(1); )
-SS(is_readables_unmuted,      wr_t)( C(s->is_readables_unmuted); )
-SS(toggle_readables_unmuted,  wr_t)( s->is_readables_unmuted = !s->is_readables_unmuted, C(1); )
-SarS(chunk_shift,             wr_t)(&s->chunks_queue, q_shift,   q_cmm, and)
-SarS(chunk_push,              wr_t)(&s->chunks_queue, q_push,    q_cpp, and)
-SarS(chunk_unshift,           wr_t)(&s->chunks_queue, q_unshift, q_cpp, and)
-SarS(mute_all_readables,      wr_t)(mute_readable, &s->readables_queue, q_for_each)
-SarS(unmute_all_readables,    wr_t)(unmute_readable, &s->readables_queue, q_for_each)
-
+S(mute_readable  ){ R(p_t *, sοll); Α('MUT', god, sοll[0].p, os_queue) O; }
+S(unmute_readable){ R(p_t *, sοll); Α('UNM', god, sοll[0].p, os_queue) O; }
+Sar(mute_all_readables)(
+  mute_readable,   readables_queue, 1, q_for_each, and2)
+Sar(unmute_all_readables)(
+  unmute_readable, readables_queue, 1, q_for_each, and2)
 Sar(ensure_all_readables_is_muted)(
-  is_readables_unmuted, toggle_readables_unmuted, mute_all_readables, and2)
+  is_readables_unmuted,
+    toggle_readables_unmuted,   mute_all_readables, and,
+    god, and3or)
 Sar(ensure_all_readables_is_unmuted)(
-  is_readables_unmuted, toggle_readables_unmuted, unmute_all_readables, or2)
+  is_readables_unmuted,
+    god,
+    toggle_readables_unmuted, unmute_all_readables, and, andor3)
 
-
-N(chunk_free) { α -= 2; R(char*, buff); Α(buff, l_free) O; }
-
-S(queue_loop_write);
+S(loop_write);
 Sar(on_chunk)(
   0, chunk_push, is_overflow, and,
     ensure_all_readables_is_muted,
     god, andor,
-  queue_loop_write, and)
-
+  loop_write, and)
 Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
@@ -100,9 +129,10 @@ Sar(stdout_and)(
     stdout_and_n,
     got, andor)
 
+S(unmut) { R(p_t*, rο); Α('UNM', god, rο, os_queue) O; }
 Sar(stdout_oor_n)(
   is_writeable,
-    dup, unmute_reader,
+    dup, unmut,
     god, and2or,
   add_to_readables_queue, and)
 Sar(stdout_oor)(
@@ -121,12 +151,7 @@ Sar(stdout_not)(
     stdout_not_n,
     got, andor)
 
-S(is_fully_written) {
-  R(Q_t, off);
-  R(Q_t, len);
-  A2(len, off) C(len == 0);
-}
-S(loop_write);
+S(is_fully_written) { R(Q_t, off); R(Q_t, len); A2(len, off) C(len == 0); }
 Sar(queue_loop_write)(
   loop_write, ο, os_queue)
 Sar(loop_write_nnn)(
@@ -148,22 +173,12 @@ Sar(loop_write)(
     epoll_ctl_mod_out, andor)
 Sar(on_epoll_out)(
   set_writeable, loop_write, and)
-N(stdout_set) {
-  R(p_t*, oο);
-  wr_t *s = (wr_t *)&oο[7];
-  s->on_epoll_event = on_epoll_out;
-  s->fd = STDOUT_FILENO;
-  QUEUE_INIT(&s->readables_queue);
-  QUEUE_INIT(&s->chunks_queue);
-  s->is_writeable = 0;
-  s->is_readables_unmuted = 0;
-  s->queue_length = 0;
-  A(oο) C(1);
-}
+
 Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
   STDOUT_FILENO, l_setnoblock, and2,
   stdout_set, and)
+
 SarP(init)(god)
 
 // clang-format off
