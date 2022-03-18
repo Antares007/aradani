@@ -23,6 +23,7 @@ q_for_each,         L)IN(L,
 q_push,             L)IN(L,
 q_shift,            L)IN(L,
 q_soll_free,        L)IN(L,
+q_soll_remove,      L)IN(L,
 q_unshift,          L)IN(L,
 //
 epoll_ctl_add_out,  L)IN(L,
@@ -32,7 +33,7 @@ epoll_ctl_mod_out,  L)IN(L,
 is_alfa_zero,       L)IN(L,
 match,        imports)
 
-#include "unistd.h"
+#define	STDOUT_FILENO	1	/* Standard output. */
 #include "os/queue.h"
 
 typedef struct wr_t {
@@ -64,7 +65,7 @@ SS(set_writeable,             wr_t)(   s->is_writeable = 1,   C(1); )
 SS(unset_writeable,           wr_t)(   s->is_writeable = 0,   C(1); )
 SS(readables_queue,           wr_t)(A(&s->readables_queue[1]) C(1); )
 SS(chunks_queue,              wr_t)(A(&s->chunks_queue[1])    C(1); )
-SS(is_active,                 wr_t)( C((QUEUE*)&s->readables_queue[1] ==
+SSP(is_active,                wr_t)( C((QUEUE*)&s->readables_queue[1] !=
                             QUEUE_NEXT((QUEUE*)&s->readables_queue[1])); )
 SS(is_overflow,               wr_t)( C(s->queue_length > 15); )
 SS(q_cpp,                     wr_t)(   s->queue_length++, C(1); )
@@ -115,7 +116,7 @@ Sar(ensure_all_readables_is_unmuted)(
     toggle_readables_unmuted, unmute_all_readables, and, andor3)
 
 S(loop_write);
-Sar(on_chunk)(
+SarP(on_chunk)(
   0, chunk_push, is_overflow, and,
     ensure_all_readables_is_muted,
     god, andor,
@@ -124,18 +125,19 @@ Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
   got, or)
-Sar(stdout_and)(
+SarP(stdout_and)(
   is_active,
     stdout_and_n,
     got, andor)
 
 S(unmut) { R(p_t*, rο); Α('UNM', god, rο, os_queue) O; }
-Sar(stdout_oor_n)(
+S(dup) { R(void*, v); A2(v, v) C(1); }
+SarP(stdout_oor_n)(
   is_writeable,
     dup, unmut,
     god, and2or,
   add_to_readables_queue, and)
-Sar(stdout_oor)(
+SarP(stdout_oor)(
   is_active, epoll_ctl_add_out, or, stdout_oor_n, and)
 
 Sar(stdout_not_nn)(
@@ -146,7 +148,7 @@ Sar(stdout_not_n)(
   is_alfa_zero,
     bye_all, epoll_ctl_del_out, and,
     stdout_not_nn, and3or)
-Sar(stdout_not)(
+SarP(stdout_not)(
   is_active,
     stdout_not_n,
     got, andor)
@@ -167,11 +169,11 @@ Sar(loop_write_n)(
   chunk_shift, 
     loop_write_nn,
     ensure_all_readables_is_unmuted, andor)
-Sar(loop_write)(
+SarP(loop_write)(
   is_writeable,
     loop_write_n,
     epoll_ctl_mod_out, andor)
-Sar(on_epoll_out)(
+SarP(on_epoll_out)(
   set_writeable, loop_write, and)
 
 Sar(mk_stdout)(
