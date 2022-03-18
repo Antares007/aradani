@@ -7,7 +7,7 @@
 // Yes, it is special because we are switching pith.
 N(os_next) {
   if (α)
-    return (printf("we are dropping data!\n"), (void)0);
+    return (printf("Señor, we are dropping data!\n"), (void)0);
 
   QUEUE *q;
   if ((QUEUE *)&ο[Ψ] == (q = QUEUE_NEXT((QUEUE *)&ο[Ψ])))
