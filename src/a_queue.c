@@ -2,6 +2,7 @@
 // clang-format off
 IBS(                L)IN(L,
 debugger,           L)IN(L,
+dot,                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
@@ -83,7 +84,6 @@ S(q_shift) {
   R(p_t *, h);
   Α(h, q_soll_shift, q_soll_unsoll_free, and) O;
 }
-S(dot) { O; }
 S(q_for_each_n) {
   R(p_t *, qσ);
   R(p_t *, h);

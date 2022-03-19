@@ -11,6 +11,7 @@ E(got, "0", 0,      L)E(L,
 "0", 0,             L)E(L,
 "printf", printf,   L)END(L,
 debugger,           L)END(L,
+dot,                L)END(L,
 god,                L)END(L,
 gor,                L)END(L,
 got,                L)END(L,
@@ -54,7 +55,6 @@ SP(ray_not) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
   }
 }
-
 SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
 NP(ray_and) { os_next(T()); }
 
