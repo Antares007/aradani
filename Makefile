@@ -33,6 +33,7 @@ src/os_run:                  \
 	src/os/new.o               \
 	src/os/next.o              \
 	src/os/queue.o             \
+	src/os/page.o              \
 	src/os_epoll.o             \
 	src/os_gui_pith.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
