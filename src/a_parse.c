@@ -58,6 +58,7 @@ S(Μ) {
   R(n_t, nar);
   AS(nar, nar, Μ, and2, god, or) O;
 }
+S(set_alfa_zero) { α = 0, C(1); }
 S(testuni) {
   ο5 = "aŠა𓅪 α𓅨";
   ο6 = cslen(ο5);
@@ -65,7 +66,7 @@ S(testuni) {
   print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
   AS(u8cp, Μ, god, not, os_wordump, and) O;
 }
-Nar(მთავარი)(debugger, testuni, and)
+Nar(მთავარი)(debugger, testuni, and, set_alfa_zero, and)
 SarP(init)(god)
 
 //N(Ο);                      
