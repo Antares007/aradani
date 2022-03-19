@@ -2,7 +2,6 @@
 #include "gotgod.h"
 #include "oars.h"
 #include "os/pith_coords.h"
-#include "os/queue.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -58,18 +57,19 @@ SP(ray_not) {
 }
 SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
 NP(ray_and) { os_next(T()); }
-
 void os_hrtime_init();
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init();
-  p_t *σ = malloc(0x1000), ο[512];
-  Q_t α = 0, ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);
+  p_t *σ = malloc(0x1000);
+  Q_t α = 0;
+  p_t ο[512];
+  Q_t ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
-  ο[Φ].p = ο, ο[Ρ].Q = ρ, QUEUE_INIT((QUEUE *)&ο[Ψ]), ο[Ν].v = "š";
+  ο[Φ].p = ο, ο[Ρ].Q = ρ, ο[Ψ + 0].p = &ο[Ψ], ο[Ψ + 1].p = &ο[Ψ], ο[Ν].v = "ο";
   Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

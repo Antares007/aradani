@@ -6,53 +6,94 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
 os_ls,              L)IN(L,
+os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_seed,            L)IN(L,
 os_wordump,         L)IN(L,
 //
 and,                L)IN(L,
-and4,         imports)
+and2,               L)IN(L,
+and2or,             L)IN(L,
+and3or,             L)IN(L,
+and4,               L)IN(L,
+andor,              L)IN(L,
+andor3,             L)IN(L,
+or,                 L)IN(L,
+or3,          imports) //
 
-SarP(init)(god)
 
-E(got, "0",             0,L)E(L,
-"0",                    0,L)E(L,
-"printf",           print,L)E(L,
-"god",                god,L)E(L,
-"gor",                gor,L)E(L,
-"got",                got,L)E(L,
-"l_free",             god,L)E(L,
-"l_setnoblock",       god,L)E(L,
-"l_write",            god,L)E(L,
-"os_new_n",           god,L)E(L,
-"os_queue",           god,L)E(L, //
-"and",                god,L)E(L,
-"and2",               god,L)E(L,
-"and2or",             god,L)E(L,
-"and3or",             god,L)E(L,
-"andor",              god,L)E(L,
-"andor3",             god,L)E(L,
-"or",                 god,L)E(L,
-"or3",                god,L)E(L, //
-"q_for_each",         god,L)E(L,
-"q_push",             god,L)E(L,
-"q_shift",            god,L)E(L,
-"q_soll_free",        god,L)E(L,
-"q_soll_remove",      god,L)E(L,
-"q_unshift",          god,L)E(L, //
-"epoll_ctl_add_out",  god,L)E(L,
-"epoll_ctl_del_out",  god,L)E(L,
-"epoll_ctl_mod_out",  god,L)E(L, //
-"is_alfa_zero",       god,L)E(L,
-"match",       god,exports2)
+SarP(pgot)(got)
+SarP(pgod)(god)
+SarP(pgor)(gor)
 
-SP(მთავარი_n) {
-  const char* arsi_fname = "src/a_stdout.tarsi";
-  Α(arsi_fname, exports2, os_seed, os_ls, and) O;
+#define ET(Tail, Name, Head) SarP(Name##_stab)(god) E(Tail, #Name, Name##_stab, Head)
+#define EE(Tail, Name, Head) E(Tail, #Name, Name, Head)
+S(drop1) {
+  α -= 1; C(1);
 }
-SP(მთავარი) {
-  Α(მთავარი_n, ο, os_queue) O;
+SP(import_n) {
+  R(const char*, in);
+  R(n_t, e);
+  R(n_t, a);
+  R(const char*, en);
+  if (cmp(in, en)) Α(e, in, import_n, and2) O;
+  else             A(a) C(1);
 }
+SP(import) {
+  R(const char*, n);
+  R(n_t, e);
+  Α(e, n, import_n, and2) O;
+}
+E(got, "0",              0,L)E(L,
+"0",                     0,L)E(L,
+"printf",            print,L)E(L,
+"god",                pgod,L)E(L,
+"gor",                pgor,L)E(L,
+"got",                pgot,
+                           L)ET(L,
+l_free,                    L)E(L,
+"l_setnoblock", drop1,     L)ET(L,
+l_write,                   L)EE(L,
+os_new_n,                  L)ET(L,
+os_queue,                  
+                           L)EE(L,
+and,                       L)EE(L,
+and2,                      L)EE(L,
+and2or,                    L)EE(L,
+and3or,                    L)EE(L,
+andor,                     L)EE(L,
+andor3,                    L)EE(L,
+or,                        L)EE(L,
+or3,                       
+                           L)ET(L, //
+q_for_each,                L)ET(L,
+q_push,                    L)ET(L,
+q_shift,                   L)ET(L,
+q_soll_free,               L)ET(L,
+q_soll_remove,             L)ET(L,
+q_unshift,                 L)ET(L, //
+epoll_ctl_add_out,         L)ET(L,
+epoll_ctl_del_out,         L)ET(L,
+epoll_ctl_mod_out,         L)ET(L, //
+is_alfa_zero,              L)ET(L,
+match,              exports2)
+
+static n_t arsi;
+
+S(set) {
+  R(n_t*, a);
+  R(n_t , v);
+  *a = v, C(1);
+}
+SarP(init)("src/a_stdout.tarsi", exports2, os_seed, &arsi, set, and2)
+S(test) {
+  R(n_t, j);
+}
+SarP(მთავარი_n)(
+  arsi, "mk_stdout", import,
+  dot, and,
+  os_wordump, and)
+SarP(მთავარი)(მთავარი_n, ο, os_queue)
 
 // clang-format off
 EN(tail,
