@@ -59,12 +59,15 @@ src/gui/ui: src/gui/ui.c
 	@rm $@.binp $@.elf 
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
+src/a_%.tarsi: src/a_%.oars src/goto.bin
+	cat $^ > $@
 clean:
 	rm -f                   \
 		src/*.bin             \
 		src/*.oars            \
 		src/*.o               \
 		src/*.arsi            \
+		src/*.tarsi           \
 		src/os/*.o            \
 		src/os_run            \
 		src/etc/epoll_client  \

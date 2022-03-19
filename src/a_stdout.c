@@ -182,7 +182,9 @@ Sar(mk_stdout)(
   stdout_set, and)
 
 SarP(init)(god)
+SarP(მთავარი)(mk_stdout)
 
 // clang-format off
 EN(tail,
-mk_stdout,      exports)
+mk_stdout,          L)EN(L,
+მთავარი,      exports)

@@ -43,6 +43,7 @@ os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
 os_roll_n,          L)END(L,
+os_seed,            L)END(L,
 os_soll_free,       L)END(L,
 os_soll_n,          L)END(L,
 os_unroll,          L)END(L,
@@ -53,13 +54,12 @@ os_wordump,      root);
 SP(ray_not) {
   if(α == 3) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
-  }
+  } long i = 0; while (i < α) { printf("%016lx ", σ[i].Q); if (++i < α) printf("%016lx\n", σ[i].Q); else printf("\n"); i++; }
 }
 SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
 NP(ray_and) { os_next(T()); }
 
 void os_hrtime_init();
-
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
