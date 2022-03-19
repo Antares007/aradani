@@ -75,12 +75,8 @@ S(addQQ) {
   R(Q_t, l);
   Α(l + r) C(1);
 }
-S(insert_timer_pith);
-Sar(reset_timer)(ο, insert_timer_pith, ο[0].p, os_queue)
-Sar(timer_oor)(ο[7].p, os_soll_free)
-Sar(timer_not)(ο[7].p, os_soll_free, got, and)
-Sar(create_timer_pith)(timer_not, reset_timer, timer_oor, os_new)
-S(insert_timer_pith) {
+S(insert_timer);
+S(insert_timer) {
   R(p_t *, oο);
   Α(oο[8].Q, os_hrtime, addQQ, and, oο, insert_timeout, and2) O;
 }
@@ -89,6 +85,9 @@ S(srun) {
   p_t *sοll = oο[7].p;
   Α(sοll, os_unsoll, oο, os_queue, and2) O;
 }
+Sar(timer_and)(ο, insert_timer, ο[0].p, os_queue)
+Sar(timer_oor)(ο[7].p, os_soll_free)
+Sar(timer_not)(ο[7].p, os_soll_free, got, and)
 S(timer_set) {
   R(Q_t  , delay);
   R(p_t *, oο);
@@ -97,15 +96,14 @@ S(timer_set) {
   oο[8].Q = delay;
   A(oο) C(1);
 }
+Sar(mk_timer)(timer_not, timer_and, timer_oor, os_new)
 S(timer_n) {
   R(Q_t, wc);
   R(Q_t, delay);
-  Α(    wc, os_soll_n,
-    create_timer_pith, and,
-     delay, timer_set, and2,
-    insert_timer_pith, and) O;
+  Α(wc, os_soll_n, mk_timer, and, delay, timer_set, and2, insert_timer, and) O;
 }
 S(timer) { Q_t β = α - 1; Α(β, timer_n) O; }
+
 S(printtimeouts) {
   for (Q_t i = 0; i < timeouts_count; i++)
     print("%lu %p\n", timeouts[i], piths[i]);
