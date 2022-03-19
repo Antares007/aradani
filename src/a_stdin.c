@@ -11,8 +11,7 @@ l_setnoblock,       L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
-os_queue,           L)IN(L,
-//
+os_queue,           L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or3,            L)IN(L,
@@ -20,12 +19,12 @@ andor,              L)IN(L,
 andor3,             L)IN(L,
 not,                L)IN(L,
 or,                 L)IN(L,
-or3,                L)IN(L,
-//
+or3,                L)IN(L, //
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   L)IN(L,
 epoll_ctl_mod_in, imports);
-#include "unistd.h"
+
+#define	STDIN_FILENO	0	/* Standard input.  */
 
 SarP(init)(god)
 
@@ -36,7 +35,17 @@ typedef struct rd_t {
   Q_t is_unmuted:1;
   Q_t is_readable:1;
 } rd_t;
-
+S(on_epoll_in);
+S(stdin_set) {
+  R(p_t *, oο);
+  rd_t *s = (rd_t *)&oο[7];
+  s->on_epoll_event = on_epoll_in;
+  s->fd = STDIN_FILENO;
+  s->writeable = 0;
+  s->is_unmuted = 0;
+  s->is_readable = 0;
+  A(oο) C(1);
+}
 SS(activate,           rd_t)( R(p_t *, oο); s->writeable = oο, C(1); )
 SS(deactivate,         rd_t)( s->writeable = 0, C(1); )
 SS(hi,                 rd_t)( Α(ο, gor, s->writeable, os_queue) O; )
@@ -54,8 +63,8 @@ SarS(queue_chunk_send, rd_t)('CNK', god, s->writeable, os_queue)
 
 Sar(activate_and_greet)(activate, hi, and)
 Sar(bye_and_deactivate)(bye, deactivate, and)
-S(is_alfa_zero) { C(α == 0); }
 
+S(is_alfa_zero) { C(α == 0); }
 
 Sar(stdin_oor)(
   is_active,
@@ -122,23 +131,11 @@ Sar(loop_read_if_unmuted)(
 Sar(on_epoll_in)(
   set_readable, loop_read_if_unmuted, and)
 
-S(stdin_set) {
-  R(p_t *, oο);
-  rd_t *s = (rd_t *)&oο[7];
-  s->on_epoll_event = on_epoll_in;
-  s->fd = STDIN_FILENO;
-  s->writeable = 0;
-  s->is_unmuted = 0;
-  s->is_readable = 0;
-  A(oο) C(1);
-}
 Sar(mk_stdin)(
      stdin_not, stdin_and, stdin_oor, "≫", os_new_n,
      stdin_set, and,
      STDIN_FILENO, l_setnoblock, and2)
-Nar(ls)(
-  exports, os_ls)
-// clang-format off
+
 EN(tail,
 activate,           L)EN(L,
 bye,                L)EN(L,

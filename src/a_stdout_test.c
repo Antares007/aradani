@@ -9,8 +9,7 @@ os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_seed,            L)IN(L,
-os_wordump,         L)IN(L,
-//
+os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and2or,             L)IN(L,
@@ -20,7 +19,6 @@ andor,              L)IN(L,
 andor3,             L)IN(L,
 or,                 L)IN(L,
 or3,          imports) //
-
 
 SarP(pgot)(got)
 SarP(pgod)(god)
@@ -49,14 +47,12 @@ E(got, "0",              0,L)E(L,
 "printf",            print,L)E(L,
 "god",                pgod,L)E(L,
 "gor",                pgor,L)E(L,
-"got",                pgot,
-                           L)ET(L,
+"got",                pgot,L)ET(L,
 l_free,                    L)E(L,
 "l_setnoblock", drop1,     L)ET(L,
 l_write,                   L)EE(L,
 os_new_n,                  L)ET(L,
-os_queue,                  
-                           L)EE(L,
+os_queue,                  L)EE(L,
 and,                       L)EE(L,
 and2,                      L)EE(L,
 and2or,                    L)EE(L,
@@ -64,8 +60,7 @@ and3or,                    L)EE(L,
 andor,                     L)EE(L,
 andor3,                    L)EE(L,
 or,                        L)EE(L,
-or3,                       
-                           L)ET(L, //
+or3,                       L)ET(L, //
 q_for_each,                L)ET(L,
 q_push,                    L)ET(L,
 q_shift,                   L)ET(L,
@@ -89,12 +84,12 @@ SarP(init)("src/a_stdout.tarsi", exports2, os_seed, &arsi, set, and2)
 S(test) {
   R(n_t, j);
 }
+
 SarP(მთავარი_n)(
   arsi, "mk_stdout", import,
   dot, and,
   os_wordump, and)
 SarP(მთავარი)(მთავარი_n, ο, os_queue)
 
-// clang-format off
 EN(tail,
 მთავარი,      exports)

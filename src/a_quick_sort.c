@@ -5,8 +5,7 @@ debugger,           L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
-os_wordump,         L)IN(L,
-//
+os_wordump,         L)IN(L, //
 and,          imports);
 SarP(init)(god)
 N(qsort);
@@ -58,6 +57,5 @@ N(მთავარი) {
 }
 Nar(deb)(debugger, მთავარი, and)
 
-// clang-format off
 EN(tail,          
 deb,          exports);

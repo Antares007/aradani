@@ -8,8 +8,7 @@ l_free,             L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
 os_new_n,           L)IN(L,
-os_queue,           L)IN(L,
-//
+os_queue,           L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and2or,             L)IN(L,
@@ -17,19 +16,16 @@ and3or,             L)IN(L,
 andor,              L)IN(L,
 andor3,             L)IN(L,
 or,                 L)IN(L,
-or3,                L)IN(L,
-//
+or3,                L)IN(L, //
 q_for_each,         L)IN(L,
 q_push,             L)IN(L,
 q_shift,            L)IN(L,
 q_soll_free,        L)IN(L,
 q_soll_remove,      L)IN(L,
-q_unshift,          L)IN(L,
-//
+q_unshift,          L)IN(L, //
 epoll_ctl_add_out,  L)IN(L,
 epoll_ctl_del_out,  L)IN(L,
-epoll_ctl_mod_out,  L)IN(L,
-//
+epoll_ctl_mod_out,  L)IN(L, //
 is_alfa_zero,       L)IN(L,
 match,        imports)
 
@@ -184,7 +180,6 @@ Sar(mk_stdout)(
 SarP(init)(god)
 SarP(მთავარი)(mk_stdout)
 
-// clang-format off
 EN(tail,
 mk_stdout,          L)EN(L,
 მთავარი,      exports)

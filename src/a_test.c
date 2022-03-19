@@ -6,8 +6,7 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
 os_new,             L)IN(L,
-os_queue_n,         L)IN(L,
-//
+os_queue_n,         L)IN(L, //
 and,                L)IN(L,
 and4,         imports)
 
@@ -20,6 +19,7 @@ SP(n2) { counter[2]++, C(1); }
 Sar(pgot)(n2, n2, and)
 Sar(pgod)(n1, n1, and, n1, and)
 Sar(pgor)(n0, n0, and, n0, and, n0, and)
+
 S(make_pith) {
   A4(pgot, pgod, pgor, os_new) O; 
 }
@@ -35,6 +35,5 @@ SP(test1) {
 }
 NarP(os_new_test)(make_pith, test1, and)
 
-// clang-format off
 EN(tail,
 os_new_test,        exports)

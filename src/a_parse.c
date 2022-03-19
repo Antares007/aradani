@@ -9,8 +9,7 @@ nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
-os_wordump,         L)IN(L,
-//
+os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3,               L)IN(L,
@@ -170,7 +169,6 @@ SarP(init)(god)
 // Digit ::= [#x0030-#x0039] | [#x0660-#x0669] | [#x06F0-#x06F9] | [#x0966-#x096F] | [#x09E6-#x09EF] | [#x0A66-#x0A6F] | [#x0AE6-#x0AEF] | [#x0B66-#x0B6F] | [#x0BE7-#x0BEF] | [#x0C66-#x0C6F] | [#x0CE6-#x0CEF] | [#x0D66-#x0D6F] | [#x0E50-#x0E59] | [#x0ED0-#x0ED9] | [#x0F20-#x0F29] 
 // Extender ::= #x00B7 | #x02D0 | #x02D1 | #x0387 | #x0640 | #x0E46 | #x0EC6 | #x3005 | [#x3031-#x3035] | [#x309D-#x309E] | [#x30FC-#x30FE] 
 
-// clang-format off
 EN(tail,
 bin_lsh,            L)EN(L,
 bin_or,             L)EN(L,

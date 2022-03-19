@@ -5,11 +5,8 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,          imports)
 
-// clang-format on
-
 SarP(init)(god)
 SP(Main) { A(7) C(1); }
 
-// clang-format off
 EN(tail,
 Main, exports)

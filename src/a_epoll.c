@@ -8,8 +8,7 @@ l_epoll_create,     L)IN(L,
 l_epoll_ctl,        L)IN(L,
 l_epoll_wait,       L)IN(L,
 os_queue,           L)IN(L,
-os_queue_n,         L)IN(L,
-//
+os_queue_n,         L)IN(L, //
 and,                L)IN(L,
 and2,         imports)
 
@@ -42,7 +41,6 @@ SP(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
 
 SarP(init)(5, l_epoll_create, set, and, loop_in_queue, and)
 
-// clang-format off
 EN(tail,
 epoll_ctl_add_in,  L)EN(L,
 epoll_ctl_add_out, L)EN(L,

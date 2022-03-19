@@ -10,14 +10,12 @@ l_malloc,           L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
-os_wordump,         L)IN(L,
-//
+os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3,               L)IN(L,
 and4,               L)IN(L,
 andor,        imports);
-// clang-format off
 #include "os/queue.h"
 S(queue_insert_tail) {
   R(QUEUE *, qσ);
@@ -112,7 +110,6 @@ SP(Main_n) {
 SP(Main) {
   Α(q_new, Main_n, and) O;
 }
-// clang-format off
 EN(tail,
 q_for_each,         L)EN(L,
 q_pop,              L)EN(L,

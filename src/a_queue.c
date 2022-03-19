@@ -9,8 +9,7 @@ got,                L)IN(L,
 os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
-os_wordump,         L)IN(L,
-//
+os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and2or2,            L)IN(L,
@@ -24,7 +23,6 @@ and5,         imports);
 #define S2Q(s) ((QUEUE*)((s) + (s)[-1].Q - 3))
 #define Q2S(q) (((p_t*)(q)) - ((p_t*)(q))[2].Q)
 
-// clang-format on
 Sar(init)(god);
 S(drop3) { α -= 3, C(1); }
 Sar(q_unroll)(os_unsoll, drop3, and)
@@ -115,8 +113,6 @@ S(pgod) {
   //Α(sοll, q_soll_remove, sοll, q_soll_free, and2) O;
   A2(off+i++, (sοll[0].Q << 32) | sοll[1].Q) C(1);
 }
-
-// clang-format off
 S(show) {
   R(p_t *, h);
           Α(6, 3, h, q_push,
@@ -134,7 +130,6 @@ S(show) {
 }
 Sar(მთავარი)(q_make, show, and)
 
-// clang-format off
 EN(tail,
 q_for_each,         L)EN(L,
 q_for_each_n,       L)EN(L,
