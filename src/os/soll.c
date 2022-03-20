@@ -25,15 +25,23 @@ N(os_roll_n) {
   ρ += rso[-1].Q = wc;
   A(rso) C(1);
 }
-N(os_soll_n) {
-  R(Q_t, wc);
-  p_t *rso = malloc(sizeof(p_t) * (wc + 1));
-  rso += 1, α -= rso[-1].Q = wc;
-  for (Q_t i = 0; i < wc; i++)
+N(nar);
+#include "../gotgod.h"
+#define SOLL                                                                   \
+  R(Q_t, wc);                                                                  \
+  p_t *rso = malloc(sizeof(p_t) * (wc + 1));                                   \
+  rso += 1, α -= rso[-1].Q = wc;                                               \
+  for (Q_t i = 0; i < wc; i++)                                                 \
     rso[i].v = σ[α + i].v;
+N(os_soll_and) {
+  SOLL;
+  A3(rso, god, 020) nar(T());
+}
+N(os_soll_n) {
+  SOLL;
   A(rso) C(1);
 }
 N(os_soll_free) {
-  R(p_t*, rso);
+  R(p_t *, rso);
   free(rso - 1), C(1);
 }
