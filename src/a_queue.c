@@ -24,7 +24,7 @@ and5,         imports);
 #define S2Q(s) ((QUEUE*)((s) + (s)[-1].Q - 3))
 #define Q2S(q) (((p_t*)(q)) - ((p_t*)(q))[2].Q)
 
-Sar(init)(god);
+SarP(init)(god);
 S(drop3) { α -= 3, C(1); }
 Sar(q_unroll)(os_unsoll, drop3, and)
 S(q_soll) {
@@ -32,7 +32,7 @@ S(q_soll) {
   Q_t wc3 = wc + 3;
   Α(0, 0, wc, wc3, os_soll_n) O;
 }
-SarP(q_soll_free)(os_soll_free);
+Sar(q_soll_free)(os_soll_free);
 S(q_soll_push) {
   R(p_t *, h);
   R(p_t *, qσ);

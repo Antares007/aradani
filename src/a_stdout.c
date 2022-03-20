@@ -61,7 +61,7 @@ SS(set_writeable,             wr_t)(   s->is_writeable = 1,   C(1); )
 SS(unset_writeable,           wr_t)(   s->is_writeable = 0,   C(1); )
 SS(readables_queue,           wr_t)(A(&s->readables_queue[1]) C(1); )
 SS(chunks_queue,              wr_t)(A(&s->chunks_queue[1])    C(1); )
-SSP(is_active,                wr_t)( C((QUEUE*)&s->readables_queue[1] !=
+SS(is_active,                 wr_t)( C((QUEUE*)&s->readables_queue[1] !=
                             QUEUE_NEXT((QUEUE*)&s->readables_queue[1])); )
 SS(is_overflow,               wr_t)( C(s->queue_length > 15); )
 SS(q_cpp,                     wr_t)(   s->queue_length++, C(1); )
@@ -81,13 +81,15 @@ Sar(bye_all)(
 S(rem_nar) {
   R(p_t *, oο);
   R(p_t *, sοll);
-  if (oο == sοll[0].p) A3(bye_nar, gor, and) O;
+  if (oο == sοll[0].p) A4(sοll, bye_nar, gor, and) O;
   else C(1);
 }
+Sar(por)(gor)
+Sar(pod)(god)
 Sar(remove_readable)(
-  rem_nar, readables_queue,
-    2, q_for_each,
-    god, and2or)
+  rem_nar, readables_queue, 2, q_for_each, and2,
+    por,
+    pod, andor)
 
 Sar(add_to_readables_queue)(readables_queue, q_push, and)
 
@@ -112,7 +114,7 @@ Sar(ensure_all_readables_is_unmuted)(
     toggle_readables_unmuted, unmute_all_readables, and, andor3)
 
 S(loop_write);
-SarP(on_chunk)(
+Sar(on_chunk)(
   0, chunk_push, is_overflow, and,
     ensure_all_readables_is_muted,
     god, andor,
@@ -121,19 +123,19 @@ Sar(stdout_and_n)(
   is_alfa_zero,
   'CNK', on_chunk,  match, or3,
   got, or)
-SarP(stdout_and)(
+Sar(stdout_and)(
   is_active,
     stdout_and_n,
     got, andor)
 
 S(unmut) { R(p_t*, rο); Α('UNM', god, rο, os_queue) O; }
 S(dup) { R(void*, v); A2(v, v) C(1); }
-SarP(stdout_oor_n)(
+Sar(stdout_oor_n)(
   is_writeable,
     dup, unmut,
     god, and2or,
   add_to_readables_queue, and)
-SarP(stdout_oor)(
+Sar(stdout_oor)(
   is_active, epoll_ctl_add_out, or, stdout_oor_n, and)
 
 Sar(stdout_not_nn)(
@@ -144,7 +146,7 @@ Sar(stdout_not_n)(
   is_alfa_zero,
     bye_all, epoll_ctl_del_out, and,
     stdout_not_nn, and3or)
-SarP(stdout_not)(
+Sar(stdout_not)(
   is_active,
     stdout_not_n,
     got, andor)
@@ -165,12 +167,12 @@ Sar(loop_write_n)(
   chunk_shift, 
     loop_write_nn,
     ensure_all_readables_is_unmuted, andor)
-SarP(loop_write)(
+Sar(loop_write)(
   is_writeable,
     loop_write_n,
-    epoll_ctl_mod_out, andor)
-SarP(on_epoll_out)(
-  set_writeable, loop_write, and)
+    god, andor)
+Sar(on_epoll_out)(
+  set_writeable, loop_write_n, and)
 
 Sar(mk_stdout)(
   stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
@@ -178,7 +180,7 @@ Sar(mk_stdout)(
   stdout_set, and)
 
 SarP(init)(god)
-SarP(მთავარი)(mk_stdout)
+Sar(მთავარი)(mk_stdout)
 
 EN(tail,
 mk_stdout,          L)EN(L,

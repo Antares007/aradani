@@ -100,7 +100,7 @@ Sar(stdin_not_n)(
   is_alfa_zero, and,
     bye_and_deactivate,
     stdin_not_nn, andor)
-SarP(stdin_not)(
+Sar(stdin_not)(
   is_active,
     stdin_not_n,
     got, andor)

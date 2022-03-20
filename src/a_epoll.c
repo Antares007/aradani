@@ -27,17 +27,17 @@ S(epoll_on_wait) {
 }
 Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
 
-SarP(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_add_in )(epoll_fd, EPOLL_CTL_ADD, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_in )(epoll_fd, EPOLL_CTL_DEL, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_in )(epoll_fd, EPOLL_CTL_MOD, ο[8].Q, ο, EPOLLIN  | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-SarP(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
-SarP(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
+Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
 Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, 5, os_queue_n)
 
-SP(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
+S(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
 
 SarP(init)(5, l_epoll_create, set, and, loop_in_queue, and)
 

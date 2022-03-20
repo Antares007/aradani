@@ -10,7 +10,7 @@ os_win,             L)IN(L,
 //
 and2,               L)IN(L,
 and5,         imports)
-Sar(init)(god)
+SarP(init)(god)
 
 SP(c_oor) {
   R(p_t *, oο);
