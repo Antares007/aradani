@@ -23,7 +23,7 @@ S(p_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 0)
-    print("p_and %lu\n", c);
+    print("%p p_and %lu\n", σ, c);
   Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(p_not) {}
@@ -37,7 +37,7 @@ S(c_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 1)
-    print("c_and %lu\n", c);
+    print("%p c_and %lu\n", σ, c);
   Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(c_not) {}

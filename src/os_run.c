@@ -57,12 +57,12 @@ SP(ray_not) {
 }
 SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
 NP(ray_and) { os_next(T()); }
-void os_hrtime_init();
+void os_hrtime_init(); void page_init(); void *page_alloc();
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
-  os_hrtime_init();
-  p_t *σ = malloc(0x1000);
+  os_hrtime_init(); page_init();
+  p_t *σ = page_alloc();
   Q_t α = 0;
   p_t ο[512];
   Q_t ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);

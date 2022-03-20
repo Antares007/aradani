@@ -36,5 +36,6 @@ void page_free(void *pageaddr) {
   Q_t cellnumber = pagenumber / CELL_BITS;
   Q_t celloffset = pagenumber % CELL_BITS;
   Q_t cellmask = ((Q_t)1 << celloffset);
+  if( freemap_cells[cellnumber] & cellmask) printf("oeee\n");
   freemap_cells[cellnumber] |= cellmask;
 }
