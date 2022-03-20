@@ -16,6 +16,7 @@ and2or2,            L)IN(L,
 and3,               L)IN(L,
 and4,               L)IN(L,
 and4or2,            L)IN(L,
+and4or4,            L)IN(L,
 and5,         imports);
 
 #include "os/queue.h"
@@ -89,9 +90,9 @@ S(q_for_each_n) {
   if (h == qσ)
     A2(sοll, os_soll_free) O;
   else 
-    A12(qσ, sοll, os_unsoll, dot, and,
+    A14(qσ, sοll, os_unsoll, dot, and,
         sοll, h, Q2S(QUEUE_NEXT(S2Q(qσ))), q_for_each_n,
-        sοll, os_soll_free, and4or2) O;
+        sοll, os_soll_free, gor, and, and4or4) O;
 }
 S(q_for_each) {
   R(Q_t, wc);
