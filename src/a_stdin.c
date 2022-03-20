@@ -72,11 +72,11 @@ Sar(stdin_oor)(
     epoll_ctl_add_in, andor,
   activate_and_greet, and)
 
-S(loop_read_if_unmuted);
+S(loop_read);
 Sar(unmute_n)(
   set_unmuted, is_readable, and,
-    loop_read_if_unmuted,
-    epoll_ctl_mod_in, andor)
+    loop_read,
+    god, andor)
 Sar(unmute)(
     is_unmuted, unmute_n, or)
 
@@ -115,7 +115,7 @@ Sar(read_chunk)(0x10000, l_malloc, read_chunk_n, and)
 S(is_eof) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
 
 Sar(queue_loop_read_if_unmuted)(
-  loop_read_if_unmuted, ο, os_queue)
+  loop_read, ο, os_queue)
 Sar(cont_or_stop_reading)(
   is_eof,
     free_chunk, got, and,
@@ -124,12 +124,12 @@ Sar(loop_read_send_chunks_n)(
   read_chunk,
     cont_or_stop_reading,
     set_unreadable, epoll_ctl_mod_in, and, andor3)
-Sar(loop_read_if_unmuted)(
+Sar(loop_read)(
   is_unmuted,
     loop_read_send_chunks_n,
     god, andor)
 Sar(on_epoll_in)(
-  set_readable, loop_read_if_unmuted, and)
+  set_readable, loop_read, and)
 
 Sar(mk_stdin)(
      stdin_not, stdin_and, stdin_oor, "≫", os_new_n,
