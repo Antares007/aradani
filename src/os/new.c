@@ -3,25 +3,25 @@
 #include "queue.h"
 #include <stdlib.h>
 // clang-format off
-static void append_to_parent_queue(QUEUE* pq, QUEUE* mq) {
+static void append_to_φψ(QUEUE *pq, QUEUE *mq) {
   QUEUE *q;
   if (mq != (q = QUEUE_NEXT(mq)))
     QUEUE_PREV(q) = QUEUE_PREV(pq), QUEUE_PREV_NEXT(mq) = pq,
-    QUEUE_PREV_NEXT(pq) = q, QUEUE_PREV(pq) = QUEUE_PREV(mq),
-    QUEUE_INIT(mq);
+    QUEUE_PREV_NEXT(pq) = q, QUEUE_PREV(pq) = QUEUE_PREV(mq), QUEUE_INIT(mq);
 }
 #define S_RAY(RAY, PRE)                                                        \
   S(s##RAY) {                                                                  \
     if ((ο[ρ + 6].Q = !ο[ρ + 6].Q))                                            \
       ο[ρ + 3 + RAY].c(T());                                                   \
     else {                                                                     \
+      p_t *φο = ο[Φ].p;                                                        \
       PRE;                                                                     \
-      ο[Φ].p[ο[Φ].p[Ρ].Q + RAY].c(σ, α, ο[Φ].p, ο[Φ].p[Ρ].Q);                  \
+      φο[φο[Ρ].Q + RAY].c(σ, α, φο, φο[Ρ].Q);                                  \
     }                                                                          \
   }
-S_RAY(2, )
-S_RAY(1, append_to_parent_queue((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
-S_RAY(0, append_to_parent_queue((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
+S_RAY(2, free(ο))
+S_RAY(1, append_to_φψ((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
+S_RAY(0, append_to_φψ((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
 N(os_new_psn) { 
   R(const char *, name);
   R(Q_t,          nρ);
