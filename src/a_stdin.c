@@ -105,7 +105,7 @@ Sar(stdin_not)(
     stdin_not_n,
     got, andor)
 
-S(chunk_free) { α--, l_free(T());}
+SP(chunk_free) { α--, l_free(T());}
 S(chunk_read_n) {
   R(void *, buffer);
   Α(buffer, 0x10000, ο[8].Q, l_read, chunk_free, not) O; // o[8].Q == fd

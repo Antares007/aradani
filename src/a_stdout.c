@@ -84,12 +84,10 @@ S(rem_nar) {
   if (oο == sοll[0].p) A4(sοll, bye_nar, gor, and) O;
   else C(1);
 }
-Sar(por)(gor)
-Sar(pod)(god)
 Sar(remove_readable)(
   rem_nar, readables_queue, 2, q_for_each, and2,
-    por,
-    pod, andor)
+    gor,
+    god, andor)
 
 Sar(add_to_readables_queue)(readables_queue, q_push, and)
 
