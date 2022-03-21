@@ -8,7 +8,7 @@ got,                L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
-os_soll_and,        L)IN(L,
+os_soll_a,        L)IN(L,
 os_soll_n,          L)IN(L,
 
 and,                L)IN(L,
@@ -80,8 +80,8 @@ SarP(on_data)(god)
 SarP(on_end)(god)
 Nar(example)(
   mk_stdin,
-    on_data, 1, os_soll_and,
-    on_end,  1, os_soll_and,
+    on_data, 1, os_soll_a,
+    on_end,  1, os_soll_a,
     trans, and,
     pipe, and,
       mk_stdout, and,

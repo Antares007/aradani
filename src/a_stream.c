@@ -8,7 +8,7 @@ got,                L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
-os_soll_and,        L)IN(L,
+os_soll_a,          L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
 os_wordump,         L)IN(L,
@@ -63,9 +63,9 @@ S(tos) {
 }
 Sar(nsoll)(
   tos, tos, and, tos, and, 5, os_soll_n,
-  tos, tos, and, god, and, 5, os_soll_and,
-  tos, god, and, god, and, 5, os_soll_and,
-  1,   2,   3,   4,   5,   5, os_soll_and,
+  tos, tos, and, god, and, 5, os_soll_a,
+  tos, god, and, god, and, 5, os_soll_a,
+  1,   2,   3,   4,   5,   5, os_soll_a,
   ο, 512, "Š", new_soll_psn_a)
 
 Sar(example)(

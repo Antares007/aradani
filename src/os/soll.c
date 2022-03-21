@@ -33,7 +33,7 @@ N(nar);
   rso += 1, α -= rso[-1].Q = wc;                                               \
   for (Q_t i = 0; i < wc; i++)                                                 \
     rso[i].v = σ[α + i].v;
-N(os_soll_and) {
+N(os_soll_a) {
   SOLL;
   A3(rso, god, 020) nar(T());
 }
