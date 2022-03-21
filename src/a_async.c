@@ -7,7 +7,7 @@ got,                L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_queue_and,       L)IN(L,
+os_queue_n,         L)IN(L,
 os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
@@ -60,7 +60,7 @@ Sar(check_queue_timeout)(
     queue_timeout_run :
     god)
 Sar(queue_timeout_run)(
-  god, run_timeouts, check_queue_timeout, and, ο, 3, os_queue_and)
+  run_timeouts, check_queue_timeout, and, ο, 3, os_queue_n)
 Sar(insert_timeout)(
   insert_timeout_n,
   timeouts_count ?
@@ -84,9 +84,9 @@ S(insert_timer) {
 S(srun) {
   R(p_t *, oο);
   p_t *sοll = oο[7].p;
-  Α(god, sοll, os_unsoll, oο, sοll[-1].Q, os_queue_and, and3) O;
+  Α(sοll, os_unsoll, oο, sοll[-1].Q, os_queue_n, and3) O;
 }
-Sar(timer_and)(god, ο, insert_timer, ο[0].p, 2, os_queue_and)
+Sar(timer_and)(ο, insert_timer, ο[0].p, 2, os_queue_n)
 Sar(timer_oor)(ο[7].p, os_soll_free)
 Sar(timer_not)(ο[7].p, os_soll_free, got, and)
 S(timer_set) {

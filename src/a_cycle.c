@@ -7,7 +7,7 @@ got,                L)IN(L,
 nar,                L)IN(L,
 os_new,             L)IN(L,
 os_next,            L)IN(L,
-os_queue_and,       L)IN(L,
+os_queue,           L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 not,                L)IN(L,
@@ -17,30 +17,28 @@ SarP(init)(god)
 
 SP(p_or) {
   R(p_t *, oο);
-  R(Q_t, c);
-  Α(god, c, ο, gor, oο, 3, os_queue_and) O;
+  Α(ο, gor, oο, os_queue) O;
 }
 S(p_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 0)
     print("%p p_and %lu\n", σ, c);
-  Α(god, c + 1, ο, god, oο, 3, os_queue_and) O;
+  Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(p_not) {}
 SP(mproducer) { Α(p_not, p_and, p_or, os_new) O; }
 
 SP(c_or) {
   R(p_t *, oο);
-  R(Q_t, c);
-  Α(god, c, ο, god, oο, 3, os_queue_and) O;
+  Α(ο, god, oο, os_queue) O;
 }
 S(c_and) {
   R(p_t *, oο);
   R(Q_t, c);
   if (c % 100000000 == 1)
     print("%p c_and %lu\n", σ, c);
-  Α(god, c + 1, ο, god, oο, 3, os_queue_and) O;
+  Α(c + 1, ο, god, oο, os_queue) O;
 }
 S(c_not) {}
 SP(mconsumer) { Α(c_not, c_and, c_or, os_new) O; }
@@ -48,8 +46,7 @@ SP(mconsumer) { Α(c_not, c_and, c_or, os_new) O; }
 SP(counter_n) {
   R(p_t *, pο);
   R(p_t *, cο);
-  R(Q_t, c);
-  Α(god, c, cο, gor, pο, 3, os_queue_and) O;
+  Α(cο, gor, pο, os_queue) O;
 }
 
 S(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }

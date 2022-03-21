@@ -6,7 +6,7 @@ gor,                L)IN(L,
 got,                L)IN(L,
 os_new_psn,         L)IN(L,
 os_next,            L)IN(L,
-os_queue_and,       L)IN(L, //
+os_queue_n,       L)IN(L, //
 and,                L)IN(L,
 and2,         imports);
 // clang-format on
@@ -15,7 +15,7 @@ NP(sgod) {
   if (c > 4)
     C(1);
   else
-    Α(god, c + 1, sgod, ο, 2, os_queue_and) O;
+    Α(c + 1, sgod, ο, 2, os_queue_n) O;
 }
 SP(ayr_not) {
   if (α == 3) {
@@ -24,7 +24,7 @@ SP(ayr_not) {
     R(const char *, n);
     print("%s %p %p\n", n, a, e);
   } else
-    Α(god, god, ο[7].p, 1, os_queue_and) O;
+    Α(god, ο[7].p, 1, os_queue_n) O;
 }
 SP(ayr_oor) {
   R(p_t *, oο);
@@ -42,8 +42,8 @@ SP(init) {
   oο[Ν].cs = "α";
   C(1);
 }
-Nar(example1)(god, oο, gor, ο, 2, os_queue_and);
-Nar(example0)(god, 0, sgod, ο, 2, os_queue_and);
+Nar(example1)(oο, gor, ο, 2, os_queue_n);
+Nar(example0)(0, sgod, ο, 2, os_queue_n);
 Nar(example)(example1, example0, and);
 // clang-format off
 EN(tail,

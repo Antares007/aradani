@@ -8,7 +8,7 @@ l_free,             L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
 os_new_n,           L)IN(L,
-os_queue_and,       L)IN(L,
+os_queue_n,         L)IN(L,
 
 and,                L)IN(L,
 and2,               L)IN(L,
@@ -73,7 +73,7 @@ SS(q_cmm,                     wr_t)(   s->queue_length--, C(1); )
 SS(is_readables_unmuted,      wr_t)( C(s->is_readables_unmuted != 0); )
 SS(toggle_readables_unmuted,  wr_t)(   s->is_readables_unmuted =
                                       !s->is_readables_unmuted, C(1); )
-S(bye) { R(p_t *, oο); Α(god, ο, got, oο, 2, os_queue_and) O; }
+S(bye) { R(p_t *, oο); Α(ο, got, oο, 2, os_queue_n) O; }
 S(bye_nar) {
   R(p_t *, sοll);
   Α(sοll[0].p, bye,
@@ -100,8 +100,8 @@ Sar(chunk_push   )(chunks_queue,    q_push, and, q_cpp, and)
 Sar(chunk_unshift)(chunks_queue, q_unshift, and, q_cpp, and)
 S(chunk_free     ){ α -= 2; R(char*, buff); Α(buff, l_free) O; }
 
-S(mute_readable  ){ R(p_t *, sοll); Α(god, 'MUT', god, sοll[0].p, 2, os_queue_and) O; }
-S(unmute_readable){ R(p_t *, sοll); Α(god, 'UNM', god, sοll[0].p, 2, os_queue_and) O; }
+S(mute_readable  ){ R(p_t *, sοll); Α('MUT', god, sοll[0].p, 2, os_queue_n) O; }
+S(unmute_readable){ R(p_t *, sοll); Α('UNM', god, sοll[0].p, 2, os_queue_n) O; }
 Sar(mute_all_readables)(
   mute_readable,   readables_queue, 1, q_for_each, and2)
 Sar(unmute_all_readables)(
@@ -130,7 +130,7 @@ Sar(stdout_and)(
     stdout_and_n,
     got, andor)
 
-S(unmut) { R(p_t*, rο); Α(god, 'UNM', god, rο, 2, os_queue_and) O; }
+S(unmut) { R(p_t*, rο); Α('UNM', god, rο, 2, os_queue_n) O; }
 S(dup) { R(void*, v); A2(v, v) C(1); }
 Sar(stdout_oor_n)(
   is_writeable,
@@ -155,7 +155,7 @@ Sar(stdout_not)(
 
 S(is_fully_written) { R(Q_t, off); R(Q_t, len); A2(len, off) C(len == 0); }
 Sar(queue_loop_write)(
-  god, loop_write, ο, 1, os_queue_and)
+  loop_write, ο, 1, os_queue_n)
 Sar(loop_write_nnn)(
   is_fully_written,
     chunk_free,
