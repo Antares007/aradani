@@ -4,8 +4,7 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
 os_new_psn,         L)IN(L,
-os_queue,           L)IN(L,
-os_queue_n,         L)IN(L,
+os_queue_and,       L)IN(L,
 os_win,             L)IN(L,
 //
 and2,               L)IN(L,
@@ -21,14 +20,15 @@ SP(c_oor) {
 SP(c_and) { C(1); }
 SP(c_not) { C(1); }
 NarP(c)(c_not, c_and, c_oor, ο, 512, "c", os_new_psn);
-Sar(expample)(c, gor, os_win, and2, 2, os_queue_n, and2)
+Sar(expample)(god, c, gor, os_win, and2, 2, os_queue_and, and2)
 
-Sar(Increase)('+', 'txt', god, ο, os_queue)
-Sar(Decrease)('-', 'txt', god, ο, os_queue)
+Sar(Increase)(god, '+', 'txt', god, ο, 3, os_queue_and)
+Sar(Decrease)(god, '-', 'txt', god, ο, 3, os_queue_and)
 Nar(Counter)(
-  Increase, 'btn', god, ο, os_queue,
-  Decrease, 'btn', god, ο, os_queue, and5,
-       '0', 'txt', god, ο, os_queue, and5
+  god,
+  Increase, 'btn', god, ο, 3, os_queue_and,
+  Decrease, 'btn', god, ο, 3, os_queue_and,
+       '0', 'txt', god, ο, 3, os_queue_and
 )
 S(Increase2) {
   Α('+', 'txt', god) O;

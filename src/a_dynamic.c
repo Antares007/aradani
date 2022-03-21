@@ -19,8 +19,6 @@ os_bark,            L)IN(L,
 os_hrtime,          L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_queue,           L)IN(L,
-os_queue_n,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or,             L)IN(L,

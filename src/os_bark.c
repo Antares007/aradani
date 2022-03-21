@@ -6,8 +6,8 @@
 #include <unistd.h>
 
 
-N(nar);
-N(os_queue);
+N(nar); Sar(and)(010, nar);
+N(os_queue_and);
 
 static void *mapfile(const char *filename, void *pith) {
   int fd = open(filename, O_RDONLY);
@@ -52,7 +52,9 @@ S(os_bark_seed_and_import_first) {
 }
 NP(os_bark) {
   R(p_t *, oο);
-  AS(os_bark_seed_and_import_first, dot, 010, nar, oο, os_queue) O;
+  R(n_t, root);
+  R(const char *, name);
+  AS(god, name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_and) O;
 }
 S(os_ls_n) {
   R(n_t, export);

@@ -8,8 +8,7 @@ got,                L)IN(L,
 l_free,             L)IN(L,
 l_malloc,           L)IN(L,
 os_new_psn,         L)IN(L,
-os_queue,           L)IN(L,
-os_queue_n,         L)IN(L,
+os_queue_and,       L)IN(L,
 os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
@@ -98,14 +97,15 @@ NP(pgod) {
 }
 SP(Main_n) {
   R(p_t *, qο);
-  Α(debugger, 
+  Α(god,
+    debugger, 
     6, 3, q_push, and3,
     3, 6, q_push, and3,
     pgod, q_for_each, and2,
           q_shift, and,
           q_shift, and,
           os_wordump, os_wordump, andor,
-          qο, os_queue) O;
+          qο, 19, os_queue_and) O;
 }
 SP(Main) {
   Α(q_new, Main_n, and) O;

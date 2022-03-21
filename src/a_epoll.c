@@ -7,8 +7,7 @@ got,                L)IN(L,
 l_epoll_create,     L)IN(L,
 l_epoll_ctl,        L)IN(L,
 l_epoll_wait,       L)IN(L,
-os_queue,           L)IN(L,
-os_queue_n,         L)IN(L, //
+os_queue_and,       L)IN(L, //
 and,                L)IN(L,
 and2,         imports)
 
@@ -22,7 +21,7 @@ S(epoll_on_wait) {
   R(q_t, num);
   if (num) {
     p_t *oο = events[num - 1].data.ptr;
-    Α(oο[7].c, oο, os_queue, num - 1, epoll_on_wait, and2) O;
+    Α(god, oο[7].c, oο, 1, os_queue_and, num - 1, epoll_on_wait, and2) O;
   } else C(1);
 }
 Sar(epoll_get_events)(epoll_fd, events, sizeof(events) / sizeof(*events), 0, l_epoll_wait)
@@ -35,7 +34,7 @@ Sar(epoll_ctl_add_out)(epoll_fd, EPOLL_CTL_ADD, ο[8].Q, ο, EPOLLOUT | EPOLLET 
 Sar(epoll_ctl_del_out)(epoll_fd, EPOLL_CTL_DEL, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 Sar(epoll_ctl_mod_out)(epoll_fd, EPOLL_CTL_MOD, ο[8].Q, ο, EPOLLOUT | EPOLLET | EPOLLONESHOT, l_epoll_ctl)
 
-Sar(loop_in_queue)(epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, 5, os_queue_n)
+Sar(loop_in_queue)(god, epoll_get_events, epoll_on_wait, and, loop_in_queue, and, ο[Φ].p, 5, os_queue_and)
 
 S(set) { R(Q_t, fd); epoll_fd = fd, C(1); }
 

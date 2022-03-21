@@ -8,7 +8,6 @@ got,                L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_queue,           L)IN(L,
 os_wordump,         L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,

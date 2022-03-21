@@ -14,7 +14,7 @@ rl_EndDrawing,              L)IN(L,
 rl_InitWindow,              L)IN(L,
 rl_WindowShouldClose,       L)IN(L,
 //
-os_queue,                   L)p_t *oο;I(L,
+os_queue_and,               L)p_t *oο;I(L,
 "ο", oο,                    L)IN(L,
 //
 and,                        L)IN(L,

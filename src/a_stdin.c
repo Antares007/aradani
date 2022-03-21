@@ -11,7 +11,7 @@ l_setnoblock,       L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
-os_queue,           L)IN(L, //
+os_queue_and,       L)IN(L, //
 and,                L)IN(L,
 and2,               L)IN(L,
 and3or3,            L)IN(L,
@@ -48,8 +48,8 @@ S(stdin_set) {
 }
 SS(activate,           rd_t)( R(p_t *, oο); s->writeable = oο, C(1); )
 SS(deactivate,         rd_t)( s->writeable = 0, C(1); )
-SS(hi,                 rd_t)( Α(ο, gor, s->writeable, os_queue) O; )
-SS(bye,                rd_t)( Α(ο, got, s->writeable, os_queue) O; )
+SS(hi,                 rd_t)( Α(god, ο, gor, s->writeable, 2, os_queue_and) O; )
+SS(bye,                rd_t)( Α(god, ο, got, s->writeable, 2, os_queue_and) O; )
 SS(is_active,          rd_t)( C(s->writeable != 0); )
 SS(is_readable,        rd_t)( C(s->is_readable != 0); )
 SS(is_unmuted,         rd_t)( C(s->is_unmuted != 0); )
@@ -59,7 +59,11 @@ SS(set_readable,       rd_t)( s->is_readable = 1, C(1); )
 SS(unset_readable,     rd_t)( s->is_readable = 0, C(1); )
 SS(is_goodbye,         rd_t)( R(p_t*, arg); A(arg) C(arg == s->writeable); )
 
-SarS(queue_chunk_send, rd_t)('CNK', god, s->writeable, os_queue)
+SS(queue_chunk_send, rd_t)(
+  R(Q_t, n);
+  R(void*, b);
+  Α(god, b, n, 'CNK', god, s->writeable, 4, os_queue_and) O;
+)
 
 Sar(activate_and_greet)(activate, hi, and)
 Sar(bye_and_deactivate)(bye, deactivate, and)
@@ -114,7 +118,7 @@ Sar(chunk_read)(0x10000, l_malloc, chunk_read_n, and)
 S(is_eof) { R(Q_t, num); R(void*, buff); Α(buff, num) C(num == 0); };
 
 Sar(queue_loop_read)(
-  loop_read, ο, os_queue)
+  god, loop_read, ο, 1, os_queue_and)
 Sar(loop_read_nn)(
   is_eof,
     chunk_free, got, and,
