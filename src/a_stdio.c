@@ -18,6 +18,12 @@ and4or,             L)IN(L,
 and5or5,            L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
+
+forward,            L)IN(L,
+greet,              L)IN(L,
+greet_b,            L)IN(L,
+reject,             L)IN(L,
+
 mk_stdin,           L)IN(L,
 mk_stdout,    imports)
 SarP(init)(god)
@@ -28,9 +34,6 @@ SarP(init)(god)
 #define οconsumer(ο)    ο[0xa].p
 #define οtransformer(ο) ο[0xb].p   
 
-S(reject ) { R(p_t*, cο); R(p_t*, pο); Α(cο, got, pο, 2, os_queue_n) O; }
-S(forward) { R(p_t*, pο); Α(god, pο, os_queue) O; }
-S(greet  ) { R(p_t*, cο); R(p_t*, pο); Α(cο, gor, pο, 2, os_queue_n) O; }
 S(pipe   ) { R(p_t*, cο); R(p_t*, pο); οproducer(cο) = pο; A(pο) C(1); } // fix it
 Sar(set_consumer)(god)
 Sar(mk_trans_pith)(god)
@@ -71,7 +74,6 @@ SP(trans_set) {
 SP(trans) {
   R(p_t *, ns);
   R(p_t *, as);
-  print("%lu\n", as[3].Q);
   Α(mk_trans, as, ns, trans_set, and3) O;
 }
 SarP(on_data)(god)

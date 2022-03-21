@@ -30,6 +30,11 @@ epoll_ctl_add_out,  L)IN(L,
 epoll_ctl_del_out,  L)IN(L,
 epoll_ctl_mod_out,  L)IN(L,
 
+forward,            L)IN(L,
+greet,              L)IN(L,
+greet_b,            L)IN(L,
+reject,             L)IN(L,
+
 is_alfa_zero,       L)IN(L,
 match,        imports)
 
@@ -73,10 +78,9 @@ SS(q_cmm,                     wr_t)(   s->queue_length--, C(1); )
 SS(is_readables_unmuted,      wr_t)( C(s->is_readables_unmuted != 0); )
 SS(toggle_readables_unmuted,  wr_t)(   s->is_readables_unmuted =
                                       !s->is_readables_unmuted, C(1); )
-S(bye) { R(p_t *, oο); Α(ο, got, oο, 2, os_queue_n) O; }
 S(bye_nar) {
   R(p_t *, sοll);
-  Α(sοll[0].p, bye,
+  Α(ο, sοll[0].p, reject,
     sοll, q_soll_remove, and2,
     sοll, q_soll_free, and2) O;
 }

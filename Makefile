@@ -11,6 +11,7 @@ src/a_stdio.arsi:            \
 	src/a_stdio.oars           \
 	src/a_stdout.oars          \
 	src/a_stdin.oars           \
+	src/a_stream.oars          \
 	src/a_epoll.oars           \
 	src/os.arsi                
 	cat $^ > $@

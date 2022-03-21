@@ -11,18 +11,27 @@ l_setnoblock,       L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_n,           L)IN(L,
-os_queue_n,         L)IN(L, //
+os_queue_and,       L)IN(L,
+os_queue_n,         L)IN(L,
+
 and,                L)IN(L,
 and2,               L)IN(L,
+and3,               L)IN(L,
 and3or3,            L)IN(L,
 andor,              L)IN(L,
 andor3,             L)IN(L,
 not,                L)IN(L,
 or,                 L)IN(L,
-or3,                L)IN(L, //
+or3,                L)IN(L,
+
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   L)IN(L,
-epoll_ctl_mod_in, imports);
+epoll_ctl_mod_in,   L)IN(L,
+
+forward,            L)IN(L,
+greet,              L)IN(L,
+greet_b,            L)IN(L,
+reject,       imports);
 
 #define	STDIN_FILENO	0	/* Standard input.  */
 
@@ -46,10 +55,9 @@ S(stdin_set) {
   s->is_readable = 0;
   A(oο) C(1);
 }
-SS(activate,           rd_t)( R(p_t *, oο); s->writeable = oο, C(1); )
+SS(set_writable,       rd_t)( R(p_t *, oο); s->writeable = oο, C(1); )
 SS(deactivate,         rd_t)( s->writeable = 0, C(1); )
-SS(hi,                 rd_t)( Α(ο, gor, s->writeable, 2, os_queue_n) O; )
-SS(bye,                rd_t)( Α(ο, got, s->writeable, 2, os_queue_n) O; )
+SS(writeable,          rd_t)( A(s->writeable) C(1); )
 SS(is_active,          rd_t)( C(s->writeable != 0); )
 SS(is_readable,        rd_t)( C(s->is_readable != 0); )
 SS(is_unmuted,         rd_t)( C(s->is_unmuted != 0); )
@@ -65,12 +73,15 @@ SS(queue_chunk_send, rd_t)(
   Α(b, n, 'CNK', god, s->writeable, 4, os_queue_n) O;
 )
 
-Sar(activate_and_greet)(activate, hi, and)
-Sar(bye_and_deactivate)(bye, deactivate, and)
+S(activate_and_greet) {
+  R(p_t *, wο);
+  Α(wο, set_writable, ο, wο, greet_b, and3) O;
+}
+Sar(bye_and_deactivate)(ο, writeable, reject, and, deactivate, and)
 
 S(is_alfa_zero) { C(α == 0); }
 
-Sar(stdin_oor)(
+SarP(stdin_oor)(
   is_active,
     bye_and_deactivate,
     epoll_ctl_add_in, andor,
@@ -140,8 +151,6 @@ Sar(mk_stdin)(
      STDIN_FILENO, l_setnoblock, and2)
 
 EN(tail,
-activate,           L)EN(L,
-bye,                L)EN(L,
 is_alfa_zero,       L)EN(L,
 match,              L)EN(L,
 mk_stdin,     exports);
