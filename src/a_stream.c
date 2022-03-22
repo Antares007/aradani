@@ -46,17 +46,10 @@ S(new_soll_set) {
   oο[10].p = oor_soll;
   A(oο) C(1);
 }
-S(new_soll_psn) {
-  R(const char*, name);
-  R(Q_t, size);
-  R(p_t *, oο);
-  R(p_t *, set_soll);
-  R(p_t *, oor_soll);
-  R(p_t *, and_soll);
-  R(p_t *, not_soll);
-  Α(new_soll_not, new_soll_and, new_soll_oor, oο, size, name, os_new_psn,
-    set_soll, oor_soll, and_soll, not_soll, new_soll_set, and5) O;
-}
+Narg7(new_soll_psn)(not_soll,p_t*, and_soll,p_t*, oor_soll,p_t*, set_soll,p_t*, oο,p_t*, size,Q_t, name,const char*)(
+  new_soll_not, new_soll_and, new_soll_oor, oο, size, name, os_new_psn,
+  set_soll, oor_soll, and_soll, not_soll, new_soll_set, and5)
+
 Sar(new_soll_psn_a)(new_soll_psn, and4)
 
 S(tos) { print("-> %lu\n", ο[7].p[4]); C(1); }
