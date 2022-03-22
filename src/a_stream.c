@@ -9,14 +9,17 @@ os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll_a,          L)IN(L,
+os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
 os_wordump,         L)IN(L,
 
 and,                L)IN(L,
+and2,               L)IN(L,
 and4,               L)IN(L,
 and5,               L)IN(L,
 andor,              L)IN(L,
+not,                L)IN(L,
 
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   imports)
@@ -31,14 +34,20 @@ Sarg1(forward)(oο,p_t*         )(god, oο, os_queue)
 
 So(set_alfa_zero)( α = 0, C(1); )
 
-Sargo(new_soll_not)(ο[ 8].p, os_unsoll, dot, and)
+Sargo(free_sols_and_got)(
+  ο[ 7].p, os_soll_free,
+  ο[ 8].p, os_soll_free, and2,
+  ο[ 9].p, os_soll_free, and2,
+  ο[10].p, os_soll_free, and2,
+                    got, and)
+Sargo(new_soll_not)(ο[ 8].p, os_unsoll, dot, and, free_sols_and_got, not)
 Sargo(new_soll_and)(ο[ 9].p, os_unsoll, dot, and)
 Sargo(new_soll_oor)(ο[10].p, os_unsoll, dot, and)
-N5(new_soll_set)(oο,        p_t*,
+S5(new_soll_set)(oο,        p_t*,
                  set_soll,  p_t*,
-                 oor_soll,  p_t*,
+                 not_soll,  p_t*,
                  and_soll,  p_t*,
-                 not_soll,  p_t*)(
+                 oor_soll,  p_t*)(
   oο[ 7].p = set_soll;
   oο[ 8].p = not_soll;
   oο[ 9].p = and_soll;
@@ -52,8 +61,7 @@ Sarg7(new_soll_psn)(not_soll, p_t*,
                     size,     Q_t,
                     name,     const char*)(
   new_soll_not, new_soll_and, new_soll_oor, oο, size, name, os_new_psn,
-  set_soll, oor_soll, and_soll, not_soll, new_soll_set, and5)
-
+  set_soll, not_soll, and_soll, oor_soll, new_soll_set, and5)
 Sargo(new_soll_psn_a)(new_soll_psn, and4)
 
 So(tos)( print("-> %lu\n", ο[7].p[4]); C(1); )
