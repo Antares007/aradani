@@ -16,7 +16,11 @@ os_wordump,         L)IN(L,
 and,                L)IN(L,
 and4,               L)IN(L,
 and5,               L)IN(L,
-andor,        imports)
+andor,              L)IN(L,
+
+epoll_ctl_add_in,   L)IN(L,
+epoll_ctl_del_in,   imports)
+
 
 SarP(init)(god)
 
@@ -55,12 +59,26 @@ S(new_soll_psn) {
 }
 Sar(new_soll_psn_a)(new_soll_psn, and4)
 
-Nar(s_readable )(os_wordump, set_alfa_zero, and)
-Nar(s_writeable)(os_wordump, set_alfa_zero, and)
-S(tos) {
-  print("-> %lu\n", ο[7].p[4]);
-  C(1);
+S(tos) { print("-> %lu\n", ο[7].p[4]); C(1); }
+S(s_readable) {
+  R(p_t *, set_soll);
+  R(p_t *, destroy_soll);
+  R(p_t *, read_soll);
+  R(p_t *, construct_soll);
+  Α(tos, tos, and, tos, and, 5, os_soll_n,
+    tos, tos, and, god, and, 5, os_soll_a,
+    tos, god, and, god, and, 5, os_soll_a,
+    set_soll, construct_soll, read_soll, destroy_soll, 4, os_soll_a,
+    ο, 512, "Š", new_soll_psn_a) O;
 }
+Nar(s_stdin)(
+  epoll_ctl_del_in, 1, os_soll_n,
+  tos, tos, and, god, and, 5, os_soll_a,
+  epoll_ctl_add_in, 1, os_soll_a,
+  1,   2,   3,   4,   5,   5, os_soll_a,
+  s_readable, and)
+
+Nar(s_writeable)(os_wordump, set_alfa_zero, and)
 Sar(nsoll)(
   tos, tos, and, tos, and, 5, os_soll_n,
   tos, tos, and, god, and, 5, os_soll_a,

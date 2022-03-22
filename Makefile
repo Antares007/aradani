@@ -16,6 +16,12 @@ src/a_stdio.arsi:            \
 	src/os.arsi                
 	cat $^ > $@
 
+src/a_stream.arsi:           \
+	src/a_stream.oars          \
+	src/a_epoll.oars           \
+	src/os.arsi                
+	cat $^ > $@
+
 src/os.arsi:                 \
 	src/a_queue.oars           \
 	src/a_junctions.oars       \
