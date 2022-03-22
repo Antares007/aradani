@@ -8,6 +8,7 @@ got,                L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
+os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
 os_wordump,         L)IN(L,
@@ -47,13 +48,10 @@ So(lookahead)      ( A((Q_t)οb[οp]) C(1); )
 So(shift)          ( if (οp < οs) οp++, C(1); else C(2); )
 So(bin_lsh)        ( R(Q_t, r); R(Q_t, l); A(l << r) C(1); )
 So(bin_or)         ( R(Q_t, r); R(Q_t, l); A(l |  r) C(1); )
-S1(drop_n)(wc, Q_t)( α -= wc, C(1);)
 So(drop_and_gor)( α--, C(0); )
 
 Sargo(lookahead_shift)(lookahead, shift,  and)
 
-//u8cp_b2
-//um110xxxxx, 6 bin_lsh, lookahead_shift, um10xxxxxx and bin_or.
 Sargo(u8cp_b1)(
   lookahead,      um0xxxxxxx, and, drop_and_gor, or)
 Sargo(u8cp_b2)(
@@ -87,38 +85,36 @@ S1(sh)(soll, p_t*)(
   else
     A(soll) C(2);
 )
-//S2(res)(pos,Q_t, wc,Q_t)(οp = pos, α -= wc, C(1);)
-          
+S1(unsh)(soll, p_t*)(
+  Q_t opos = soll[soll[-1].Q - 2].Q;
+  οp = opos, Α(soll, os_soll_free) O;
+)
+Sarg1(Μ)(n,     n_t)(n, n, Μ, and2)
 
-//u8cp
-//lookahead_shift and (u8cp_b1, u8cp_b2, u8cp_b3 or u8cp_b4).
-Sarg1(Μ)(n,     n_t)(
-  n,
-  n, Μ,
-  god, 021, nar)
+S1(is_in_id_cp_range)(cp,     p_t*)(
+  A(cp) C('a' <= cp[1].Q && cp[1].Q <= 'z');)
 
-S1(is_in_id_cp_range)(cp,     Q_t)(
-  C('a' <= cp && cp <= 'z');)
 Nargo(id_cp)(
-  lookahead, is_in_id_cp_range, and,
-    shift,
-    1, drop_n, 012, nar)
+  la, is_in_id_cp_range, and,
+    sh,
+    drop_and_gor, 011, nar)
 Nargo(id)(
-  debugger, id_cp, Μ, and2)
+  id_cp, id_cp, Μ, and2)
 Nargo(οpgod)(οp, god)
 Sargo(lash)(la,sh,and)
 No(testuni)(
-  οb = "აŠa𓅪 α𓅨";
+  οb = "abc აŠ𓅪 α𓅨";//";
   οs = cslen(οb);
   οp = 0;
   print("\ncs:\t%s\nlen:\t%lu\n\n", οb, οs);
-  Α(lash,
-    lash, and,
-    lash, and,
-    lash, and,
-    lash, and,
-    lash, and,
-    la, and) O;
+  Α(id, lash, Μ, 02, nar) O;
+  //Α(lash,
+  //  lash, and,
+  //  lash, and,
+  //  lash, and,
+  //  lash, and,
+  //  lash, and,
+  //  la, and) O;
 )
 
 So(set_alfa_zero)( α = 0, C(1); )
