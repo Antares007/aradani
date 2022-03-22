@@ -23,6 +23,7 @@ src/a_stream.arsi:           \
 	cat $^ > $@
 
 src/os.arsi:                 \
+	src/a_new_soll.oars        \
 	src/a_queue.oars           \
 	src/a_junctions.oars       \
 	src/goto.bin
