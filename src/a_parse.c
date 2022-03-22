@@ -8,7 +8,10 @@ got,                L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_wordump,         L)IN(L, //
+os_soll_n,          L)IN(L,
+os_unsoll,          L)IN(L,
+os_wordump,         L)IN(L,
+
 and,                L)IN(L,
 and2,               L)IN(L,
 and3,               L)IN(L,
@@ -21,50 +24,111 @@ andor2,             L)IN(L,
 not,                L)IN(L,
 not2and,            L)IN(L,
 not2and2or2,        L)IN(L,
-or,           imports);
+or,                 L)IN(L,
 
-#define ο5 ο[15].cs
-#define ο6 ο[16].Q
-#define ο7 ο[17].Q
+new_soll_psn,       L)IN(L,
+new_soll_psn_a, imports);
+
+#define οb ο[15].cs
+#define οs ο[16].Q
+#define οp ο[17].Q
+
 Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
-#define U8CP_UM(Name, Mask, Check, Unmask, Ray) \
-  S(Name){R(Q_t, v);(v & Mask)==Check?(A(v & Unmask)C(1)):(A(v)C(Ray));}
+
+#define U8CP_UM(Name, Mask, Check, Unmask, Ray)                                   \
+  S1(Name)(v,    Q_t)( (v & Mask) == Check ? (A(v & Unmask)C(1)) : (A(v)C(Ray)); )
 U8CP_UM(um0xxxxxxx, 0x80, 0x00, 0xff, 0)
 U8CP_UM(um10xxxxxx, 0xc0, 0x80, 0x3f, 2)
 U8CP_UM(um110xxxxx, 0xe0, 0xc0, 0x1f, 0)
 U8CP_UM(um1110xxxx, 0xf0, 0xe0, 0x0f, 0)
 U8CP_UM(um11110xxx, 0xf8, 0xf0, 0x07, 0)
 
-S(lookahead)       { A((Q_t)ο5[ο7]) C(1); }
-S(shift)           { if (ο7 < ο6) ο7++, C(1); else C(2); }
-S(bin_lsh)         { R(Q_t, r); R(Q_t, l); A(l << r) C(1); }
-S(bin_or)          { R(Q_t, r); R(Q_t, l); A(l |  r) C(1); }
-S(lookahead_shift) { A3(lookahead, shift,  and) O; }
+So(lookahead)      ( A((Q_t)οb[οp]) C(1); )
+So(shift)          ( if (οp < οs) οp++, C(1); else C(2); )
+So(bin_lsh)        ( R(Q_t, r); R(Q_t, l); A(l << r) C(1); )
+So(bin_or)         ( R(Q_t, r); R(Q_t, l); A(l |  r) C(1); )
+S1(drop_n)(wc, Q_t)( α -= wc, C(1);)
+So(drop_and_gor)( α--, C(0); )
 
-Sar(u8cp_b1)(um0xxxxxxx)
-Sar(u8cp_b2)(um110xxxxx,       6, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and, bin_or, and)
-Sar(u8cp_b3)(um1110xxxx,      12, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and,  bin_or, and, bin_or, and)
-Sar(u8cp_b4)(um11110xxx,      18, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and, 12, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and,  6, bin_lsh, and2, lookahead_shift, and,
-             um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and)
-Sar(u8cp)(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or)
-S(Μ) {
-  R(n_t, nar);
-  AS(nar, nar, Μ, and2, god, or) O;
-}
-S(set_alfa_zero) { α = 0, C(1); }
-S(testuni) {
-  ο5 = "aŠა𓅪 α𓅨";
-  ο6 = cslen(ο5);
-  ο7 = 0;
-  print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
-  AS(u8cp, Μ, god, not, os_wordump, and) O;
-}
-Nar(მთავარი)(debugger, testuni, and, set_alfa_zero, and)
+Sargo(lookahead_shift)(lookahead, shift,  and)
+
+//u8cp_b2
+//um110xxxxx, 6 bin_lsh, lookahead_shift, um10xxxxxx and bin_or.
+Sargo(u8cp_b1)(
+  lookahead,      um0xxxxxxx, and, drop_and_gor, or)
+Sargo(u8cp_b2)(
+  lookahead,      um110xxxxx, and, drop_and_gor, or,  6, bin_lsh, and2, shift, and,
+  lookahead, and, um10xxxxxx, and, bin_or, and)
+Sargo(u8cp_b3)(
+  lookahead,      um1110xxxx, and, drop_and_gor, or, 12, bin_lsh, and2, shift, and,
+  lookahead, and, um10xxxxxx, and,                    6, bin_lsh, and2, shift, and, 
+  lookahead, and, um10xxxxxx, and, bin_or, and, bin_or, and)
+Sargo(u8cp_b4)(
+  lookahead,      um11110xxx, and, drop_and_gor, or, 18, bin_lsh, and2, shift, and,
+  lookahead, and, um10xxxxxx, and,                   12, bin_lsh, and2, shift, and,
+  lookahead, and, um10xxxxxx, and,                    6, bin_lsh, and2, shift, and,
+  lookahead, and, um10xxxxxx, and,  bin_or, and, bin_or, and, bin_or, and)
+Sargo(u8cp)(u8cp_b1, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or)
+
+S2(soll)(spos,Q_t, oα,Q_t)(Q_t wc = α - oα, cpos = οp + 1; οp = spos, Α(spos, cpos, wc + 2, os_soll_n) O;)
+S2(rstr)(spos,Q_t, oα,Q_t)(α = oα, οp = spos, C(0);)
+S2(rstt)(spos,Q_t, oα,Q_t)(α = oα, οp = spos, C(2);)
+So(la)(
+  Q_t a = α;
+  Α('u8cp', u8cp,
+    οp, a, rstt, 
+    οp, a, soll,
+    οp, a, rstr, 0333, nar) O;
+)
+S1(sh)(soll, p_t*)(
+  Q_t npos = soll[soll[-1].Q - 1].Q;
+  if (npos < οs)
+    οp = npos, A(soll) C(1);
+  else
+    A(soll) C(2);
+)
+//S2(res)(pos,Q_t, wc,Q_t)(οp = pos, α -= wc, C(1);)
+          
+
+//u8cp
+//lookahead_shift and (u8cp_b1, u8cp_b2, u8cp_b3 or u8cp_b4).
+Sarg1(Μ)(n,     n_t)(
+  n,
+  n, Μ,
+  god, 021, nar)
+
+S1(is_in_id_cp_range)(cp,     Q_t)(
+  C('a' <= cp && cp <= 'z');)
+Nargo(id_cp)(
+  lookahead, is_in_id_cp_range, and,
+    shift,
+    1, drop_n, 012, nar)
+Nargo(id)(
+  debugger, id_cp, Μ, and2)
+Sargo(οpgod)(οp, god)
+Sargo(lash)(la,sh,and)
+No(testuni)(
+  οb = "აŠa𓅪 α𓅨";
+  οs = cslen(οb);
+  οp = 0;
+  print("\ncs:\t%s\nlen:\t%lu\n\n", οb, οs);
+  Α(lash,
+    lash, and,
+    lash, and,
+    lash, and,
+    lash, and,
+    lash, and,
+    la, and) O;
+)
+
+So(set_alfa_zero)( α = 0, C(1); )
+Sargo(მთავარი)(
+  testuni,
+  2, os_wordump,
+  1, os_wordump,
+  0, os_wordump, 0222, nar,
+  set_alfa_zero, 0010, nar)
+
 SarP(init)(god)
 
 //N(Ο);                      
