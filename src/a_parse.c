@@ -105,7 +105,7 @@ Nargo(id_cp)(
     1, drop_n, 012, nar)
 Nargo(id)(
   debugger, id_cp, Μ, and2)
-Sargo(οpgod)(οp, god)
+Nargo(οpgod)(οp, god)
 Sargo(lash)(la,sh,and)
 No(testuni)(
   οb = "აŠa𓅪 α𓅨";

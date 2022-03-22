@@ -5,6 +5,7 @@ dot,                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
+nar,                L)IN(L,
 os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
@@ -21,6 +22,9 @@ and5,               L)IN(L,
 andor,              L)IN(L,
 not,                L)IN(L,
 
+new_soll_psn,       L)IN(L,
+new_soll_psn_a,     L)IN(L,
+
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   imports)
 
@@ -34,46 +38,40 @@ Sarg1(forward)(oο,p_t*         )(god, oο, os_queue)
 
 So(set_alfa_zero)( α = 0, C(1); )
 
-Sargo(free_sols_and_got)(
-  ο[ 7].p, os_soll_free,
-  ο[ 8].p, os_soll_free, and2,
-  ο[ 9].p, os_soll_free, and2,
-  ο[10].p, os_soll_free, and2,
-                    got, and)
-Sargo(new_soll_not)(ο[ 8].p, os_unsoll, dot, and, free_sols_and_got, not)
-Sargo(new_soll_and)(ο[ 9].p, os_unsoll, dot, and)
-Sargo(new_soll_oor)(ο[10].p, os_unsoll, dot, and)
-S5(new_soll_set)(oο,        p_t*,
-                 set_soll,  p_t*,
-                 not_soll,  p_t*,
-                 and_soll,  p_t*,
-                 oor_soll,  p_t*)(
-  oο[ 7].p = set_soll;
-  oο[ 8].p = not_soll;
-  oο[ 9].p = and_soll;
-  oο[10].p = oor_soll;
-  A(oο) C(1);)
-Sarg7(new_soll_psn)(not_soll, p_t*,
-                    and_soll, p_t*,
-                    oor_soll, p_t*,
-                    set_soll, p_t*,
-                    oο,       p_t*,
-                    size,     Q_t,
-                    name,     const char*)(
-  new_soll_not, new_soll_and, new_soll_oor, oο, size, name, os_new_psn,
-  set_soll, not_soll, and_soll, oor_soll, new_soll_set, and5)
-Sargo(new_soll_psn_a)(new_soll_psn, and4)
-
 So(tos)( print("-> %lu\n", ο[7].p[4]); C(1); )
+
+Sargo(s_readable_not)(god)
+
+Sargo(s_readable_and)(god)
+
+// god, cβ, os_queue
+Nargo(mk_construct_cb_pith)(
+  god, 1, os_soll_n,
+  god, 1, os_soll_a,
+  god, 1, os_soll_a,
+  god, 1, os_soll_a,
+  ο, 64, "construct cb", new_soll_psn_a)
+
+Sargo(unsoll_dot)(os_unsoll, dot, and)
+Sargo(mkcb)(god)
+Sarg2(s_readable_oor)(oο,               p_t*,
+                      construct_soll,   p_t*)(
+  oο,             1, os_soll_n, 
+  construct_soll, 1, os_soll_a,
+  mkcb,           and,
+  construct_soll, and,
+  unsoll_dot,     and)
+
 Sarg4(s_readable)(construct_soll, p_t*,
                   read_soll,      p_t*,
                   destroy_soll,   p_t*,
                   set_soll,       p_t*)(
-  tos, tos, and, tos, and, 5, os_soll_n,
-  tos, tos, and, god, and, 5, os_soll_a,
-  tos, god, and, god, and, 5, os_soll_a,
-  set_soll, construct_soll, read_soll, destroy_soll, 4, os_soll_a,
+  s_readable_not, 1, os_soll_n,
+  s_readable_and, 1, os_soll_a,
+  construct_soll, s_readable_oor, 1, os_soll_a,
+  set_soll,  read_soll, destroy_soll, 3, os_soll_a,
   ο, 512, "Š", new_soll_psn_a)
+
 Nargo(s_stdin)(
   epoll_ctl_del_in, 1, os_soll_n,
   tos, tos, and, god, and, 5, os_soll_a,
@@ -83,13 +81,14 @@ Nargo(s_stdin)(
 
 Nargo(s_writeable)(os_wordump, set_alfa_zero, and)
 Sargo(nsoll)(
-  tos, tos, and, tos, and, 5, os_soll_n,
+  tos, tos, and, got, and, 5, os_soll_n,
   tos, tos, and, god, and, 5, os_soll_a,
   tos, god, and, god, and, 5, os_soll_a,
   1,   2,   3,   4,   5,   5, os_soll_a,
   ο, 512, "Š", new_soll_psn_a)
 
-Sargo(example)(god, nsoll, os_queue, and)
+Nargo(example)(got, nsoll, os_queue, and)
+
 
 /*
   readable._construct(callback)  Call this function (optionally with an error argument) when the stream has finished initializing.
