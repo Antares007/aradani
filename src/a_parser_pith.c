@@ -32,8 +32,15 @@ Sarg2(parser)(inp, const char*,
   inp, 0, len, -1, 4, os_soll_a,
   ο, 512, "p", new_soll_psn, and4
 )
-So(lookahead)( C((POS < LEN) ? (LHD = BUF[POS], 1) : 2); )
-So(shift    )( Q_t lookahead = LHD; if (lookahead == -1) C(2); else LHD = -1, POS++, A(lookahead) C(1); )
+So(lookahead)(
+  if (POS < LEN) LHD = BUF[POS], A(LHD) C(1);
+  else C(2);
+)
+So(shift    )(
+  Q_t lookahead = LHD;
+  if (lookahead == -1) C(2);
+  else LHD = -1, POS++, C(1);
+)
 
 Sargo(example)(
   lookahead,
