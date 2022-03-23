@@ -15,7 +15,11 @@ src/a_stdio.arsi:            \
 	src/a_epoll.oars           \
 	src/os.arsi                
 	cat $^ > $@
-
+src/a_parse.arsi: \
+	src/a_parse.oars \
+	src/a_parse_u8cp.oars \
+	src/os.arsi 
+	cat $^ > $@
 src/a_stream.arsi:           \
 	src/a_stream.oars          \
 	src/a_epoll.oars           \
