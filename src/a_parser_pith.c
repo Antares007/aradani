@@ -39,7 +39,7 @@ So(lookahead)(
 So(shift    )(
   Q_t lookahead = LHD;
   if (lookahead == -1) C(2);
-  else LHD = -1, POS++, C(1);
+  else LHD = -1, POS++, A(lookahead) C(1);
 )
 
 Sargo(example)(
