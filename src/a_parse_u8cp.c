@@ -1,7 +1,7 @@
 #include "arsi.h"
 // clang-format off
 IBS(                L)IN(L,
-debugger,                L)IN(L,
+debugger,           L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
@@ -98,5 +98,7 @@ Sargo(მთავარი)(example, "ašა🦅სβo", parse)
 
 
 EN(tail,
-u8cp,               L)EN(L, 
+lookahead,          L)EN(L, 
+parse,              L)EN(L, 
+shift,              L)EN(L, 
 მთავარი,      exports)
