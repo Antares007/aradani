@@ -1,6 +1,6 @@
 #pragma once
-#define Nargo_s(...) Α(__VA_ARGS__) O; }
-#define N_s(...) {__VA_ARGS__} }
+#define Nargo_s(...) Q_t sα = α; (void)sα; Α(__VA_ARGS__) O; }
+#define N_s(...) Q_t sα = α; (void)sα; {__VA_ARGS__} }
 #define Nargo(Name) Narg0(Name)()
 #define No(Name) N0(Name)()
 #define Sargo(Name) static Nargo(Name)
