@@ -16,10 +16,6 @@ src/a_stdio.arsi:            \
 	src/os.arsi                
 	cat $^ > $@
 
-src/a_parse.arsi:                   \
-	src/a_parse.oars           \
-	src/a_parse_tok.arsi
-	cat $^ > $@
 src/a_parse_tok.arsi:                   \
 	src/a_parse_tok.oars           \
 	src/a_parse_u8cp.arsi
