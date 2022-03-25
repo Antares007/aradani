@@ -21,7 +21,6 @@ parser,             L)n_t sh;I(L,
 "shift", sh,  imports);
 
 SargoP(init)(god)
-#define LOOKAHEAD ο[7].p[3].Q
 #define U8CP_CK(Name, Mask, Check) S1(Name)(v, Q_t)(C((v & Mask) == Check);)
 #define U8CP_UM(Name, Unmask)      S1(Name)(v, Q_t)(A(v & Unmask) C(1);)
 U8CP_CK(ck0xxxxxxx, 0x80, 0x00)
@@ -45,12 +44,12 @@ Sargo(u8cp_b2)(
 Sargo(u8cp_b3)(
   la,      ck1110xxxx, and, sh, and, um1110xxxx, and, 12, bin_lsh, and2,
   la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,  6, bin_lsh, and2,
-  la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,     bin_or,  and,  bin_or, and)
+  la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,     bin_or,  and, bin_or, and)
 Sargo(u8cp_b4)(
   la,      ck11110xxx, and, sh, and, um11110xxx, and, 18, bin_lsh, and2,
   la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and, 12, bin_lsh, and2,
   la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,  6, bin_lsh, and2,
-  la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,     bin_or,  and,  bin_or, and, bin_or, and)
+  la, and, ck10xxxxxx, and, sh, and, um10xxxxxx, and,     bin_or,  and, bin_or, and, bin_or, and)
 Sargo(u8cp   )(
   u8cp_b1, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or)
 
@@ -59,27 +58,11 @@ Sargo(u8cp   )(
 #define LEN ο[7].p[2].Q
 #define LHD ο[7].p[3]
 
-S1(lookahead_set )(cp_soll, p_t*)(LHD.p = cp_soll, A(cp_soll) C(1);)
-S3(lookahead_soll)(type,      Q_t,
-                   spos,      Q_t,
-                   alfa,      Q_t)(
-  Q_t wc = α - alfa;
-  Q_t epos = POS;
-  POS = spos;
-  Α(type, spos, epos, wc + 3, os_soll_n, lookahead_set, and) O;
-)
-So(lookahead     )(
-  if (LHD.Q == -1) {
-    Q_t alfa = α;
-    Α(u8cp, 'u8cp', POS, alfa, lookahead_soll, and4) O;
-  } else A(LHD.p) C(1);
-)
-So(shift         )(
-  Q_t lookahead = LHD.Q;
-  if (lookahead == -1) C(2);
-  else POS = LHD.p[LHD.p[-1].Q - 1].Q, LHD.Q = -1, A(lookahead) C(1);
-)
-Sargo(example    )(
+S1(lookahead_n )(spos, Q_t)(POS = spos, Α('u8cp', spos, POS, 4, os_soll_n) O;)
+Sargo(lookahead)(         )(u8cp, POS, lookahead_n, and2)
+S1(shift_n     )(so,  p_t*)(POS = so[so[-1].Q - 1].Q, A(so) C(1);)
+S0(shift       )(         )(Α(lookahead, shift_n, and) O;)
+Sargo(example  )(
   lookahead,      shift, and,
   lookahead, and, shift, and,
   lookahead, and, shift, and,
