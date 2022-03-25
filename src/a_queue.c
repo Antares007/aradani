@@ -145,7 +145,6 @@ q_soll_push,        L)EN(L,
 q_soll_remove,      L)EN(L,
 q_soll_unsoll_free, L)EN(L,
 q_soll_unshift,     L)EN(L,
-q_unroll,           L)EN(L,
 q_unshift,          L)EN(L,
 show,               L)EN(L,
 მთავარი,         exports);

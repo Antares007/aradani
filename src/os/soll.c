@@ -1,47 +1,57 @@
 #include "../oars.h"
 #include <stdlib.h>
 
-N(os_unroll) {
-  R(p_t *, rso);
-  Q_t wc = rso[-1].Q;
-  ρ -= wc;
+N1(os_unsoll)(sοll,  p_t*)(
+  Q_t wc = sοll[-1].Q;
   for (Q_t i = 0; i < wc; i++)
-    ο[ρ + i].v = rso[i].v;
-  C(1);
-}
-N(os_unsoll) {
-  R(p_t *, rso);
-  Q_t wc = rso[-1].Q;
-  for (Q_t i = 0; i < wc; i++)
-    σ[α + i].v = rso[i].v;
+    σ[α + i].v = sοll[i].v;
   α += wc, C(1);
-}
-N(os_roll_n) {
-  R(Q_t, wc);
-  p_t *rso = malloc(sizeof(p_t) * (wc + 1));
-  rso += 1;
-  for (Q_t i = 0; i < wc; i++)
-    rso[i].v = ο[ρ + i].v;
-  ρ += rso[-1].Q = wc;
-  A(rso) C(1);
-}
+)
 N(nar);
 #include "../gotgod.h"
 #define SOLL                                                                   \
-  R(Q_t, wc);                                                                  \
-  p_t *rso = malloc(sizeof(p_t) * (wc + 1));                                   \
-  rso += 1, α -= rso[-1].Q = wc;                                               \
+  p_t *sοll = malloc(sizeof(p_t) * (wc + 1));                                  \
+  sοll += 1, α -= sοll[-1].Q = wc;                                             \
   for (Q_t i = 0; i < wc; i++)                                                 \
-    rso[i].v = σ[α + i].v;
-N(os_soll_a) {
+    sοll[i].v = σ[α + i].v;
+N1(os_soll_a)(wc, Q_t)(
   SOLL;
-  A3(rso, god, 020) nar(T());
-}
-N(os_soll_n) {
+  Α(sοll, god, 020) nar(T());
+)
+N1(os_soll_n)(wc, Q_t)(
   SOLL;
-  A(rso) C(1);
-}
-N(os_soll_free) {
-  R(p_t *, rso);
-  free(rso - 1), C(1);
-}
+  Α(sοll) C(1);
+)
+No(os_soll)(
+  Q_t wc = α;
+  SOLL;
+  Α(sοll) C(1);
+)
+N1(os_soll_free)(sοll, p_t *)(
+  free(sοll - 1), C(1);
+)
+Narg1(os_unsoll_free)(sοll, p_t *)(
+  sοll, os_unsoll, sοll, os_soll_free, 020, nar
+)
+Narg1(os_unsoll_apply)(sοll, p_t *)(
+  sοll, os_unsoll, dot, 010, nar
+)
+Narg1(os_unsoll_free_apply)(sοll, p_t *)(
+  sοll, os_unsoll_free, dot, 010, nar
+)
+
+N1(os_unroll)(sοll,  p_t*)(
+  Q_t wc = sοll[-1].Q;
+  ρ -= wc;
+  for (Q_t i = 0; i < wc; i++)
+    ο[ρ + i].v = sοll[i].v;
+  C(1);
+)
+N1(os_roll_n)(wc,  Q_t)(
+  p_t *sοll = malloc(sizeof(p_t) * (wc + 1));
+  sοll += 1;
+  for (Q_t i = 0; i < wc; i++)
+    sοll[i].v = ο[ρ + i].v;
+  ρ += sοll[-1].Q = wc;
+  A(sοll) C(1);
+)
