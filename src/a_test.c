@@ -16,6 +16,15 @@ static Q_t counter[3];
 SP(n0) { counter[0]++, C(1); }
 SP(n1) { counter[1]++, C(1); }
 SP(n2) { counter[2]++, C(1); }
+
+//TODO: extend and implement this idea for testing
+//Nargo(ttt)(
+//  "check mk_term", god,     t_assert,
+//  'a', term,                t_setup,
+//  9,                        t_act,
+//  9, 7, is_at,              t_assert,
+//)
+
 Sar(pgot)(n2, n2, and)
 Sar(pgod)(n1, n1, and, n1, and)
 Sar(pgor)(n0, n0, and, n0, and, n0, and)
