@@ -35,13 +35,21 @@ SargoP(init)(god)
 // mar rules defining non-terminals while looking for
 // matches of terminals with tokens on the input. 
 
+
+NargoP(pgot)(got)
+NargoP(pgod)(god)
+NargoP(pgor)(gor)
+
+Nargo(mk_empty  )(0, "ε", pgor, pgod, pgot, 512, os_new_pith)
+Nargo(empty     )(mk_empty, 1, os_soll_n)
+
 N3P(term_god)(buf,    const char*,
              len,    Q_t,
              pos,    Q_t)(
   if (pos == len) C(2);
   else Α(buf, len, pos + (ο[7].Q == (Q_t)buf[pos])) C(ο[7].Q == (Q_t)buf[pos]);
 )
-Nargo(mk_term   )(1, "Ť", gor, term_god,  got, 512, os_new_pith)
+Nargo(mk_term   )(1, "Ť", pgor, term_god,  pgot, 512, os_new_pith)
 Nargo(term      )(mk_term, 2, os_soll_n)
 
 NargoP(thenS_god )(ο, ο[7].p, os_unsoll_apply)
@@ -55,27 +63,33 @@ Nargo(thenS     )(and, thenS_n, and)
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "ssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
+Narg1P(apply)(sοll, p_t*)(god, ο, sοll, os_unsoll_apply, os_queue, and)
 
-Nargo(orelse_gor)(ο, ο[7].p, os_unsoll_apply)
-Nargo(mk_orelse )(1, "Ǒ", orelse_gor, god, got, 512, os_new_pith)
-Narg2(orelse_n  )(lsοll, p_t*,  rsοll, p_t*)(
-  rsοll, mk_orelse, 
-  lsοll, os_unsoll_apply, and2,
-            5, os_soll_n, and2
+NargoP(orelse_gor)(ο[7].p, apply)
+Nargo(mk_orelse  )(1, "Ǒ", orelse_gor, pgod, pgot, 512, os_new_pith)
+Narg2P(orelse_nn  )(lsοll, p_t*,  rsοll, p_t*)(
+ //rsοll, mk_orelse, 
+ lsοll, rsοll
+   // , apply, and2,
+   //        5, os_soll_n, and2
 )
-Nargo(orelse    )(and, orelse_n, and)
+NargoP(orelse   )(god)
+//Narg1P(orelse_n   )(wc, Q_t)(
+//  dot, os_unsoll, and, wc + 3, os_soll_n, orelse_nn, and
+//)
+
 // (p ‘orelse‘ q) j = unite (p j) (q j)
 // e.g, assuming that the input is "ssss", then
 // (empty ‘orelse‘ term_s) 2 => {2, 3} 
 
-Nargo(empty     )(god)
-Nargo(term_s    )('s', term)
+Nargo(term_s     )('s', term)
 // sS   =  (term_s ‘thenS‘ sS ‘thenS‘ sS) ‘orelse‘ empty
 // sS 1 => {1, 2, 3, 4, 5}
 NargoP(sS        )(
-    empty,
-    term_s, sS, thenS, sS, thenS, orelse5
+  empty,
+  term_s, orelse
 )
+Nargo(exam)("sssss", 5, 0, sS, apply, and)
 
 // S := S a | a
 //Nargo(term_a)('a', term)
@@ -92,14 +106,7 @@ NargoP(mk_dumper )(2, os_wordump, 2, os_soll_n,
                    0, os_wordump, 2, os_soll_a,
                    0,
                    ο, 512, "D", new_soll_psn, and5)
-Nargo(მთავარი)(
-  "sssss", 5, 0, god, debugger,
-                      mk_dumper,        and,
-                      sS,               and,
-                      os_unsoll,        and,
-                      dot,              and,
-                      os_queue,         and
-)
+Nargo(მთავარი)(exam, mk_dumper, os_queue, and)
 
 Sarg2(parser)(inp, const char*,
               len, Q_t)(
