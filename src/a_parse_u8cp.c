@@ -59,7 +59,7 @@ Sargo(u8cp   )(
 #define LHD ο[7].p[3]
 
 S1(lookahead_n )(spos, Q_t)(POS = spos, Α('u8cp', spos, POS, 4, os_soll_n) O;)
-Sargo(lookahead)(         )(u8cp, POS, lookahead_n, and2)
+Sarg0(lookahead)(         )(u8cp, POS, lookahead_n, and2)
 S1(shift_n     )(so,  p_t*)(POS = so[so[-1].Q - 1].Q, A(so) C(1);)
 S0(shift       )(         )(Α(lookahead, shift_n, and) O;)
 Sargo(example  )(
