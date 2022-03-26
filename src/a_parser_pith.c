@@ -40,9 +40,6 @@ NargoP(pgot)(got)
 NargoP(pgod)(god)
 NargoP(pgor)(gor)
 
-Nargo(mk_empty  )(0, "ε", pgor, pgod, pgot, 512, os_new_pith)
-Nargo(empty     )(mk_empty, 1, os_soll_n)
-
 N3P(term_god)(buf,    const char*,
              len,    Q_t,
              pos,    Q_t)(
@@ -50,7 +47,7 @@ N3P(term_god)(buf,    const char*,
   else Α(buf, len, pos + (ο[7].Q == (Q_t)buf[pos])) C(ο[7].Q == (Q_t)buf[pos]);
 )
 Nargo(mk_term   )(1, "Ť", pgor, term_god,  pgot, 512, os_new_pith)
-Nargo(term      )(mk_term, 2, os_soll_n)
+Nargo(term      )(mk_term)
 
 NargoP(thenS_god )(ο, ο[7].p, os_unsoll_apply)
 Nargo(mk_thenS  )(1, "Š", gor, thenS_god, got, 512, os_new_pith)
@@ -63,33 +60,34 @@ Nargo(thenS     )(and, thenS_n, and)
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "ssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
-Narg1P(apply)(sοll, p_t*)(god, ο, sοll, os_unsoll_apply, os_queue, and)
-
-NargoP(orelse_gor)(ο[7].p, apply)
-Nargo(mk_orelse  )(1, "Ǒ", orelse_gor, pgod, pgot, 512, os_new_pith)
-Narg2P(orelse_nn  )(lsοll, p_t*,  rsοll, p_t*)(
- //rsοll, mk_orelse, 
- lsοll, rsοll
-   // , apply, and2,
-   //        5, os_soll_n, and2
+Narg1P(apply)(sοll, n_t)(god, ο, sοll, os_queue, and)
+Q_t i=0;
+NoP(orelse_god)(
+  Α(ο[7].p, apply) O;
 )
-NargoP(orelse   )(god)
-//Narg1P(orelse_n   )(wc, Q_t)(
-//  dot, os_unsoll, and, wc + 3, os_soll_n, orelse_nn, and
-//)
+NargoP(orelse  )(2, "Ǒ", pgor, orelse_god, pgot, 512, os_new_pith)
 
 // (p ‘orelse‘ q) j = unite (p j) (q j)
 // e.g, assuming that the input is "ssss", then
 // (empty ‘orelse‘ term_s) 2 => {2, 3} 
 
-Nargo(term_s     )('s', term)
+NargoP(term_s     )('s', term)
+NargoP(term_a     )('a', term)
 // sS   =  (term_s ‘thenS‘ sS ‘thenS‘ sS) ‘orelse‘ empty
 // sS 1 => {1, 2, 3, 4, 5}
+NargoP(mk_empty  )(0, "ε", pgor, pgod, pgot, 512, os_new_pith)
+Nargo(empty      )(mk_empty)
 NargoP(sS        )(
-  empty,
-  term_s, orelse
-)
-Nargo(exam)("sssss", 5, 0, sS, apply, and)
+    empty,
+    term_s, orelse,
+    term_a, orelse)
+
+NargoP(mk_empty1)(0, "ε1", pgor, pgod, pgot, 512, os_new_pith)
+NargoP(mk_empty2)(0, "ε2", pgor, pgod, pgot, 512, os_new_pith)
+NargoP(mk_empty3)(0, "ε3", pgor, pgod, pgot, 512, os_new_pith)
+NargoP(exam)(god, ο, mk_empty1, mk_empty2, and, mk_empty3, and, os_queue, and)
+
+NargoP(exam0)("sssss", 5, 0, sS, apply)
 
 // S := S a | a
 //Nargo(term_a)('a', term)
@@ -101,11 +99,14 @@ Nargo(exam)("sssss", 5, 0, sS, apply, and)
 //  Sa, term_c, thenS, orelse3,
 //  Sa, term_s, thenS, orelse3
 //)
-NargoP(mk_dumper )(2, os_wordump, 2, os_soll_n,
-                   1, os_wordump, 2, os_soll_a,
-                   0, os_wordump, 2, os_soll_a,
-                   0,
-                   ο, 512, "D", new_soll_psn, and5)
+NargoP(Not)(os_wordump)
+NargoP(And)(os_wordump)
+NargoP(Oor)(os_wordump)
+NargoP(mk_dumper )(ο, 0, "D",
+                   Oor,
+                   And,
+                   Not,
+                   512, os_new_pith)
 Nargo(მთავარი)(exam, mk_dumper, os_queue, and)
 
 Sarg2(parser)(inp, const char*,
@@ -143,8 +144,11 @@ Nargo(example)(
 //SargoP(მთავარი)(example, 2, god, 1, god, 0, god, 0222, nar, "sa", 3, parser, os_queue, and)
 
 EN(tail,
+apply,              L)EN(L,
+empty,              L)EN(L,
 lookahead,          L)EN(L,
 mk_dumper,          L)EN(L,
+mk_empty,           L)EN(L,
 mk_term,            L)EN(L,
 parser,             L)EN(L,
 sS,                 L)EN(L,
