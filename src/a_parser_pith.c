@@ -106,25 +106,15 @@ NargoP(act1)(god)
 NargoP(act2)(god)
 NargoP(act3)(god)
 NargoP(queue)(os_queue)
-  // D    3  505 exam_n:src/a_parser_pith.c D    3  505 exam_n:src/a_parser_pith.c
-  // D    0  505 And:src/a_parser_pith.c    D    0  505 And:src/a_parser_pith.c
-  // ε1   3  505 pgod:src/a_parser_pith.c   ε1   0  505 pgod:src/a_parser_pith.c
-  //                                        ε2   0  505 pgod:src/a_parser_pith.c
-  //                                        ε3   3  505 pgod:src/a_parser_pith.c
-  //
-  //
-  //
-  //
 Narg3P(exam_n    )(p, p_t*,
                    q, p_t*,
                    b, p_t*)(
-  "a", 1, 0,
-  god,
-    god,
-      god,
-      b, queue, and3,
-    q, queue, and7,
-  p, queue
+  "a", 1, 0, act1,
+               act2,
+                 act3,
+                 b, queue, and3,
+               q, queue, and7,
+             p, queue
 )
 NargoP(exam      )(
   mk_empty1,

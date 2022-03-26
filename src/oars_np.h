@@ -3,14 +3,14 @@
 #define NP_(n, PRN, N)                                                         \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    PRN("%5lx % 3ld % 3ld %s\t%s:%s\n", (Q_t)σ &(Q_t)0xFFFFFF, α, ρ, ο[Ν].cs,  \
-        __FUNCTION__, __FILE__);                                               \
+    PRN("%3lx % 3ld % 3ld %s\t%s:%s\n", ((Q_t)σ >> 12) & (Q_t)0xFFF, α, ρ,     \
+        ο[Ν].cs, __FUNCTION__, __FILE__);                                      \
     n##p(T());                                                                 \
   }                                                                            \
   N(n##p)
 #define PLog_(PRN)                                                             \
-  PRN("%5lx % 3ld % 3ld %s\t%s:%s\n", (Q_t)σ &(Q_t)0xFFFFFF, α, ρ, ο[Ν].cs,    \
-      __FUNCTION__, __FILE__)
+  PRN("%3lx % 3ld % 3ld %s\t%s:%s\n", ((Q_t)σ >> 12) & (Q_t)0xFFF, α, ρ,       \
+      ο[Ν].cs, __FUNCTION__, __FILE__);                                        
 #ifndef ARSI
 #include <stdio.h>
 #define PLog PLog_(printf)
