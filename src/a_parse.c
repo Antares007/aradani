@@ -54,7 +54,7 @@ Sar(u8cp_b4)(um11110xxx,      18, bin_lsh, and2, lookahead_shift, and,
 Sar(u8cp)(lookahead_shift, u8cp_b1, and, u8cp_b2, or, u8cp_b3, or, u8cp_b4, or)
 S(Μ) {
   R(n_t, nar);
-  AS(nar, nar, Μ, and2, god, or) O;
+  Α(nar, nar, Μ, and2, god, or) O;
 }
 S(set_alfa_zero) { α = 0, C(1); }
 S(testuni) {
@@ -62,7 +62,7 @@ S(testuni) {
   ο6 = cslen(ο5);
   ο7 = 0;
   print("\ncs:\t%s\nlen:\t%lu\n\n", ο5, ο6);
-  AS(u8cp, Μ, god, not, os_wordump, and) O;
+  Α(u8cp, Μ, god, not, os_wordump, and) O;
 }
 Nar(მთავარი)(debugger, testuni, and, set_alfa_zero, and)
 SarP(init)(god)

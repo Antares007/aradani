@@ -48,13 +48,13 @@ N(os_bark_import_first) {
 S(os_bark_seed_and_import_first) {
   R(n_t, root);
   R(const char *, name);
-  AS(name, root, os_seed, os_bark_import_first, 010, nar) O;
+  Α(name, root, os_seed, os_bark_import_first, 010, nar) O;
 }
 NP(os_bark) {
   R(p_t *, oο);
   R(n_t, root);
   R(const char *, name);
-  AS(god, name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_and) O;
+  Α(god, name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_and) O;
 }
 S(os_ls_n) {
   R(n_t, export);

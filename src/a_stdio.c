@@ -8,7 +8,7 @@ got,                L)IN(L,
 os_new_n,           L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
-os_soll_a,        L)IN(L,
+os_soll_a,          L)IN(L,
 os_soll_n,          L)IN(L,
 
 and,                L)IN(L,

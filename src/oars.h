@@ -43,9 +43,6 @@ typedef void (*n_t)(OARS);
 #define T(n) n##σ, n##α, n##ο, n##ρ
 #define C(r) G(r)
 
-#define Sa(T, ...) (*((T *)&σ[α]) = ((T)__VA_ARGS__), α += wordCountOf(T)),
-#define Sr(T, n) T *n = (T *)&σ[α -= wordCountOf(T)]
-
 #define ALIGN(O, A) ((Q_t)(((O) + ((A) - 1)) / (A))) * (A)
 #define wordCountOf(T) ALIGN(sizeof(T), sizeof(void*))
 
@@ -56,5 +53,4 @@ typedef void (*n_t)(OARS);
 #include "oars_nars.h"
 #include "oars_a21.h"
 #include "oars_as.h"
-#include "oars_sa21.h"
 #include "oars_np.h"

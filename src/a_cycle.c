@@ -49,8 +49,8 @@ SP(counter_n) {
   Α(cο, gor, pο, os_queue) O;
 }
 
-S(counter) { AS(mconsumer, mproducer, and, counter_n, and) O; }
-S(მთავარი) { AS(0, counter) O; }
+S(counter) { Α(mconsumer, mproducer, and, counter_n, and) O; }
+S(მთავარი) { Α(0, counter) O; }
 
 // clang-format off
 EN(tail, 

@@ -30,7 +30,7 @@ S(მთავარი) {
   const char* cc1 = "src/a_cycle.arsi";
   const char* cc2 = "src/a_async.arsi";
   const char* cc3 = "src/a_parse.arsi";
-  AS(
+  Α(
     god,
     cc1, exports, ο, os_bark, 040, nar,
     cc2, exports, ο, os_bark, 040, nar,
