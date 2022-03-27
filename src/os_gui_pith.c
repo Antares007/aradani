@@ -2,7 +2,7 @@
 #include "oars.h"
 #include "raylib.h"
 
-N(os_new_psn);
+N(os_new_ps);
 N(os_queue_n);
 N(nar);
 Sar(and)(010, nar);
@@ -46,4 +46,4 @@ SP(win_set) {
   SetTargetFPS(0);
   Α(oο) C(1);
 }
-NarP(os_win)(win_not, win_and, win_oor, ο, 512, "ω", os_new_psn, win_set, and);
+NarP(os_win)(win_not, win_and, win_oor, ο, 512, os_new_ps, win_set, and);

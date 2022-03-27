@@ -4,7 +4,6 @@ IBS(                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
-os_new_psn,         L)IN(L,
 os_next,            L)IN(L,
 os_queue_n,       L)IN(L, //
 and,                L)IN(L,
@@ -39,7 +38,7 @@ SP(init) {
   oο[--oρ].c = os_next;
   oο[--oρ].c = ayr_oor;
   oο[Φ].p = oο, oο[Ρ].Q = oρ, oο[Ψ + 0].p = &oο[Ψ], oο[Ψ + 1].p = &oο[Ψ],
-  oο[Ν].cs = "α";
+  oο[Ι].Q = 0;
   C(1);
 }
 Nar(example1)(oο, gor, ο, 2, os_queue_n);

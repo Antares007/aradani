@@ -6,7 +6,6 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
 nar,                L)IN(L,
-os_new_psn,         L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll_a,          L)IN(L,
@@ -22,8 +21,8 @@ and5,               L)IN(L,
 andor,              L)IN(L,
 not,                L)IN(L,
 
-new_soll_psn,       L)IN(L,
-new_soll_psn_a,     L)IN(L,
+new_soll_ps,        L)IN(L,
+new_soll_ps_a,      L)IN(L,
 
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   imports)
@@ -50,7 +49,7 @@ Nargo(mk_construct_cb_pith)(
   god, 1, os_soll_a,
   god, 1, os_soll_a,
   god, 1, os_soll_a,
-  ο, 64, "construct cb", new_soll_psn_a)
+  ο, 64, new_soll_ps_a)
 
 Sargo(unsoll_dot)(os_unsoll, dot, and)
 Sargo(mkcb)(god)
@@ -70,7 +69,7 @@ Sarg4(s_readable)(construct_soll, p_t*,
   s_readable_and, 1, os_soll_a,
   construct_soll, s_readable_oor, 1, os_soll_a,
   set_soll,  read_soll, destroy_soll, 3, os_soll_a,
-  ο, 512, "Š", new_soll_psn_a)
+  ο, 512, new_soll_ps_a)
 
 Nargo(s_stdin)(
   epoll_ctl_del_in, 1, os_soll_n,
@@ -85,7 +84,7 @@ Sargo(nsoll)(
   tos, tos, and, god, and, 5, os_soll_a,
   tos, god, and, god, and, 5, os_soll_a,
   1,   2,   3,   4,   5,   5, os_soll_a,
-  ο, 512, "Š", new_soll_psn_a)
+  ο, 512, new_soll_ps_a)
 
 Nargo(example)(got, nsoll, os_queue, and)
 

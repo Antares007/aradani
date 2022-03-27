@@ -7,7 +7,7 @@ got,                L)IN(L,
 l_free,             L)IN(L,
 l_setnoblock,       L)IN(L,
 l_write,            L)IN(L,
-os_new_n,           L)IN(L,
+os_new,             L)IN(L,
 os_queue_n,         L)IN(L,
 
 and,                L)IN(L,
@@ -181,7 +181,7 @@ Sar(on_epoll_out)(
   set_writeable, loop_write_n, and)
 
 Sar(mk_stdout)(
-  stdout_not, stdout_and, stdout_oor, "≪", os_new_n,
+  stdout_not, stdout_and, stdout_oor, os_new,
   STDOUT_FILENO, l_setnoblock, and2,
   stdout_set, and)
 

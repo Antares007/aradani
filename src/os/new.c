@@ -19,12 +19,22 @@ static void append_to_φψ(QUEUE *pq, QUEUE *mq) {
       φο[φο[Ρ].Q + RAY].c(σ, α, φο, φο[Ρ].Q);                                  \
     }                                                                          \
   }
-S_RAY(2, free(ο))
+static char ids[0x1000] = {0};
+S_RAY(2, (ids[ο[Ι].Q] = 0, free(ο)))
 S_RAY(1, append_to_φψ((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
 S_RAY(0, append_to_φψ((QUEUE*)&ο[Φ].p[Ψ], (QUEUE*)&ο[Ψ]))
+static q_t id_next() {
+  for(q_t i = 1; i < sizeof(ids) / sizeof(*ids); i++)
+    if (ids[i] == 0)
+      return ids[i] = 1, i;
+  return -1;
+}
 N(os_new_pith) {
   R(Q_t,              nρ);
+  Q_t id            = id_next();
+  if (id  < 0) return C(2);
   p_t *nο           = malloc(nρ * sizeof(void *));
+  if (nο == 0) return ids[id] = 0, C(2);
   nο[Σ].Q           = nρ; 
   nο[--nρ].Q        = 0;
   R(n_t,              ray_not);
@@ -37,8 +47,7 @@ N(os_new_pith) {
   nο[--nρ].c        = s1;
   nο[--nρ].c        = s0;
   nο[Ρ].Q           = nρ;
-  R(const char*,      name);
-  nο[Ν].cs          = name;
+  nο[Ι].Q           = id;
   nο[Ψ+0].p         = &nο[Ψ];
   nο[Ψ+1].p         = &nο[Ψ];
   R(Q_t,              wc);
@@ -50,13 +59,14 @@ N(os_new_pith) {
   nο[Φ].p           = oο;
   A(nο) C(1);
 }
-Narg6(os_new_psn) ( 
+Narg5(os_new_ps)( 
   ray_not,   n_t,          
   ray_and,   n_t,          
   ray_oor,   n_t,          
   oο,        p_t *,        
-  nρ,        Q_t,          
-  name,      const char *)(oο, 0, name, ray_oor, ray_and, ray_not, nρ, os_new_pith)
-
-N(os_new_n) { R(const char*, n);  Α(ο[Φ].p, 512,  n,  os_new_psn) O; }
-N(os_new  ) {                     Α(ο[Φ].p, 512, "n", os_new_psn) O; }
+  nρ,        Q_t)(
+  oο, 0, ray_oor, ray_and, ray_not, nρ, os_new_pith
+)
+Nargo(os_new   )(
+  ο[Φ].p, 512, os_new_ps
+)

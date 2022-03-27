@@ -5,7 +5,7 @@ dot,                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
-os_new_psn,         L)IN(L,
+os_new_ps,          L)IN(L,
 os_soll_free,       L)IN(L,
 os_unsoll,          L)IN(L,
 
@@ -34,17 +34,16 @@ S5(new_soll_set)(oο,        p_t*,
   oο[ 9].p = and_soll;
   oο[10].p = oor_soll;
   A(oο) C(1);)
-Sarg7(new_soll_psn)(not_soll, p_t*,
+Sarg6(new_soll_ps)(not_soll, p_t*,
                     and_soll, p_t*,
                     oor_soll, p_t*,
                     set_soll, p_t*,
                     oο,       p_t*,
-                    size,     Q_t,
-                    name,     const char*)(
-  new_soll_not, new_soll_and, new_soll_oor, oο, size, name, os_new_psn,
+                    size,     Q_t)(
+  new_soll_not, new_soll_and, new_soll_oor, oο, size, os_new_ps,
   set_soll, not_soll, and_soll, oor_soll, new_soll_set, and5)
-Sargo(new_soll_psn_a)(new_soll_psn, and4)
+Sargo(new_soll_ps_a)(new_soll_ps, and4)
 
 EN(tail,
-new_soll_psn,       L)EN(L,
-new_soll_psn_a,     exports)
+new_soll_ps,       L)EN(L,
+new_soll_ps_a,     exports)

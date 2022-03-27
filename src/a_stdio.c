@@ -5,7 +5,7 @@ dot,                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
-os_new_n,           L)IN(L,
+os_new,             L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll_a,          L)IN(L,
@@ -59,7 +59,7 @@ SarP(trans_not)(
     got,
     trans_not_n, andor)
 
-SarP(mk_trans )(trans_not, trans_and, trans_oor, "T", os_new_n)
+SarP(mk_trans )(trans_not, trans_and, trans_oor, os_new)
 SP(trans_set) {
   R(p_t *, ns);
   R(p_t *, as);

@@ -36,9 +36,8 @@ os_bark,            L)END(L,
 os_hrtime,          L)END(L,
 os_ls,              L)END(L,
 os_new,             L)END(L,
-os_new_n,           L)END(L,
 os_new_pith,        L)END(L,
-os_new_psn,         L)END(L,
+os_new_ps,          L)END(L,
 os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_and,       L)END(L,
@@ -75,7 +74,7 @@ int main(int argc, char **argv) {
   ο[--ρ].c = ray_not;
   ο[--ρ].c = os_next;
   ο[--ρ].c = ray_oor;
-  ο[Φ].p = ο, ο[Ρ].Q = ρ, ο[Ψ + 0].p = &ο[Ψ], ο[Ψ + 1].p = &ο[Ψ], ο[Ν].v = "ο";
+  ο[Φ].p = ο, ο[Ρ].Q = ρ, ο[Ψ + 0].p = &ο[Ψ], ο[Ψ + 1].p = &ο[Ψ], ο[Ι].v = 0;
   Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

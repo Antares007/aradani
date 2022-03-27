@@ -10,7 +10,7 @@ l_read,             L)IN(L,
 l_setnoblock,       L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
-os_new_n,           L)IN(L,
+os_new,             L)IN(L,
 os_queue_and,       L)IN(L,
 os_queue_n,         L)IN(L,
 
@@ -146,7 +146,7 @@ Sar(on_epoll_in)(
   set_readable, loop_read, and)
 
 Sar(mk_stdin)(
-     stdin_not, stdin_and, stdin_oor, "≫", os_new_n,
+     stdin_not, stdin_and, stdin_oor, os_new,
      stdin_set, and,
      STDIN_FILENO, l_setnoblock, and2)
 

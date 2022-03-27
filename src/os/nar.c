@@ -12,7 +12,7 @@ const char *os_debug_find_name(void *a);
     Q_t line_size = 1024;                                                      \
     q_t chars_count = 0;                                                       \
     char *buffer = malloc(line_size);                                          \
-    while ((chars_count = (printf("\n%s %3lu/%3lu a/o/s/c>", ο[Ν].cs, α, ρ),   \
+    while ((chars_count = (printf("\n%5lu %3lu/%3lu a/o/s/c>", ο[Ι].Q, α, ρ),   \
                            getline(&buffer, &line_size, stdin)))) {            \
       chr = buffer[0];                                                         \
       if (chr == 0xa)                                                          \

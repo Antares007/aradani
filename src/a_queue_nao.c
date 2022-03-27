@@ -7,7 +7,7 @@ gor,                L)IN(L,
 got,                L)IN(L,
 l_free,             L)IN(L,
 l_malloc,           L)IN(L,
-os_new_psn,         L)IN(L,
+os_new_ps,          L)IN(L,
 os_queue,           L)IN(L,
 os_wordump,         L)IN(L, //
 and,                L)IN(L,
@@ -87,7 +87,7 @@ Sar(q_not)(got)
 Sar(q_and)(god)
 S(q_oor) { R(p_t*, oο); ο[9].p = oο, C(1); }
 S(q_set) { R(p_t*, oο); ο[9].p =  0, QUEUE_INIT((QUEUE*)&oο[7]), A(oο) C(1); }
-S(q_new) { Α(q_not, q_and, q_oor, ο, 512, "q", os_new_psn, q_set, and) O; }
+S(q_new) { Α(q_not, q_and, q_oor, ο, 512, os_new_ps, q_set, and) O; }
 
 SarP(init)(god);
 NP(pgod) {

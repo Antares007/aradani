@@ -34,10 +34,7 @@ not2and,            L)IN(L,
 not2and2or2,        L)IN(L,
 or,                 L)IN(L,
 or2,                L)IN(L,
-or3,                L)IN(L,
-
-new_soll_psn,       L)IN(L,
-new_soll_psn_a,     L)n_t la;I(L,
+or3,                L)n_t la;I(L,
 
 "lookahead", la,    L)IN(L,
 lookahead_set,      L)IN(L,
