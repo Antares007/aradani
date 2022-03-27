@@ -68,36 +68,61 @@ Narg2(thenS_n    )(lsοll, p_t*,  rsοll, p_t*)(
             5, os_soll_n, and2
 )
 Nargo(thenS      )(and, thenS_n, and)
-// (p ‘thenS‘ q) j = union (map q (p j))
-// e.g., assuming that the input is "ssss", then
-// (term_s ‘thenS‘ term_s) 1 => {3}
 Narg1P(apply     )(sοll, n_t)(god, ο, sοll, os_queue, and)
-Q_t i=0;
+Q_t i = 0;
 NoP(orelse_god   )(
   Α(ο[7].p, apply) O;
 )
 NargoP(orelse    )(2, "Ǒ", pgor, orelse_god, pgot, 512, os_new_pith)
-
-  //  buf len pos act1
-  //  act2
-  //  act3
-  //  b os_queue and3
-  //  q os_queue and7 
+NargoP(term_s    )('s', term)
+NargoP(term_a    )('a', term)
+  //  j
+  //  act
+  //    act
+  //    q os_queue and3
   //  p os_queue
+  //
+  //  (p ‘thenS‘ q) j = union (map q (p j))
+  //  e.g., assuming that the input is "ssss", then
+  //  (term_s ‘thenS‘ term_s) 1 => {3}
   //
   //  (p ‘orelse‘ q) j = unite (p j) (q j)
   //  e.g, assuming that the input is "ssss", then
   //  (empty ‘orelse‘ term_s) 2 => {2, 3} 
-NargoP(term_s    )('s', term)
-NargoP(term_a    )('a', term)
-  // sS   =  (term_s ‘thenS‘ sS ‘thenS‘ sS) ‘orelse‘ empty
-  // sS 1 => {1, 2, 3, 4, 5}
+  //
+  //  sS   =  (term_s ‘thenS‘ sS ‘thenS‘ sS) ‘orelse‘ empty
+  //  sS 1 => {1, 2, 3, 4, 5}
 NargoP(mk_empty  )(0, "ε", pgor, pgod, pgot, 512, os_new_pith)
 Nargo(empty      )(mk_empty)
+// clang-format on
+#define PithPS(ο, oο, Size, Gor, Got)                                          \
+  p_t ο[(Size)];                                                               \
+  ο[Σ].Q = (Size), ο[(Size)-1].c = Got, ο[(Size)-2].c = os_next,               \
+  ο[(Size)-3].c = Gor, ο[Φ].p = oο, ο[Ρ].Q = (Size)-3, ο[Ψ + 0].p = &ο[Ψ],     \
+  ο[Ψ + 1].p = &ο[Ψ], ο[Ν].v = #ο;
+// clang-format off
+
+#define TS(Left, Right, Name)  p_t Name[128];
+#define OE(Left, Right, Name)  p_t Name[128];
+#define Term(str, Name)  p_t Name[128];
+
+Term("s", trm_s)
+
+  OE(0,   empty,
+L)TS(L,   SS,
+L)TS(L,   SS,
+L)TS(L,   trm_s,  SS)
+
+  TS(0,   trm_a,
+L)TS(L,   Sa,
+L)OE(L,   trm_a,  Sa)
+// Sa → Sa | b
 NargoP(sS        )(
-    empty,
-    term_s, orelse,
-    term_a, orelse)
+  term_s,
+    sS, thenS,
+      sS, thenS,
+        empty, orelse
+)
 
 NargoP(mk_empty1 )(ο[Φ].p, 0, "ε1", pgod, pgod, pgot, 512, os_new_pith)
 NargoP(mk_empty2 )(ο[Φ].p, 0, "ε2", pgod, pgod, pgot, 512, os_new_pith)
@@ -109,12 +134,12 @@ NargoP(queue)(os_queue)
 Narg3P(exam_n    )(p, p_t*,
                    q, p_t*,
                    b, p_t*)(
-  "a", 1, 0, act1,
-               act2,
-                 act3,
-                 b, queue, and3,
-               q, queue, and7,
-             p, queue
+  "abc", 1, 0, act1,
+                 act2,
+                   act3,
+                   b, queue, and3,
+                 q, queue, and7,
+               p, queue
 )
 NargoP(exam      )(
   mk_empty1,
