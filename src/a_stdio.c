@@ -8,7 +8,6 @@ got,                L)IN(L,
 os_new,             L)IN(L,
 os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
-os_soll_a,          L)IN(L,
 os_soll_n,          L)IN(L,
 
 and,                L)IN(L,
@@ -34,7 +33,7 @@ SarP(init)(god)
 #define οconsumer(ο)    ο[0xa].p
 #define οtransformer(ο) ο[0xb].p   
 
-S(pipe   ) { R(p_t*, cο); R(p_t*, pο); οproducer(cο) = pο; A(pο) C(1); } // fix it
+N(pipe   ) { R(p_t*, cο); R(p_t*, pο); οproducer(cο) = pο; A(pο) C(1); } // fix it
 Sar(set_consumer)(god)
 Sar(mk_trans_pith)(god)
 Sar(set_trans_pith)(god)
@@ -71,19 +70,15 @@ SP(trans_set) {
   οtransformer(ο) = 0;
   A(tο) C(1);
 }
-SP(trans) {
+N(trans) {
   R(p_t *, ns);
   R(p_t *, as);
   Α(mk_trans, as, ns, trans_set, and3) O;
 }
-SarP(on_data)(god)
-SarP(on_end)(god)
+NarP(on_data)(god)
+NarP(on_end)(god)
 Nar(example)(
   mk_stdin,
-    on_data, 1, os_soll_a,
-    on_end,  1, os_soll_a,
-    trans, and,
-    pipe, and,
       mk_stdout, and,
       greet, and);
 

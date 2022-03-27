@@ -10,7 +10,6 @@ nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_pith,        L)IN(L,
 os_queue,           L)IN(L,
-os_soll_a,          L)IN(L,
 os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
@@ -179,15 +178,6 @@ NargoP(mk_dumper )(ο, 0,
 
 NargoP(მთავარი)(exam, mk_dumper, os_queue, and)
 
-Sarg2(parser)(inp, const char*,
-              len, Q_t)(
-  got,             1, os_soll_n,
-  god,             1, os_soll_a,
-  gor,             1, os_soll_a,
-  inp, 0, len, -1, 4, os_soll_a,
-  ο, 512, new_soll_ps, and4
-)
-
 #define BUF ο[7].p[0].cs
 #define POS ο[7].p[1].Q
 #define LEN ο[7].p[2].Q
@@ -217,8 +207,6 @@ EN(tail,
 empty,              L)EN(L,
 lookahead,          L)EN(L,
 mk_dumper,          L)EN(L,
-parser,             L)EN(L,
-parser,             L)EN(L,
 sS,                 L)EN(L,
 shift,              L)EN(L,
 term,               L)EN(L,

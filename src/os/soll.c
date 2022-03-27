@@ -8,24 +8,16 @@ N1(os_unsoll)(sοll,  p_t*)(
   α += wc, C(1);
 )
 N(nar);
-#include "../gotgod.h"
-#define SOLL                                                                   \
+N1(os_soll_n)(wc, Q_t)(
   p_t *sοll = malloc(sizeof(p_t) * (wc + 1));                                  \
   sοll += 1, α -= sοll[-1].Q = wc;                                             \
   for (Q_t i = 0; i < wc; i++)                                                 \
     sοll[i].v = σ[α + i].v;
-N1(os_soll_a)(wc, Q_t)(
-  SOLL;
-  Α(sοll, god, 020) nar(T());
-)
-N1(os_soll_n)(wc, Q_t)(
-  SOLL;
   Α(sοll) C(1);
 )
 No(os_soll)(
   Q_t wc = α;
-  SOLL;
-  Α(sοll) C(1);
+  Α(wc, os_soll_n) C(1);
 )
 N1(os_soll_free)(sοll, p_t *)(
   free(sοll - 1), C(1);
@@ -33,6 +25,7 @@ N1(os_soll_free)(sοll, p_t *)(
 Narg1(os_unsoll_free)(sοll, p_t *)(
   sοll, os_unsoll, sοll, os_soll_free, 020, nar
 )
+#include "../gotgod.h"
 Narg1(os_unsoll_apply)(sοll, p_t *)(
   sοll, os_unsoll, dot, 010, nar
 )
