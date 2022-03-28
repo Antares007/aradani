@@ -42,7 +42,7 @@ N(os_soll_free) {
   R(p_t *, sοll);
   page_free(sοll), C(1);
 }
-NP(os_unsoll_free) {
+N(os_unsoll_free) {
   R(p_t *, sοll);
   Α(sοll, os_unsoll,
     sοll, os_soll_free, 020, nar) O;
