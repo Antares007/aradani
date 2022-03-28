@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 static void *freemap;
-static Q_t freemap_cells[1];
+static Q_t freemap_cells[5];
 
 #define CELL_BITS ((Q_t)(8 * sizeof(*freemap_cells)))
 #define PAGE_SIZE ((Q_t)0x1000)

@@ -69,6 +69,7 @@ int main(int argc, char **argv) {
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init(); page_init();
   p_t *σ = page_alloc();
+  σ += 1;
   Q_t α = 0;
   p_t ο[512];
   Q_t ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);

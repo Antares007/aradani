@@ -1,6 +1,7 @@
 #include "../oars.h"
 #include <stdlib.h>
 N(nar);
+N(page_alloc);
 N(os_unsoll) {
   R(p_t *, sοll);
   Q_t wc = sοll[-1].Q;

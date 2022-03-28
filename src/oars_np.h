@@ -3,7 +3,7 @@
 #define NP_(n, PRN, N)                                                         \
   N(n##p);                                                                     \
   N(n) {                                                                       \
-    PRN("%3lx %3ld %3ld %3ld\t%s:%s\n", ((Q_t)σ >> 12) & (Q_t)0xFFF, ο[Ι].Q,   \
+    PRN("%3lx %ld\t%3ld %3ld\t%s:%s\n", ((Q_t)σ >> 12) & (Q_t)0xFFF, ο[Ι].Q,   \
         α, ρ, __FUNCTION__, __FILE__);                                         \
     n##p(T());                                                                 \
   }                                                                            \
