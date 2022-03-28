@@ -27,7 +27,7 @@ N(os_next) {
   p_t *nσ = ((p_t *)q);
   Q_t nα = nσ[2].Q;
   p_t *nο = nσ[3].p;
-  Q_t nρ = nσ[4].Q;
   nσ -= nα;
+  Q_t nρ = nο[Ρ].Q;
   dot(nσ, nα, nο, nρ);
 }

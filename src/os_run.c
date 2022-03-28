@@ -42,13 +42,11 @@ os_next,            L)END(L,
 os_queue,           L)END(L,
 os_queue_n,         L)END(L,
 os_queue_soll,      L)END(L,
-os_roll_n,          L)END(L,
 os_seed,            L)END(L,
 os_soll,            L)END(L,
 os_soll_dup,        L)END(L,
 os_soll_free,       L)END(L,
 os_soll_n,          L)END(L,
-os_unroll,          L)END(L,
 os_unsoll,          L)END(L,
 os_unsoll_apply,    L)END(L,
 os_unsoll_free,     L)END(L,
@@ -69,7 +67,6 @@ int main(int argc, char **argv) {
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init(); page_init();
   p_t *σ = page_alloc();
-  σ += 1;
   Q_t α = 0;
   p_t ο[512];
   Q_t ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);

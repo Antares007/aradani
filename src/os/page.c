@@ -12,9 +12,9 @@ static Q_t freemap_cells[5];
 void page_init() {
   freemap = malloc(PAGE_SIZE * 8 * sizeof(freemap_cells));
   for (Q_t i = 0; i < CELLS_COUNT; i++)
-    freemap_cells[i] = 0xffffffffffffffff;
+    freemap_cells[i] = (Q_t)0xffffffffffffffff;
 }
-void *page_alloc() {
+p_t *page_alloc() {
   for (Q_t i = 0; i < CELLS_COUNT; i++) {
     if (freemap_cells[i] != 0) {
       for (Q_t j = 0; j < CELL_BITS; j++) {
@@ -22,7 +22,9 @@ void *page_alloc() {
         if (freemap_cells[i] & cellmask) {
           freemap_cells[i] &= ~cellmask;
           Q_t pagenumber = i * CELL_BITS + j;
-          void *pageaddr = (pagenumber << PAGE_BITS) + freemap;
+          p_t *pageaddr = (pagenumber << PAGE_BITS) + freemap;
+          pageaddr += 2;
+          pageaddr[-2].Q = PAGE_SIZE / sizeof(p_t) - 2;
           return pageaddr;
         }
       }
