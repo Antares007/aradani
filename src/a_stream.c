@@ -18,9 +18,6 @@ and5,               L)IN(L,
 andor,              L)IN(L,
 not,                L)IN(L,
 
-new_soll_ps,        L)IN(L,
-new_soll_ps_a,      L)IN(L,
-
 epoll_ctl_add_in,   L)IN(L,
 epoll_ctl_del_in,   imports)
 

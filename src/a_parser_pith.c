@@ -23,9 +23,7 @@ and3or,             L)IN(L,
 and4,               L)IN(L,
 and5,               L)IN(L,
 and7,               L)IN(L,
-or3,                L)IN(L,
-
-new_soll_ps,  imports);
+or3,          imports);
 
 SoP(init)( C(1); )
 // The basic idea is to use the continuation-passing style of
