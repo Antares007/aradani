@@ -7,8 +7,7 @@
 
 
 N(nar); Sar(and)(010, nar);
-N(os_queue_and);
-
+N(os_queue_n);
 static void *mapfile(const char *filename, void *pith) {
   int fd = open(filename, O_RDONLY);
   struct stat sb;
@@ -54,7 +53,7 @@ NP(os_bark) {
   R(p_t *, oο);
   R(n_t, root);
   R(const char *, name);
-  Α(god, name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_and) O;
+  Α(name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_n) O;
 }
 S(os_ls_n) {
   R(n_t, export);

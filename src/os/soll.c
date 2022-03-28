@@ -9,9 +9,9 @@ N1(os_unsoll)(sοll,  p_t*)(
 )
 N(nar);
 N1(os_soll_n)(wc, Q_t)(
-  p_t *sοll = malloc(sizeof(p_t) * (wc + 1));                                  \
-  sοll += 1, α -= sοll[-1].Q = wc;                                             \
-  for (Q_t i = 0; i < wc; i++)                                                 \
+  p_t *sοll = malloc(sizeof(p_t) * (wc + 1));                                  
+  sοll += 1, α -= sοll[-1].Q = wc;                                             
+  for (Q_t i = 0; i < wc; i++)                                                 
     sοll[i].v = σ[α + i].v;
   Α(sοll) C(1);
 )

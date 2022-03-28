@@ -11,7 +11,6 @@ l_setnoblock,       L)IN(L,
 nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new,             L)IN(L,
-os_queue_and,       L)IN(L,
 os_queue_n,         L)IN(L,
 
 and,                L)IN(L,
