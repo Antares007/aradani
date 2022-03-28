@@ -10,6 +10,10 @@ nar,                L)IN(L,
 os_ls,              L)IN(L,
 os_new_pith,        L)IN(L,
 os_queue,           L)IN(L,
+os_queue_n,         L)IN(L,
+os_queue_soll,      L)IN(L,
+os_soll,            L)IN(L,
+os_soll_dup,        L)IN(L,
 os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
@@ -24,200 +28,94 @@ and4,               L)IN(L,
 and5,               L)IN(L,
 and7,               L)IN(L,
 or3,          imports);
+// clang-format off
 
-SoP(init)( C(1); )
-// The basic idea is to use the continuation-passing style of
-// programming (CPS) so that the parser computes multiple results,
-// for ambiguous cases, incrementally.
-//
-// Top-down RECOGNIZERS can be implemented as a set
-// of mutually recursive processes which search for
-// parses using a top-down expansion of the gram-
-// mar rules defining non-terminals while looking for
-// matches of terminals with tokens on the input. 
-
-NargoP(pgot)(got)
-NargoP(pgod)(god)
-NargoP(pgor)(gor)
+static NP(init) { C(1); }
+NP(pgot) { Α(got) O; }
+NP(pgod) { Α(god) O; }
+NP(pgor) { Α(gor) O; }
 N(spith);
 
 N(thenS);
-Narg3P(thenS_oor )(buf,   void*,
-                   len,   Q_t,
-                   pos,   Q_t)(
-  ο[8].p, buf, len, pos, gor, ο[7].p, os_queue)
-Nargo(mk_thenS   )(thenS_oor, 2, spith)
-Nargo(thenS      )(and, mk_thenS, and)
+NP(thenS_oor) {
+  R(Q_t, pos);
+  R(Q_t, len);
+  R(void *, buf);
+  Α(ο[8].p, buf, len, pos, gor, ο[7].p, os_queue) O;
+}
+NP(thenS) { Α(thenS_oor, 2, spith) O; }
 
 N(orelse);
-NargoP(orelse_oor)(
-  gor, ο[7].p, os_queue,
-  gor, ο[8].p, os_queue, and3
-)
-Nargo(mk_orelse  )(orelse_oor, 2, spith)
-Nargo(orelse     )(and, mk_orelse, and)
+NP(orelse_oor) {
+  Α(gor, os_soll, os_soll_dup, and,
+    ο[7].p, os_queue_soll, and2,
+    ο[8].p, os_queue_soll, and2) O;
+}
+NP(orelse) { Α(orelse_oor, 2, spith) O; }
 
 N(term);
-N4P(term_oor)(cο,   p_t*,
-              buf,  const char*,
-              len,  Q_t,
-              pos,  Q_t)(
-  if (pos >= len) C(2);
+NP(term_oor) {
+  R(Q_t, pos);
+  R(Q_t, len);
+  R(const char *, buf);
+  R(p_t *, cο);
+  if (pos >= len)                   C(1);
   else if (ο[7].Q == (Q_t)buf[pos]) Α(buf, len, pos + 1, gor, cο, os_queue) O;
-  else C(2);
-)
-NargoP(term)(term_oor, 1, spith)
+  else                              C(2);
+}
+NP(term) { Α(term_oor, 1, spith) O; }
 
 N(empty);
-Narg4P(empty_oor )(cο,    p_t*,
-                   buf,   void*,
-                   len,   Q_t,
-                   pos,   Q_t)(
-  buf, len, pos, gor, cο, os_queue
-)
-Nargo(empty    )(0, empty_oor, spith)
+NP(empty_oor) {
+  R(Q_t, pos);
+  R(Q_t, len);
+  R(void *, buf);
+  R(p_t *, cο);
+  Α(buf, len, pos, gor, cο, os_queue) O;
+}
+NP(empty) { Α(empty_oor, 0, spith) O; }
 
-NargoP(term_s    )('s', term)
-NargoP(term_a    )('a', term)
-  //  j
-  //  act
-  //    act
-  //    q os_queue and3
-  //  p os_queue
-  //
-  //  (p ‘thenS‘ q) j = union (map q (p j))
-  //  e.g., assuming that the input is "ssss", then
-  //  (term_s ‘thenS‘ term_s) 1 => {3}
-  //
-  //  (p ‘orelse‘ q) j = unite (p j) (q j)
-  //  e.g, assuming that the input is "ssss", then
-  //  (empty ‘orelse‘ term_s) 2 => {2, 3} 
-  //
-  //  sS   =  (term_s ‘thenS‘ sS ‘thenS‘ sS) ‘orelse‘ empty
-  //  sS 1 => {1, 2, 3, 4, 5}
-// TODO: can be implemented as pith ray
-Nargo(Ο)(ο, god)
-NargoP(sS_oor)(
-  term_s, Ο, thenS, Ο, thenS,
-  empty, orelse
-)
-NargoP(sS)(ο, 0, sS_oor, god, got, 512, os_new_pith)
-Nargo(s)(god)
-/*
-s     ::= np vp | s pp
-np    ::= noun | det noun | np pp
-pp    ::= prep np
-vp    ::= verb np
-det   ::= ’a’ | ’t’
-noun  ::= ’i’ | ’m’ | ’p’ | ’b’
-verb  ::= ’s’
-prep  ::= ’n’ | ’w’
+NP(term_s) { Α('s', term) O; }
+NP(term_a) { Α('a', term) O; }
 
-The Haskell code below defines a parser for the
-above grammar, using our combinators:
-s     = memoize "s" ((np ‘thenS‘ vp) ‘orelse‘ (s ‘thenS‘ pp))
-np    = memoize "np" (noun ‘orelse‘ (det ‘thenS‘ noun) ‘orelse‘ (np ‘thenS‘ pp))
-pp    = memoize "pp" (prep ‘thenS‘ np)
-vp    = memoize "vp" (verb ‘thenS‘ np)
-det   = memoize "det" (term ’a’ ‘orelse‘ term ’t’)
-noun  = memoize "noun" (term ’i’
-               ‘orelse‘ term ’m’
-               ‘orelse‘ term ’p’
-               ‘orelse‘ term ’b’)
-verb  = memoize "verb" (term ’s’)
-prep  = memoize "prep" (term ’n’ ‘orelse‘ term ’w’)
-*/
-NargoP(mk_empty1 )(ο[Φ].p, 0, pgod, pgod, pgot, 512, os_new_pith)
-NargoP(mk_empty2 )(ο[Φ].p, 0, pgod, pgod, pgot, 512, os_new_pith)
-NargoP(mk_empty3 )(ο[Φ].p, 0, pgod, pgod, pgot, 512, os_new_pith)
-NargoP(act1)(god)
-NargoP(act2)(god)
-NargoP(act3)(god)
-NargoP(queue)(os_queue)
-Narg3P(exam_n    )(p, p_t*,
-                   q, p_t*,
-                   b, p_t*)(
-  "abc", 1, 0, act1,
-                 act2,
-                   act3,
-                   b, queue, and3,
-                 q, queue, and7,
-               p, queue
-)
-NargoP(exam      )(
-  debugger,
-  term_a, and,
-  term_a, and,
-  term_a, and,
-  term_a, and,
-  //mk_empty1,
-  //mk_empty2, and,
-  //mk_empty3, and,
-  //exam_n,    and
-)
+N(Ο) { Α(ο) C(1); }
 
-NargoP(exam0)("sssss", 5, 0, sS)
+NP(sS_oor) { Α(gor,
+    term_s,
+    ο, thenS, and2,
+    //ο, thenS, and2,
+    empty,    and,
+    orelse,   and,
+os_queue, and) O; }
+NP(sS) { Α(sS_oor, 0, spith) O; }
 
-// S := S a | a
-//Nargo(term_b)(god)
-//Nargo(term_c)(god)
-//Nargo(Sa    )(
-//  term_b, 
-//  Sa, term_a
-//)
-NargoP(Not)(os_wordump)
-NargoP(And)(os_wordump)
-NargoP(Oor)(os_wordump)
-NargoP(mk_dumper )(ο, 0, 
-                   Oor,
-                   And,
-                   Not,
-                   512, os_new_pith)
+NP(queue) { os_queue(T()); }
+NP(exam) { Α(ο, "sssss", 5, 0, gor,
+  //            term_s, term_s, and, thenS, and,
+              sS,
+              queue, and) O; }
 
-NargoP(მთავარი)(exam, mk_dumper, os_queue, and)
+NP(Not) { Α(os_wordump) O; }
+NP(And) { Α(os_wordump) O; }
+NP(Oor) { Α(os_wordump) O; }
+NP(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
+NP(მთავარი) { Α(exam, mk_dumper, 1, os_queue_n, and2) O; }
 
-#define BUF ο[7].p[0].cs
-#define POS ο[7].p[1].Q
-#define LEN ο[7].p[2].Q
-#define LHD ο[7].p[3].Q
-So(lookahead)(
-  if (POS < LEN) LHD = BUF[POS], A(LHD) C(1);
-  else C(2);
-)
-So(shift    )(
-  Q_t lookahead = LHD;
-  if (lookahead == -1) C(2);
-  else LHD = -1, POS++, A(lookahead) C(1);
-)
-
-Nargo(example)(
-  lookahead,
-  lookahead, and,
-  shift,     and,
-  lookahead, and,
-  shift,     and,
-  lookahead, and,
-  shift,     and)
-
-//SargoP(მთავარი)(example, 2, god, 1, god, 0, god, 0222, nar, "sa", 3, parser, os_queue, and)
-
+// clang-format off
 EN(tail,
-empty,              L)EN(L,
-lookahead,          L)EN(L,
-mk_dumper,          L)EN(L,
-sS,                 L)EN(L,
-shift,              L)EN(L,
-term,               L)EN(L,
-term_a,             L)EN(L,
-term_oor,           L)EN(L,
-term_s,             L)EN(L,
 მთავარი,      exports);
+// clang-format on
 
-N2(set_state)(oο,   p_t*,
-              wc,   Q_t)({
-  while(wc)
+N(set_state) {
+  R(Q_t, wc);
+  R(p_t *, oο);
+  while (wc)
     oο[--wc + 7].v = σ[--α].v;
   Α(oο) C(1);
-})
-Narg2(spith )(oor,  n_t,
-              wc,   Q_t)(ο, 0, oor, god, got, 512, os_new_pith, wc, set_state, and2)
+}
+
+N(spith) {
+  R(Q_t, wc);
+  R(n_t, oor);
+  Α(ο, 0, oor, god, got, 512, os_new_pith, wc, set_state, and2) O;
+}

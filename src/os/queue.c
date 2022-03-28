@@ -23,6 +23,14 @@ N(os_queue_n) {
   nσ[nα + 4].Q = nο[Ρ].Q;
   C(1);
 }
+N(os_unsoll_free);
+N(nar);
+NP(os_queue_soll) {
+  R(p_t*, oο);
+  R(p_t*, sοll);
+  Α(sοll, os_unsoll_free,
+    oο, sοll[-1].Q, os_queue_n, 030, nar) O;
+}
 N(os_queue) {
   Q_t a = α - 1;
   A2(a, os_queue_n) O;
