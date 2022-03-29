@@ -36,8 +36,14 @@ N(pgod) { Α(god) O; }
 N(pgor) { Α(gor) O; }
 N(new_pith);
 
-#define LOG print("%lx %2lu α:%lu σ[α-1].Q:%lu %s\n", ((Q_t)σ >> 12) & 0xff, ο[3].Q, α, σ[α-1].Q, __FUNCTION__)
-#define CοBufLenPos LOG; R(Q_t, pos); R(Q_t, len); R(const char *, buf); R(p_t *, cο)
+#define LOG print("σ:%lx n:%2lu α:%lu pos:%lu %s\n",  \
+                  ((Q_t)σ >> 12) & 0xff,              \
+                  ο[3].Q,                             \
+                  α,                                  \
+                  pos,                                \
+                  __FUNCTION__                        \
+                  )
+#define CοBufLenPos R(Q_t, pos); R(Q_t, len); R(const char *, buf); R(p_t *, cο); LOG 
 N(Q)  { os_queue(T()); }
 N(QN) { os_queue_n(T()); }
 N(QS) { os_queue_soll(T()); }
@@ -59,6 +65,23 @@ N(vε_oor) {
   Α(cο, buf, len, pos, gor, cο, sοpop,
     5, QN, and2) O;
 }
+/*            ⎧
+              ⎪ {},      j ≥ #input
+term t j    = ⎨ {j + 1}, j th element of input = t
+              ⎪ {},      otherwise
+              ⎩
+empty j     = {j}
+(p <+> q) j = (p j) ∪ (q j) 
+(p  *> q) j = (map q (p j))
+
+(<+>)       :: R -> R -> R
+p <+> q     = \r -> union (p r) (q r)
+(*>)        :: R -> R -> R
+p *> q      = \r -> unions $ map q $ elems $ p r
+parse       :: R -> PosSet
+parse p     = p 0
+
+*/
 N(orelse_oor) {
   CοBufLenPos;
   Α(cο, buf, len, pos, gor, 5, os_soll_n,
@@ -99,7 +122,7 @@ N(Ο)      { Α(ο) C(1); }
 N(sS1) { Α(term_s, ο, thenS, and2, ο, thenS, and2) O; }
 N(sS2) { Α(vε) O; }
 N(sS) { Α(sS1,
-          sS2, and, orelse, and) O; }
+          sS2, and, orelse, and, var, and) O; }
 NP(exam) {
         Α(ο, 1, os_soll_n,
           "sssss", 5, 0, gor, sS, and5,
@@ -113,9 +136,11 @@ N(drop3) {
     C(1);
   } else Α(os_wordump) O;
 }
-N(Not) { print("N\n"), Α(drop3) O; }
-N(And) { print("A\n"), Α(drop3) O; }
-N(Oor) { print("O\n"), Α(drop3) O; }
+#include "os/queue.h"
+static Q_t qlen(QUEUE *h);
+N(Not) { print("N %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
+N(And) { print("A %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
+N(Oor) { print("O %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
 N(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
 N(მთავარი) { Α(exam, mk_dumper, 1, QN, and2) O; }
 
@@ -136,4 +161,11 @@ N(new_pith) {
   R(Q_t, wc);
   R(n_t, oor);
   Α(ο[Φ].p, 0, oor, god, got, 512, os_new_pith, wc, set_state, and2) O;
+}
+static Q_t qlen(QUEUE *h) {
+  QUEUE *q;
+  Q_t c = 0;
+  for ((q) = QUEUE_NEXT(h); (q) != (h); (q) = QUEUE_NEXT(q))
+    c++;
+  return c;
 }
