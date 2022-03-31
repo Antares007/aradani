@@ -24,40 +24,40 @@ and5,         imports);
 #define S2Q(s) ((QUEUE*)((s) + (s)[-1].Q - 3))
 #define Q2S(q) (((p_t*)(q)) - ((p_t*)(q))[2].Q)
 
-SarP(init)(god);
-S(drop3) { α -= 3, C(1); }
-Sar(q_unroll)(os_unsoll, drop3, and)
-S(q_soll) {
+Sargo(init)(god);
+N(drop3) { α -= 3, C(1); }
+Sargo(q_unroll)(os_unsoll, drop3, and)
+N(q_soll) {
   R(Q_t, wc);
   Q_t wc3 = wc + 3;
   Α(0, 0, wc, wc3, os_soll_n) O;
 }
-Sar(q_soll_free)(os_soll_free);
-S(q_soll_push) {
+Sargo(q_soll_free)(os_soll_free);
+N(q_soll_push) {
   R(p_t *, h);
   R(p_t *, qσ);
   QUEUE_INSERT_TAIL(S2Q(h), S2Q(qσ)), C(1);
 }
-S(q_soll_unshift) {
+N(q_soll_unshift) {
   R(p_t *, h);
   R(p_t *, qσ);
   QUEUE_INSERT_HEAD(S2Q(h), S2Q(qσ)), C(1);
 }
-S(q_push) {
+N(q_push) {
   R(p_t *, h);
   Q_t wc = α;
   Α(wc, q_soll, h, q_soll_push, and2) O;
 }
-S(q_unshift) {
+N(q_unshift) {
   R(p_t *, h);
   Q_t wc = α;
   Α(wc, q_soll, h, q_soll_unshift, and2) O;
 }
-S(q_soll_unsoll_free) {
+N(q_soll_unsoll_free) {
   R(p_t *, qσ);
   Α(qσ, q_unroll, qσ, q_soll_free, and2) O;
 }
-S(q_soll_remove) {
+N(q_soll_remove) {
   R(p_t *, qσ);
   R(p_t *, h);
   if (h == qσ)
@@ -67,23 +67,23 @@ S(q_soll_remove) {
   else
     C(2);
 }
-S(q_soll_pop) {
+N(q_soll_pop) {
   R(p_t *, h);
   A3(h, Q2S(QUEUE_PREV(S2Q(h))), q_soll_remove) O;
 }
-S(q_soll_shift) {
+N(q_soll_shift) {
   R(p_t *, h);
   A3(h, Q2S(QUEUE_NEXT(S2Q(h))), q_soll_remove) O;
 }
-S(q_pop) {
+N(q_pop) {
   R(p_t *, h);
   Α(h, q_soll_pop, q_soll_unsoll_free, and) O;
 }
-S(q_shift) {
+N(q_shift) {
   R(p_t *, h);
   Α(h, q_soll_shift, q_soll_unsoll_free, and) O;
 }
-S(q_for_each_n) {
+N(q_for_each_n) {
   R(p_t *, qσ);
   R(p_t *, h);
   R(p_t *, sοll);
@@ -94,27 +94,27 @@ S(q_for_each_n) {
         sοll, h, Q2S(QUEUE_NEXT(S2Q(qσ))), q_for_each_n,
         sοll, os_soll_free, gor, and, and4or4) O;
 }
-S(q_for_each) {
+N(q_for_each) {
   R(Q_t, wc);
   R(p_t *, h);
   A6(wc, os_soll_n,
      h, Q2S(QUEUE_NEXT(S2Q(h))), q_for_each_n, and3) O;
 }
-S(q_make_n) {
+N(q_make_n) {
   R(p_t *, qσ);
   QUEUE_INIT((QUEUE *)qσ);
   A(qσ) C(1);
 }
-Sar(q_make)(0, 0, 0, 3, os_soll_n, q_make_n, and);
+Sargo(q_make)(0, 0, 0, 3, os_soll_n, q_make_n, and);
 
 Q_t i = 0;
-S(pgod) {
+N(pgod) {
   R(Q_t, off);
   R(p_t *, sοll);
   //Α(sοll, q_soll_remove, sοll, q_soll_free, and2) O;
   A2(off+i++, (sοll[0].Q << 32) | sοll[1].Q) C(1);
 }
-S(show) {
+N(show) {
   R(p_t *, h);
           Α(6, 3, h, q_push,
             2, 3, h, q_unshift, and4,
@@ -129,7 +129,7 @@ S(show) {
                  -1, os_wordump,
                  +0, os_wordump, and2or2) O;
 }
-Sar(მთავარი)(q_make, show, and)
+Sargo(მთავარი)(q_make, show, and)
 
 EN(tail,
 q_for_each,         L)EN(L,

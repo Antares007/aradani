@@ -6,8 +6,8 @@ gor,                L)IN(L,
 got,                L)IN(L,
 nar,          imports)
 
-SarP(init)(god)
-SP(Main) { A(7) C(1); }
+Sargo(init)(god)
+static N(Main) { PLog; A(7) C(1); }
 
 EN(tail,
 Main, exports)

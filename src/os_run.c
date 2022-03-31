@@ -73,9 +73,8 @@ N(mk) {
   Α(nnn, aaa, ooo, os_new) O;
 }
 int main(int argc, char **argv) {
-  (void)root;
-  //if (argc < 2)
-  //  return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  if (argc < 2)
+    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init(); page_init();
   p_t *ο = page_alloc();
   ο += 5;
@@ -92,7 +91,7 @@ int main(int argc, char **argv) {
   ο[0].c = ray_oor;
   //Α(one) O;
   //Α(one, ο, os_queue, ο, os_queue, ο, os_queue) O;
-  Α(os_cycle, mk, os_queue, 010, nar) O;
-  //  Α(argv[1], root, ο, os_bark) O;
+  //Α(os_cycle, mk, os_queue, 010, nar) O;
+  Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

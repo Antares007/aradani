@@ -6,7 +6,7 @@ gor,                L)IN(L,
 got,                L)IN(L,
 nar,          imports);
 // clang-format on
-SarP(init)(god)
+Sargo(init)(god)
 #define JUN(Tail, Name, Jun, Head) N(Name) { A(Jun) nar(T()); } EN(Tail, Name, Head)
 /*
 const nao = ["", "or", "and", "not"];

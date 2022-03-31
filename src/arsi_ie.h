@@ -1,11 +1,13 @@
 #pragma once
-#define E(Ta, Na, Ad, He) So(He)(Α(Na, Ad, Ta) C(1);)
-#define I(Ta, Na, Ad, He) So(He)(Α(Na, &Ad, Ta) C(0);)
+#define E(Ta, Na, Ad, He)                                                      \
+  static N(He) { Α(Na, Ad, Ta) C(1); }
+#define I(Ta, Na, Ad, He)                                                      \
+  static N(He) { Α(Na, &Ad, Ta) C(0); }
 #define IBS(Head) IB(πrn) IF(πrn, printf, print, Head, int, const char *, ...)
 #define L CAT(expimp_, __LINE__)
 #define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
 #define END(Tail, Name, Head)                                                  \
-  void Name(OARS);                                                             \
+  N(Name);                                                                     \
   EN(Tail, Name, Head)
 #define IN(Tail, Name, Head)                                                   \
   static n_t Name;                                                             \
