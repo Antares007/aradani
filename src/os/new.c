@@ -2,10 +2,13 @@
 #include "pith_coords.h"
 #include "queue.h"
 #include <stdlib.h>
+void*page_alloc();
+void page_free(void*);
 // clang-format off
 No(os_new_pith)(
   R(Q_t,              nρ);
-  p_t *nο           = malloc(nρ * sizeof(void *));
+  (void)nρ;
+  p_t *nο           = page_alloc();
   if (nο == 0) return C(2);
   nο               += 5;
   nο[Ǎ].Q           = 3; 

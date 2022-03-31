@@ -61,7 +61,7 @@ So(ray_not)(
 )
 So(ray_oor)( PLog; R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; )
 No(ray_and)(       os_next(T()); )
-void os_hrtime_init(); void page_init(); p_t *soll_alloc();
+void os_hrtime_init(); void page_init(); void* page_alloc(); p_t *soll_alloc();
 void os_cycle(OARS);
 
 No(one)( PLog;printf("one\n"); C(1); )
@@ -69,6 +69,7 @@ N(nnn) {PLog; C(1);}
 N(aaa) {PLog; C(1);}
 N(ooo) {PLog; C(1);}
 N(mk) {
+  PLog;
   Α(nnn, aaa, ooo, os_new) O;
 }
 int main(int argc, char **argv) {
@@ -76,11 +77,11 @@ int main(int argc, char **argv) {
   //if (argc < 2)
   //  return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init(); page_init();
+  p_t *ο = page_alloc();
+  ο += 5;
   p_t *σ = soll_alloc();
   Q_t α = 0;
   Q_t ρ = σ[Σ].Q;
-  p_t b[8];
-  p_t *ο = b + 5;
   ο[Ǎ].Q = 3;
   ο[Σ].Q = 3;
   ο[Φ].p = ο;

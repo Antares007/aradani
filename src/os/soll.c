@@ -25,7 +25,7 @@ static void append_to_parent_queue(QUEUE *mq, QUEUE *pq) {
       φο[RAY].c(φο, α, ρ, σ);                                                  \
     }                                                                          \
   }
-S_RAY(2, free(ο))
+S_RAY(2, page_free(ο))
 S_RAY(1, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
 S_RAY(0, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
 p_t *soll_alloc() {

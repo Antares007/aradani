@@ -1,8 +1,10 @@
 #pragma once
+// clang-format off
 #include "os/pith_coords.h"
 #define PLog_(PRN)                                                             \
-  PRN("ο:%p σ:%3lx α:%3ld ρ:%3ld\t%s:%s\n", ο, ((Q_t)σ >> 12) & (Q_t)0xFFF, α, \
-      ρ, __FUNCTION__, __FILE__)
+  PRN("ο%02lx %3ld %3ld σ%02lx %s:%s\n",                                       \
+      ((Q_t)ο - ο[Φ].p[Φ].p[Φ].Q) >> 12, α, ρ,                                 \
+      ((Q_t)σ - ο[Φ].p[Φ].p[Φ].Q) >> 12, __FUNCTION__, __FILE__)
 #ifndef ARSI
 #include <stdio.h>
 #define PLog PLog_(printf)
