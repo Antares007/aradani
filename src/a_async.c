@@ -86,7 +86,7 @@ S(srun) {
   p_t *sοll = oο[7].p;
   Α(sοll, os_unsoll, oο, sοll[-1].Q, os_queue_n, and3) O;
 }
-Sar(timer_and)(ο, insert_timer, ο[0].p, 2, os_queue_n)
+Sar(timer_and)(ο, insert_timer, ο[Φ].p, 2, os_queue_n)
 Sar(timer_oor)(ο[7].p, os_soll_free)
 Sar(timer_not)(ο[7].p, os_soll_free, got, and)
 S(timer_set) {
