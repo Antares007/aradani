@@ -14,20 +14,25 @@ static Q_t qlen(QUEUE *h) {
 
 void page_free(void *);
 
-N(os_next) {
-  if (α)
-    return (printf("Señor, we are dropping data! α:%lu ψ:%lu\n", α,
-                   qlen((QUEUE *)&ο[Ψ])),
-            C(2));
-  QUEUE *q;
-  if ((QUEUE *)&ο[Ψ] == (q = QUEUE_NEXT((QUEUE *)&ο[Ψ])))
-    return C(2);
-  QUEUE_REMOVE(q);
-  page_free(σ);
-  p_t *nσ = ((p_t *)q);
-  Q_t nα = nσ[2].Q;
-  p_t *nο = nσ[3].p;
-  nσ -= nα;
-  Q_t nρ = nο[Ρ].Q;
-  dot(nσ, nα, nο, nρ);
-}
+No(os_next)(
+  if (α) {
+    if (σ[-3].p == 0)
+      printf("Señor, we are dropping data! α:%lu ψ:%lu\n", α, qlen(ο[Ψ].v));
+    else {
+      printf("ret\n");
+      // p_t *nσ = σ[-3].p;
+      //σ[-3].p = 0;
+      ////nσ[-2];
+      //Α(1) O;
+    }
+  } else {
+    QUEUE *q;
+    if ((QUEUE*)&ο[Ψ] == (q = QUEUE_NEXT((QUEUE *)&ο[Ψ])))
+      return (printf("The End!\n"), (void)0);
+    QUEUE_REMOVE(q);
+    page_free(σ);
+    p_t *nσ = ((p_t *)q) + 5, *nο = nσ[Φ].p;
+    nσ[Φ].p = 0;
+    dot(nο, nσ[Ǎ].Q, nσ[Σ].Q, nσ);
+  }
+)

@@ -1,11 +1,12 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-O3 -std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
+CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
 run: all
 	./src/os_run src/a_dynamic.arsi
 all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_dynamic.arsi
+nm: nm.c src/os/page.o
 
 src/a_stdio.arsi:            \
 	src/a_stdio.oars           \
@@ -39,8 +40,8 @@ src/os.arsi:                 \
 
 src/os_run:                  \
 	src/os_run.c               \
+	src/os_cycle.c             \
 	src/os_hrtime.o            \
-	src/os_mc21.o              \
 	src/os_bark.o              \
 	src/os_wordump.o           \
 	src/os/nar.o               \
@@ -50,8 +51,7 @@ src/os_run:                  \
 	src/os/next.o              \
 	src/os/queue.o             \
 	src/os/page.o              \
-	src/os_epoll.o             \
-	src/os_gui_pith.o
+	src/os_epoll.o             
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src/gui/ui: src/gui/ui.c

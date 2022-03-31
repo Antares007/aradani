@@ -1,10 +1,10 @@
 #include "../oars.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+void nar(OARS);
 static Q_t is_debugging = 0;
 static char pchr = 0xa;
-N(debugger) { is_debugging = 1, C(1); }
+No(debugger)( is_debugging = 1, C(1); )
 const char *os_debug_find_name(void *a);
 #define SCLOOP                                                                 \
   if (is_debugging) {                                                          \
@@ -12,7 +12,7 @@ const char *os_debug_find_name(void *a);
     Q_t line_size = 1024;                                                      \
     q_t chars_count = 0;                                                       \
     char *buffer = malloc(line_size);                                          \
-    while ((chars_count = (printf("\n%5lu %3lu/%3lu a/o/s/c>", ο[Ι].Q, α, ρ),   \
+    while ((chars_count = (printf("\n%p %3lu/%3lu a/o/s/c>", ο, α, ρ),         \
                            getline(&buffer, &line_size, stdin)))) {            \
       chr = buffer[0];                                                         \
       if (chr == 0xa)                                                          \
@@ -28,16 +28,16 @@ const char *os_debug_find_name(void *a);
             printf("%016lx ", σ[i].q);                                         \
         }                                                                      \
       } else if (chr == 'o') {                                                 \
-        for (Q_t i = ρ; i < ο[Σ].Q; i++) {                                     \
-          if (ο[i].v == nar_oor) {                                             \
-            printf("\n%04loΨ ", ο[i + 3].Q);                                   \
+        for (Q_t i = ρ; i < σ[-2].Q; i++) {                                    \
+          if (σ[i].v == nar_oor) {                                             \
+            printf("\n%04loΨ ", σ[i + 3].Q);                                   \
             i += 3;                                                            \
           } else {                                                             \
-            const char *n = os_debug_find_name(ο[i].v);                        \
+            const char *n = os_debug_find_name(σ[i].v);                        \
             if (n)                                                             \
               printf("%s ", n);                                                \
             else                                                               \
-              printf("%016lx ", ο[i].q);                                       \
+              printf("%016lx ", σ[i].q);                                       \
           }                                                                    \
         }                                                                      \
       } else if (chr == 's') {                                                 \
@@ -53,13 +53,13 @@ const char *os_debug_find_name(void *a);
   if (WC) {                                                                    \
     while (WC) {                                                               \
       if (is_debugging) {                                                      \
-        const char *n = os_debug_find_name(ο[ρ].v);                            \
+        const char *n = os_debug_find_name(σ[ρ].v);                            \
         if (n)                                                                 \
           printf("%s ", n);                                                    \
         else                                                                   \
-          printf("%p ", ο[ρ].v);                                               \
+          printf("%p ", σ[ρ].v);                                               \
       }                                                                        \
-      WC--, σ[α++].v = ο[ρ++].v;                                               \
+      WC--, σ[α++].v = σ[ρ++].v;                                               \
     }                                                                          \
     SCLOOP                                                                     \
   }
@@ -69,35 +69,35 @@ const char *os_debug_find_name(void *a);
   nc = ((j & 0700) >> 6), ac = ((j & 0070) >> 3), oc = ((j & 0007) >> 0)
 #define DESTRUCT                                                               \
   ρ += 3;                                                                      \
-  Q_t j = ο[ρ++].Q, DESTRUCTJ
-N(nar_oor);
-N(nar_not) {
+  Q_t j = σ[ρ++].Q, DESTRUCTJ
+void nar_oor(OARS);
+No(nar_not)(
   DESTRUCT, f = nc;
   DEBUGGING(nc);
   ρ += ac + oc;
   f ? O : C(2);
-}
-N(nar_and) {
+)
+No(nar_and)(
   DESTRUCT, f = ac;
   ρ += nc;
   DEBUGGING(ac);
   ρ += oc;
   f ? O : C(1);
-}
-N(nar_oor) {
+)
+No(nar_oor)(
   DESTRUCT, f = oc;
   ρ += nc + ac;
   DEBUGGING(oc);
   f ? O : C(0);
-}
+)
 
-N(nar) {
+No(nar)(
   Q_t j = σ[--α].Q, DESTRUCTJ, tc = nc + ac + oc;
   while (tc)
-    tc--, ο[--ρ].v = σ[--α].v;
-  ο[--ρ].Q = j;
-  ο[--ρ].c = nar_not, ο[--ρ].c = nar_and, ο[--ρ].c = nar_oor;
+    tc--, σ[--ρ].v = σ[--α].v;
+  σ[--ρ].Q = j;
+  σ[--ρ].c = nar_not, σ[--ρ].c = nar_and, σ[--ρ].c = nar_oor;
   O;
-}
+)
 #undef DESTRUCT
 #undef DESTRUCTJ

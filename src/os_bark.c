@@ -6,8 +6,9 @@
 #include <unistd.h>
 
 
-N(nar); Sar(and)(010, nar);
-N(os_queue_n);
+void nar(OARS);
+void os_queue_n(OARS);
+Sargo(and)(010, nar);
 static void *mapfile(const char *filename, void *pith) {
   int fd = open(filename, O_RDONLY);
   struct stat sb;
@@ -24,7 +25,7 @@ static void *mapfile(const char *filename, void *pith) {
   saddr += ALIGN(sb.st_size, 0x1000);
   return addr;
 }
-N(os_seed) {
+No(os_seed)(
   R(n_t, root);
   R(const char *, filename);
   n_t e = mapfile(filename, root);
@@ -32,37 +33,37 @@ N(os_seed) {
     A(e) C(1);
   else
     C(2);
-}
-S(os_bark_import_first_n) {
+)
+So(os_bark_import_first_n)(
   --α;
   R(n_t, n);
   --α;
   A(n) C(1);
-}
-N(os_debug_init);
-N(os_bark_import_first) {
+)
+void os_debug_init(OARS);
+No(os_bark_import_first)(
   R(n_t, e);
   Α(e, e, os_debug_init, 0020, nar, os_bark_import_first_n, 0010, nar) O;
-}
-S(os_bark_seed_and_import_first) {
+)
+So(os_bark_seed_and_import_first)(
   R(n_t, root);
   R(const char *, name);
   Α(name, root, os_seed, os_bark_import_first, 010, nar) O;
-}
-NP(os_bark) {
+)
+No(os_bark)(PLog;
   R(p_t *, oο);
   R(n_t, root);
   R(const char *, name);
   Α(name, root, os_bark_seed_and_import_first, dot, and, oο, 5, os_queue_n) O;
-}
-S(os_ls_n) {
+)
+So(os_ls_n)(
   R(n_t, export);
   R(void*, addr);
   R(const char*, name);
   printf("%p %s\n", addr, name);
   Α(export, god, os_ls_n, 0110, nar) O;
-}
-N(os_ls) {
+)
+No(os_ls)(
   R(n_t, export);
   Α(export, os_ls_n, 010, nar) O;
-}
+)

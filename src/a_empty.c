@@ -3,7 +3,8 @@
 IBS(                L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
-got,          imports)
+got,                L)IN(L,
+nar,          imports)
 
 SarP(init)(god)
 SP(Main) { A(7) C(1); }

@@ -51,29 +51,47 @@ os_unsoll,          L)END(L,
 os_unsoll_apply,    L)END(L,
 os_unsoll_free,     L)END(L,
 os_unsoll_free_apply,L)END(L,
-os_win,             L)END(L,
 os_wordump,      root);
 
-SP(ray_not) {
+So(ray_not)(
+    PLog;
   if(α == 3) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
   } long i = 0; while (i < α) { printf("%016lx ", σ[i].Q); if (++i < α) printf("%016lx\n", σ[i].Q); else printf("\n"); i++; }
+)
+So(ray_oor)( PLog; R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; )
+No(ray_and)(       os_next(T()); )
+void os_hrtime_init(); void page_init(); p_t *soll_alloc();
+void os_cycle(OARS);
+
+No(one)( PLog;printf("one\n"); C(1); )
+N(nnn) {PLog; C(1);}
+N(aaa) {PLog; C(1);}
+N(ooo) {PLog; C(1);}
+N(mk) {
+  Α(nnn, aaa, ooo, os_new) O;
 }
-SP(ray_oor) { R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
-NP(ray_and) { os_next(T()); }
-void os_hrtime_init(); void page_init(); void *page_alloc();
 int main(int argc, char **argv) {
-  if (argc < 2)
-    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
+  (void)root;
+  //if (argc < 2)
+  //  return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   os_hrtime_init(); page_init();
-  p_t *σ = page_alloc();
+  p_t *σ = soll_alloc();
   Q_t α = 0;
-  p_t ο[512];
-  Q_t ρ = ο[Σ].Q = sizeof(ο) / sizeof(*ο);
-  ο[--ρ].c = ray_not;
-  ο[--ρ].c = os_next;
-  ο[--ρ].c = ray_oor;
-  ο[Φ].p = ο, ο[Ρ].Q = ρ, ο[Ψ + 0].p = &ο[Ψ], ο[Ψ + 1].p = &ο[Ψ], ο[Ι].v = 0;
-  Α(argv[1], root, ο, os_bark) O;
+  Q_t ρ = σ[Σ].Q;
+  p_t b[8];
+  p_t *ο = b + 5;
+  ο[Ǎ].Q = 3;
+  ο[Σ].Q = 3;
+  ο[Φ].p = ο;
+  ο[Ψ+1].p = &ο[Ψ];
+  ο[Ψ+0].p = &ο[Ψ];
+  ο[2].c = ray_not;
+  ο[1].c = ray_and;
+  ο[0].c = ray_oor;
+  //Α(one) O;
+  //Α(one, ο, os_queue, ο, os_queue, ο, os_queue) O;
+  Α(os_cycle, mk, os_queue, 010, nar) O;
+  //  Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

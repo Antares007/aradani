@@ -49,15 +49,15 @@ N(QN) { os_queue_n(T()); }
 N(QS) { os_queue_soll(T()); }
 N(sοpop) {
   R(p_t*, sο);
-  if (sο[-1].Q)
-    A(sο[--sο[-1].Q].v) C(1); 
+  if (sο[Ǎ].Q)
+    A(sο[--sο[Ǎ].Q].v) C(1); 
   else C(2);
 }
 N(sοpush) {
   R(p_t*, sο);
   R(void*, v);
-  if ((sο[-1].Q + 1) < sο[-2].Q)
-    sο[sο[-1].Q++].v = v, A(sο) C(1); 
+  if ((sο[Ǎ].Q + 1) < sο[Σ].Q)
+    sο[sο[Ǎ].Q++].v = v, A(sο) C(1); 
   else C(2);
 }
 N(vε_oor) {
@@ -132,7 +132,7 @@ NP(exam) {
 N(drop3) {
   if (α == 4) {
     CοBufLenPos;
-    print(">%s(%lu)%lu - %lu\n", buf,pos,len, cο[-1].Q);
+    print(">%s(%lu)%lu - %lu\n", buf,pos,len, cο[Ǎ].Q);
     C(1);
   } else Α(os_wordump) O;
 }

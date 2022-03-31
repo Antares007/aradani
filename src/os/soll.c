@@ -1,57 +1,89 @@
+// TODO: rename soll to sigma
+//
+
 #include "../gotgod.h"
 #include "../oars.h"
+#include "pith_coords.h"
+#include "queue.h"
 #include <stdlib.h>
-N(nar); p_t *page_alloc();
+p_t *page_alloc();
 void page_free(p_t *);
-N(os_soll) {
-  p_t *sοll = σ;
-  sοll[-1].Q = α;
-  σ = page_alloc();
-  α = 0;
-  Α(sοll) C(1);
+void nar(OARS);
+static void append_to_parent_queue(QUEUE *mq, QUEUE *pq) {
+  QUEUE *q;
+  if (mq != (q = QUEUE_NEXT(mq)))
+    QUEUE_PREV(q) = QUEUE_PREV(pq), QUEUE_PREV_NEXT(mq) = pq,
+    QUEUE_PREV_NEXT(pq) = q, QUEUE_PREV(pq) = QUEUE_PREV(mq), QUEUE_INIT(mq);
 }
-N(os_soll_n) {
-  R(Q_t, sa);
-  if (sa == α) return os_soll(T());
-  if (α  < sa) return C(2);
-
+#define S_RAY(RAY, PRE)                                                        \
+  static N(s##RAY) {                                                           \
+    if ((σ[ρ + 3].Q = !σ[ρ + 3].Q))                                            \
+      ο[RAY].c(T());                                                           \
+    else {                                                                     \
+      p_t *φο = ο[Φ].p;                                                        \
+      PRE;                                                                     \
+      φο[RAY].c(φο, α, ρ, σ);                                                  \
+    }                                                                          \
+  }
+S_RAY(2, free(ο))
+S_RAY(1, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+S_RAY(0, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
+p_t *soll_alloc() {
   p_t *sοll = page_alloc();
-  if (sοll == 0) return C(2);
-  if (sοll[-2].Q < sa) return page_free(sοll), C(2);
-
-  α -= sοll[-1].Q = sa;
-  for (Q_t i = 0; i < sa; i++)
+  sοll += 5;
+  sοll[Ǎ].Q = sοll[Φ].Q = 0;
+  sοll[Σ].Q = 503;
+  sοll[503+3].Q = 0;
+  sοll[503+2].c = s2;
+  sοll[503+1].c = s1;
+  sοll[503+0].c = s0;
+  return sοll;
+}
+No(os_soll_n)(
+  R(Q_t, wc);
+  if (α < wc)
+    return C(2);
+  p_t *sοll = soll_alloc();
+  if (sοll == 0)
+    return C(2);
+  α -= sοll[Ǎ].Q = wc;
+  for (Q_t i = 0; i < wc; i++)
     sοll[i].v = σ[α + i].v;
   Α(sοll) C(1);
-}
-N(os_unsoll) {
+)
+No(os_soll)(
+  Q_t a = α;
+  A(a) os_soll_n(T());
+)
+No(os_unsoll)(
   R(p_t *, sοll);
-  if (σ[-2].Q < (α + sοll[-1].Q)) return C(2);
-  for (Q_t i = 0; i < sοll[-1].Q; i++) σ[α + i].v = sοll[i].v;
-  α += sοll[-1].Q, C(1);
-}
-N(os_soll_dup) {
+  if (σ[Σ].Q < (α + sοll[Ǎ].Q))
+    return C(2);
+  for (Q_t i = 0; i < sοll[Ǎ].Q; i++)
+    σ[α + i].v = sοll[i].v;
+  α += sοll[Ǎ].Q, C(1);
+)
+No(os_soll_dup)(
   R(p_t *, sοll);
-  p_t *dsοll = page_alloc();
-  if (dsοll[-2].Q < sοll[-1].Q) return C(2);
-  dsοll[-1].Q = sοll[-1].Q;
-  for (Q_t i = 0; i < sοll[-1].Q; i++) dsοll[i].v = sοll[i].v;
+  p_t *dsοll = soll_alloc();
+  dsοll[Ǎ].Q = sοll[Ǎ].Q;
+  for (Q_t i = 0; i < sοll[Ǎ].Q; i++)
+    dsοll[i].v = sοll[i].v;
   Α(sοll, dsοll) C(1);
-}
-N(os_soll_free) {
+)
+No(os_soll_free)(
   R(p_t *, sοll);
   page_free(sοll), C(1);
-}
-N(os_unsoll_free) {
+)
+No(os_unsoll_free)(
   R(p_t *, sοll);
-  Α(sοll, os_unsoll,
-    sοll, os_soll_free, 020, nar) O;
-}
-N(os_unsoll_apply) {
+  Α(sοll, os_unsoll, sοll, os_soll_free, 020, nar) O;
+)
+No(os_unsoll_apply)(
   R(p_t *, sοll);
   Α(sοll, os_unsoll, dot, 010, nar) O;
-}
-N(os_unsoll_free_apply) {
+)
+No(os_unsoll_free_apply)(
   R(p_t *, sοll);
   Α(sοll, os_unsoll_free, dot, 010, nar) O;
-}
+)

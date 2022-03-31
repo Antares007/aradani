@@ -3,24 +3,40 @@
 #include "../oars.h"
 #include "pith_coords.h"
 #include <stdlib.h>
-N(nar);
-N(os_soll_n);
-N(os_soll);
-N(os_queue_soll) {
-  R(p_t*, oο);
-  R(p_t*, sοll);
-  if(sοll[-2].Q < (sοll[-1].Q + 4)) return C(2);
-  QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&sοll[sοll[-1].Q + 0]);
-  sοll[sοll[-1].Q + 2].Q = sοll[-1].Q;
-  sοll[sοll[-1].Q + 3].v = oο;
+void nar(OARS);
+void os_soll_n(OARS);
+void os_soll(OARS);
+p_t *soll_alloc();
+No(os_queue_soll)(
+  R(p_t *, oο);
+  R(p_t *, sοll);
+  QUEUE_INSERT_TAIL((QUEUE *)&ο[Ψ], (QUEUE *)&sοll[Ψ]);
+  sοll[Φ].p = oο;
   C(1);
-}
-N(os_queue_n) {
+)
+No(os_call_n_n)(
+  R(p_t *, oο);
+  R(p_t *, cσ);
+  p_t *rσ = σ;
+  σ = soll_alloc();
+  if (σ == 0)
+    return (σ = rσ, C(2));
+  α = 0;
+  ρ = σ[-2].Q;
+  cσ[-3].p = rσ;
+  Α(cσ, oο, os_queue_soll) O;
+)
+No(os_call_n)(
   R(Q_t, wc);
-  R(p_t*, oο);
+  R(p_t *, oο);
+  Α(wc, os_soll_n, oο, os_call_n_n, 020, nar) O;
+)
+No(os_queue_n)(
+  R(Q_t, wc);
+  R(p_t *, oο);
   Α(wc, os_soll_n, oο, os_queue_soll, 020, nar) O;
-}
-N(os_queue) {
-  R(p_t*, oο);
+)
+No(os_queue)(
+  R(p_t *, oο);
   Α(os_soll, oο, os_queue_soll, 020, nar) O;
-}
+)

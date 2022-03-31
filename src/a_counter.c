@@ -22,16 +22,23 @@ SP(c_not) { C(1); }
 NarP(c)(c_not, c_and, c_oor, ο, 512, os_new_ps);
 Sar(expample)(c, gor, os_win, and2, 2, os_queue_n, and2)
 
+typedef struct dom_t {
+  n_t element;
+  n_t text;
+} dom_t;
 S(Increase2) {
-  Α('+', 'txt', god) O;
+  dom_t *o = (dom_t *)&ο[7];
+  Α('+', o->text) O;
 }
 S(Decrease2) {
-  Α('-', 'txt') C(1);
+  dom_t *o = (dom_t *)&ο[7];
+  Α('-', o->text) O;
 }
 N(Counter2) {
-  Α(Increase2, 'btn') C(1);
-  Α(Decrease2, 'btn') C(1);
-  Α("0", 'txt') C(1);
+  dom_t *o = (dom_t *)&ο[7];
+  Α(Increase2, "button", o->element) O;
+  Α(Decrease2, "button", o->element) O;
+  Α("0", o->text) O;
 }
 
 EN(tail,
