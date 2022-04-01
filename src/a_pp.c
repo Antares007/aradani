@@ -29,8 +29,53 @@ and5,               L)IN(L,
 and7,               L)IN(L,
 or3,          imports);
 // clang-format off
+/*
+s    = np vp thenS
+       s  pp thenS orelse3
+       "s" memoize
+np   = noun
+       det noun thenS orelse3
+       np pp thenS    orelse3
+       "np" memoize
+pp   = prep np thenS
+       "pp" memoize  
+vp   = verb np thenS
+       "vp" memoize  
+det  = 'a' term
+       't' term orelse2
+       "det" memoize 
+noun = 'i' term 
+       'm' term orelse2
+       'p' term orelse2
+       'b' term orelse2
+       "noun" memoize  
+verb = 's' term
+       "verb" memoize
+prep = 'n' term
+       'w' term orelse2
+       "prep" memoize 
 
-static NP(init) { C(1); }
+s    = memoize "s" ((np ‘thenS‘ vp) ‘orelse‘ (s ‘thenS‘ pp))
+np   = memoize "np" (noun ‘orelse‘ (det ‘thenS‘ noun) ‘orelse‘ (np ‘thenS‘ pp))
+pp   = memoize "pp" (prep ‘thenS‘ np)
+vp   = memoize "vp" (verb ‘thenS‘ np)
+det  = memoize "det" (term ’a’ ‘orelse‘ term ’t’)
+noun = memoize "noun" (term ’i’
+                       ‘orelse‘ term ’m’
+                       ‘orelse‘ term ’p’
+                       ‘orelse‘ term ’b’)
+verb = memoize "verb" (term ’s’)
+prep = memoize "prep" (term ’n’ ‘orelse‘ term ’w’)
+*/
+#define dA(...)
+#define dT(...)
+#define dO(...)
+static NP(init) { 
+  dA(L, a, b, c, L)dA(L,
+        a, b, c, L)dA(L,
+        a, b, c, L)
+  C(1);
+}
 N(pgot) { Α(got) O; }
 N(pgod) { Α(god) O; }
 N(pgor) { Α(gor) O; }
@@ -120,52 +165,52 @@ N(term_a) { Α('a', term) O; }
 N(term_b) { Α('b', term) O; }
 N(term_c) { Α('c', term) O; }
 N(Ο)      { Α(ο) C(1); }
-N(sS);
-Q_t i = 0;
-Q_t j = 0;
-N(TR) { PLog;
-  R(const char*, trm);
-  R(n_t, l);
-  (void)trm, (void)l;
-}
-N(TS) { PLog;
-  R(n_t, r);
-  R(n_t, l);
-  (void)r;
-  if(l != ο[7].c)
-    l(T());
-  else
-    C(1);
-}
-N(OR) { PLog; R(n_t, r); R(n_t, l); (void)r; if(l != ο[7].c) l(T()); else C(1); }
 
-N(t_a) { PLog; C(1); }
-N(t_b) { PLog; C(1); }
-N(t_c) { PLog; C(1); }
-N(t_d) { PLog; C(1); }
+//Q_t i = 0;
+//Q_t j = 0;
 
-N(Sa);
-N(Sa_a    ){ PLog; Α(Sa, t_a, TS) O; }
-N(Sa_b    ){ PLog; Α(Sa, t_b, TS) O; }
-N(Sa      ){ PLog; Α(Sa_a, Sa_b, OR, t_c, OR, t_d, OR) O; }
+//N(TR) { PLog;
+//  R(const char*, trm);
+//  R(n_t, l);
+//  (void)trm, (void)l;
+//}
 
+//N(TS) { PLog;
+//  R(n_t, r);
+//  R(n_t, l);
+//  (void)r;
+//  if(l != ο[7].c)
+//    l(T());
+//  else
+//    C(1);
+//}
 
-N(exam    ){ PLog; ο[7].c = Sa; Α(Sa) O; }
+//N(OR) { PLog; R(n_t, r); R(n_t, l); (void)r; if(l != ο[7].c) l(T()); else C(1); }
+//N(t_a     ){ PLog; C(1); }
+//N(t_b     ){ PLog; C(1); }
+//N(t_c     ){ PLog; C(1); }
+//N(t_d     ){ PLog; C(1); }
+//N(Sa);
+//N(Sa_a    ){ PLog; Α(Sa, t_a, TS) O; }
+//N(Sa_b    ){ PLog; Α(Sa, t_b, TS) O; }
+//N(Sa      ){ PLog; Α(Sa_a, Sa_b, OR, t_c, OR, t_d, OR, 0, vinit) O; }
+//Nargo(sS1)(term_s,
+//           ο,      
+//           thenS,  and2,
+//           ο,      
+//           thenS,  and2)
+//Nargo(sS2)(ε)
+//Nargo(sS )(sS1,
+//           sS2,    and,
+//           orelse, and)
 
-Nargo(sS1)(term_s,
-           ο,      
-           thenS,  and2,
-           ο,      
-           thenS,  and2)
-Nargo(sS2)(ε)
-Nargo(sS )(sS1,
-           sS2,    and,
-           orelse, and)
+N(exam    ){ Α(god) O; }
+
 NP(exam22) {
-  Α(sS) O;
-//        Α(ο, 1, os_soll_n,
-//          "sssss", 5, 0, gor, sS, and5,
-//          Q, and) O;
+  //Α(sS) O;
+  //        Α(ο, 1, os_soll_n,
+  //          "sssss", 5, 0, gor, sS, and5,
+  //          Q, and) O;
 }
 
 N(drop3) {
