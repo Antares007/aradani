@@ -7,7 +7,7 @@
 
 #define S(Name) static N(Name)
 #define SP(Name) S(Name)
-#define NP(Name) N(Name)
+#define NP(Name) N(Name##_p);N(Name){PLog;Name##_p(T());}N(Name##_p)
 
 #define NS_(...) {__VA_ARGS__}}
 #define NarS_(...) Α(__VA_ARGS__) O; }

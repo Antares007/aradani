@@ -58,18 +58,23 @@ noun = memoize "noun" (term ’i’
                        ‘orelse‘ term ’b’)
 verb = memoize "verb" (term ’s’)
 prep = memoize "prep" (term ’n’ ‘orelse‘ term ’w’)
-*/
+              ⎧
+              ⎪ {},      j ≥ #input
+term t j    = ⎨ {j + 1}, j th element of input = t
+              ⎪ {},      otherwise
+              ⎩
+empty j     = {j}
+(p <+> q) j = (p j) ∪ (q j) 
+(p  *> q) j = (map q (p j))
+
+(<+>)       :: R -> R -> R
+p <+> q     = \r -> union (p r) (q r)
+(*>)        :: R -> R -> R
+p *> q      = \r -> unions $ map q $ elems $ p r
+parse       :: R -> PosSet
+parse p     = p 0 */
 static NP(init) { C(1); }
 N(new_pith);
-
-#define LOG print("σ:%lx n:%2lu α:%lu pos:%lu %s\n",  \
-                  ((Q_t)σ >> 12) & 0xff,              \
-                  ο[3].Q,                             \
-                  α,                                  \
-                  pos,                                \
-                  __FUNCTION__                        \
-                  )
-#define CοBufLenPos R(Q_t, pos); R(Q_t, len); R(const char *, buf); R(p_t *, cο); LOG 
 N(Q)  { os_queue(T()); }
 N(QN) { os_queue_n(T()); }
 N(QS) { os_queue_soll(T()); }
@@ -86,111 +91,75 @@ N(sοpush) {
     sο[sο[Ǎ].Q++].v = v, A(sο) C(1); 
   else C(2);
 }
-N(empty_oor) {
-  CοBufLenPos;
-  Α(cο, buf, len, pos, gor, cο, sοpop,
-    5, QN, and2) O;
-}
-/*            ⎧
-              ⎪ {},      j ≥ #input
-term t j    = ⎨ {j + 1}, j th element of input = t
-              ⎪ {},      otherwise
-              ⎩
-empty j     = {j}
-(p <+> q) j = (p j) ∪ (q j) 
-(p  *> q) j = (map q (p j))
-
-(<+>)       :: R -> R -> R
-p <+> q     = \r -> union (p r) (q r)
-(*>)        :: R -> R -> R
-p *> q      = \r -> unions $ map q $ elems $ p r
-parse       :: R -> PosSet
-parse p     = p 0
-
-*/
-N(orelse_oor) {
-  CοBufLenPos;
-  Α(cο, buf, len, pos, gor, 5, os_soll_n,
-    os_soll_dup, and,
-    ο[7].p, QS, and2,
-    ο[8].p, QS, and2) O;
-}
-N(thenS_oor) {
-  CοBufLenPos;
-  Α(ο[8].p, cο, sοpush,
-    buf, len, pos, gor, ο[7].p, 5, QN, and7) O;
-}
-N(term_oor) {
-  CοBufLenPos;
-  if (pos >= len) {
-    print("A\n"), C(1);
-  } else if (ο[7].Q == (Q_t)buf[pos]) {
-    print("B\n"), Α(cο, buf, len, pos + 1, gor, cο, sοpop,
-                    5, QN, and2) O;
-  } else {
-    print("C\n"), C(1);
-  }
-}
-N(var_oor) {
-  CοBufLenPos;
-  Α(cο, buf, len, pos, gor, ο[7].p, 5, QN) O;
-}
-//N(orelse) { Α(orelse_oor, 2, new_pith) O; }
-//N(thenS ) { Α(thenS_oor,  2, new_pith) O; }
-//N(term  ) { Α(term_oor,   1, new_pith) O; }
-//N(empty ) { Α(empty_oor,  0, new_pith) O; }
+N(empty_oor ) { PLog; C(1); }
+N(orelse_oor) { PLog; Α(ο[8].c, os_unsoll_apply) O; }
+N(thenS_oor ) { PLog; C(1); }
+N(term_oor  ) { PLog; C(1); }
+N(mk_orelse ) { PLog; Α(orelse_oor, 2, new_pith) O; }
+N(mk_thenS  ) { PLog; Α(thenS_oor,  2, new_pith) O; }
+N(mk_term   ) { PLog; Α(term_oor,   1, new_pith) O; }
+N(mk_empty  ) { PLog; Α(empty_oor,  0, new_pith) O; }
 
 //N(term_s) { Α('s', term) O; }
 //N(term_a) { Α('a', term) O; }
 //N(term_b) { Α('b', term) O; }
 //N(term_c) { Α('c', term) O; }
  
-N(term   ){PLog; α -= 1, C(1); }
-N(orelse2){PLog; α -= 2, O; }
-N(orelse3){PLog; α -= 3, O; }
-N(thenS  ){PLog; α -= 1, O; }
-N(memoize){PLog; α -= 1, O; }
-N(noun   ){PLog;
-        Α('i', term,
-          'm', term, orelse2,
-          'p', term, orelse2,
-          'b', term, orelse2,        "noun", memoize) O;}
-N(det    ){PLog;
-        Α('a', term,
-          't', term, orelse2,         "det", memoize) O;}
-N(prep   ){PLog;
-        Α('n', term,
-          'w', term, orelse2,        "prep", memoize) O;}
-N(verb   ){PLog;
-        Α('s', term,                 "verb", memoize) O;}
-N(pp);
-N(np     ){PLog;
-        Α(noun,
-          det, noun, thenS, orelse3,
-          np,  pp,   thenS, orelse3,  "np", memoize) O;}
-N(vp     ){PLog;
-        Α(verb, np, thenS,            "vp", memoize) O;}
-N(s      ){PLog;
-        Α(np, vp, thenS,
-          s,  pp, thenS, orelse3,     "s", memoize) O;}
-N(pp     ){PLog;
-        Α(prep, np, thenS,            "pp", memoize) O;}
+N(pgod) {PLog; C(1);}
 
-N(exam){Α(np) O; }
-
-
-N(drop3) {
-  if (α == 4) {
-    CοBufLenPos;
-    print(">%s(%lu)%lu - %lu\n", buf,pos,len, cο[Ǎ].Q);
-    C(1);
-  } else Α(os_wordump) O;
+N(orelse_nn) {
+  R(p_t *, soll);
+  Α(dot, soll, mk_orelse, and2) O;
 }
-#include "os/queue.h"
-static Q_t qlen(QUEUE *h);
-N(Not) { print("N %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
-N(And) { print("A %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
-N(Oor) { print("O %lu\n", qlen((void*)&ο[Φ].p[Φ].p[Ψ])), Α(drop3) O; }
+N(orelse_n ) {
+  R(Q_t, wc);
+  Α(wc, os_soll_n, orelse_nn, and) O;
+}
+
+N(thenS_nn) {
+  R(p_t *, soll);
+  Α(dot, soll, mk_thenS, and2) O;
+}
+N(thenS_n){ 
+  R(Q_t, wc);
+  Α(wc, os_soll_n, thenS_nn, and) O;
+}
+N(term   ){ mk_term(T()); }
+N(memoize);
+
+
+N(orelse ){ Α(1) orelse_n(T()); }
+N(orelse2){ Α(2) orelse_n(T()); }
+N(orelse3){ Α(3) orelse_n(T()); }
+N(thenS  ){ Α(1) thenS_n(T()); }
+N(thenS2 ){ Α(2) thenS_n(T()); }
+N(thenS3 ){ Α(3) thenS_n(T()); }
+
+NargoP(noun   )('i', term,
+               'm', term, orelse2,
+               'p', term, orelse2,
+               'b', term, orelse2,       noun, memoize)
+NargoP(det    )('a', term,
+               't', term, orelse2,        det, memoize)
+NargoP(prep   )('n', term,
+               'w', term, orelse2,       prep, memoize)
+NargoP(verb   )('s', term,                verb, memoize)
+N(pp);
+NargoP(np     )(noun,
+               det, noun, thenS, orelse3,
+               np,  pp,   thenS, orelse3,  np, memoize)
+NargoP(vp     )(verb, np, thenS,            vp, memoize)
+NargoP(s      )(np, vp, thenS,
+               s,  pp, thenS, orelse3,      s, memoize)
+NargoP(pp     )(prep, np, thenS,            pp, memoize)
+NargoP(Sa     )('b', term,
+               Sa, 'a', term, orelse3,     Sa, memoize)
+NargoP(exam   )(gor, np, os_queue, and)
+
+
+N(Not) { PLog; C(1); }
+N(And) { PLog; C(1); }
+N(Oor) { PLog; C(1); }
 N(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
 N(მთავარი) { Α(exam, mk_dumper, 1, QN, and2) O; }
 
@@ -212,10 +181,21 @@ N(new_pith) {
   R(n_t, oor);
   Α(ο[Φ].p, 0, oor, god, got, 512, os_new_pith, wc, set_state, and2) O;
 }
-static Q_t qlen(QUEUE *h) {
-  QUEUE *q;
-  Q_t c = 0;
-  for ((q) = QUEUE_NEXT(h); (q) != (h); (q) = QUEUE_NEXT(q))
-    c++;
-  return c;
+static p_t memo[512][2];
+N(memoize_n) {
+  R(Q_t, id);
+  R(void *, v);
+  for(Q_t i = 0; i < sizeof(memo) / sizeof(*memo); i++)
+    if (memo[i][0].Q == 0)
+      return memo[i][0].Q = id,
+             memo[i][1].v = v,
+             A(v) C(1);
+  A(v) C(1);
+}
+N(memoize) {
+  PLog;
+  R(Q_t, id);
+  for(Q_t i = 0; i < sizeof(memo) / sizeof(*memo); i++)
+    if (memo[i][0].Q == id) return α = 0, A(memo[i][1].v) C(1);
+  Α(dot, id, memoize_n, and2) O;
 }
