@@ -113,20 +113,59 @@ N(orelse) { Α(orelse_oor, 2, new_pith) O; }
 N(thenS) { Α(thenS_oor, 2, new_pith) O; }
 N(term) { Α(term_oor, 1, new_pith) O; }
 N(var) { Α(var_oor, 1, new_pith) O; }
-N(vε) { Α(vε_oor, 0, new_pith) O; }
+N(ε) { Α(vε_oor, 0, new_pith) O; }
 
 N(term_s) { Α('s', term) O; }
 N(term_a) { Α('a', term) O; }
+N(term_b) { Α('b', term) O; }
+N(term_c) { Α('c', term) O; }
 N(Ο)      { Α(ο) C(1); }
+N(sS);
+Q_t i = 0;
+Q_t j = 0;
+N(TR) { PLog;
+  R(const char*, trm);
+  R(n_t, l);
+  (void)trm, (void)l;
+}
+N(TS) { PLog;
+  R(n_t, r);
+  R(n_t, l);
+  (void)r;
+  if(l != ο[7].c)
+    l(T());
+  else
+    C(1);
+}
+N(OR) { PLog; R(n_t, r); R(n_t, l); (void)r; if(l != ο[7].c) l(T()); else C(1); }
 
-N(sS1) { Α(term_s, ο, thenS, and2, ο, thenS, and2) O; }
-N(sS2) { Α(vε) O; }
-N(sS) { Α(sS1,
-          sS2, and, orelse, and, var, and) O; }
-NP(exam) {
-        Α(ο, 1, os_soll_n,
-          "sssss", 5, 0, gor, sS, and5,
-          Q, and) O;
+N(t_a) { PLog; C(1); }
+N(t_b) { PLog; C(1); }
+N(t_c) { PLog; C(1); }
+N(t_d) { PLog; C(1); }
+
+N(Sa);
+N(Sa_a    ){ PLog; Α(Sa, t_a, TS) O; }
+N(Sa_b    ){ PLog; Α(Sa, t_b, TS) O; }
+N(Sa      ){ PLog; Α(Sa_a, Sa_b, OR, t_c, OR, t_d, OR) O; }
+
+
+N(exam    ){ PLog; ο[7].c = Sa; Α(Sa) O; }
+
+Nargo(sS1)(term_s,
+           ο,      
+           thenS,  and2,
+           ο,      
+           thenS,  and2)
+Nargo(sS2)(ε)
+Nargo(sS )(sS1,
+           sS2,    and,
+           orelse, and)
+NP(exam22) {
+  Α(sS) O;
+//        Α(ο, 1, os_soll_n,
+//          "sssss", 5, 0, gor, sS, and5,
+//          Q, and) O;
 }
 
 N(drop3) {
