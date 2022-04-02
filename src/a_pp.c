@@ -105,7 +105,7 @@ N(paper) {
 N(swap       ) { R(void*, b); R(void*, a); Α(b, a) C(1); }
 N(drop       ) { α--, C(1); }
 N(swap_drop  ) { Α(swap, drop, and) O; }
-NP(paper_dup ) {
+N(paper_dup ) {
   R(p_t *, op);
   Α(op, 
     op[0].Q,    op[1].cs,   op[2].Q,
@@ -125,8 +125,8 @@ N(paper_push_next) {
   R(p_t*, next);
   Α(next, paper[Nexts].p, sοpush) O;
 }
-NP(gor_apply      ) { R(p_t*, oο); print("%p\n", oο); Α(gor, oο, os_queue) O; }
-NP(paper_goto_next) {
+N(gor_apply      ) { R(p_t*, oο); Α(gor, oο, os_queue) O; }
+N(paper_goto_next) {
   R(p_t*, paper);
   Α(paper, paper[Nexts].p, sοpop, gor_apply, and) O;
 }
@@ -159,7 +159,7 @@ NP(orelse_oor_nn) {
 }
 N(orelse_oor_n) {
   R(p_t *, oο);
-  R(p_t *, paper);print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
+  R(p_t *, paper);
   Α(oο,     
     paper,  paper_push_next, 
     paper,  paper_dup,       and2,
@@ -171,10 +171,9 @@ N(orelse_oor) {
 }
 //(p  *> q) j = (map q (p j))
 NP(thenS_oor ) {
-  R(p_t *, paper);print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
-  Α(ο[8].c,   
-    paper,   paper_push_next, and2,
-    paper, ο[7].c, gor_apply, and3) O;
+  R(p_t *, paper);
+  Α(ο[8].c, paper,   paper_push_next, and2,
+            paper, ο[7].c, gor_apply, and3) O;
 }
 //               ⎧
 //               ⎪ {},      j ≥ #input
@@ -185,10 +184,8 @@ NP(term_oor  ) {
   R(p_t*, paper); print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
   if (paper[Position].Q >= paper[Length  ].Q ||
  (Q_t)paper[Buffer  ].cs[  paper[Position].Q] != ο[7].Q) {
-    print("A\n");
     Α(paper, paper_goto_next) O;
   } else {
-    print("B\n");
     Α(paper, paper_inc_position,
       paper, paper_goto_next, and2) O;
   }
@@ -209,8 +206,9 @@ N(memoize   );
 NargoP(term_s     )('s', term)
 NargoP(exam_thenS )(term_s, term_s, thenS)
 NargoP(exam_orelse)(empty, term_s, orelse)
+NargoP(exam_sS)(term_s, exam_sS, thenS, empty, orelse)
 N(parse);
-NargoP(exam)( 1, "sssss", paper, exam_orelse, parse)
+NargoP(exam)( 1, "sssss", paper, exam_thenS, parse)
 
 /*
 NargoP(noun   )('i', term,
