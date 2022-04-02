@@ -18,6 +18,7 @@ os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
 os_unsoll,          L)IN(L,
 os_unsoll_apply,    L)IN(L,
+os_unsoll_free,     L)IN(L,
 os_unsoll_free_apply,L)IN(L,
 os_wordump,         L)IN(L,
 
@@ -107,13 +108,28 @@ N(paper) {
     0, os_soll_n, and2,
     5, os_soll_n, and2) O;
 }
+N(swap     ) { R(void*, b); R(void*, a); Α(b, a) C(1); }
+N(drop     ) { α--, C(1); }
+N(swap_drop) { Α(swap, drop, and) O; }
+NP(paper_dup) {
+  R(p_t *, op);
+  Α(op, 
+    op[0].Q, op[1].cs, op[2].Q,
+    op[3].v, os_soll_dup, swap_drop, and,
+    op[4].v, os_soll_dup, swap_drop, and, and4,
+          5,   os_soll_n, and2) O;
+}
+N(paper_join) {
+  R(p_t *, rp);
+  R(p_t *, lp);
+  Α((rp[0].Q < lp[0].Q ? lp[0].Q : rp[0].Q), lp[1].cs, lp[2].Q,
+    lp[3].v,
+    lp[4].v, 5, os_soll_n) O;
+}
 N(paper_push_next) {
   R(p_t*, paper);
   R(p_t*, next);
   Α(next, paper[Nexts].p, sοpush) O;
-}
-N(os_unsoll_free_apply_) {
-  A(os_unsoll_free_apply) O;
 }
 N(paper_goto_next) {
   R(p_t*, paper);
@@ -133,16 +149,36 @@ NP(empty_oor ) {
   Α(paper, paper_goto_next) O;
 }
 //(p <+> q) j = (p j) ∪ (q j) 
-NP(orelse_oor) { C(1); }
+N(orelse_join) {
+  R(p_t *, paper);
+  ο[++ο[7].Q   +    7].p = paper;
+  if (ο[7].Q   ==   2)
+    Α(ο[7+1].p, ο[2+7].p, paper_join) O;
+  else
+    C(1);
+}
+NP(orelse_oor_nn) {
+  R(p_t *, rpaper);
+  R(p_t *, lpaper);
+  Α(lpaper, ο[7].c, gor_apply,
+    rpaper, ο[8].c, gor_apply, and, and4) O;
+}
+NP(orelse_oor_n) {
+  R(p_t *, oο);
+  R(p_t *, paper);print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
+  Α(oο,     soll_gor_apply,
+    paper,  paper_push_next, and2,
+    paper,  paper_dup,       and2,
+            orelse_oor_nn,   and) O;
+}
+NP(orelse_oor) {
+  Α(0, orelse_join, 1, new_pith,
+                   orelse_oor_n, and) O;
+}
 //(p  *> q) j = (map q (p j))
 NP(thenS_oor ) {
-  R(p_t *, paper);
-  print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
-  //Α(gor, ο[7].c, os_queue,
-  //     thenS_mk_next_soll, and,
-  //          nexts, sοpush, and2,
-  //        ο, memo, sοpush, and3) O; 
-  Α(ο[8].c,  soll_gor_apply, and,
+  R(p_t *, paper);print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
+  Α(ο[8].c,   soll_gor_apply, and,
     paper,   paper_push_next, and2,
     paper, ο[7].c, gor_apply, and3) O;
 }
@@ -152,14 +188,11 @@ NP(thenS_oor ) {
 //               ⎪ {},      otherwise
 //               ⎩
 NP(term_oor  ) {
-  R(p_t*, paper);
-  print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
+  R(p_t*, paper); print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
   if (paper[Position].Q >= paper[Length  ].Q ||
  (Q_t)paper[Buffer  ].cs[  paper[Position].Q] != ο[7].Q) {
-    print("a\n");
     Α(paper, paper_goto_next) O;
   } else {
-    print("b\n");
     Α(paper, paper_inc_position,
       paper, paper_goto_next, and2) O;
   }
@@ -172,14 +205,16 @@ N(mk_empty  ) { Α(empty_oor,  0, new_pith) O; }
 N(orelse    ) { R(p_t *, vο); Α(dot, vο, mk_orelse, and2) O; }
 N(thenS     ) { R(p_t *, vο); Α(dot, vο, mk_thenS, and2) O; }
 N(term      ) { mk_term(T()); }
-N(memoize);
+N(empty     ) { mk_empty(T()); }
+N(memoize   );
 
 
 
-NargoP(term_s)('s', term)
-NargoP(exam_thenS)(term_s, term_s, thenS)
+NargoP(term_s     )('s', term)
+NargoP(exam_thenS )(term_s, term_s, thenS)
+NargoP(exam_orelse)(empty, term_s, orelse)
 N(parse);
-NargoP(exam)( 1, "sssss", paper, exam_thenS, parse)
+NargoP(exam)( 1, "sssss", paper, exam_orelse, parse)
 
 /*
 NargoP(noun   )('i', term,
@@ -205,7 +240,7 @@ NargoP(Sa     )('b', term,
 
 N(Not) { PLog; C(1); }
 N(And) { PLog; C(1); }
-N(Oor) { PLog; Α(os_unsoll, os_wordump, and) O; }
+N(Oor) { PLog; Α(os_unsoll_free, os_wordump, and) O; }
 N(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
 N(მთავარი) { Α(exam, mk_dumper, 1, os_queue_n, and2) O; }
 N(exam_run) {
