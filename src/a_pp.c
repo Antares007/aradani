@@ -178,18 +178,9 @@ N(memoize);
 
 NargoP(term_s)('s', term)
 NargoP(exam_thenS)(term_s, term_s, thenS)
-N(exam_run) {
-  R(n_t, vs);
-  R(p_t*, paper);
-  Α(ο, soll_gor_apply,
-    paper, paper_push_next, and2,
-    paper, vs, gor_apply, and3) O;
-}
-NargoP(exam)(
-  1, "sssss", paper,
-         exam_thenS, and,
-           exam_run, and
-)
+N(parse);
+NargoP(exam)( 1, "sssss", paper, exam_thenS, parse)
+
 /*
 NargoP(noun   )('i', term,
                'm', term, orelse2,
@@ -217,6 +208,18 @@ N(And) { PLog; C(1); }
 N(Oor) { PLog; Α(os_unsoll, os_wordump, and) O; }
 N(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
 N(მთავარი) { Α(exam, mk_dumper, 1, os_queue_n, and2) O; }
+N(exam_run) {
+  R(n_t, vs);
+  R(p_t*, paper);
+  Α(ο, soll_gor_apply,
+    paper, paper_push_next, and2,
+    paper, vs, gor_apply, and3) O;
+}
+N(parse) {
+  R(n_t, r);
+  R(n_t, l);
+  Α(l, r, and, exam_run, and) O;
+}
 
 // clang-format off
 EN(tail,
