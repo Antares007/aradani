@@ -14,9 +14,11 @@
                                   .
             ο[2] = არა/Not | ο[1] = და/And | ο[0] = ან/Or
 
-"Notandor/არადანი" gives us the power to specify everything
-in the M-language. We need to do so because the M-language
-is the only language we have from the beginning.            */
+  The protocol of "Notandor/არადანი" gives us the power to specify
+  everything in the M-words. We need to do so because the M-words
+  are the only language we have from the beginning within the CPU.
+  We need to start to specify things using language and not data
+  structures. */
 // clang-format off
 #include <stdint.h>
 typedef  int8_t  b_t; typedef  int16_t w_t; typedef  int32_t d_t; typedef  int64_t q_t;

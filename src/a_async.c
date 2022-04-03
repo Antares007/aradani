@@ -14,7 +14,7 @@ os_unsoll,          L)IN(L,
 and,                L)IN(L,
 and2,               L)IN(L,
 and3,               L)IN(L,
-and6,               L)IN(L,
+and4,               L)IN(L,
 not,          imports);
 
 #define MAX_TIMEOUTS 1024
@@ -101,13 +101,13 @@ S(printtimeouts) {
 }
 S(hello ) { R(Q_t, i); print("hello %lu\n", i), C(1); }
 N(timers) { Α(
-  1, hello, god, and, 1000, timer,
-  2, hello, god, and, 2000, timer, and6,
-  3, hello, god, and, 3000, timer, and6,
-  4, hello, god, and, 4000, timer, and6,
-  5, hello, god, and, 5000, timer, and6,
-  6, hello, god, and, 6000, timer, and6,
-  7, hello, god, and, 7000, timer, and6) O; }
+  1, hello, 1000, timer,
+  2, hello, 2000, timer, and4,
+  3, hello, 3000, timer, and4,
+  4, hello, 4000, timer, and4,
+  5, hello, 5000, timer, and4,
+  6, hello, 6000, timer, and4,
+  7, hello, 7000, timer, and4) O; }
 N(ls    ) { Α(exports, os_ls) O; }
 // clang-format off
 EN(tail,
