@@ -96,6 +96,7 @@ N(sοfind) {
 }
 Q_t cslen(const char* cs) { Q_t len = 0; while(cs[len]) len++; return len; }
 enum { Position, Buffer, Length, Nexts, Memo, };
+
 N(paper) {
   R(const char *, buffer);
   R(Q_t, position);
@@ -104,6 +105,7 @@ N(paper) {
     0, os_soll_n, and2,
     5, os_soll_n, and2) O;
 }
+
 N(swap      ) { R(void*, b); R(void*, a); Α(b, a) C(1); }
 N(drop      ) { α--, C(1); }
 N(swap_drop ) { Α(swap, drop, and) O; }
@@ -122,10 +124,17 @@ N(paper_join) {
     lp[3].v,
     lp[4].v, 5, os_soll_n) O;
 }
+N(paper_memoize_pith) {
+  R(p_t*, paper);
+  if (ο[5].Q)
+    Α(ο[5].Q, paper[Memo].p, sοpush) O;
+  else
+    C(1);
+}
 N(paper_push_next) {
   R(p_t*, paper);
   R(p_t*, next);
-  Α(next, paper[Nexts].p, sοpush) O;
+  Α(next,  paper[Nexts].p, sοpush) O;
 }
 N(gor_apply ) { R(p_t*, oο); Α(co0, oο, os_queue) O; }
 N(paper_goto_next) {
@@ -133,18 +142,26 @@ N(paper_goto_next) {
   Α(paper, paper[Nexts].p, sοpop, gor_apply, and) O;
 }
 N(paper_inc_position) {
-  R(p_t*, paper);
+  R(p_t *, paper);
   paper[Position].Q++;
+  paper[Memo    ].p[Ǎ].Q = 0;
   C(1);
 }
-
-NP(empty_oor ) {
+#define PP(Name)                                               \
+  print("\n%s %lu %s\n", #Name, paper[Position].Q, ο[5].cs);   \
+  for(Q_t i = 0; i < paper[Memo].p[Ǎ].Q;   i++)                \
+    print("%lu:%s\n", i,   paper[Memo].p[i].cs);
+//for(Q_t i = 0; i < paper[Nexts].p[Ǎ].Q;  i++)                \
+//  print("%p\n", paper[Nexts].p[i].p[5]); 
+N(empty_oor ) {
   R(p_t*, paper);
+  PP(Ε);
   Α(paper, paper_goto_next) O;
 }
 
 N(orelse_join) {
   R(p_t *, paper);
+  PP(orelse_join);
   ο[++ο[1].Q + 1].p = paper;
   if (ο[1].Q == 2)
     Α(ο[2].p, ο[3].p, paper_join,
@@ -153,7 +170,7 @@ N(orelse_join) {
   else
     C(1);
 }
-NP(orelse_oor_nn) {
+N(orelse_oor_nn) {
   R(p_t *, rpaper);
   R(p_t *, lpaper);
   Α(lpaper, ο[7].c, gor_apply,
@@ -162,27 +179,31 @@ NP(orelse_oor_nn) {
 N(orelse_oor_n) {
   R(p_t *, oο);
   R(p_t *, paper);
-  Α(oο,
-    paper, paper_push_next,
-    paper, paper_dup, and2,
-             orelse_oor_nn, and) O;
+  PP(O);
+  Α(oο,     paper, paper_push_next,
+            paper, paper_memoize_pith, and2,
+            paper,       paper_dup, and2,
+                     orelse_oor_nn, and) O;
 }
 N(orelse_oor) {
   Α(orelse_join, 0, 0, 0, 4, os_soll_n,
                           orelse_oor_n, and) O;
 }
 
-NP(thenS_oor ) {
+N(thenS_oor) {
   R(p_t *, paper);
+  PP(T);
   Α(ο[8].c, paper, paper_push_next, and2,
-            paper, ο[7].c, gor_apply, and3) O;
+            paper, paper_memoize_pith, and2,
+            paper,ο[7].c,gor_apply, and3) O;
 }
 
-NP(term_oor ) {
-  R(p_t*, paper); print("%s %lu\n", paper[Buffer].cs, paper[Position].Q);
+N(term_oor) {
+  R(p_t*, paper);
+  PP(V);
   if (paper[Position].Q >= paper[Length  ].Q ||
  (Q_t)paper[Buffer  ].cs[  paper[Position].Q] != ο[7].Q) {
-    Α(paper, co2) O;
+    print("drop\n"); C(1);// Α(paper, co2) O;
   } else {
     Α(paper, paper_inc_position,
       paper, paper_goto_next, and2) O;
@@ -199,16 +220,25 @@ N(term        ) { mk_term(T()); }
 N(empty       ) { mk_empty(T()); }
 N(memoize);
 
-NP(term_s     ) { Α('s', term) O; }
-NP(exam_thenS ) { Α(term_s, term_s, thenS) O; }
-NP(exam_orelse) { Α(empty, term_s, orelse) O; }
+N(term_s     ) { Α('s', term) O; }
+N(exam_thenS ) { Α(term_s, term_s, thenS) O; }
+N(exam_orelse) { Α(empty, term_s, orelse) O; }
 
-NP(sS         ) { Α(term_s, sS, thenS, sS, thenS,
-                    empty, orelse) O; }
+N(set_o5) { R(Q_t , id); R(p_t*, oο); oο[5].Q = id; A(oο) C(1); }
+
+N(sS        ) { Α(term_s, sS, thenS,  sS, thenS,
+                                   empty, orelse,
+                                      sS, set_o5, and2) O; }
 
 N(parse);
+N(term_b      ) { Α('b', term) O; }
+N(term_a      ) { Α('a', term) O; }
 
-N(exam      ) { Α(1, "sssss", paper, sS, parse) O; }
+N(Sa);
+N(Sa_Sa_term_a) { Α(Sa, term_a, thenS,                         "Sa_Sa_term_a", set_o5, and2) O; }
+N(Sa          ) { Α(term_b, Sa_Sa_term_a, orelse,              "Sa",           set_o5, and2) O; }
+
+N(exam      ) { Α(1, "sssss", paper, Sa, parse) O; }
 
 N(paper_dump) { Α(os_unsoll_free, os_wordump, and) O; }
 
@@ -241,6 +271,7 @@ N(set_state) {
   R(p_t *, oο);
   while (wc)
     oο[--wc + 7].v = σ[--α].v;
+  oο[5].Q = 0;
   Α(oο) C(1);
 }
 NP(ray_not) {
@@ -271,8 +302,6 @@ N(memoize) {
 N(term_i    ) { Α('i', term) O; }
 N(term_m    ) { Α('m', term) O; }
 N(term_p    ) { Α('p', term) O; }
-N(term_b    ) { Α('b', term) O; }
-N(term_a    ) { Α('a', term) O; }
 N(term_t    ) { Α('t', term) O; }
 N(term_n    ) { Α('n', term) O; }
 N(term_w    ) { Α('w', term) O; }
