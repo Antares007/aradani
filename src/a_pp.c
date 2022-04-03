@@ -1,6 +1,9 @@
 #include "arsi.h"
 // clang-format off
 IBS(                L)IN(L,
+co0,                L)IN(L,
+co1,                L)IN(L,
+co2,                L)IN(L,
 debugger,           L)IN(L,
 dot,                L)IN(L,
 god,                L)IN(L,
@@ -124,7 +127,7 @@ N(paper_push_next) {
   R(p_t*, next);
   Α(next, paper[Nexts].p, sοpush) O;
 }
-N(gor_apply ) { R(p_t*, oο); Α(gor, oο, os_queue) O; }
+N(gor_apply ) { R(p_t*, oο); Α(co0, oο, os_queue) O; }
 N(paper_goto_next) {
   R(p_t*, paper);
   Α(paper, paper[Nexts].p, sοpop, gor_apply, and) O;

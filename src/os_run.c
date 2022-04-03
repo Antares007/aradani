@@ -9,6 +9,9 @@
 E(got, "0", 0,      L)E(L,
 "0", 0,             L)E(L,
 "printf", printf,   L)END(L,
+co0,                L)END(L,
+co1,                L)END(L,
+co2,                L)END(L,
 debugger,           L)END(L,
 dot,                L)END(L,
 god,                L)END(L,
@@ -53,37 +56,21 @@ os_unsoll_free,     L)END(L,
 os_unsoll_free_apply,L)END(L,
 os_wordump,      root);
 
-S(ray_not) { PLog;
-  if(α == 3) {
-    R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
-  } long i = 0; while (i < α) { printf("%016lx ", σ[i].Q); if (++i < α) printf("%016lx\n", σ[i].Q); else printf("\n"); i++; }
-}
-S(ray_oor) { PLog; R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
-S(ray_and) {       os_next(T()); }
-
-void os_hrtime_init(); void page_init(); void* page_alloc(); p_t *soll_alloc();
-void os_cycle(OARS);
+void os_hrtime_init();
+void os_queue_init();
+void os_soll_init();
+p_t *os_soll_alloc();
 
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
-  os_hrtime_init(); page_init();
-  p_t *ο = page_alloc();
-  ο += 5;
-  p_t *σ = soll_alloc();
-  Q_t α = 0;
-  Q_t ρ = σ[Σ].Q;
-  ο[Ǎ].Q = 3;
-  ο[Σ].Q = 3;
-  ο[Φ].p = ο;
-  ο[Ψ+1].p = &ο[Ψ];
-  ο[Ψ+0].p = &ο[Ψ];
-  ο[2].c = ray_not;
-  ο[1].c = ray_and;
-  ο[0].c = ray_oor;
-  //Α(one) O;
-  //Α(one, ο, os_queue, ο, os_queue, ο, os_queue) O;
-  //Α(os_cycle, mk, os_queue, 010, nar) O;
+  (void)root;
+  os_hrtime_init();
+  os_soll_init();
+  os_queue_init();
+  p_t *ο = os_soll_alloc(), *σ = os_soll_alloc();
+  ο[Φ].v = ο;
+  Q_t  α = 0, ρ = σ[Σ].Q;
   Α(argv[1], root, ο, os_bark) O;
   return 0;
 }

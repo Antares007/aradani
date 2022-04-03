@@ -2,33 +2,27 @@
 #include "pith_coords.h"
 #include "queue.h"
 #include <stdlib.h>
-void*page_alloc();
-void page_free(void*);
+void*os_soll_alloc();
 // clang-format off
 N(os_new_pith) {
   R(Q_t,              nρ);
   (void)nρ;
-  p_t *nο           = page_alloc();
-  if (nο == 0) return C(2);
-  nο               += 5;
-  nο[Ǎ].Q           = 3; 
-  nο[Σ].Q           = nρ; 
-  nο[Ψ+0].p         = &nο[Ψ];
-  nο[Ψ+1].p         = &nο[Ψ];
+  p_t *sο           = os_soll_alloc();
+  if (sο == 0) return C(2);
   R(n_t,              ray_not);
   R(n_t,              ray_and);
   R(n_t,              ray_oor);
-  nο[2].c           = ray_not;
-  nο[1].c           = ray_and;
-  nο[0].c           = ray_oor;
+  sο[2].c           = ray_not;
+  sο[1].c           = ray_and;
+  sο[0].c           = ray_oor;
   R(Q_t,              wc);
-  while(wc) {
+  while (wc) {
     R(void*,          v);
-    nο[--wc + 7].v  = v;
+    sο[--wc + 7].v  = v;
   }
   R(p_t *,            oο);
-  nο[Φ].p           = oο;
-  A(nο) C(1);
+  sο[Φ].p           = oο;
+  A(sο) C(1);
 }
 N(os_new_ps) {  
   R(Q_t,  nρ);

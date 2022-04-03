@@ -40,7 +40,7 @@ src/os.arsi:                 \
 
 src/os_run:                  \
 	src/os_run.c               \
-	src/os_cycle.c             \
+	src/os_cycle.o             \
 	src/os_hrtime.o            \
 	src/os_bark.o              \
 	src/os_wordump.o           \
@@ -49,7 +49,6 @@ src/os_run:                  \
 	src/os/debugger.o          \
 	src/os/new.o               \
 	src/os/next.o              \
-	src/os/queue.o             \
 	src/os/page.o              \
 	src/os_epoll.o             
 	${CC} $^ -o $@ ${CFLAGS} -lraylib

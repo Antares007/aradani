@@ -4,44 +4,31 @@
 #include "pith_coords.h"
 #include "queue.h"
 #include <stdlib.h>
+void page_init();
 p_t *page_alloc();
 void page_free(p_t *);
-void nar(OARS);
-static void append_to_parent_queue(QUEUE *mq, QUEUE *pq) {
-  QUEUE *q;
-  if (mq != (q = QUEUE_NEXT(mq)))
-    QUEUE_PREV(q) = QUEUE_PREV(pq), QUEUE_PREV_NEXT(mq) = pq,
-    QUEUE_PREV_NEXT(pq) = q, QUEUE_PREV(pq) = QUEUE_PREV(mq), QUEUE_INIT(mq);
-}
-#define S_RAY(RAY, PRE)                                                        \
-  static N(s##RAY) {                                                           \
-    if ((σ[ρ + 3].Q = !σ[ρ + 3].Q))                                            \
-      ο[RAY].c(T());                                                           \
-    else {                                                                     \
-      p_t *φο = ο[Φ].p;                                                        \
-      PRE;                                                                     \
-      φο[RAY].c(φο, α, ρ, σ);                                                  \
-    }                                                                          \
-  }
-S_RAY(2, page_free(ο))
-S_RAY(1, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
-S_RAY(0, append_to_parent_queue((QUEUE*)&ο[Ψ], (QUEUE*)&ο[Φ].p[Ψ]))
-p_t *soll_alloc() {
-  p_t *sοll = page_alloc();
-  sοll += 5;
-  sοll[Ǎ].Q = sοll[Φ].Q = 0;
-  sοll[Σ].Q = 503;
-  sοll[503+3].Q = 0;
-  sοll[503+2].c = s2;
-  sοll[503+1].c = s1;
-  sοll[503+0].c = s0;
+N(nar);
+N(os_next);
+static NP(soll_not) {}
+static N( soll_and) { os_next(T()); }
+static NP(soll_oor) {}
+
+void os_soll_init() { page_init(); }
+p_t *os_soll_alloc() {
+  p_t *sοll    = page_alloc();
+  sοll        += 5;
+  sοll[Ǎ].Q    = sοll[Φ].Q = 0;
+  sοll[Σ].Q    = 504;
+  sοll[506].c  = soll_not;
+  sοll[505].c  = soll_and;
+  sοll[504].c  = soll_oor;
   return sοll;
 }
 N(os_soll_n) {
   R(Q_t, wc);
   if (α < wc)
     return C(2);
-  p_t *sοll = soll_alloc();
+  p_t *sοll = os_soll_alloc();
   if (sοll == 0)
     return C(2);
   α -= sοll[Ǎ].Q = wc;
@@ -63,7 +50,7 @@ N(os_unsoll) {
 }
 N(os_soll_dup) {
   R(p_t *, sοll);
-  p_t *dsοll = soll_alloc();
+  p_t *dsοll = os_soll_alloc();
   dsοll[Ǎ].Q = sοll[Ǎ].Q;
   for (Q_t i = 0; i < sοll[Ǎ].Q; i++)
     dsοll[i].v = sοll[i].v;
