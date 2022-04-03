@@ -19,8 +19,8 @@ SP(c_oor) {
 }
 SP(c_and) { C(1); }
 SP(c_not) { C(1); }
-NarP(c)(c_not, c_and, c_oor, ο, 512, os_new_ps);
-Sar(expample)(c, gor, os_win, and2, 2, os_queue_n, and2)
+N(c) { Α(c_not, c_and, c_oor, ο, 512, os_new_ps) O; }
+S(expample) { Α(c, gor, os_win, and2, 2, os_queue_n, and2) O; }
 
 typedef struct dom_t {
   n_t element;

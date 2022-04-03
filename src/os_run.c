@@ -53,25 +53,17 @@ os_unsoll_free,     L)END(L,
 os_unsoll_free_apply,L)END(L,
 os_wordump,      root);
 
-So(ray_not)(
-    PLog;
+S(ray_not) { PLog;
   if(α == 3) {
     R(n_t,e); R(void*,a); R(const char*,n); printf("%s %p %p\n", n, a, e);
   } long i = 0; while (i < α) { printf("%016lx ", σ[i].Q); if (++i < α) printf("%016lx\n", σ[i].Q); else printf("\n"); i++; }
-)
-So(ray_oor)( PLog; R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; )
-No(ray_and)(       os_next(T()); )
+}
+S(ray_oor) { PLog; R(p_t*, oο); Α(ο, gor, oο, 2, os_queue_n) O; }
+S(ray_and) {       os_next(T()); }
+
 void os_hrtime_init(); void page_init(); void* page_alloc(); p_t *soll_alloc();
 void os_cycle(OARS);
 
-No(one)( PLog;printf("one\n"); C(1); )
-N(nnn) {PLog; C(1);}
-N(aaa) {PLog; C(1);}
-N(ooo) {PLog; C(1);}
-N(mk) {
-  PLog;
-  Α(nnn, aaa, ooo, os_new) O;
-}
 int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;

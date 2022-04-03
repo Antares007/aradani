@@ -5,10 +5,11 @@ void nar(OARS);
 void os_new(OARS);
 void os_next(OARS);
 void os_queue(OARS);
-Nargo(and )(0010, nar)
-Nargo(and2)(0020, nar)
-Nargo(not )(0100, nar)
-Nargo(or  )(0001, nar)
+
+N(and ) { Α(0010, nar) O; }
+N(and2) { Α(0020, nar) O; }
+N(not ) { Α(0100, nar) O; }
+N(or  ) { Α(0001, nar) O; }
 // clang-format on
 N(p_or) { PLog;
   R(p_t *, oο);

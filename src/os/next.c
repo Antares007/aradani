@@ -11,10 +11,9 @@ static Q_t qlen(QUEUE *h) {
     c++;
   return c;
 }
-
 void page_free(void *);
 
-No(os_next)(
+N(os_next) {
   if (α) {
     if (σ[-3].p == 0)
       printf("Señor, we are dropping data! α:%lu ψ:%lu\n", α, qlen(ο[Ψ].v));
@@ -35,4 +34,4 @@ No(os_next)(
     nσ[Φ].p = 0;
     dot(nο, nσ[Ǎ].Q, nσ[Σ].Q, nσ);
   }
-)
+}

@@ -5,10 +5,6 @@
 #define SarP(Name) SP(Name) Nar_Sar_
 #define NarP(Name) NP(Name) Nar_Sar_
 
-#define S(Name) static N(Name)
-#define SP(Name) S(Name)
-#define NP(Name) N(Name##_p);N(Name){PLog;Name##_p(T());}N(Name##_p)
-
 #define NS_(...) {__VA_ARGS__}}
 #define NarS_(...) Α(__VA_ARGS__) O; }
 #define NS(Name, T) N(Name) { T*s = (T*)&ο[7]; NS_

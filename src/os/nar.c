@@ -4,7 +4,7 @@
 void nar(OARS);
 static Q_t is_debugging = 0;
 static char pchr = 0xa;
-No(debugger)( is_debugging = 1, C(1); )
+N(debugger){ is_debugging = 1, C(1); }
 const char *os_debug_find_name(void *a);
 #define SCLOOP                                                                 \
   if (is_debugging) {                                                          \
@@ -71,33 +71,33 @@ const char *os_debug_find_name(void *a);
   ρ += 3;                                                                      \
   Q_t j = σ[ρ++].Q, DESTRUCTJ
 void nar_oor(OARS);
-No(nar_not)(
+N(nar_not) {
   DESTRUCT, f = nc;
   DEBUGGING(nc);
   ρ += ac + oc;
   f ? O : C(2);
-)
-No(nar_and)(
+}
+N(nar_and) {
   DESTRUCT, f = ac;
   ρ += nc;
   DEBUGGING(ac);
   ρ += oc;
   f ? O : C(1);
-)
-No(nar_oor)(
+}
+N(nar_oor) {
   DESTRUCT, f = oc;
   ρ += nc + ac;
   DEBUGGING(oc);
   f ? O : C(0);
-)
+}
 
-No(nar)(
+N(nar) {
   Q_t j = σ[--α].Q, DESTRUCTJ, tc = nc + ac + oc;
   while (tc)
     tc--, σ[--ρ].v = σ[--α].v;
   σ[--ρ].Q = j;
   σ[--ρ].c = nar_not, σ[--ρ].c = nar_and, σ[--ρ].c = nar_oor;
   O;
-)
+}
 #undef DESTRUCT
 #undef DESTRUCTJ

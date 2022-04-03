@@ -55,7 +55,7 @@ N(მთავარი) {
   A9(6, 3, 4, 2, 8, 9, 7, 3, 9) e = α;
   A7(0, 8, b, e, qsort, os_wordump, and) O;
 }
-Nar(deb)(debugger, მთავარი, and)
+N(deb) { Α(debugger, მთავარი, and) O; }
 
 EN(tail,          
 deb,          exports);

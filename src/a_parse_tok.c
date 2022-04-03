@@ -39,78 +39,98 @@ or3,                L)n_t la;I(L,
 lookahead_set,      L)IN(L,
 parse,              L)IN(L,
 shift,        imports);
+// clang-format on
+static N(Μ) {
+  R(n_t, n);
+  Α(n, n, Μ, god, and2or) O;
+}
+N(is_eq) {
+  R(Q_t, cp);
+  R(p_t *, cps);
+  C(cps[0].Q == cp);
+}
+N(is_neq) {
+  R(Q_t, cp);
+  R(p_t *, cps);
+  C(cps[0].Q != cp);
+}
+N(ncp) {
+  R(Q_t, cp);
+  Α(la, cp, is_neq, and2, shift, and) O;
+}
+N(cp) {
+  R(Q_t, cp);
+  Α(la, cp, is_eq, and2, shift, and) O;
+}
+static N(is_anyof) {
+  R(const char *, chars);
+  R(p_t *, cps);
+  while (*chars)
+    if (cps[0].Q == *chars++)
+      return C(1);
+  C(0);
+}
+static N(anyof) {
+  R(const char *, chars);
+  Α(la, chars, is_anyof, and2, shift, and) O;
+}
+static N(is_in_range) {
+  R(Q_t, to);
+  R(Q_t, from);
+  R(p_t *, cps);
+  C(from <= cps[0].Q && cps[0].Q <= to);
+}
+static N(range) {
+  R(Q_t, to);
+  R(Q_t, from);
+  Α(la, from, to, is_in_range, and3, shift, and) O;
+}
 
-Sarg1(Μ)(n,     n_t)(
-  n,
-    n, Μ,
-    god, and2or)
+static N(reduce) {
+  Q_t a = α;
+  Α(a, os_soll_n) O;
+}
+static N(ws_cp) { Α(" \t", anyof, os_soll_free, and) O; }
+static N(ws) { Α(ws_cp, Μ) O; }
+static N(cprn_) { Α(')', cp, 'cprn', reduce, and2) O; }
+static N(cprn) { Α(ws, cprn_, and) O; }
+static N(oprn_) { Α('(', cp, 'oprn', reduce, and2) O; }
+static N(oprn) { Α(ws, oprn_, and) O; }
+static N(cmm_) { Α(',', cp, 'cmm', reduce, and2) O; }
+static N(cmm) { Α(ws, cmm_, and) O; }
+static N(smc_) { Α(';', cp, 'smc', reduce, and2) O; }
+static N(smc) { Α(ws, smc_, and) O; }
+static N(cln_) { Α(':', cp, 'cln', reduce, and2) O; }
+static N(cln) { Α(ws, cln_, and) O; }
+static N(nl_) { Α("\n\r", anyof, 'nl', reduce, and2) O; }
+static N(nl) { Α(ws, nl_, and) O; }
+static N(id_s_cp) { Α('a', 'z', range, 'A', 'Z', range, or3) O; }
+static N(id_cp) { Α(id_s_cp, '0', '9', range, or3, '_', cp, or2) O; }
+static N(id_n) { Α(id_cp, id_n, god, andor) O; }
+static N(id) { Α(ws, id_s_cp, and, id_n, and, 'id', reduce, and2) O; }
+static N(lookahead) {
+  if (ο[7].p[3].Q == -1) {
+    Α(id, nl, or, cln, or, cmm, or, oprn, or, cprn, or, smc, or, lookahead_set,
+      and)
+    O;
+  } else
+    A(ο[7].p[3].p) C(1);
+}
+static N(pos) { Α(ο[7].p[1].Q, god) O; }
+static N(prn_a) { Α(pos, got, and, pos, god, and, pos, gor, and, 0333, nar) O; }
+N(unsoll) {
+  R(p_t *, so);
+  Α(so, os_unsoll, so, os_soll_free, and2) O;
+}
+N(drop) {
+  { α--, C(1); }
+}
+N(lash) { Α(lookahead, drop, and, shift, and) O; }
+static N(testuni) { Α(lash, lash, and, lash, and, prn_a) O; }
+static N(მთავარი) { Α(testuni, "aaa\r.", parse) O; }
+static N(init) { Α(god) O; }
 
-N2(is_eq    )(cps,p_t*, cp,Q_t)( C(cps[0].Q == cp); )
-N2(is_neq   )(cps,p_t*, cp,Q_t)( C(cps[0].Q != cp); )
-Narg1(ncp   )(cp,Q_t)(la, cp, is_neq, and2, shift, and)
-Narg1(cp    )(cp,Q_t)(la, cp, is_eq,  and2, shift, and)
-
-S2(is_anyof )(cps,p_t*, chars,const char*)( while(*chars) if (cps[0].Q == *chars++) return C(1); C(0);)
-Sarg1(anyof )(chars, const char*)(la, chars, is_anyof, and2, shift, and)
-//Sarg1(noneof)(chars, const char*)(la, chars, is_anyof, and2, gor, shift, andor)
-
-S3(is_in_range)(cps,p_t*, from,Q_t, to,Q_t)(C(from <= cps[0].Q && cps[0].Q <= to);)
-Sarg2(range   )(from,Q_t, to,Q_t)(la, from, to, is_in_range, and3, shift, and)
-
-SoP(reduce)( Q_t a = α; Α(a, os_soll_n) O; )
-
-Sargo(ws_cp     )(" \t", anyof, os_soll_free, and)
-Sargo(ws        )(ws_cp, Μ)
-Sargo(cprn_     )(')', cp,                      'cprn', reduce, and2)  
-Sargo(cprn      )(ws, cprn_, and)
-Sargo(oprn_     )('(', cp,                      'oprn', reduce, and2)  
-Sargo(oprn      )(ws, oprn_, and)
-Sargo(cmm_      )(',', cp,                      'cmm',  reduce, and2)  
-Sargo(cmm       )(ws, cmm_, and)
-Sargo(smc_      )(';', cp,                      'smc',  reduce, and2)  
-Sargo(smc       )(ws, smc_, and)
-Sargo(cln_      )(':', cp,                      'cln',  reduce, and2)  
-Sargo(cln       )(ws, cln_, and)
-Sargo(nl_       )("\n\r", anyof,                'nl',   reduce, and2)  
-Sargo(nl        )(ws, nl_, and)
-Sargo(id_s_cp   )('a', 'z', range, 'A', 'Z', range, or3)
-Sargo(id_cp     )(id_s_cp, '0', '9', range, or3, '_', cp, or2)
-Sargo(id_n      )(id_cp, id_n, god, andor)
-Sargo(id        )(ws, id_s_cp, and, id_n, and,  'id',   reduce, and2)
-
-#define LHD ο[7].p[3]
-So(lookahead )(
-  if (LHD.Q == -1) {
-    Α(id,
-      nl,             or,
-      cln,            or,
-      cmm,            or,
-      oprn,           or,
-      cprn,           or,
-      smc,            or,
-      lookahead_set,  and) O;
-  } else A(LHD.p) C(1);
-)
-
-Sargo(pos)(ο[7].p[1].Q, god)
-Sargo(prn_a)(
-  pos, got, and,
-  pos, god, and,
-  pos, gor, and, 0333, nar)
-Narg1(unsoll)(so, p_t*)(so, os_unsoll, so, os_soll_free, and2)
-No(drop)(α--, C(1);)
-Nargo(lash)(lookahead, drop, and, shift, and)
-Sargo(testuni)(
-  lash,
-  lash, and,
-  lash, and,
-  //lookahead, shift, and,
-  prn_a
-)
-Sargo(მთავარი)(testuni, "aaa\r.", parse)
-
-SargoP(init)(god)
-
+// clang-format off
 EN(tail,
 lookahead,          L)EN(L, 
 lookahead_set,      L)EN(L, 

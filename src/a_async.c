@@ -23,6 +23,8 @@ static Q_t timeouts[MAX_TIMEOUTS];
 static p_t *piths[MAX_TIMEOUTS];
 static Q_t timeouts_count;
 
+SP(init) { timeouts_count = 0; C(1); }
+
 static q_t binary_search_rightmost(Q_t t) {
   Q_t l = 0, r = timeouts_count, m;
   while (l < r) 
@@ -53,23 +55,11 @@ S(run_timeouts_n) {
   timeouts_count -= pos;
   O;
 }
-Sar(run_timeouts)(os_hrtime, run_timeouts_n, and)
-S(queue_timeout_run);
-Sar(check_queue_timeout)(
-  timeouts_count ?
-    queue_timeout_run :
-    god)
-Sar(queue_timeout_run)(
-  run_timeouts, check_queue_timeout, and, ο, 3, os_queue_n)
-Sar(insert_timeout)(
-  insert_timeout_n,
-  timeouts_count ?
-    god :
-    queue_timeout_run, and)
-SP(init) {
-  timeouts_count = 0;
-  C(1);
-}
+S(queue_timeout_run  );
+S(run_timeouts       ) { Α(os_hrtime, run_timeouts_n, and) O; }
+S(check_queue_timeout) { Α(timeouts_count ? queue_timeout_run : god) O; }
+S(queue_timeout_run  ) { Α(run_timeouts, check_queue_timeout, and, ο, 3, os_queue_n) O; }
+S(insert_timeout     ) { Α(insert_timeout_n, timeouts_count ? god : queue_timeout_run, and) O; }
 S(drop) { α--, C(1); }
 S(addQQ) {
   R(Q_t, r);
@@ -86,9 +76,9 @@ S(srun) {
   p_t *sοll = oο[7].p;
   Α(sοll, os_unsoll, oο, sοll[-1].Q, os_queue_n, and3) O;
 }
-Sar(timer_and)(ο, insert_timer, ο[Φ].p, 2, os_queue_n)
-Sar(timer_oor)(ο[7].p, os_soll_free)
-Sar(timer_not)(ο[7].p, os_soll_free, got, and)
+S(timer_and) { Α(ο, insert_timer, ο[Φ].p, 2, os_queue_n) O; }
+S(timer_oor) { Α(ο[7].p, os_soll_free) O; }
+S(timer_not) { Α(ο[7].p, os_soll_free, got, and) O; }
 S(timer_set) {
   R(Q_t  , delay);
   R(p_t *, oο);
@@ -97,29 +87,28 @@ S(timer_set) {
   oο[8].Q = delay;
   A(oο) C(1);
 }
-Sar(mk_timer)(timer_not, timer_and, timer_oor, os_new)
+S(mk_timer) { Α(timer_not, timer_and, timer_oor, os_new) O; }
 S(timer_n) {
   R(Q_t, wc);
   R(Q_t, delay);
   Α(wc, os_soll_n, mk_timer, and, delay, timer_set, and2, insert_timer, and) O;
 }
-S(timer) { Q_t β = α - 1; Α(β, timer_n) O; }
-
+S(timer ) { Q_t β = α - 1; Α(β, timer_n) O; }
 S(printtimeouts) {
   for (Q_t i = 0; i < timeouts_count; i++)
     print("%lu %p\n", timeouts[i], piths[i]);
   C(1);
 }
-S(hello) { R(Q_t, i); print("hello %lu\n", i), C(1); }
-Nar(timers)(
+S(hello ) { R(Q_t, i); print("hello %lu\n", i), C(1); }
+N(timers) { Α(
   1, hello, god, and, 1000, timer,
   2, hello, god, and, 2000, timer, and6,
   3, hello, god, and, 3000, timer, and6,
   4, hello, god, and, 4000, timer, and6,
   5, hello, god, and, 5000, timer, and6,
   6, hello, god, and, 6000, timer, and6,
-  7, hello, god, and, 7000, timer, and6)
-Nar(ls)(exports, os_ls)
+  7, hello, god, and, 7000, timer, and6) O; }
+N(ls    ) { Α(exports, os_ls) O; }
 // clang-format off
 EN(tail,
 binary_search_rightmost,  L)EN(L,

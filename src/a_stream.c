@@ -19,31 +19,46 @@ andor,              L)IN(L,
 not,                L)IN(L,
 
 epoll_ctl_add_in,   L)IN(L,
-epoll_ctl_del_in,   imports)
-
-
-Sargo(init)(god)
-
-Sarg2(reject )(lο,p_t*, rο,p_t*)(lο, got, rο, 2, os_queue_n)
-Sarg2(greet  )(lο,p_t*, rο,p_t*)(rο, gor, lο, 2, os_queue_n)
-Sarg2(greet_b)(lο,p_t*, rο,p_t*)(lο, gor, rο, 2, os_queue_n)
-Sarg1(forward)(oο,p_t*         )(god, oο, os_queue)
-
-Nargo(example)(got)
-/*
-  readable._construct(callback)  Call this function (optionally with an error argument) when the stream has finished initializing.
-  readable._read(size)
-  readable._destroy(err, callback) A callback function that takes an optional error argument.
-  readable.push(chunk[, encoding]) Returns: <boolean> true if additional chunks of data may continue to be pushed; false otherwise.
+epoll_ctl_del_in,   imports);
+// clang-format on
+static N(init) { Α(god) O; }
+static N(reject) {
+  R(p_t *, rο);
+  R(p_t *, lο);
+  Α(lο, got, rο, 2, os_queue_n) O;
+}
+static N(greet) {
+  R(p_t *, rο);
+  R(p_t *, lο);
+  Α(rο, gor, lο, 2, os_queue_n) O;
+}
+static N(greet_b) {
+  R(p_t *, rο);
+  R(p_t *, lο);
+  Α(lο, gor, rο, 2, os_queue_n) O;
+}
+static N(forward) {
+  R(p_t *, oο);
+  Α(god, oο, os_queue) O;
+}
+N(example) { Α(got) O; }
+/*readable._construct(callback)  Call this function (optionally with an error
+  argument) when the stream has finished initializing. readable._read(size)
+  readable._destroy(err, callback) A callback function that takes an optional
+  error argument. readable.push(chunk[, encoding]) Returns: <boolean> true if
+  additional chunks of data may continue to be pushed; false otherwise.
 
   writable._construct(callback)
   writable._write(chunk, encoding, callback)
   writable._destroy(err, callback)
   writable._final(callback)
 
-  transform._flush(callback) A callback function (optionally with an error argument and data) to be called when remaining data has been flushed.
-  transform._transform(chunk, encoding, callback) A callback function (optionally with an error argument and data) to be called after the supplied chunk has been processed.
-*/
+  transform._flush(callback) A callback function (optionally with an error
+  argument and data) to be called when remaining data has been flushed.
+  transform._transform(chunk, encoding, callback) A callback function
+  (optionally with an error argument and data) to be called after the supplied
+  chunk has been processed.*/
+// clang-format off
 EN(tail,
 forward,            L)EN(L,
 greet,              L)EN(L,

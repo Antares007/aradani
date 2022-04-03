@@ -6,23 +6,23 @@
 #include <strings.h>
 #include <sys/epoll.h>
 #include <unistd.h>
-No(l_malloc)(
+N(l_malloc) {
   R(Q_t, s);
   void *m = malloc(s);
   if (m)
     A(m) C(1);
   else
     C(2);
-)
-No(l_free)(
+}
+N(l_free) {
   R(void *, m);
   free(m), C(1);
-)
-No(l_close)(
+}
+N(l_close) {
   R(Q_t, fd);
   close(fd), C(1);
-)
-No(l_read)(                                                                
+}
+N(l_read) {
   R(Q_t, fd);                                                                
   R(Q_t, nbyte);                                                             
   R(void *, buf);                                                            
@@ -34,8 +34,8 @@ No(l_read)(
       C(2);                                                                 
   } else                                                                     
     A2(buf, num) C(1);                                                             
-)
-No(l_write)(                                                                
+}
+N(l_write) {
   R(Q_t, fd);                                                                
   R(Q_t, off);                                                             
   R(Q_t, nbyte);                                                             
@@ -48,8 +48,8 @@ No(l_write)(
       C(2);                                                                 
   } else                                                                     
     A3(buf, nbyte - num, off + num) C(1);                                                             
-)
-No(l_accept)(
+}
+N(l_accept) {
   R(q_t, fd);
   struct sockaddr_in clnt_addr;
   socklen_t clnt_addr_len = sizeof(clnt_addr);
@@ -58,8 +58,8 @@ No(l_accept)(
     C(2);
   else
     A(rez) C(1);
-)
-No(l_address)(
+}
+N(l_address) {
   R(Q_t, port);
   R(const char *, ip);
   struct sockaddr_in *address = (void *)&σ[α];
@@ -69,8 +69,8 @@ No(l_address)(
   inet_pton(AF_INET, ip, &address->sin_addr);
   address->sin_port = htons(port);
   C(1);
-)
-No(l_bind)(
+}
+N(l_bind) {
   α -= wordCountOf(struct sockaddr_in);
   struct sockaddr_in *address = (void *)&σ[α];
   R(Q_t, fd);
@@ -79,16 +79,16 @@ No(l_bind)(
     C(2);
   else
     A(fd) C(1);
-)
-No(l_epoll_create)(
+}
+N(l_epoll_create) {
   R(Q_t, size);
   q_t fd = epoll_create(size);
   if (fd < 0)
     C(2);
   else
     A(fd) C(1);
-)
-No(l_epoll_ctl)(
+}
+N(l_epoll_ctl) {
   R(Q_t, events);
   R(void *, ptr);
   R(Q_t, fd);
@@ -101,8 +101,8 @@ No(l_epoll_ctl)(
     C(2);
   else
     C(1);
-)
-No(l_epoll_wait)(
+}
+N(l_epoll_wait) {
   R(Q_t, timeout);
   R(Q_t, maxevents);
   R(struct epoll_event *, events);
@@ -112,8 +112,8 @@ No(l_epoll_wait)(
     C(2);
   else
     A(ret) C(1);
-)
-No(l_setnoblock)(
+}
+N(l_setnoblock) {
   R(q_t, fd);
   int flags = fcntl(fd, F_GETFL, 0);
   if (flags < 0)
@@ -123,19 +123,19 @@ No(l_setnoblock)(
     C(1);
   else
     C(2);
-)
-No(l_socket)(
+}
+N(l_socket) {
   long fd = socket(PF_INET, SOCK_STREAM, 0);
   if (fd < 0)
     C(2);
   else
     A(fd) C(1);
-)
-No(l_listen)(
+}
+N(l_listen) {
   R(q_t, fd);
   q_t rez = listen(fd, 101);
   if (rez < 0)
     C(2);
   else
     C(1);
-)
+}

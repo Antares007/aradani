@@ -1,6 +1,4 @@
 // TODO: rename soll to sigma
-//
-
 #include "../gotgod.h"
 #include "../oars.h"
 #include "pith_coords.h"
@@ -39,7 +37,7 @@ p_t *soll_alloc() {
   sοll[503+0].c = s0;
   return sοll;
 }
-No(os_soll_n)(
+N(os_soll_n) {
   R(Q_t, wc);
   if (α < wc)
     return C(2);
@@ -50,40 +48,40 @@ No(os_soll_n)(
   for (Q_t i = 0; i < wc; i++)
     sοll[i].v = σ[α + i].v;
   Α(sοll) C(1);
-)
-No(os_soll)(
+}
+N(os_soll) {
   Q_t a = α;
   A(a) os_soll_n(T());
-)
-No(os_unsoll)(
+}
+N(os_unsoll) {
   R(p_t *, sοll);
   if (σ[Σ].Q < (α + sοll[Ǎ].Q))
     return C(2);
   for (Q_t i = 0; i < sοll[Ǎ].Q; i++)
     σ[α + i].v = sοll[i].v;
   α += sοll[Ǎ].Q, C(1);
-)
-No(os_soll_dup)(
+}
+N(os_soll_dup) {
   R(p_t *, sοll);
   p_t *dsοll = soll_alloc();
   dsοll[Ǎ].Q = sοll[Ǎ].Q;
   for (Q_t i = 0; i < sοll[Ǎ].Q; i++)
     dsοll[i].v = sοll[i].v;
   Α(sοll, dsοll) C(1);
-)
-No(os_soll_free)(
+}
+N(os_soll_free) {
   R(p_t *, sοll);
   page_free(sοll), C(1);
-)
-No(os_unsoll_free)(
+}
+N(os_unsoll_free) {
   R(p_t *, sοll);
   Α(sοll, os_unsoll, sοll, os_soll_free, 020, nar) O;
-)
-No(os_unsoll_apply)(
+}
+N(os_unsoll_apply) {
   R(p_t *, sοll);
   Α(sοll, os_unsoll, dot, 010, nar) O;
-)
-No(os_unsoll_free_apply)(
+}
+N(os_unsoll_free_apply) {
   R(p_t *, sοll);
   Α(sοll, os_unsoll_free, dot, 010, nar) O;
-)
+}
