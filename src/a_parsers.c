@@ -33,6 +33,7 @@ and4,               L)IN(L,
 and5,               L)IN(L,
 and5or,             L)IN(L,
 and5or3,            L)IN(L,
+and5or5,            L)IN(L,
 and7,               L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
@@ -100,7 +101,7 @@ enum {
     print("%s ", paper[Memo].p[i].cs);                                         \
   if (paper[Nexts].p[Ǎ].Q) print("\n  n:");                                    \
   for (Q_t i = 0; i < paper[Nexts].p[Ǎ].Q; i++)                                \
-    print("%s ", paper[Nexts].p[i].p[5].cs);                                   \
+    print("%s ", paper[Nexts].p[i].cs);                                        \
   if (paper[Line].p[Ǎ].Q) print("\n  l:");                                     \
   for (Q_t i = 0; i < paper[Line].p[Ǎ].Q; i++)                                 \
     print(" %s", paper[Line].p[i].p[4].cs);                                    \
@@ -185,26 +186,49 @@ N(is_visited) {
       return A(p) C(1);
   A(p) C(0);
 }
+N(increment_left_rec       ) { 
+  R(p_t*, p);
+  p_t *v = p[Nexts].p;
+  if (ο[5].cs) v[v[Ǎ].Q++].cs = ο[5].cs;
+  Α(p) C(1);
+}
+N(clear_left_rec           ) { 
+  R(p_t*, p);
+  p_t *v = p[Nexts].p;
+  v[Ǎ].Q = 0;
+  Α(p) C(1);
+}
+N(is_more_then_tokens_plus1) { 
+  R(p_t*, p);
+  p_t *v = p[Memo].p;
+  Q_t c = 0;
+  for (Q_t i = 0; i < v[Ǎ].Q; i++)
+    if(v[i].v == ο[5].v)
+      c++;
+  A(p) C(c > (p[Length].Q - p[Position].Q + 1));
+}
+
 N(open_door) { ο[6].Q = 0, C(1); }
 N(close_door) { ο[6].Q = 1, C(1); }
 N(is_closed) { C(ο[6].Q == 1); }
 
-N(orelse_oor_n){ Α(goto_or) O; }
-N(orelse_oor) { Α(is_visited,
-                   return_and,
-                   orelse_oor_n, split_line, andor2) O; }
-N(orelse_and) { Α(add_to_visited, return_and, and) O; }
-N(orelse_not) { Α(return_not) O; }
+N(orelse_oor_n) { Α(is_visited,
+                     return_and,
+                     goto_or, split_line, andor2) O; }
+N(orelse_oor  ) { Α(increment_left_rec, is_more_then_tokens_plus1, and, return_and, orelse_oor_n, andor) O; }
+N(orelse_and  ) { Α(clear_left_rec, add_to_visited, and, return_and, and) O; }
+N(orelse_not  ) { Α(return_not) O; }
 
-N(thenS_oor) { Α(is_visited,
-                 return_and,
-                 close_door, get_leftο, and, goto_or, and, andor5) O; }
-N(thenS_and) { Α(is_closed,
-                 open_door, get_rightο, and, goto_or, and,
-                 return_and, and5or) O; }
-N(thenS_not) { Α(return_not) O; }
+N(thenS_oor_n ) { Α(is_visited,
+                     return_and,
+                     close_door, get_leftο, and, goto_or, and, andor5) O; }
+N(thenS_oor   ) { Α(increment_left_rec, is_more_then_tokens_plus1, and, return_and, thenS_oor_n, andor) O; }
+N(thenS_and   ) { Α(is_closed,
+                     open_door, get_rightο, and, goto_or, and,
+                     clear_left_rec, add_to_visited, and, return_and, and, and5or5) O; }
+N(thenS_not   ) { Α(return_not) O; }
 
-N(term_oor) {
+N(term_oor    ) {
   Α(paper_match_input,
      paper_inc_position, clear_visited_memo, and, return_and, and,
      return_not, and5or) O;
@@ -248,12 +272,6 @@ N(thenS) {
 }
 N(term) { mk_term(T()); }
 N(empty) { mk_empty(T()); }
-N(exam_run) {
-  R(n_t, vs);
-  R(p_t *, paper);
-  ο[5].v = "return???";
-  Α(paper, vs, goto_or, drop, and) O;
-}
 
 NP(parse_n) {
   R(n_t, grammer);

@@ -76,9 +76,9 @@ N(set_o5) {
 N(term_b) { Α("b", term) O; }
 N(term_a) { Α("a", term) O; }
 
-N(Sa);
-N(Sa_Sa_term_a) { Α(Sa, term_a, thenS, "T", set_o5, and2) O; }
-N(Sa) { Α(term_b, Sa_Sa_term_a, orelse, "O", set_o5, and2) O; }
+N(S_);
+N(S_a) { Α(S_, term_a, thenS,   "T", set_o5, and2) O; }
+N(S_)  { Α(term_b, S_a, orelse, "O", set_o5, and2) O; }
 
 N(sS) { Α(term_s, sS, thenS, sS, thenS, empty, orelse, "sS", set_o5, and2) O; }
 
