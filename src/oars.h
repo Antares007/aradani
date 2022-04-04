@@ -39,7 +39,7 @@ typedef void (*n_t)(OARS);
 #define N(n)    void n(OARS)
 #define A(vs)   σ[α++].v = (void *)(vs),
 #define R(T, n) T n = (T)σ[--α].v
-#define G(r)    σ[ρ + r].c(T())
+#define G(r)    σ[ρ + (r)].c(T())
 #define O       σ[α - 1].c(ο, α - 1, ρ, σ)
 #define T(n)    n##ο, n##α, n##ρ, n##σ 
 #define C(r)    G(r)
