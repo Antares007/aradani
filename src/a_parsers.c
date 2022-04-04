@@ -94,8 +94,8 @@ enum {
   Line,
 };
 #define PP(Name)                                                               \
-  print("\n%2lx %s %lu d:%lu %s", ((Q_t)paper >> 12) & 0xFF, ο[5].cs,          \
-        paper[Position].Q, paper[Nexts].p[Ǎ].Q, #Name);                        \
+  print("\nP%lx p:%lu n:%lu %s %s", paper[6].Q,                                \
+        paper[Position].Q, paper[Nexts].p[Ǎ].Q, ο[4].cs, #Name);               \
   if (paper[Memo].p[Ǎ].Q) print("\n  m:");                                     \
   for (Q_t i = 0; i < paper[Memo].p[Ǎ].Q; i++)                                 \
     print("%s ", paper[Memo].p[i].cs);                                         \
@@ -115,8 +115,12 @@ N(paper_dump) {
 N(paper) {
   R(const char *, buffer);
   R(Q_t, position);
-  Α(position, buffer, cslen(buffer), 0, os_soll_n, 0, os_soll_n, and2, 0,
-    os_soll_n, and2, 6, os_soll_n, and2)
+  Α(position, buffer, cslen(buffer),
+     0, os_soll_n,
+     0, os_soll_n, and2,
+     0, os_soll_n, and2,
+     0,
+     7, os_soll_n, and3)
   O;
 }
 N(paper_dup) {
@@ -126,7 +130,8 @@ N(paper_dup) {
     op[3].v, dup_swap_drop,
     op[4].v, dup_swap_drop, and2,
     op[5].v, dup_swap_drop, and2,
-    6, os_soll_n, and2) O;
+    op[6].Q + 1,
+    7, os_soll_n, and3) O;
 }
 N(clear_visited_memo) {
   R(p_t *, paper);
@@ -164,48 +169,51 @@ N(goto_or) {
   Α(p, co0, oο, 2, os_queue_n,
     ο, p[Line].p, spush, and3) O;
 }
-NP(return_and) {
-  R(p_t *, p);
-  Α(p, co1, p[Line].p, spop, 2, os_queue_n, and2) O;
+N(return_and) {
+  R(p_t *, paper);
+  Α(paper, co1, paper[Line].p, spop, 2, os_queue_n, and2) O;
 }
 N(return_not) {
-  R(p_t *, p);
-  Α(p, co2, p[Line].p, spop, 2, os_queue_n, and2) O;
+  R(p_t *, paper);
+  Α(paper, co2, paper[Line].p, spop, 2, os_queue_n, and2) O;
 }
 N(add_to_visited) {
-  R(p_t*, p);
-  p_t *v = p[Memo].p;
+  R(p_t*, paper);
+  p_t *v = paper[Memo].p;
   if (ο[5].v) v[v[Ǎ].Q++].v = ο[5].v;
-  Α(p) C(1);
+  Α(paper) C(1);
 }
 N(is_visited) {
-  R(p_t*, p);
-  p_t *v = p[Memo].p;
+  R(p_t*, paper);
+  p_t *v = paper[Memo].p;
   for (Q_t i = 0; i < v[Ǎ].Q; i++)
     if(v[i].v == ο[5].v)
-      return A(p) C(1);
-  A(p) C(0);
+      return A(paper) C(1);
+  A(paper) C(0);
 }
 N(increment_left_rec       ) { 
-  R(p_t*, p);
-  p_t *v = p[Nexts].p;
+  R(p_t*, paper);
+  PP(increment_left_rec)
+  p_t *v = paper[Nexts].p;
   if (ο[5].cs) v[v[Ǎ].Q++].cs = ο[5].cs;
-  Α(p) C(1);
+  Α(paper) C(1);
 }
 N(clear_left_rec           ) { 
-  R(p_t*, p);
-  p_t *v = p[Nexts].p;
+  R(p_t*, paper);
+  PP(clear_left_rec)
+  p_t *v = paper[Nexts].p;
   v[Ǎ].Q = 0;
-  Α(p) C(1);
+  Α(paper) C(1);
 }
 N(is_more_then_tokens_plus1) { 
-  R(p_t*, p);
-  p_t *v = p[Memo].p;
+  R(p_t*, paper);
+  PP(is_more_then_tokens_plus1)
+  p_t *v = paper[Nexts].p;
   Q_t c = 0;
   for (Q_t i = 0; i < v[Ǎ].Q; i++)
     if(v[i].v == ο[5].v)
       c++;
-  A(p) C(c > (p[Length].Q - p[Position].Q + 1));
+  A(paper) C(c > (paper[Length].Q - paper[Position].Q + 2));
 }
 
 N(open_door) { ο[6].Q = 0, C(1); }
@@ -273,7 +281,7 @@ N(thenS) {
 N(term) { mk_term(T()); }
 N(empty) { mk_empty(T()); }
 
-NP(parse_n) {
+N(parse_n) {
   R(n_t, grammer);
   R(Q_t, pos);
   R(const char*, input);
@@ -281,7 +289,7 @@ NP(parse_n) {
               grammer, and,
               goto_or, and) O;
 }
-NP(p) {
+N(p) {
   R(p_t*, oο);
   Α(parse_n, oο, os_queue) O;
 }

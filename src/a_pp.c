@@ -80,11 +80,16 @@ N(S_);
 N(S_a) { Α(S_, term_a, thenS,   "T", set_o5, and2) O; }
 N(S_)  { Α(term_b, S_a, orelse, "O", set_o5, and2) O; }
 
-N(sS) { Α(term_s, sS, thenS, sS, thenS, empty, orelse, "sS", set_o5, and2) O; }
+NP(Sa) { Α(Sa, term_a, thenS,
+               term_b, orelse, "O", set_o5, and2) O; }
+
+N(sS) { Α(term_s, sS, thenS,
+                  sS, thenS,
+              empty, orelse, "sS", set_o5, and2) O; }
 
 // N(sSa) { Α(sS, term_a, thenS, "sSa", set_o5, and2) O; }
 
-N(exam) { Α("sssss", 0, sS, parse) O; }
+N(exam) { Α("baa", 0, Sa, parse) O; }
 
 N(მთავარი) { Α(exam) O; }
 

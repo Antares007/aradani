@@ -28,7 +28,7 @@ src/a_parse_tok.arsi:                   \
 	cat $^ > $@
 src/a_parse_u8cp.arsi:              \
 	src/a_parse_u8cp.oars      \
-	src/a_parser_pith.arsi
+	src/os.arsi
 	cat $^ > $@
 
 src/a_stream.arsi:                  \
