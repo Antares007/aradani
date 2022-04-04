@@ -45,7 +45,6 @@ or3,          imports);
     parse       :: R -> PosSet
     parse p     = p 0 */
 static NP(init) { C(1); }
-N(new_pith);
 N(spop) {
   R(p_t *, sο);
   if (sο[Ǎ].Q)
@@ -107,7 +106,7 @@ enum {
 
 N(paper_dump) {
   R(p_t*, paper);
-  PP(PPPPPPPPPPPPP)
+  PP(DUMP)
   A(paper) C(1);
 }
 N(paper) {
@@ -119,9 +118,12 @@ N(paper) {
 }
 N(paper_dup) {
   R(p_t *, op);
-  Α(op, op[0].Q, op[1].cs, op[2].Q, op[3].v, dup_swap_drop, op[4].v,
-    dup_swap_drop, and2, op[5].v, dup_swap_drop, and2, 6, os_soll_n, and2)
-  O;
+  Α(op,
+    op[0].Q, op[1].cs, op[2].Q,
+    op[3].v, dup_swap_drop,
+    op[4].v, dup_swap_drop, and2,
+    op[5].v, dup_swap_drop, and2,
+    6, os_soll_n, and2) O;
 }
 N(paper_push_next) {
   R(p_t *, paper);
@@ -150,26 +152,27 @@ N(get_leftο) { A(ο[7].c) C(1); }
 
 N(split_line) {
   R(n_t, onpaper);
-  Α(os_soll_dup, get_rightο, and, onpaper, and, get_leftο, and, onpaper, and) O;
+  Α(paper_dup, get_rightο, and, onpaper, and,
+                get_leftο, and, onpaper, and) O;
 }
 N(pname){
   R(p_t*, oο);
   print("%s\n", oο[4].cs);
   A(oο) C(1);
 }
-NP(goto_or) {
+N(goto_or) {
   R(p_t *, oο);
   R(p_t *, p);
-  Α(p, co0, oο, pname, 2, os_queue_n, and2,
+  Α(p, co0, oο, 2, os_queue_n,
     ο, p[Line].p, spush, and3) O;
 }
 NP(return_and) {
   R(p_t *, p);
-  Α(p, co1, p[Line].p, spop, pname, and, 2, os_queue_n, and2) O;
+  Α(p, co1, p[Line].p, spop, 2, os_queue_n, and2) O;
 }
-NP(return_not) {
+N(return_not) {
   R(p_t *, p);
-  Α(p, co2, p[Line].p, spop, pname, and, 2, os_queue_n, and2) O;
+  Α(p, co2, p[Line].p, spop, 2, os_queue_n, and2) O;
 }
 
 N(open_door) { ο[6].Q = 0, C(1); }
@@ -177,13 +180,13 @@ N(close_door) { ο[6].Q = 1, C(1); }
 N(is_closed) { C(ο[6].Q == 1); }
 
 N(orelse_oor_n){ Α(goto_or) O; }
-N(orelse_oor) { Α(orelse_oor_n, split_line) O; }
-N(orelse_and) { Α(return_and) O; }
-N(orelse_not) { Α(return_not) O; }
+NP(orelse_oor) { Α(orelse_oor_n, split_line) O; }
+NP(orelse_and) { Α(return_and) O; }
+NP(orelse_not) { Α(return_not) O; }
 
 N(thenS_oor) { Α(close_door, get_leftο, and, goto_or, and) O; }
 N(thenS_and) {
-  Α(paper_dump, is_closed, and,
+  Α(is_closed, 
     open_door, get_rightο, and, goto_or, and,
     return_and, and5or) O;
 }
@@ -233,49 +236,39 @@ N(thenS) {
 }
 N(term) { mk_term(T()); }
 N(empty) { mk_empty(T()); }
-
-N(set_state) {
-  R(Q_t, wc);
-  R(p_t *, oο);
-  while (wc)
-    oο[--wc + 7].v = σ[--α].v;
-  oο[5].Q = 0;
-  Α(oο) C(1);
-}
-N(ray_not) { Α(co2, ο[Φ].p, os_queue, ο, os_soll_free, and2) O; }
-N(new_pith) {
-  R(Q_t, wc);
-  R(n_t, oor);
-  Α(ο, 0, oor, god, ray_not, 512, os_new_pith, wc, set_state, and2) O;
-}
-static p_t memo[512][2];
-N(memoize_n) {
-  R(Q_t, id);
-  R(void *, v);
-  for (Q_t i = 0; i < sizeof(memo) / sizeof(*memo); i++)
-    if (memo[i][0].Q == 0)
-      return memo[i][0].Q = id, memo[i][1].v = v, A(v) C(1);
-  A(v) C(1);
-}
-N(memoize) {
-  R(Q_t, id);
-  for (Q_t i = 0; i < sizeof(memo) / sizeof(*memo); i++)
-    if (memo[i][0].Q == id)
-      return α = 0, A(memo[i][1].v) C(1);
-  Α(dot, id, memoize_n, and2) O;
-}
-
 N(exam_run) {
   R(n_t, vs);
   R(p_t *, paper);
   ο[5].v = "return???";
-  Α(ο, paper, paper_push_next, paper, vs, gor_apply, and3) O;
+  Α(paper, vs, goto_or, drop, and) O;
 }
+
+NP(parse_n) {
+  R(n_t, grammer);
+  R(Q_t, pos);
+  R(const char*, input);
+  Α(pos, input, paper,
+              grammer, and,
+              goto_or, and) O;
+}
+NP(p) {
+  R(p_t*, oο);
+  Α(parse_n, oο, os_queue) O;
+}
+N(setαzero   ) { α = 0, C(1); }
+N(paper_dump2) { Α(paper_dump, setαzero, and) O; }
 N(parse) {
-  R(n_t, r);
-  R(n_t, l);
-  Α(l, r, and, exam_run, and) O;
+  Α(os_wordump,
+    paper_dump2,
+    os_wordump,
+    "",
+    "",
+    "",
+    "",
+    7,
+    os_soll_n, setο, and, p, and) O;
 }
+
 EN(tail,
 empty,              L)EN(L,
 orelse,             L)EN(L,
@@ -283,4 +276,3 @@ paper,              L)EN(L,
 parse,              L)EN(L,
 term,               L)EN(L,
 thenS,        exports);
-

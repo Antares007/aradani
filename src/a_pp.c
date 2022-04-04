@@ -65,7 +65,7 @@ parse p     = p 0 */
 static NP(init) { C(1); }
 
 N(term_s) { Α("s", term) O; }
-N(exam_thenS) { Α(term_s, term_s, thenS) O; }
+NP(exam_thenS) { Α(term_s, term_s, thenS) O; }
 N(exam_orelse) { Α(empty, term_s, orelse) O; }
 N(set_o5) {
   R(Q_t, id);
@@ -81,21 +81,10 @@ N(Sa_Sa_term_a) { Α(Sa, term_a, thenS, "T", set_o5, and2) O; }
 N(Sa) { Α(term_b, Sa_Sa_term_a, orelse, "O", set_o5, and2) O; }
 N(sS) { Α(term_s, sS, thenS, sS, thenS, empty, orelse, "sS", set_o5, and2) O; }
 // N(sSa) { Α(sS, term_a, thenS, "sSa", set_o5, and2) O; }
-N(exam) { Α(0, "sssss", paper, exam_thenS, parse) O; }
 
-N(set_α_zero) { α = 0, C(1); }
-N(paper_dump) {
-  R(p_t *, paper);
-  Α(paper, os_soll_free, os_wordump, and, set_α_zero, and) O;
-}
+N(exam) { Α("sssss", 0, exam_orelse, parse) O; }
 
-NP(Not) { Α(paper_dump) O; }
-NP(And) { C(1); }
-NP(Oor) { Α(paper_dump) O; }
-
-N(mk_dumper) { Α(ο, 0, Oor, And, Not, 512, os_new_pith) O; }
-
-N(მთავარი) { Α(exam, mk_dumper, 1, os_queue_n, and2) O; }
+N(მთავარი) { Α(exam) O; }
 
 
 N(term_i) { Α("i", term) O; }
