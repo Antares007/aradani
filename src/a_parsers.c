@@ -35,7 +35,9 @@ and5or,             L)IN(L,
 and5or3,            L)IN(L,
 and7,               L)IN(L,
 andor,              L)IN(L,
+andor2,             L)IN(L,
 andor3,             L)IN(L,
+andor5,             L)IN(L,
 or3,          imports);
 // clang-format off
 /*  (<+>)       :: R -> R -> R
@@ -125,19 +127,14 @@ N(paper_dup) {
     op[5].v, dup_swap_drop, and2,
     6, os_soll_n, and2) O;
 }
-N(paper_push_next) {
+N(clear_visited_memo) {
   R(p_t *, paper);
-  R(p_t *, next);
-  Α(next, paper[Nexts].p, spush) O;
-}
-N(gor_apply) {
-  R(p_t *, oο);
-  Α(co0, oο, os_queue) O;
+  paper[Memo].p[Ǎ].Q = 0;
+  A(paper) C(1);
 }
 N(paper_inc_position) {
   R(p_t *, paper);
   paper[Position].Q++;
-  paper[Memo].p[Ǎ].Q = 0;
   A(paper) C(1);
 }
 N(paper_match_input) {
@@ -174,28 +171,43 @@ N(return_not) {
   R(p_t *, p);
   Α(p, co2, p[Line].p, spop, 2, os_queue_n, and2) O;
 }
-
+N(add_to_visited) {
+  R(p_t*, p);
+  p_t *v = p[Memo].p;
+  if (ο[5].v) v[v[Ǎ].Q++].v = ο[5].v;
+  Α(p) C(1);
+}
+N(is_visited) {
+  R(p_t*, p);
+  p_t *v = p[Memo].p;
+  for (Q_t i = 0; i < v[Ǎ].Q; i++)
+    if(v[i].v == ο[5].v)
+      return A(p) C(1);
+  A(p) C(0);
+}
 N(open_door) { ο[6].Q = 0, C(1); }
 N(close_door) { ο[6].Q = 1, C(1); }
 N(is_closed) { C(ο[6].Q == 1); }
 
 N(orelse_oor_n){ Α(goto_or) O; }
-NP(orelse_oor) { Α(orelse_oor_n, split_line) O; }
-NP(orelse_and) { Α(return_and) O; }
-NP(orelse_not) { Α(return_not) O; }
+N(orelse_oor) { Α(is_visited,
+                   return_and,
+                   orelse_oor_n, split_line, andor2) O; }
+N(orelse_and) { Α(add_to_visited, return_and, and) O; }
+N(orelse_not) { Α(return_not) O; }
 
-N(thenS_oor) { Α(close_door, get_leftο, and, goto_or, and) O; }
-N(thenS_and) {
-  Α(is_closed, 
-    open_door, get_rightο, and, goto_or, and,
-    return_and, and5or) O;
-}
+N(thenS_oor) { Α(is_visited,
+                 return_and,
+                 close_door, get_leftο, and, goto_or, and, andor5) O; }
+N(thenS_and) { Α(is_closed,
+                 open_door, get_rightο, and, goto_or, and,
+                 return_and, and5or) O; }
 N(thenS_not) { Α(return_not) O; }
 
 N(term_oor) {
   Α(paper_match_input,
-     paper_inc_position, return_and, and,
-     return_not, and3or) O;
+     paper_inc_position, clear_visited_memo, and, return_and, and,
+     return_not, and5or) O;
 }
 N(empty_oor) { Α(return_and) O; }
 
@@ -258,9 +270,9 @@ NP(p) {
 N(setαzero   ) { α = 0, C(1); }
 N(paper_dump2) { Α(paper_dump, setαzero, and) O; }
 N(parse) {
-  Α(os_wordump,
+  Α(paper_dump2,
     paper_dump2,
-    os_wordump,
+    paper_dump2,
     "",
     "",
     "",
