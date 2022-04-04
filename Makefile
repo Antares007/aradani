@@ -8,6 +8,11 @@ run: all
 all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_dynamic.arsi
 nm: nm.c src/os/page.o
 
+src/a_pp.arsi:       \
+	src/a_pp.oars      \
+	src/a_parsers.arsi
+	cat $^ > $@
+
 src/a_stdio.arsi:            \
 	src/a_stdio.oars           \
 	src/a_stdout.oars          \
