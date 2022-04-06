@@ -13,6 +13,8 @@ nar,                L)IN(L,
 os_new_pith,        L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll_free,       L)IN(L,
+os_unsoll,          L)IN(L,
+os_unsoll_n,        L)IN(L,
 os_wordump,         L)IN(L,
 
 and,                L)IN(L,
@@ -20,11 +22,12 @@ and2,               L)IN(L,
 
 empty,              L)IN(L,
 orelse,             L)IN(L,
-paper,              L)IN(L,
 parse,              L)IN(L,
 term,               L)IN(L,
 thenS,        imports);
 // clang-format on
+//
+
 /*
 s    = np vp thenS
        s  pp thenS orelse3      "s" memoize
