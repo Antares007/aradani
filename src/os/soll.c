@@ -34,6 +34,7 @@ N(os_soll_n) {
   α -= sοll[Ǎ].Q = wc;
   for (Q_t i = 0; i < wc; i++)
     sοll[i].v = σ[α + i].v;
+  sοll[Φ].p = ο;
   Α(sοll) C(1);
 }
 N(os_soll) {
