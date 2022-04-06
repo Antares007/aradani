@@ -10,6 +10,7 @@ god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
 nar,                L)IN(L,
+os_queue,           L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll,            L)IN(L,
 os_soll_dup,        L)IN(L,
@@ -53,36 +54,72 @@ N(binary_unsoll_n) {
 }
 N(binary_unsoll) {
   R(p_t *, ps);
-  Α(ο, os_unsoll, drop, and, dot, and, ps, binary_unsoll_n, and2) O;
+  Α(ο, os_unsoll, drop3, and, dot, and, ps, binary_unsoll_n, and2) O;
 }
 N(unary_unsoll) {
   R(p_t *, ps);
   n_t ray = ο[ο[Ǎ].Q - 2].c;
   Α(ο, os_unsoll, drop2, drop, and, soll, and, ps, ray, and2) O;
 }
-N(variable3) { Α(3, soll_n, variable_ray, binary_unsoll, soll, and3) O; }
-N(variable2) { Α(2, soll_n, variable_ray, binary_unsoll, soll, and3) O; }
-N(variable ) { Α(1, soll_n, variable_ray, binary_unsoll, soll, and3) O; }
-N(orelse3  ) { Α(3, soll_n, orelse_ray,   binary_unsoll, soll, and3) O; }
-N(orelse2  ) { Α(2, soll_n, orelse_ray,   binary_unsoll, soll, and3) O; }
-N(orelse   ) { Α(1, soll_n, orelse_ray,   binary_unsoll, soll, and3) O; }
-N(thenS3   ) { Α(3, soll_n, thenS_ray,    binary_unsoll, soll, and3) O; }
-NP(thenS2  ) { Α(2, soll_n, thenS_ray,    binary_unsoll, soll, and3) O; }
-N(thenS    ) { Α(1, soll_n, thenS_ray,    binary_unsoll, soll, and3) O; }
-N(empty    ) { Α(        0, empty_ray,    unary_unsoll,  soll      ) O; }
-N(term     ) { Α(        1, term_ray,     unary_unsoll,  soll      ) O; }
+N(variable_unsoll_n) {
+  R(p_t*, ps);
+  R(p_t*, lhsoll);
+  p_t *rhsoll = ο[ο[Ǎ].Q - 3].p; n_t ray = ο[ο[Ǎ].Q - 2].c;
+  Α(rhsoll, lhsoll, ps, ray) O;
+}
+N(variable_unsoll) {
+  R(p_t*, ps);
+  Α(ο, os_unsoll, drop3, and, dot, and, ps, variable_unsoll_n, and2) O;
+}
+N(variable_n   ) { Α(soll_n, soll, variable_ray, binary_unsoll, soll, and3) O; }
+N(orelse_n     ) { Α(soll_n, orelse_ray, binary_unsoll, soll, and3) O; }
+N(thenS_n      ) { Α(soll_n, soll,  thenS_ray, soll, and3) O; }
+
+N(empty        ) { Α(soll, 0, empty_ray, soll, and3) O; }
+N(term         ) { Α(soll, 0, term_ray, soll, and3) O; }
+
+N(variable3    ) { Α(3, variable_n) O; }
+N(variable2    ) { Α(2, variable_n) O; }
+N(variable     ) { Α(1, variable_n) O; }
+N(orelse3      ) { Α(3, orelse_n) O; }
+N(orelse2      ) { Α(2, orelse_n) O; }
+N(orelse       ) { Α(1, orelse_n) O; }
+N(thenS3       ) { Α(3, thenS_n) O; }
+N(thenS2       ) { Α(2, thenS_n) O; }
+N(thenS        ) { Α(1, thenS_n) O; }
 
 NP(pgod        ) { C(1); }
-NP(example     ) { Α("a", term, pgod, variable, "sssss", apply, and2) O; }
-NP(variable_ray) { 
+
+N(dump_paper  );N(paper);
+NP(exam_thenS ) { Α("thenS", "s", term, "s", term, thenS2) O; }
+
+N(exam_orelse ) { Α(     empty, 's', term, orelse2) O; }
+
+#define Var(Name, ...) N(Name) { Α(__VA_ARGS__, #Name, variable) O; }
+Var(Sa,
+    Sa, 'a', term, thenS2, 'b', term, orelse2)
+
+  // O
+  // O
+  // O
+  // o
+  // o
+NP(example_     ) { Α("a", term, god, variable, "sssss", apply, and2) O; }
+NP(example     ) { Α(co0, pgod, 1, os_soll_n, os_queue, and) O; }
+
+NP(variable_ray) {
+  print("AAA\n");
 }
 
-N(orelse_ray) { }
+N(orelse_ray   ) { }
 
 N(thenS_ray_next) {
   //Α(add_right_simbol_to_nexts_list, and,
   //   continue_on_left_simbol, and) O;
 }
+// we can name any chunk of machine code
+// and define continuation points in form of
+// rays with help of sentence pith.
 // Make a choice, write it down, think like, u already
 // have all the data available to make it;
 // It is like monad thing, data is hidden behind words.
@@ -106,13 +143,6 @@ N(empty_ray) {
   //Α(goto_next) O;
 }
 
-N(dump_paper  );N(paper);
-NP(exam_thenS ) { Α("thenS", "s", term, "s", term, thenS2) O; }
-
-N(exam_orelse ) { Α(     empty, 's', term, orelse2) O; }
-
-N(Sa          ) { Α(Sa,         'a', term, thenS2,
-                                'b', term, orelse2) O; }
 
 
 Q_t cslen(const char *cs);
