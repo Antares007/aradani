@@ -29,8 +29,6 @@ and4,               L)IN(L,
 andor,        imports);
 N(orelse_n) { Α(ο[0].c) O; }
 N(thenS_n ) { Α(ο[1].c) O; }
-N(empty_n ) { Α(ο[2].c) O; }
-N(term_n  ) { Α(ο[3].c) O; }
 N(var_n   ) { Α(ο[4].c) O; }
 N(orelse3 ) { Α(3, ο[0].c) O; }
 N(orelse2 ) { Α(2, ο[0].c) O; }
@@ -38,14 +36,8 @@ N(orelse  ) { Α(1, ο[0].c) O; }
 N(thenS3  ) { Α(3, ο[1].c) O; }
 N(thenS2  ) { Α(2, ο[1].c) O; }
 N(thenS   ) { Α(1, ο[1].c) O; }
-N(empty3  ) { Α(3, ο[2].c) O; }
-N(empty2  ) { Α(2, ο[2].c) O; }
-N(empty1  ) { Α(1, ο[2].c) O; }
-N(empty   ) { Α(0, ο[2].c) O; }
-N(term3   ) { Α(3, ο[3].c) O; }
-N(term2   ) { Α(2, ο[3].c) O; }
-N(term    ) { Α(1, ο[3].c) O; }
-N(var3    ) { Α(3, ο[4].c) O; }
+N(empty   ) { Α(ο[2].c) O; }
+N(term    ) { Α(ο[3].c) O; }
 N(var2    ) { Α(2, ο[4].c) O; }
 N(var     ) { Α(1, ο[4].c) O; }
 
@@ -64,7 +56,9 @@ N(soll         ) { Α(os_soll, setο, and) O; }
 N(soll_n       ) { Α(os_soll_n, setο, and) O; }
 
 
-N(Š) { Α(Š, "a", term, thenS2, "b", term, orelse2, 0, Š, var2) O; }
+N(Š) {
+  Α(Š, "a", term, thenS2,
+       "b", term, orelse2, "Š", var) O; }
 /*            Š→Ša|b
          Š            a ← T
         / \               ↑
@@ -78,12 +72,12 @@ N(Š) { Α(Š, "a", term, thenS2, "b", term, orelse2, 0, Š, var2) O; }
 NP(r1) { C(1); }
 NP(r2) { C(1); }
 NP(r3) { C(1); }
-NP(sTs) { Α(r1,   "s", term2,
-            r2,   "s", term2, thenS3,
+NP(sTs) { Α(    "s", term,
+                "s", term, thenS2,
             r3, "sTs", var2) O; }
-N(sOs) { Α(r1,  empty1,
-           r2, "s",  term2, thenS3,
-           r3, "sOs", var2) O; }
+N(sOs) { Α(     empty,
+                "s", term, thenS2,
+            r3, "sOs", var2) O; }
 
 typedef struct lp_t {
   p_t ostv[5];
@@ -102,22 +96,14 @@ NP(orelse_ray   ) {
 NP(thenS_ray   ) { TS(lp_t);
   Α(soll_n, o->nextsolls, spush, and2, dot, and) O;
 }
-NP(empty_ray   ) { TS(lp_t);
-  R(Q_t, wc);
-  α -= wc;
-  Α(o->nextsolls, spop, os_unsoll_free, and, dot, and) O;
-}
+
 NP(reduce_next ) { TS(lp_t); Α(o->nextsolls, spop, os_unsoll_free, and, dot, and) O; }
-NP(pos_cpp) { TS(lp_t);
-  o->pos++, C(1);
-}
+NP(empty_ray   ) { Α(reduce_next) O; }
+NP(pos_cpp) { TS(lp_t); o->pos++, C(1); }
 NP(term_ray    ) { TS(lp_t);
-  R(Q_t, wc);
   R(const char*, str);
-  R(n_t, r);
-  (void)wc;
   if (o->pos < o->len && o->input[o->pos] == str[0]) 
-    Α(r, reduce_next, and) O;
+    Α(reduce_next) O;
   else 
     ;
 }
@@ -140,7 +126,7 @@ NP(varsoll     ) {
     11, os_soll_n, and2) O;
 }
 NP(example    ) {
-  Α(sOs,
+  Α(sTs,
      //os_unsoll_free, and, os_wordump, and,
      varsoll, os_queue, and) O;
 }
