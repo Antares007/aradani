@@ -28,11 +28,12 @@ and3or,             L)IN(L,
 and4,               L)IN(L,
 and4or,             L)IN(L,
 and5or,             L)IN(L,
-andor,        imports);
+andor,              L)IN(L,
+or,           imports);
 
 N(init         ) { C(1); }
-NP(spop         ) { R(p_t *, sο); if (sο[Ǎ].Q) A(sο[--sο[Ǎ].Q].v) C(1); else C(2); }
-NP(spush        ) { R(p_t *, sο); R(void *, v); if ((sο[Ǎ].Q + 1) < sο[Σ].Q) sο[sο[Ǎ].Q++].v = v, C(1); else C(2); }
+N(spop         ) { R(p_t *, sο); if (sο[Ǎ].Q) A(sο[--sο[Ǎ].Q].v) C(1); else C(2); }
+N(spush        ) { R(p_t *, sο); R(void *, v); if ((sο[Ǎ].Q + 1) < sο[Σ].Q) sο[sο[Ǎ].Q++].v = v, C(1); else C(2); }
 N(setο         ) { R(p_t *, oο); oο[Φ].p = ο; Α(oο) C(1); }
 N(soll_n       ) { Α(os_soll_n, setο, and) O; }
 
@@ -42,9 +43,10 @@ N(thenS3  ) { Α(3, ο[1].c) O; } N(thenS2  ) { Α(2, ο[1].c) O; } N(thenS   ) 
 N(empty   ) { Α(ο[2].c) O; } N(term    ) { Α(ο[3].c) O; } N(var2    ) { Α(ο[4].c) O; }
 N(var     ) { Α(god, ο[4].c) O; }
 
+N(r) { C(1); }
 N(Š) {
   Α(Š, "a", term, thenS2,
-       "b", term, orelse2, "Š", var) O; }
+       "b", term, orelse2, r, "Š", var2) O; }
 /*            Š→Ša|b
          Š            a ← T
         / \               ↑
@@ -55,53 +57,58 @@ N(Š) {
    b                  b ← O
                       
    */
-NP(r1) { C(1); }
-NP(r2) { C(1); }
-NP(r3) { C(1); }
+N(r1) { C(1); }
+N(r2) { C(1); }
+N(r3) { C(1); }
 
-NP(sTs) { Α(    "s", term,
+N(sTs) { Α(    "s", term,
                 "s", term, thenS2,
             r3, "sTs", var2) O; }
 N(sOs) { Α(     empty,
                 "s", term, orelse2,
             r3, "sOs", var2) O; }
 
-N(sS ) { Α("s", term, sS, thenS, sS, thenS,
+NP(sS) { Α("s", term, sS, thenS, 
                              empty, orelse, r3, "sS", var2) O; }
 typedef struct lp_t {
   p_t ostv[5]; const char* input; Q_t len; Q_t pos; char* name; Q_t lc; p_t* nextsolls;
 } lp_t;
+
 #define TS(T) T*o=(T*)ο;(void)o
+
 N(variable_soll );
-NP(rleft) { C(1); }
-NP(rright) { C(1); }
+N(rleft         ) { C(1); }
+N(rright        ) { C(1); }
 N(isnot_variable) { R(n_t, nar); A(nar) C(nar != var2 && nar != var); }
 
-NP(orelse_ray_nn    ) { TS(lp_t); Α(o->input, o->pos, variable_soll, os_queue, and) O; }
-NP(orelse_ray_n    ) { Α(isnot_variable,
-                          rleft, "left", var2, god,
-                          god, and4or, orelse_ray_nn, and) O; }
-N(chain_var_soll   ) { TS(lp_t); Α(o->input, o->pos, variable_soll) O; }
-NP(orelse_ray_l    ) { R(Q_t, wc); Α(chain_var_soll, wc + 3, os_queue_n, and2, orelse_ray_n, and) O; }
-NP(orelse_ray      ) { R(Q_t, wc);
+N(orelse_ray_nn ) { TS(lp_t); Α(o->input, o->pos, variable_soll, os_queue, and) O; }
+NP(orelse_ray_n ) { Α(isnot_variable,
+                      rleft, "left", var2, god,
+                      god, and4or, orelse_ray_nn, and) O; }
+N(chain_var_soll) { TS(lp_t); Α(o->input, o->pos, variable_soll) O; }
+N(orelse_ray_l  ) { R(Q_t, wc); Α(chain_var_soll, wc + 3, os_queue_n, and2, orelse_ray_n, and) O; }
+NP(orelse_ray   ) { R(Q_t, wc);
   Α(isnot_variable,
      rright, "right", var2, god,
      god, and4or, wc, orelse_ray_l, and2) O;
 }
-N(print_state      ) { TS(lp_t); print("%s pos:%lu nsc:%lu lc:%lu\n", o->input, o->pos, o->nextsolls[Ǎ].Q, o->lc); C(1); }
+NP(print_state     ) { TS(lp_t); print("%s pos:%lu nsc:%lu lc:%lu\n", o->input, o->pos, o->nextsolls[Ǎ].Q, o->lc); C(1); }
 N(can_match_input  ) { TS(lp_t); R(char*, s); C(o->pos < o->len && o->input[o->pos] == s[0]); }
 N(move_ahead       ) { TS(lp_t); o->pos++, C(1); }
 NP(thenS_ray       ) { TS(lp_t); Α(soll_n, o->nextsolls, spush, and2, dot, and) O; }
 N(reduce_next_soll ) { TS(lp_t); Α(o->nextsolls, spop, os_unsoll_free, and, dot, and) O; }
-NP(term_ray        ) { TS(lp_t); Α(can_match_input, move_ahead, and, reduce_next_soll, and) O; }
+NP(term_ray        ) { TS(lp_t); Α(can_match_input, move_ahead, and, reduce_next_soll, and, print_state, or) O; }
 NP(var_ray         ) { TS(lp_t);
   R(char *, name);
   R(n_t, r);
   if (o->name == 0) {
-    o->name = name, Α(r, print_state, and, 3, soll_n, o->nextsolls, spush, and2, dot, and) O;
+    o->name = name,
+    print("AAA %s\n", o->name), Α(r, print_state, and, 3, soll_n, o->nextsolls, spush, and2, dot, and) O;
   } else if (cmp(o->name, name) == 0) {
-    o->lc++;
-  } else O;
+    print("BBB %s\n", o->name), o->lc++;
+  } else {
+    print("CCC %s\n", o->name), O;
+  }
 }
 Q_t cslen(const char *cs);
 N(variable_soll ) {
@@ -114,10 +121,10 @@ N(variable_soll ) {
     0, os_soll_n, // next_solls
     11, os_soll_n, and2) O;
 }
-NP(example      ) {
-  Α(sOs,
+N(example      ) {
+  Α(sS,
      //os_unsoll_free, and, os_wordump, and,
-     "sssss", 0, variable_soll, os_queue, and) O;
+     "ss", 0, variable_soll, os_queue, and) O;
 }
 
 N(მთავარი     ) { Α(example) O; }
