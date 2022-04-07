@@ -26,6 +26,8 @@ and2or,             L)IN(L,
 and3,               L)IN(L,
 and3or,             L)IN(L,
 and4,               L)IN(L,
+and4or,             L)IN(L,
+and5or,             L)IN(L,
 andor,        imports);
 
 N(init         ) { C(1); }
@@ -56,12 +58,16 @@ N(Š) {
 NP(r1) { C(1); }
 NP(r2) { C(1); }
 NP(r3) { C(1); }
+
 NP(sTs) { Α(    "s", term,
                 "s", term, thenS2,
             r3, "sTs", var2) O; }
 N(sOs) { Α(     empty,
                 "s", term, orelse2,
             r3, "sOs", var2) O; }
+
+N(sS ) { Α("s", term, sS, thenS, sS, thenS,
+                             empty, orelse, r3, "sS", var2) O; }
 typedef struct lp_t {
   p_t ostv[5]; const char* input; Q_t len; Q_t pos; char* name; Q_t lc; p_t* nextsolls;
 } lp_t;
@@ -69,14 +75,18 @@ typedef struct lp_t {
 N(variable_soll );
 NP(rleft) { C(1); }
 NP(rright) { C(1); }
-NP(orelse_ray_n    ) { TS(lp_t);
-  Α(rleft,  "left", var2,
-    o->input, o->pos, variable_soll, os_queue, and) O;
-}
-NP(orelse_ray      ) { TS(lp_t);
-  R(Q_t, wc);
-  Α(rright, "right", var2,
-    o->input, o->pos, variable_soll, wc + 3, os_queue_n, and2, orelse_ray_n, and) O;
+N(isnot_variable) { R(n_t, nar); A(nar) C(nar != var2 && nar != var); }
+
+NP(orelse_ray_nn    ) { TS(lp_t); Α(o->input, o->pos, variable_soll, os_queue, and) O; }
+NP(orelse_ray_n    ) { Α(isnot_variable,
+                          rleft, "left", var2, god,
+                          god, and4or, orelse_ray_nn, and) O; }
+N(chain_var_soll   ) { TS(lp_t); Α(o->input, o->pos, variable_soll) O; }
+NP(orelse_ray_l    ) { R(Q_t, wc); Α(chain_var_soll, wc + 3, os_queue_n, and2, orelse_ray_n, and) O; }
+NP(orelse_ray      ) { R(Q_t, wc);
+  Α(isnot_variable,
+     rright, "right", var2, god,
+     god, and4or, wc, orelse_ray_l, and2) O;
 }
 N(print_state      ) { TS(lp_t); print("%s pos:%lu nsc:%lu lc:%lu\n", o->input, o->pos, o->nextsolls[Ǎ].Q, o->lc); C(1); }
 N(can_match_input  ) { TS(lp_t); R(char*, s); C(o->pos < o->len && o->input[o->pos] == s[0]); }
