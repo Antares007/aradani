@@ -67,11 +67,18 @@ typedef struct lp_t {
 } lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
 N(variable_soll );
-NP(orelse_ray   ) {
-  R(Q_t, wc); α -= wc, O;
-  Α(variable_soll) O;
+NP(rleft) { C(1); }
+NP(rright) { C(1); }
+NP(orelse_ray_n    ) { TS(lp_t);
+  Α(rleft,  "left", var2,
+    o->input, o->pos, variable_soll, os_queue, and) O;
 }
-N(print_state      ) { TS(lp_t); print("%s pos:%lu nsc:%lu lc:%lc\n", o->input, o->pos, o->nextsolls[Ǎ].Q, o->lc); C(1); }
+NP(orelse_ray      ) { TS(lp_t);
+  R(Q_t, wc);
+  Α(rright, "right", var2,
+    o->input, o->pos, variable_soll, wc + 3, os_queue_n, and2, orelse_ray_n, and) O;
+}
+N(print_state      ) { TS(lp_t); print("%s pos:%lu nsc:%lu lc:%lu\n", o->input, o->pos, o->nextsolls[Ǎ].Q, o->lc); C(1); }
 N(can_match_input  ) { TS(lp_t); R(char*, s); C(o->pos < o->len && o->input[o->pos] == s[0]); }
 N(move_ahead       ) { TS(lp_t); o->pos++, C(1); }
 NP(thenS_ray       ) { TS(lp_t); Α(soll_n, o->nextsolls, spush, and2, dot, and) O; }
@@ -98,7 +105,7 @@ N(variable_soll ) {
     11, os_soll_n, and2) O;
 }
 NP(example      ) {
-  Α(sTs,
+  Α(sOs,
      //os_unsoll_free, and, os_wordump, and,
      "sssss", 0, variable_soll, os_queue, and) O;
 }
