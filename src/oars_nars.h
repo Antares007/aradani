@@ -15,5 +15,5 @@
 
 #define SS(Name, T) S(Name) { T*s = (T*)&ο[7]; NS_
 #define SSP(Name, T) SP(Name) { T*s = (T*)&ο[7]; NS_
-#define SarS(Name, T) S(Name) { T*s = (T*)&ο[7]; NarS_
+#define SarS(Name, T) SP(Name) { T*s = (T*)&ο[7]; NarS_
 #define SarSP(Name, T) SP(Name) { T*s = (T*)&ο[7]; NarS_
