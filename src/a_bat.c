@@ -54,16 +54,16 @@ N(coll) {
   R(n_t, nar);
   nar(oο, α, ρ, σ);
 }
-N(sopo) {
+N(soll_pop) {
   R(p_t *, sο);
   if (sο[Ǎ].Q) A(sο[--sο[Ǎ].Q].v) C(1); else C(0);
 }
-N(sopush) {
+N(soll_push) {
   R(p_t *, sο);
   R(void *, v);
   if ((sο[Ǎ].Q + 1) < sο[Σ].Q) sο[sο[Ǎ].Q++].v = v, C(1); else C(0);
 }
-N(sofi) {
+N(soll_contains) {
   R(p_t *, sο);
   for (Q_t i = 0; i < sο[Ǎ].Q; i++)
     if (sο[i].v == σ[α - 1].v)
@@ -80,12 +80,12 @@ N(term) { Α(ο[3].c) O; }
 N(var) { Α(ο[4].c) O; }
 N(r) { C(1); }
 
-/*            Š→Ša|b
-         Š            a ← T
+/*            S→Ša|b
+         S            a ← T
         / \               ↑
-       Š   a          b ← O
+       S   a          b ← O
       / \                 ↑
-     Š   a            a ← T
+     S   a            a ← T
     /                     ↑
    b                  b ← O 
 Parser computes multiple results, for ambiguous cases, incrementally */
@@ -117,13 +117,6 @@ N(sOs) { Α(empty,
 N(sS  ) { Α("s", term, sS, thenS, 
                    empty, orelse, "sS", var) O; }
 
-Nar(Exp )(
-    Exp, "+", term, thenS2, Exp, thenS,
-    Exp, "-", term, thenS2, Exp, thenS, orelse,
-    Exp, "*", term, thenS2, Exp, thenS, orelse,
-    Exp, "/", term, thenS2, Exp, thenS, orelse,
-    "i", term, orelse,
-          Exp, var)
 #include <stdio.h>
 N(ps ) { R(const char*, str); print("%s", str), C(1); }
 N(pnl) {                      print("\n"     ), C(1); }
@@ -144,36 +137,44 @@ N(term_b    ) { Α("b", term) O; }
 N(drop_n    ) { R(Q_t, wc); α -= wc; C(1); }
 N(drop      ) { α -= 1; C(1); }
 N(ppar      ) { R(n_t, n); Α("(", ps, n, and, ")", ps, and2) O; }
-Sar(por)(" || ", ps)
-Sar(pand)(" && ", ps)
+Nar(por)(" || ", ps)
+Nar(pand)(" && ", ps)
 
 NarP(Š)(Š, term_a, thenS,
            term_b, orelse, Š, var)
+Nar(Exp )(
+    Exp, "+", term, thenS2, Exp, thenS,
+    Exp, "-", term, thenS2, Exp, thenS, orelse,
+    Exp, "*", term, thenS2, Exp, thenS, orelse,
+    Exp, "/", term, thenS2, Exp, thenS, orelse,
+    "i", term, orelse,
+          Exp, var)
 
-Sar(push_to_nexts)(os_soll_n, ο[8].p, sopush, and2)
-Sar(enter)(dot, ppar)
+Nar(push_to_nexts)(os_soll_n, ο[8].p, soll_push, and2)
+Nar(enter)(dot, ppar)
 
-Sar(check_door)(ο[7].v, sofi)
-Sar(center)(check_door,
+Nar(check_door)(ο[7].v, soll_contains)
+Nar(center)(check_door,
               "rec", ps,
               enter, and2or)
-Sar(cont_from_nexts)(
-  ο[8].p, sopo,
+Nar(cont_from_nexts)(
+  ο[8].p, soll_pop,
     os_unsoll_free, pand, and, center, and,
     god, and5or)
-Sar(or_r)(center, por, and, center, and)
-Sar(ts_r)(push_to_nexts, check_door, and,
+
+SarP(or_r)(center, por, and, center, and)
+SarP(ts_r)(push_to_nexts, check_door, and,
   "rec", ps, cont_from_nexts, and,
   enter, and4or)
-Sar(em_r)("ε", ps, cont_from_nexts, and)
-Sar(tr_r)("\"", ps, ps, and, "\"", ps, and2, cont_from_nexts, and)
-Sar(va_r)(ο[7].v, sopush, dot, and)
+SarP(em_r)("ε", ps, cont_from_nexts, and)
+SarP(tr_r)("\"", ps, ps, and, "\"", ps, and2, cont_from_nexts, and)
+SarP(va_r)(ο[7].v, soll_push, dot, and)
 
-Sar(example)(
+Nar(example)(
   Exp, or_r, ts_r, em_r, tr_r, va_r, 7, 5, 0, os_soll_n,
-                                         0, os_soll_n, and2,
-                                         9, os_soll_n, and2,
-                                            coll,      and, "hello bro", ps, and2)
+                                           0, os_soll_n, and2,
+                                           9, os_soll_n, and2,
+                                              coll,      and, "hello bro", ps, and2)
 
 N(variable_soll     );
 N(orelse_ray       ) { TS(lp_t);
@@ -187,11 +188,11 @@ N(can_match_input  ) { TS(lp_t); R(char*, s); C(o->pos < o->len && o->input[o->p
 N(move_ahead      ) { TS(lp_t); o->pos++, o->lc = 0, C(1); }
 N(thenS_ray        ) { TS(lp_t);
   Α(soll_n, o->nextsolls,
-     sopush, and2,
+     soll_push, and2,
      dot, and) O;
 }
 N(reduce_next_soll) { TS(lp_t);
-  Α(o->nextsolls, sopo, os_unsoll_free, and, dot, and) O; }
+  Α(o->nextsolls, soll_pop, os_unsoll_free, and, dot, and) O; }
 N(term_ray         ) { TS(lp_t);
   Α(can_match_input, move_ahead, and, reduce_next_soll, and, "drop", print_state, or2) O;
 }
@@ -200,7 +201,7 @@ N(var_ray          ) { TS(lp_t);
   R(char *, name);
   if (o->name == 0)
     o->name = name,
-    Α(print_state, and, 3, soll_n, o->nextsolls, sopush, and2, dot, and) O;
+    Α(print_state, and, 3, soll_n, o->nextsolls, soll_push, and2, dot, and) O;
   else if (cmp(o->name, name) == 0) 
       ;
   else

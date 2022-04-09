@@ -6,12 +6,10 @@
 #define Nargo(Name) Narg0(Name)()
 #define No(Name) N0(Name)()
 #define Sargo(Name) static Nargo(Name)
-#define So(Name) static No(Name) // :)
 
 #define NargoP(Name) Narg0P(Name)()
 #define NoP(Name) N0P(Name)()
 #define SargoP(Name) static Nargo(Name)
-#define SoP(Name) static No(Name)
 /*
 const RS = (a, i) =>
   a
