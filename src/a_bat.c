@@ -41,8 +41,19 @@ andor4,             L)IN(L,
 andor5,             L)IN(L,
 or,                 L)IN(L,
 or2,          imports);
-typedef struct lp_t { p_t ostv[5]; const char* input; Q_t len; Q_t pos; char* name; Q_t lc; p_t* nextsolls; } lp_t;
+typedef struct lp_t {
+  n_t orelse, thenS, empty, term, variable;
+  const char* input;
+  Q_t len;
+  Q_t pos;
+  n_t start_var;
+  Q_t llc;
+  p_t* solls;
+} lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
+#define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
+#define Var(Name) N(Name) Var_
+#define VarP(Name) NP(Name) Var_
 N(init  ) { C(1); }
 N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 N(pnl   ){                      print("\n"     ), C(1); }
@@ -79,12 +90,11 @@ N(soll_contains) {
       return C(1);
   C(0);
 }
-N(orelse) { Α(ο[0].c) O; }
-N(thenS ) { Α(ο[1].c) O; }
-N(empty ) { Α(ο[2].c) O; }
-N(term  ) { Α(ο[3].c) O; }
-N(var   ) { Α(ο[4].c) O; }
-N(r     ) { C(1); }
+Var(orelse)(o->orelse)
+Var(thenS)(1, o->thenS)
+Var(empty)(o->empty)
+Var(term)(o->term)
+Var(var)(o->variable)
 
 Nar(plus )("+", term)
 Nar(minus)("-", term)
@@ -94,33 +104,52 @@ Nar(id   )("i", term)
 Nar(opar )("(", term)
 Nar(cpar )(")", term)
 Nar(Exp  )(
-    Exp, plus,  thenS,  Exp, thenS,
-    Exp, minus, thenS,  Exp, thenS, orelse,
-    Exp, mul,   thenS,  Exp, thenS, orelse,
-    Exp, div,   thenS,  Exp, thenS, orelse,
-         id,    orelse, Exp, var)
+  id, 
+  Exp, div,   thenS, Exp, thenS, orelse,
+  Exp, mul,   thenS, Exp, thenS, orelse,
+  Exp, plus,  thenS, Exp, thenS, orelse,
+  Exp, minus, thenS, Exp, thenS, orelse,
+                                    Exp, var)
+Var(term_a    )("a", term)
+Var(term_b    )("b", term)
+Var(term_o    )("o", term)
+Var(term_s    )("s", term)
+Var(sTs       )(term_a, term_s, thenS,  sTs, var)
+Var(sOs       )(empty,  term_a, orelse, sOs, var)
+Var(Sa        )(term_b,
+                Sa, term_o, thenS, orelse,
+                Sa, term_a, thenS, orelse,
+                sOs, var)
 
-Nar(term_a)("a", term)
-Nar(term_b)("b", term)
-Nar(term_s)("s", term)
-Nar(sTs   )(term_s, term_a, thenS,  sTs, var)
-Nar(sOs   )(empty,  term_a, orelse, sOs, var)
-Nar(Š     )(Š, term_a, thenS, term_b, orelse, Š, var)
+Var(push      )(os_soll_n, o->solls, soll_push, and2)
+Var(pop       )(o->solls, soll_pop, os_unsoll_free, and)
+Var(push_enter)(push, dot, and)
+Var(pop_enter )(pop, dot, and)
 
-SarP(enter)(dot)
-SarP(or_r )(enter, enter, and)
-SarP(ts_r )(enter, enter, and)
-SarP(em_r )("ε", ps)
-SarP(tr_r )(quot, ps, and, quot, and)
-SarP(va_r )(drop, enter, and)
+VarP(or_r     )(dot, dot, and)
+VarP(ts_r     )(push_enter, pop_enter, and)
+VarP(em_r     )("ε", ps)
+VarP(tr_r     )(quot, ps, and, quot, and)
+VarP(va_r     )(drop, dot, and)
 
+Q_t cslen(const char *cs);
+N(parser_pith) {
+  R(Q_t,    pos);
+  R(char*,  input);
+  R(n_t,    start_var);
+  Α(or_r, ts_r, em_r, tr_r, va_r,
+    input, cslen(input), pos, start_var, 0,
+    0, os_soll_n,
+    11, os_soll_n, and2) O;
+}
+N(parse) {
+  R(lp_t *, pp);
+  Α(pp->start_var, pp, coll) O;
+}
 Nar(example)(
-  sTs,
-  or_r, ts_r, em_r, tr_r, va_r, 5, os_soll_n,
-  coll, and,
-  " done! ", ps, and2)
+  sTs, "sssss", 0, parser_pith, parse, and, " done! ", ps, and2)
 
-N(მთავარი     ) { Α(example) O; }
+N(მთავარი  ) { Α(example) O; }
 
 // clang-format off
 EN(tail,
