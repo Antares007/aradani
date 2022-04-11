@@ -26,6 +26,7 @@ and2or,             L)IN(L,
 and2or2,            L)IN(L,
 and2or4,            L)IN(L,
 and2or5,            L)IN(L,
+and2or7,            L)IN(L,
 and3,               L)IN(L,
 and3or,             L)IN(L,
 and3or3,            L)IN(L,
@@ -33,7 +34,9 @@ and3or4,            L)IN(L,
 and4,               L)IN(L,
 and4or,             L)IN(L,
 and4or2,            L)IN(L,
+and5,               L)IN(L,
 and5or,             L)IN(L,
+and5or3,            L)IN(L,
 and5or4,            L)IN(L,
 and6or4,            L)IN(L,
 and7or,             L)IN(L,
@@ -96,59 +99,88 @@ N(soll_contains) {
       return C(1);
   C(0);
 }
-Var(orelse)(o->orelse)
+Var(orelse5)(5, o->orelse)
+Var(orelse4)(4, o->orelse)
+Var(orelse3)(3, o->orelse)
+Var(orelse2)(2, o->orelse)
+Var(orelse)(1, o->orelse)
+Var(thenS5)(5, o->thenS)
+Var(thenS4)(4, o->thenS)
+Var(thenS3)(3, o->thenS)
+Var(thenS2)(2, o->thenS)
 Var(thenS )(1, o->thenS)
 Var(empty )(o->empty)
 Var(term  )(o->term)
 Var(var   )(o->variable)
 
-Var(plus )("+", term)
-Var(minus)("-", term)
+Var(pls  )("+", term)
+Var(mns  )("-", term)
 Var(mul  )("*", term)
 Var(div  )("/", term)
 Var(id   )("i", term)
-Var(opar )("(", term)
-Var(cpar )(")", term)
+Var(opr  )("(", term)
+Var(cpr  )(")", term)
 Var(Exp  )(
-  id, 
-  Exp, div,   thenS, Exp, thenS, orelse,
-  Exp, mul,   thenS, Exp, thenS, orelse,
-  Exp, plus,  thenS, Exp, thenS, orelse,
-  Exp, minus, thenS, Exp, thenS, orelse,
-                                    Exp, var)
+  Exp, pls, thenS, Exp, thenS,
+  Exp, mns, thenS, Exp, thenS, orelse5,
+  Exp, div, thenS, Exp, thenS, orelse5,
+  Exp, mul, thenS, Exp, thenS, orelse5,
+  opr, Exp, thenS, cpr, thenS, orelse5,
+                           id, orelse,
+  Exp, var)
 Var(term_a    )("a", term)
 Var(term_b    )("b", term)
 Var(term_o    )("o", term)
 Var(term_s    )("s", term)
-Var(sTs       )(term_a, term_s, thenS,  sTs, var)
-Var(sOs       )(empty,  term_a, orelse, sOs, var)
-Var(sS        )(empty,
-                term_s, sS, thenS, sS, thenS, orelse, sS, var)
-Var(Sa        )(term_b,
-                Sa, term_o, thenS, orelse,
-                Sa, term_a, thenS, orelse,
-                Sa, var)
+Var(sTs       )(term_a, term_s, thenS, sTs, var)
+Var(sOs       )(term_a,
+                empty, orelse, sOs, var)
 
-Var(push      )(os_soll_n, o->solls, soll_push, and2)
-Var(pop       )(o->solls, soll_pop, os_unsoll_free, and)
+Var(Sa        )(
+  Sa, term_a, thenS,
+  Sa, term_o, thenS, orelse3,
+  term_b, orelse, Sa, var)
+
 
 N(match_input ){ TS(lp_t); R(char*, str); C(o->pos < o->len && o->input[o->pos] == str[0]); }
 N(shift_input ){ TS(lp_t); o->pos++, C(1); }
 N(reset_pos   ){ TS(lp_t); R(Q_t, pos); o->pos = pos, C(1); }
+N(parser_pith );
 
-Var(pdot      )(dot)
+Var(ppos      )(o->pos, plu, pnl, and)
+Var(pA        )("A", ps)
+Var(pB        )("B", ps)
+Var(pC        )("C", ps)
+Var(pD        )("D", ps)
+Var(pApos     )(pA, ppos, and)
+Var(pBpos     )(pB, ppos, and)
 
-// TODO: run in context
-VarP(or_r     )(dot,
-                o->pos, reset_pos, dot, and, or4)
-//Var(new_pith)(o->, "sssss", 0, parser_pith)
-// TODO: check for curtailment
-VarP(ts_r     )(push, dot, and,
-                      pop, dot, and,
-                      pop, gor, and, and3or3)
+
+VarP(sS        )(term_s, sS, thenS, sS, thenS,
+                 empty, orelse, sS, var)
+N(or_r_n      ) {
+  R(Q_t , pos);
+  R(p_t*, rhs);
+  Α(rhs, os_soll_free,
+    rhs, os_unsoll_free, pos, reset_pos, and2, dot, and, and2or7) O; }
+VarP(or_r     )(os_soll_n, o->pos, or_r_n, and2)
+
+NP(enter_rhs) { TS(lp_t);
+  Α(dot, pBpos, and) O;
+}
+N(ts_r_n      ) {
+  R(p_t*, rhs);
+  Α(pApos, dot, and, 
+    rhs, os_unsoll_free, enter_rhs, and,
+    rhs, os_soll_free, gor, and, 044, nar) O; }
+VarP(ts_r     )(os_soll_n, ts_r_n, and)
 VarP(em_r     )(god)
 VarP(tr_r     )(match_input, shift_input, and)
-VarP(va_r     )(drop, o->pos, plu, and2,  dot, and)
+NP(va_r     ) { TS(lp_t);
+  R(n_t, start_var);
+  (void)start_var;
+  Α(dot) O;
+}
 
 Q_t cslen(const char *cs);
 N(parser_pith) {
@@ -166,6 +198,33 @@ N(parse) {
   Α(start_var, pp, coll, pp, print_pith, and2) O;
 }
 Nar(example)(sS, "sssss", 0, parser_pith, parse, and, " done! ", ps, and2)
+
+N(puto0) { Α(ο[0].v) C(1); }
+N(cbsoll) {
+  R(p_t *, oο);
+  R(p_t *, oσ);
+  σ[Ǎ].Q = α, σ[Σ].Q = ρ;
+  oσ[oσ[Ǎ].Q++].v = σ;
+  oσ[oσ[Σ+1].Q].c(oο, oσ[Ǎ].Q, oσ[Σ].Q, oσ);
+}
+N(csoll) {
+  R(p_t *, oο);
+  R(p_t *, oσ);
+  σ[Ǎ].Q = α, σ[Σ].Q = ρ;
+  oσ[oσ[Ǎ].Q++].v = σ;
+  oσ[oσ[Ǎ].Q++].v = ο;
+  oσ[oσ[Ǎ].Q++].v = cbsoll;
+  oσ[oσ[Ǎ].Q++].v = and3;
+
+  oσ[oσ[Ǎ].Q - 1].c(oο, oσ[Ǎ].Q - 1, oσ[Σ].Q, oσ);
+}
+Nar(example_)(
+  9,
+  puto0, 1, os_soll_n,
+      7, 1, os_soll_n, and3,
+                csoll, and,
+           os_wordump, and
+  )
 
 N(მთავარი  ) { Α(example) O; }
 
