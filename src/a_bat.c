@@ -54,7 +54,7 @@ typedef struct lp_t {
   Q_t len;
   Q_t pos;
   n_t start_var;
-  Q_t llc;
+  q_t visited_pos;
   p_t* solls;
 } lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
@@ -154,40 +154,52 @@ Var(pC        )("C", ps)
 Var(pD        )("D", ps)
 Var(pApos     )(pA, ppos, and)
 Var(pBpos     )(pB, ppos, and)
+Var(pspos     )(ps, ppos, and)
 
 
-VarP(sS        )(term_s, sS, thenS, sS, thenS,
+Var(sS        )(term_s, sS, thenS, sS, thenS,
                  empty, orelse, sS, var)
 N(or_r_n      ) {
   R(Q_t , pos);
   R(p_t*, rhs);
-  Α(rhs, os_soll_free,
-    rhs, os_unsoll_free, pos, reset_pos, and2, dot, and, and2or7) O; }
-VarP(or_r     )(os_soll_n, o->pos, or_r_n, and2)
-
-NP(enter_rhs) { TS(lp_t);
-  Α(dot, pBpos, and) O;
+  Α(dot,
+    rhs, os_soll_free,
+    rhs, os_unsoll_free, pos, reset_pos, and2, dot, and,    027, nar) O; }
+N(enter_right){ TS(lp_t);
+  R(p_t*, rhs);
+  if (rhs[rhs[Ǎ].Q - 1].c == o->start_var && o->pos == o->visited_pos)
+    Α(rhs, os_soll_free) O;
+  else
+    Α(rhs, os_unsoll_free, dot, and) O;
 }
 N(ts_r_n      ) {
   R(p_t*, rhs);
-  Α(pApos, dot, and, 
-    rhs, os_unsoll_free, enter_rhs, and,
-    rhs, os_soll_free, gor, and, 044, nar) O; }
+  Α(dot,
+    rhs, enter_right,
+    rhs, os_soll_free, gor, and,                            024, nar) O; }
+
+VarP(or_r     )(os_soll_n, o->pos, or_r_n, and2)
 VarP(ts_r     )(os_soll_n, ts_r_n, and)
 VarP(em_r     )(god)
 VarP(tr_r     )(match_input, shift_input, and)
-NP(va_r     ) { TS(lp_t);
+
+N(va_r_n   ){ TS(lp_t); o->visited_pos = o->pos; C(1); }
+NP(va_r    ){ TS(lp_t);
   R(n_t, start_var);
   (void)start_var;
-  Α(dot) O;
+  if (o->start_var == 0)
+    o->start_var = start_var;
+  Α(dot, va_r_n, and, "av", pspos, and2) O;
 }
 
 Q_t cslen(const char *cs);
+
 N(parser_pith) {
   R(Q_t,    pos);
   R(char*,  input);
+  //n_tx5 input len pos start_var visited_pos solls
   Α(or_r, ts_r, em_r, tr_r, va_r,
-    input, cslen(input), pos, 0, 0,
+    input, cslen(input), pos, 0, -1,
     0, os_soll_n,
     11, os_soll_n, and2) O;
 }
