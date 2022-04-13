@@ -141,15 +141,17 @@ Var(sS     )(term_s, sS, thenS, sS, thenS,
               empty, orelse, sS, var)
 
 
-Var(sTs    )(term_a, term_s, thenS, term_a, thenS, sTs, var)
-Var(sOs    )(term_a, empty, orelse, sOs, var)
+Var(sTs         )(term_a, term_s, thenS, term_a, thenS,
+                  sTs, var)
+Var(sOs         )(term_a, empty, orelse,
+                  sOs, var)
 
-NP(match_input ) { TS(lp_t);
+NP(match_input  ) { TS(lp_t);
   R(const char*, str);
   R(Q_t, pos);
   Α(pos) C(pos < o->len && (Q_t)o->input[pos] == (Q_t)str[0]);
 }
-NP(inc_pos     ) { TS(lp_t);
+NP(inc_pos      ) { TS(lp_t);
   R(Q_t, pos);
   Α(pos + 1) C(1);
 }
