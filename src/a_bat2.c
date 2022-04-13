@@ -131,10 +131,6 @@ Var(term_b )("b", term)
 Var(term_o )("o", term)
 Var(term_s )("s", term)
 
-Var(sS     )(empty,               
-             term_s, sS, thenS, sS, thenS, orelse5,        sS, var)
-Var(sTs    )(term_a, term_s, thenS,                       sTs, var)
-Var(sOs    )(term_a, empty, orelse,                       sOs, var)
 
 NP(match_input  ) { TS(lp_t);
   R(const char*, str);
@@ -144,35 +140,39 @@ NP(match_input  ) { TS(lp_t);
   R(const char*, input);
   Α(input, len, lpos, rpos) C(rpos < len && (Q_t)input[rpos] == (Q_t)str[0]);
 }
-NP(inc_pos ) { TS(lp_t);
+NP(inc_rpos ) { TS(lp_t);
   R(Q_t, rpos);
   Α(rpos + 1) C(1);
 }
 
-Var(Sa     )(term_b,
-             Sa, term_a, thenS, orelse3,                   Sa, var)
+Var(sS     )(empty, term_s, sS, thenS, sS, thenS, orelse5,      sS,   var)
+Var(Sa     )(term_b, Sa, term_a, thenS, orelse3,                Sa,   var)
+Var(sTs    )(term_a, term_s, thenS,                             sTs,  var)
+Var(sOs    )(term_a, empty, orelse,                             sOs,  var)
 
 N(or_r_n   ) { TS(lp_t);
   R(p_t*, rhs);
   Α(dot,
     rhs, os_unsoll_free, dot, and,
-    rhs,   os_soll_free, gor, and,                            044, nar) O; }
+    rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
 N(ts_r_n   ) { TS(lp_t);
   R(p_t*, rhs);
   Α(dot,
     rhs, os_unsoll_free, dot, and,
-    rhs,   os_soll_free, gor, and,                            044, nar) O; }
+    rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(ts_r  )(os_soll_n, ts_r_n, and)
-
-//(p ‘orelse‘ q) j = unite (p j) (q j)
 VarP(em_r  )(god)
-VarP(tr_r  )(match_input, inc_pos, and)
+VarP(tr_r  )(match_input, inc_rpos, and)
 VarP(va_r  )(drop, dot, and)
 
 N(parser_pith);N(parse);
-Nar(example)("asas", 4, 0, 0, sTs, parser_pith, parse, and, os_wordump, and)
+//           input len lpos rpos
+Nar(example)("asas", 4, 0, 0,
+             sTs, parser_pith,
+                        parse, and,
+                   os_wordump, and)
 
 Q_t cslen(const char *cs);
 
@@ -186,10 +186,7 @@ N(parser_pith) {
     0, os_soll_n,
     7, os_soll_n, and2) O;
 }
-N(parse) {
-  R(lp_t *, lp);
-  Α(lp->start_var, lp, coll) O;
-}
+N(parse) { R(lp_t *, lp); Α(lp->start_var, lp, coll) O; }
 
 N(მთავარი  ) { Α(example) O; }
 
