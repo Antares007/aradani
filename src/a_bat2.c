@@ -148,36 +148,47 @@ NP(inc_rpos ) { TS(lp_t);
 Var(sS     )(empty, term_s, sS, thenS, sS, thenS, orelse5,      sS,   var)
 Var(Sa     )(term_b, Sa, term_a, thenS, orelse3,                Sa,   var)
 Var(sTs    )(term_a, term_s, thenS,                             sTs,  var)
-Var(sOs    )(term_a, empty, orelse,                             sOs,  var)
-
+Var(sOs    )(term_b,
+             term_a, empty, orelse, orelse3,                    sOs,  var)
+// (p ‘orelse‘ q) j = unite (p j)  (q j)
+// e.g, assuming that the input is "sssss", then (empty ‘orelse‘ term_s) 2 => {2, 3}
 N(or_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
-  Α(dot,                      // can be: left rec, OTher var, terminal, thenS or orelse
-    rhs, os_unsoll_free, dot, // can be: left rec, OTher var, thenS or orelse
-                              and,
+  Α(dot,                      // can be: left rec(bg), OTher var, TErminal, thenS or orelse
+    rhs, os_unsoll_free, dot, and,
+                              // can be: left rec(bg), OTher var, TErminal, thenS or orelse(sub orelse)
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
+// (p ‘thenS‘  q) j = union (map q (p j))
+// e.g., assuming that the input is "ssss", then (term_s ‘thenS‘ term_s) 1 => {3}
 N(ts_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
-  Α(dot,                      // going ahead, in the end can detect lrec or terminal
-    rhs, os_unsoll_free, dot, // going right, can detect right recursion, terminal or
+  Α(dot,                      // going ahead(left), at the head we can detect lrec or terminal
+                              // while we are going left, we will merge any other virable on our pith
+                              // that way we can detect left rec 
+    rhs, os_unsoll_free, 
+                              // going right, can detect right recursion, terminal or
                               // some OTher variable (with its own orelse and staff...)
-                              and,
-    rhs,   os_soll_free, gor, and,                              044,  nar) O; }
+                              // do we create new pith for each right brunch?
+                         dot, and,
+                              // continuation from right
+
+    rhs,   os_soll_free,      // cancaling current continuation until orelse, if there is one
+                         gor, and,                              044,  nar) O; }
 VarP(ts_r  )(os_soll_n, ts_r_n, and)
 VarP(em_r  )(god)
 VarP(tr_r  )(match_input, inc_rpos, and)
 VarP(va_r  )(drop,            // new virable grammar expanded on this pith,
-                              // it may be pith owning var or
-                              // var from right if we dont make pith for eacho of them
+                              // it may be pith owning var, var which we will merge while going left or
+                              // var from right if we dont make pith for eacho of them ?
               dot, and, 
                     // it is place/time to reduce variable
                     god, and)
 
 N(parser_pith);N(parse);
-//           input len lpos rpos
-Nar(example)("asas", 4, 0, 0,
+          // input   len lpos rpos
+Nar(example)("asas", 4,  0,   0,
              sTs, parser_pith,
                         parse, and,
                    os_wordump, and)
