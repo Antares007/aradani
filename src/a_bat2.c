@@ -50,12 +50,7 @@ or4,                L)IN(L,
 or5,          imports);
 typedef struct lp_t {
   n_t orelse, thenS, empty, term, variable;
-  const char* input;
-  Q_t len;
-  Q_t pos;
   n_t start_var;
-  q_t visited_pos;
-  Q_t lrc;
   p_t* solls;
 } lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
@@ -136,8 +131,6 @@ Var(term_b )("b", term)
 Var(term_o )("o", term)
 Var(term_s )("s", term)
 
-Var(Sa     )(term_b,
-             Sa, term_a, thenS, orelse3,                   Sa, var)
 Var(sS     )(empty,               
              term_s, sS, thenS, sS, thenS, orelse5,        sS, var)
 Var(sTs    )(term_a, term_s, thenS,                       sTs, var)
@@ -145,21 +138,28 @@ Var(sOs    )(term_a, empty, orelse,                       sOs, var)
 
 NP(match_input  ) { TS(lp_t);
   R(const char*, str);
-  R(Q_t, pos);
-  Α(pos) C(pos < o->len && (Q_t)o->input[pos] == (Q_t)str[0]);
+  R(Q_t, rpos);
+  R(Q_t, lpos);
+  R(Q_t, len);
+  R(const char*, input);
+  Α(input, len, lpos, rpos) C(rpos < len && (Q_t)input[rpos] == (Q_t)str[0]);
 }
-NP(inc_pos      ) { TS(lp_t);
-  R(Q_t, pos);
-  Α(pos + 1) C(1);
+NP(inc_pos ) { TS(lp_t);
+  R(Q_t, rpos);
+  Α(rpos + 1) C(1);
 }
-N(or_r_n      ) { TS(lp_t);
+
+Var(Sa     )(term_b,
+             Sa, term_a, thenS, orelse3,                   Sa, var)
+
+N(or_r_n   ) { TS(lp_t);
   R(p_t*, rhs);
   Α(dot,
     rhs, os_unsoll_free, dot, and,
     rhs,   os_soll_free, gor, and,                            044, nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
-N(ts_r_n      ) { TS(lp_t);
+N(ts_r_n   ) { TS(lp_t);
   R(p_t*, rhs);
   Α(dot,
     rhs, os_unsoll_free, dot, and,
@@ -171,19 +171,24 @@ VarP(em_r  )(god)
 VarP(tr_r  )(match_input, inc_pos, and)
 VarP(va_r  )(drop, dot, and)
 
-N(parser_pith);
-Nar(example)(0, sTs, "asas", 0, parser_pith, coll, and, os_wordump, and)
+N(parser_pith);N(parse);
+Nar(example)("asas", 4, 0, 0, sTs, parser_pith, parse, and, os_wordump, and)
 
 Q_t cslen(const char *cs);
 
 N(parser_pith) {
-  R(Q_t,    pos);
-  R(char *, input);
-  // n_tx5 input len pos start_var visited_pos lrc solls
+  R(n_t,    start_var);
+  //  n_t orelse, thenS, empty, term, variable;
+  //  n_t start_var;
+  //  p_t* solls;
   Α(or_r, ts_r, em_r, tr_r, va_r,
-    input, cslen(input), pos, 0, -1, 0,
-    0,  os_soll_n,
-    12, os_soll_n, and2) O;
+    start_var,
+    0, os_soll_n,
+    7, os_soll_n, and2) O;
+}
+N(parse) {
+  R(lp_t *, lp);
+  Α(lp->start_var, lp, coll) O;
 }
 
 N(მთავარი  ) { Α(example) O; }
