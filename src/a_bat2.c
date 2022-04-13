@@ -62,7 +62,7 @@ typedef struct lp_t {
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
-N(init  ) { C(1); }
+N(init  ){ C(1); }
 N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
 N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
@@ -122,29 +122,26 @@ Var(id     )("i", term)
 Var(opr    )("(", term)
 Var(cpr    )(")", term)
 Var(Exp    )(
-  Exp, pls, thenS, Exp, thenS,
+                           id, 
+  Exp, pls, thenS, Exp, thenS, orelse5,
   Exp, mns, thenS, Exp, thenS, orelse5,
   Exp, div, thenS, Exp, thenS, orelse5,
   Exp, mul, thenS, Exp, thenS, orelse5,
   opr, Exp, thenS, cpr, thenS, orelse5,
-                           id, orelse,
   Exp,  var)
+
+
 Var(term_a )("a", term)
 Var(term_b )("b", term)
 Var(term_o )("o", term)
 Var(term_s )("s", term)
-Var(Sa     )(
-  Sa, term_a, thenS,
-      term_b,        orelse,
-                         Sa, var)
-Var(sS     )(term_s, sS, thenS, sS, thenS,
-              empty, orelse, sS, var)
 
-
-Var(sTs         )(term_a, term_s, thenS, term_a, thenS,
-                  sTs, var)
-Var(sOs         )(term_a, empty, orelse,
-                  sOs, var)
+Var(Sa     )(term_b,
+             Sa, term_a, thenS, orelse3,                   Sa, var)
+Var(sS     )(empty,               
+             term_s, sS, thenS, sS, thenS, orelse5,        sS, var)
+Var(sTs    )(term_a, term_s, thenS,                       sTs, var)
+Var(sOs    )(term_a, empty, orelse,                       sOs, var)
 
 NP(match_input  ) { TS(lp_t);
   R(const char*, str);
@@ -155,6 +152,56 @@ NP(inc_pos      ) { TS(lp_t);
   R(Q_t, pos);
   Α(pos + 1) C(1);
 }
+N(or_r_n      ) { TS(lp_t);
+  R(p_t*, rhs);
+  Α(dot,
+    rhs, os_unsoll_free, dot, and,
+    rhs,   os_soll_free, gor, and,                            044, nar) O; }
+VarP(or_r  )(os_soll_n, or_r_n, and)
+
+N(ts_r_n      ) { TS(lp_t);
+  R(p_t*, rhs);
+  Α(dot,
+    rhs, os_unsoll_free, dot, and,
+    rhs,   os_soll_free, gor, and,                            044, nar) O; }
+VarP(ts_r  )(os_soll_n, ts_r_n, and)
+
+//(p ‘orelse‘ q) j = unite (p j) (q j)
+VarP(em_r  )(god)
+VarP(tr_r  )(match_input, inc_pos, and)
+VarP(va_r  )(drop, dot, and)
+
+N(parser_pith);
+Nar(example)(0, sTs, "asas", 0, parser_pith, coll, and, os_wordump, and)
+
+Q_t cslen(const char *cs);
+
+N(parser_pith) {
+  R(Q_t,    pos);
+  R(char *, input);
+  // n_tx5 input len pos start_var visited_pos lrc solls
+  Α(or_r, ts_r, em_r, tr_r, va_r,
+    input, cslen(input), pos, 0, -1, 0,
+    0,  os_soll_n,
+    12, os_soll_n, and2) O;
+}
+
+N(მთავარი  ) { Α(example) O; }
+
+// clang-format off
+EN(tail,
+მთავარი,      exports);
+Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
+
+//N(np);N(pp);N(vp);N(det);N(verb);N(prep);N(noun);
+//Var(s   )(np, vp, s, pp);
+//Var(np  )(noun, det, noun, np, pp)
+//Var(pp  )(prep, np)
+//Var(vp  )(verb, np)
+//Var(det )('a', o->ο, 't')
+//Var(noun)('i', o->ο, 'm', o->ο, 'p', o->ο, 'b')
+//Var(verb)('s')
+
 //  CPS recognizers
 //  VP → V NP |
 //       V S
@@ -178,58 +225,3 @@ NP(inc_pos      ) { TS(lp_t);
 //    (lambda (cont pos)
 //      (seq1 (lambda (pos1) (seq2 cont pos1)) pos)))
 
-N(or_r_n      ) { TS(lp_t);
-  R(p_t*, rhs);
-  Α(dot,
-    rhs, os_unsoll_free, dot, and,
-    rhs,   os_soll_free, gor, and,                            044, nar) O; }
-VarP(or_r  )(os_soll_n, or_r_n, and)
-
-N(ts_r_n      ) { TS(lp_t);
-  R(p_t*, rhs);
-  Α(dot,
-    rhs, os_unsoll_free, dot, and,
-    rhs,   os_soll_free, gor, and,                            044, nar) O; }
-VarP(ts_r  )(os_soll_n, ts_r_n, and)
-
-//(p ‘orelse‘ q) j = unite (p j) (q j)
-VarP(em_r  )(god)
-VarP(tr_r  )(match_input, inc_pos, and)
-VarP(va_r  )(drop, dot, and)
-
-N(parser_pith);N(parse);
-Nar(example)(0, sTs, "asas", 0, parser_pith, parse, and, os_wordump, and)
-
-Q_t cslen(const char *cs);
-
-N(parser_pith) {
-  R(Q_t,    pos);
-  R(char *, input);
-  // n_tx6 input len pos start_var visited_pos lrc solls
-  Α(or_r, ts_r, em_r, tr_r, va_r,
-    input, cslen(input), pos, 0, -1, 0,
-    0,  os_soll_n,
-    12, os_soll_n, and2) O;
-}
-N(print_pith) { R(lp_t*, pp); print("pos: %lu\n", pp->pos), C(1); }
-N(parse) {
-  R(lp_t *, pp);
-  R(n_t, start_var);
-  Α(start_var, pp, coll, pp, print_pith, and2) O;
-}
-
-N(მთავარი  ) { Α(example) O; }
-
-// clang-format off
-EN(tail,
-მთავარი,      exports);
-Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
-
-//N(np);N(pp);N(vp);N(det);N(verb);N(prep);N(noun);
-//Var(s   )(np, vp, s, pp);
-//Var(np  )(noun, det, noun, np, pp)
-//Var(pp  )(prep, np)
-//Var(vp  )(verb, np)
-//Var(det )('a', o->ο, 't')
-//Var(noun)('i', o->ο, 'm', o->ο, 'p', o->ο, 'b')
-//Var(verb)('s')

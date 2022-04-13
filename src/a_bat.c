@@ -141,7 +141,6 @@ Var(sOs       )(term_a,
 
 N(match_input     ){ TS(lp_t); R(char*, str); C(o->pos < o->len && o->input[o->pos] == str[0]); }
 N(shift_input     ){ TS(lp_t); o->pos++, C(1); }
-N(reset_llc       ){ TS(lp_t); o->lrc = 0, C(1); }
 N(set_visited_pos ){ TS(lp_t); o->visited_pos = o->pos; C(1); }
 NP(reset_pos       ){ TS(lp_t); R(Q_t, pos); o->pos = pos, C(1); }
 N(parser_pith     );
@@ -158,71 +157,38 @@ Var(pspos     )(ps, ppos, and)
 
 Var(sS        )(term_s, sS, thenS, sS, thenS,
                  empty, orelse, sS, var)
-Var(Sa        )(
-  Sa, term_a, thenS,      //  Sa, term_o, thenS, orelse3,
-      term_b, orelse,
-                Sa, var)
+Var(Sa)(term_b,
+        Sa, term_a, thenS, orelse3, Sa, var)
+//  Sa, term_o, thenS, orelse3,
 // (p ‘orelse‘ q) j = unite (p j) (q j)
-N(or_r_n_n   ) {TS(lp_t);
-  R(Q_t, opos);
-  R(p_t*, rhs);
-  Q_t mpos = (o->pos < opos ? opos : o->pos);
-  print("npos:%lu opos:%lu mpos:%lu\n", o->pos, opos, mpos);
-  Α(rhs, os_unsoll_free, opos, reset_pos, and2, dot, and,
-      mpos, reset_pos,
-      opos, reset_pos,                        022, nar) O;
-}
-
-
-
-
 N(or_r_n     ){ TS(lp_t);
   R(Q_t , pos);
   R(p_t*, rhs);
   Α(dot,
      rhs, os_soll_free,
-     rhs, os_unsoll_free, pos, reset_pos, and2, dot, and,    027, nar) O;
-  //Α(dot, 
-  //    rhs, pos, or_r_n_n,
-  //    rhs, pos, or_r_n_n,                    033, nar) O;
-}
+     rhs, os_unsoll_free, pos, reset_pos, and2, dot, and,    027, nar) O; }
 N(enter_right){ TS(lp_t);
   R(p_t*, rhs);
-  if (rhs[rhs[Ǎ].Q - 1].c == o->start_var && o->pos == o->visited_pos)
-    Α(rhs, os_soll_free) O;
-  else
-    Α(rhs, os_unsoll_free, dot, and) O;
-}
-N(curtail) { TS(lp_t);
+  if (rhs[rhs[Ǎ].Q - 1].c == o->start_var && o->pos == o->visited_pos) Α(rhs, os_soll_free) O;
+  else Α(rhs, os_unsoll_free, dot, and) O; }
+N(enter) { TS(lp_t);
   R(n_t, lhs);
-  print("len:%lu pos:%lu lrc:%lu visited_pos:%ld\n", o->len, o->pos, o->lrc, o->visited_pos);
-  if (lhs == o->start_var) {
-    if(++o->lrc > (o->len - o->pos + 1)) C(1);
-    else Α(lhs, dot) O;
-  } else
-    Α(lhs, dot) O;
-}
-//(p ‘orelse‘ q) j = unite (p j) (q j)
+  if (lhs == o->start_var && o->pos == o->visited_pos) Α(god) O;
+  else Α(lhs) O; }
 N(ts_r_n      ) { TS(lp_t);
   R(p_t*, rhs);
-  Α(o->lrc, plu, pnl, and, curtail, and,
-    rhs, enter_right,
-    rhs, os_soll_free, gor, and,                            024, nar) O; }
+  Α(enter,
+      rhs, enter_right,
+      rhs, os_soll_free, gor, and,             024, nar) O; }
 VarP(or_r     )(os_soll_n, o->pos, or_r_n, and2)
 VarP(ts_r     )(os_soll_n, ts_r_n, and)
 VarP(em_r     )(god)
 VarP(tr_r     )(match_input, shift_input, and)
-
 NP(va_r    ){ TS(lp_t);
   R(n_t, start_var);
-  (void)start_var;
-  if (o->start_var == 0)
-    o->start_var = start_var;
-  Α(dot,
-    set_visited_pos, and,
-          reset_llc, and,
-       "av:", pspos, and2) O;
-}
+  if (o->start_var == 0) o->start_var = start_var;
+  Α(dot, set_visited_pos, and, "av:", pspos, and2) O; }
+
 N(parse);
 Nar(example)(Sa, "baaas", 0, parser_pith, parse, and, " done! ", ps, and2)
 
