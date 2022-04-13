@@ -159,17 +159,33 @@ Var(pspos     )(ps, ppos, and)
 Var(sS        )(term_s, sS, thenS, sS, thenS,
                  empty, orelse, sS, var)
 Var(Sa        )(
-  Sa, term_a, thenS,
-//  Sa, term_o, thenS, orelse3,
-      term_b,        orelse,
-                         Sa, var)
+  Sa, term_a, thenS,      //  Sa, term_o, thenS, orelse3,
+      term_b, orelse,
+                Sa, var)
 // (p ‘orelse‘ q) j = unite (p j) (q j)
-N(or_r_n     ) {
+N(or_r_n_n   ) {TS(lp_t);
+  R(Q_t, opos);
+  R(p_t*, rhs);
+  Q_t mpos = (o->pos < opos ? opos : o->pos);
+  print("npos:%lu opos:%lu mpos:%lu\n", o->pos, opos, mpos);
+  Α(rhs, os_unsoll_free, opos, reset_pos, and2, dot, and,
+      mpos, reset_pos,
+      opos, reset_pos,                        022, nar) O;
+}
+
+
+
+
+N(or_r_n     ){ TS(lp_t);
   R(Q_t , pos);
   R(p_t*, rhs);
   Α(dot,
-    rhs, os_soll_free,
-    rhs, os_unsoll_free, pos, reset_pos, and2, dot, and,    027, nar) O; }
+     rhs, os_soll_free,
+     rhs, os_unsoll_free, pos, reset_pos, and2, dot, and,    027, nar) O;
+  //Α(dot, 
+  //    rhs, pos, or_r_n_n,
+  //    rhs, pos, or_r_n_n,                    033, nar) O;
+}
 N(enter_right){ TS(lp_t);
   R(p_t*, rhs);
   if (rhs[rhs[Ǎ].Q - 1].c == o->start_var && o->pos == o->visited_pos)
@@ -181,8 +197,7 @@ N(curtail) { TS(lp_t);
   R(n_t, lhs);
   print("len:%lu pos:%lu lrc:%lu visited_pos:%ld\n", o->len, o->pos, o->lrc, o->visited_pos);
   if (lhs == o->start_var) {
-    o->lrc++;
-    if(o->lrc > (o->len - o->pos + 1)) C(1);
+    if(++o->lrc > (o->len - o->pos + 1)) C(1);
     else Α(lhs, dot) O;
   } else
     Α(lhs, dot) O;
@@ -203,10 +218,13 @@ NP(va_r    ){ TS(lp_t);
   (void)start_var;
   if (o->start_var == 0)
     o->start_var = start_var;
-  Α(dot, set_visited_pos, and, reset_llc, and, "\nav:", pspos, and2) O;
+  Α(dot,
+    set_visited_pos, and,
+          reset_llc, and,
+       "av:", pspos, and2) O;
 }
 N(parse);
-Nar(example)(Sa, "baaa", 0, parser_pith, parse, and, " done! ", ps, and2)
+Nar(example)(Sa, "baaas", 0, parser_pith, parse, and, " done! ", ps, and2)
 
 Q_t cslen(const char *cs);
 
