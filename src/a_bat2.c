@@ -151,21 +151,29 @@ Var(sTs    )(term_a, term_s, thenS,                             sTs,  var)
 Var(sOs    )(term_a, empty, orelse,                             sOs,  var)
 
 N(or_r_n   ) { TS(lp_t);
-  R(p_t*, rhs);
-  Α(dot,
-    rhs, os_unsoll_free, dot, and,
+  R(p_t *, rhs);
+  Α(dot,                      // can be: left rec, OTher var, terminal, thenS or orelse
+    rhs, os_unsoll_free, dot, // can be: left rec, OTher var, thenS or orelse
+                              and,
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
 N(ts_r_n   ) { TS(lp_t);
-  R(p_t*, rhs);
-  Α(dot,
-    rhs, os_unsoll_free, dot, and,
+  R(p_t *, rhs);
+  Α(dot,                      // going ahead, in the end can detect lrec or terminal
+    rhs, os_unsoll_free, dot, // going right, can detect right recursion, terminal or
+                              // some OTher variable (with its own orelse and staff...)
+                              and,
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(ts_r  )(os_soll_n, ts_r_n, and)
 VarP(em_r  )(god)
 VarP(tr_r  )(match_input, inc_rpos, and)
-VarP(va_r  )(drop, dot, and)
+VarP(va_r  )(drop,            // new virable grammar expanded on this pith,
+                              // it may be pith owning var or
+                              // var from right if we dont make pith for eacho of them
+              dot, and, 
+                    // it is place/time to reduce variable
+                    god, and)
 
 N(parser_pith);N(parse);
 //           input len lpos rpos
