@@ -161,15 +161,18 @@ Put a ring around pith altering logic in rays.
             a b c orelse thenS3 == a b thenS a c thenS orelse3 
     ok            s (a (b | c)) ==  sab | sac 
     no              (s | a) b c == s b c | a b c  */
+/*
 
+ */
 N(or_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
   Α(dot,
+
+    // can be: left rec (bg), OTher var, TErminal, thenS or orelse
     // do we need to run this dot with its own pith?
     // 
     // we need to continue anyway with rhs and restore position for current pith.
     //
-    // can be: left rec (bg), OTher var, TErminal, thenS or orelse
     rhs, os_unsoll_free, dot, and,
     // can be: left rec (bg), OTher var, TErminal, thenS or orelse (sub orelse)
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
@@ -180,6 +183,7 @@ VarP(or_r  )(os_soll_n, or_r_n, and)
 N(ts_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
   Α(dot,
+    // if ahead is orelse branch, use ring to alter processing behaivour.
     // going ahead(left), at the head we can detect lrec or terminal
     // while we are going left, we will merge any other virable on our pith
     // that way we can detect left rec. do we need to detect it if it is not
@@ -201,7 +205,7 @@ VarP(va_r  )(drop,
              // new virable grammar expanded on this pith,
              // it may be pith owning var, var which we will merge while going left or
              // var from right if we dont make pith for eacho of them ?
-              dot, and, 
+             dot, and, 
              // it is place/time to reduce variable
              // describe process of reducing
                     god, and)
