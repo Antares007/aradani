@@ -150,13 +150,25 @@ Var(Sa     )(term_b, Sa, term_a, thenS, orelse3,                Sa,   var)
 Var(sTs    )(term_a, term_s, thenS,                             sTs,  var)
 Var(sOs    )(term_b,
              term_a, empty, orelse, orelse3,                    sOs,  var)
-// (p ‘orelse‘ q) j = unite (p j)  (q j)
-// e.g, assuming that the input is "sssss", then (empty ‘orelse‘ term_s) 2 => {2, 3}
+/* (p ‘orelse‘ q) j = unite (p j)  (q j)
+e.g, assuming that the input is "sssss", then (empty ‘orelse‘ term_s) 2 => {2, 3}
+In functional compositional style, meaning composing computation with functions,
+we don't have a clearly defined continuation line of process execution in time.
+So we use the brute-force algorithms on sets.
+In contrast, Aradani gives us a clearly defined execution line.
+So we can define computation in time, and in space towards to pith.
+Put a ring around pith altering logic in rays. */
+
 N(or_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
-  Α(dot,                      // can be: left rec(bg), OTher var, TErminal, thenS or orelse
+  /*          a b c orelse thenS3 == a b thenS a c thenS orelse3 */
+  //                s (a (b | c)) ==  sab | sac
+  //                  (s | a) b c == s b c | a b c
+  // s a b c orelse thenS3 thenS5 == s a thenS b then   s a thenS c then orelse5
+  
+  Α(dot,                      // can be: left rec (bg), OTher var, TErminal, thenS or orelse
     rhs, os_unsoll_free, dot, and,
-                              // can be: left rec(bg), OTher var, TErminal, thenS or orelse(sub orelse)
+                              // can be: left rec (bg), OTher var, TErminal, thenS or orelse (sub orelse)
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
@@ -166,7 +178,8 @@ N(ts_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
   Α(dot,                      // going ahead(left), at the head we can detect lrec or terminal
                               // while we are going left, we will merge any other virable on our pith
-                              // that way we can detect left rec 
+                              // that way we can detect left rec. do we need to detect it if it is not
+                              // a problem in cps 
     rhs, os_unsoll_free, 
                               // going right, can detect right recursion, terminal or
                               // some OTher variable (with its own orelse and staff...)
