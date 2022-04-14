@@ -12,7 +12,6 @@ const VP = (c, pos) => {
   V((pos1) => S(c, pos1), pos);
 };
 const inp = "baaaaaaaaaaaaaaa";
-
 const a = (c, p) => {
   if (inp[p] === "a") c(p + 1);
 };
@@ -25,5 +24,4 @@ const S = (c, p) => {
   b(c, p);
   S((p1) => a(c, p1), p);
 };
-
 S(console.log.bind(console), 0);
