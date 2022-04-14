@@ -118,11 +118,11 @@ Var(opr    )("(", term)
 Var(cpr    )(")", term)
 Var(Exp    )(
                            id, 
+  opr, Exp, thenS, cpr, thenS, orelse5,
   Exp, pls, thenS, Exp, thenS, orelse5,
   Exp, mns, thenS, Exp, thenS, orelse5,
   Exp, div, thenS, Exp, thenS, orelse5,
   Exp, mul, thenS, Exp, thenS, orelse5,
-  opr, Exp, thenS, cpr, thenS, orelse5,
   Exp,  var)
 
 
@@ -157,18 +157,21 @@ we don't have a clearly defined continuation line of process execution in time.
 So we use the brute-force algorithms on sets.
 In contrast, Aradani gives us a clearly defined execution line.
 So we can define computation in time, and in space towards to pith.
-Put a ring around pith altering logic in rays. */
+Put a ring around pith altering logic in rays.
+            a b c orelse thenS3 == a b thenS a c thenS orelse3 
+    ok            s (a (b | c)) ==  sab | sac 
+    no              (s | a) b c == s b c | a b c  */
 
 N(or_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
-  /*          a b c orelse thenS3 == a b thenS a c thenS orelse3 */
-  //                s (a (b | c)) ==  sab | sac
-  //                  (s | a) b c == s b c | a b c
-  // s a b c orelse thenS3 thenS5 == s a thenS b then   s a thenS c then orelse5
-  
-  Α(dot,                      // can be: left rec (bg), OTher var, TErminal, thenS or orelse
+  Α(dot,
+    // do we need to run this dot with its own pith?
+    // 
+    // we need to continue anyway with rhs and restore position for current pith.
+    //
+    // can be: left rec (bg), OTher var, TErminal, thenS or orelse
     rhs, os_unsoll_free, dot, and,
-                              // can be: left rec (bg), OTher var, TErminal, thenS or orelse (sub orelse)
+    // can be: left rec (bg), OTher var, TErminal, thenS or orelse (sub orelse)
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
 
@@ -176,27 +179,31 @@ VarP(or_r  )(os_soll_n, or_r_n, and)
 // e.g., assuming that the input is "ssss", then (term_s ‘thenS‘ term_s) 1 => {3}
 N(ts_r_n   ) { TS(lp_t);
   R(p_t *, rhs);
-  Α(dot,                      // going ahead(left), at the head we can detect lrec or terminal
-                              // while we are going left, we will merge any other virable on our pith
-                              // that way we can detect left rec. do we need to detect it if it is not
-                              // a problem in cps 
+  Α(dot,
+    // going ahead(left), at the head we can detect lrec or terminal
+    // while we are going left, we will merge any other virable on our pith
+    // that way we can detect left rec. do we need to detect it if it is not
+    // a problem in cps 
     rhs, os_unsoll_free, 
-                              // going right, can detect right recursion, terminal or
-                              // some OTher variable (with its own orelse and staff...)
-                              // do we create new pith for each right brunch?
+    // going right, can detect right recursion, terminal or
+    // some OTher variable (with its own orelse and staff...)
+    // do we create new pith for each right brunch?
                          dot, and,
-                              // continuation from right
+    // continuation from right
 
-    rhs,   os_soll_free,      // cancaling current continuation until orelse, if there is one
+    rhs,   os_soll_free,
+    // cancaling current continuation until orelse, if there is one
                          gor, and,                              044,  nar) O; }
 VarP(ts_r  )(os_soll_n, ts_r_n, and)
 VarP(em_r  )(god)
 VarP(tr_r  )(match_input, inc_rpos, and)
-VarP(va_r  )(drop,            // new virable grammar expanded on this pith,
-                              // it may be pith owning var, var which we will merge while going left or
-                              // var from right if we dont make pith for eacho of them ?
+VarP(va_r  )(drop,            
+             // new virable grammar expanded on this pith,
+             // it may be pith owning var, var which we will merge while going left or
+             // var from right if we dont make pith for eacho of them ?
               dot, and, 
-                    // it is place/time to reduce variable
+             // it is place/time to reduce variable
+             // describe process of reducing
                     god, and)
 
 N(parser_pith);N(parse);
