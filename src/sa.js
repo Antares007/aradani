@@ -11,17 +11,28 @@ const VP = (c, pos) => {
   V((pos1) => NP(c, pos1), pos);
   V((pos1) => S(c, pos1), pos);
 };
-const inp = "baaaaaaaaaaaaaaa";
-const a = (c, p) => {
+const inp = "aabaaa";
+const a = (c, p) => { console.log("a", p);
   if (inp[p] === "a") c(p + 1);
 };
-const b = (c, p) => {
+const b = (c, p) => { console.log("b", p);
   if (inp[p] === "b") c(p + 1);
 };
 let i = 0;
-const S = (c, p) => {
-  if (i++ > 100) return;
-  b(c, p);
-  S((p1) => a(c, p1), p);
+const S = (c, p2) => { if (i++ > 10) return; console.log("S", p2);
+  const c1 = (p3) => { console.log("Sa", p3);
+    a(c, p3);
+  };
+  b(c, p2);
+  S(c1, p2);
 };
-S(console.log.bind(console), 0);
+const aaBa = (c, p0) => {
+  const c_aa = (p2) => {
+    S(c, p2);
+  };
+  const c_a = (p1) => {
+    a(c_aa, p1);
+  };
+  a(c_a, p0);
+};
+aaBa(console.log.bind(console), 0);
