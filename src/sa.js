@@ -19,16 +19,17 @@ const pls = (ο, p) => { log("+", p); if (inp[p] === "+") ο(p + 1); };
 const mns = (ο, p) => { log("-", p); if (inp[p] === "-") ο(p + 1); };
 const opr = (ο, p) => { log("(", p); if (inp[p] === "(") ο(p + 1); };
 const cpr = (ο, p) => { log(")", p); if (inp[p] === ")") ο(p + 1); };
-
 const ε = (ο, p) => { log("ε", p); ο(p); };
 let i = 0;
 const E = (o, p0) => {if (i++ > 17) return; log("S", p0);
   a(o, p0);
-  opr((p1) => E((p2) => cpr(o, p2), p1), p0);
-  E(p1 => {
-    pls(p2 => E(o, p2), p1)
-    mns(p2 => E(o, p2), p1)
-  }, p0)
+  const o2 = (p2) => { cpr(o, p2) }
+  const o1 = (p1) => { E(o2, p1) }
+  opr(o1, p0);
+  const o4 = p2 => { E(o, p2) }
+  const o5 = p2 => { E(o, p2) }
+  const o3 = p1 => { pls(o4, p1); mns(o5, p1) }
+  E(o3, p0)
 }
 E(p => console.log("\n" + p), 0);
 const S = (ο, p0) => { if (i++ > 17) return; log("S", p0);
