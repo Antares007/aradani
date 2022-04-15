@@ -11,21 +11,20 @@ const VP = (c, pos) => {
   V((pos1) => NP(c, pos1), pos);
   V((pos1) => S(c, pos1), pos);
 };
-const inp = "aabaaa";
-const a = (c, p) => { console.log("a", p);
-  if (inp[p] === "a") c(p + 1);
-};
-const b = (c, p) => { console.log("b", p);
-  if (inp[p] === "b") c(p + 1);
-};
+const inp = "aabasaa";const log = (...args) => console.log(...args)
+const a = (c, p) => { log("a", p); if (inp[p] === "a") c(p + 1); };
+const b = (c, p) => { log("b", p); if (inp[p] === "b") c(p + 1); };
+const s = (c, p) => { log("s", p); if (inp[p] === "s") c(p + 1); };
 let i = 0;
-const S = (c, p2) => { if (i++ > 10) return; console.log("S", p2);
-  const c1 = (p3) => { console.log("Sa", p3);
-    a(c, p3);
-  };
-  b(c, p2);
-  S(c1, p2);
+const S = (c, p0) => { if (i++ > 17) return; log("S", p0);
+  b(c,  p0);
+  S((p1) => {
+    log("Sa", p1); a(c, p1);
+    log("Ss", p1); s(c, p1);
+  }, p0);
 };
+//       p0       p0 p1
+//   S → term_b   S  term_a thenS orelse3     S var
 const aaBa = (c, p0) => {
   const c_aa = (p2) => {
     S(c, p2);
@@ -35,4 +34,4 @@ const aaBa = (c, p0) => {
   };
   a(c_a, p0);
 };
-aaBa(console.log.bind(console), 0);
+aaBa(p => console.log("\n" + p), 0);
