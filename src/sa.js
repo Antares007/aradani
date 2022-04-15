@@ -1,37 +1,60 @@
-const terminal = (word) => (c, pos) => {
-  if (pos[0] === word) c(pos[1]);
+const terminal = (word) => (ο, pos) => {
+  if (pos[0] === word) ο(pos[1]);
 };
-const alt = (alt1, alt2) => (c, pos) => {
-  alt1(c, pos);
-  alt2(c, pos);
+const alt = (alt1, alt2) => (ο, pos) => {
+  alt1(ο, pos);
+  alt2(ο, pos);
 };
-const seq = (seq1, seq2) => (c, pos) => seq1((pos1) => seq2(c, pos1), pos);
+const seq = (seq1, seq2) => (ο, pos) => seq1((pos1) => seq2(ο, pos1), pos);
 //  VP → V NP | V S
-const VP = (c, pos) => {
-  V((pos1) => NP(c, pos1), pos);
-  V((pos1) => S(c, pos1), pos);
+const VP = (ο, pos) => {
+  V((pos1) => NP(ο, pos1), pos);
+  V((pos1) => S(ο, pos1), pos);
 };
-const inp = "aabasaa";const log = (...args) => console.log(...args)
-const a = (c, p) => { log("a", p); if (inp[p] === "a") c(p + 1); };
-const b = (c, p) => { log("b", p); if (inp[p] === "b") c(p + 1); };
-const s = (c, p) => { log("s", p); if (inp[p] === "s") c(p + 1); };
+const inp = "a+(a-a)basaa"; const log = (...args) => 0; //console.log(...args)
+const a = (ο, p) => { log("a", p); if (inp[p] === "a") ο(p + 1); };
+const b = (ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); };
+const s = (ο, p) => { log("s", p); if (inp[p] === "s") ο(p + 1); };
+const pls = (ο, p) => { log("+", p); if (inp[p] === "+") ο(p + 1); };
+const mns = (ο, p) => { log("-", p); if (inp[p] === "-") ο(p + 1); };
+const opr = (ο, p) => { log("(", p); if (inp[p] === "(") ο(p + 1); };
+const cpr = (ο, p) => { log(")", p); if (inp[p] === ")") ο(p + 1); };
+
+const ε = (ο, p) => { log("ε", p); ο(p); };
 let i = 0;
-const S = (c, p0) => { if (i++ > 17) return; log("S", p0);
-  b(c,  p0);
-  S((p1) => {
-    log("Sa", p1); a(c, p1);
-    log("Ss", p1); s(c, p1);
-  }, p0);
+const E = (o, p0) => {if (i++ > 17) return; log("S", p0);
+  a(o, p0);
+  opr((p1) => E((p2) => cpr(o, p2), p1), p0);
+  E(p1 => {
+    pls(p2 => E(o, p2), p1)
+    mns(p2 => E(o, p2), p1)
+  }, p0)
+}
+E(p => console.log("\n" + p), 0);
+const S = (ο, p0) => { if (i++ > 17) return; log("S", p0);
+  b(ο,  p0);
+  ε(ο,  p0);
+  S(
+      (p1) => { log("S & (a | s)",  p1);
+        a(ο, p1);
+        s(ο, p1);
+      }
+      ,
+      p0
+  );
 };
-//       p0       p0 p1
-//   S → term_b   S  term_a thenS orelse3     S var
-const aaBa = (c, p0) => {
+//      p0        p0     p1
+//  S → term_b
+//      S term_a  thenS  orelse3
+//      S term_s  thenS  orelse3 S var
+//
+const aaBa = (ο, p0) => {
   const c_aa = (p2) => {
-    S(c, p2);
+    S(ο, p2);
   };
   const c_a = (p1) => {
     a(c_aa, p1);
   };
   a(c_a, p0);
 };
-aaBa(p => console.log("\n" + p), 0);
+//aaBa(p => console.log("\n" + p), 0);
