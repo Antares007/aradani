@@ -124,6 +124,20 @@ Var(Exp    )(
   Exp, div, thenS, Exp, thenS, orelse5,
   Exp, mul, thenS, Exp, thenS, orelse5,
   Exp,  var)
+/*
+      00007ff806e8b038 os_soll_free gor and
+0044Ψ 00007ff806e8a038 os_unsoll_free dot and
+      00007ff806e8a038 os_soll_free   gor and
+0044Ψ 00007ff806e89038 os_unsoll_free dot and
+      00007ff806e89038 os_soll_free   gor and
+0044Ψ 00007ff806e88038 os_unsoll_free dot and
+      00007ff806e88038 os_soll_free   gor and
+0044Ψ 00007ff806e87038 os_unsoll_free dot and
+      00007ff806e87038 os_soll_free   gor and
+0010Ψ god
+0010Ψ os_wordump
+0
+ * */
 
 
 Var(term_a )("a", term)
@@ -211,7 +225,7 @@ VarP(va_r  )(drop,
 N(parser_pith);N(parse);
           // input   len lpos rpos
 Nar(example)("asas", 4,  0,   0,
-             sTs, parser_pith,
+             Exp, parser_pith,
                         parse, and,
                    os_wordump, and)
 
