@@ -12,24 +12,24 @@ const VP = (ο, pos) => {
   V((pos1) => S(ο, pos1), pos);
 };
 const inp = "a+(a-a)basaa"; const log = (...args) => 0; //console.log(...args)
-const a = (ο, p) => { log("a", p); if (inp[p] === "a") ο(p + 1); };
-const b = (ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); };
-const s = (ο, p) => { log("s", p); if (inp[p] === "s") ο(p + 1); };
+const a   = (ο, p) => { log("a", p); if (inp[p] === "a") ο(p + 1); };
+const b   = (ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); };
+const s   = (ο, p) => { log("s", p); if (inp[p] === "s") ο(p + 1); };
 const pls = (ο, p) => { log("+", p); if (inp[p] === "+") ο(p + 1); };
 const mns = (ο, p) => { log("-", p); if (inp[p] === "-") ο(p + 1); };
 const opr = (ο, p) => { log("(", p); if (inp[p] === "(") ο(p + 1); };
 const cpr = (ο, p) => { log(")", p); if (inp[p] === ")") ο(p + 1); };
 const ε = (ο, p) => { log("ε", p); ο(p); };
 let i = 0;
-const E = (o, p0) => {if (i++ > 17) return; log("S", p0);
-  a(o, p0);
-  const o2 = (p2) => { cpr(o, p2) }
-  const o1 = (p1) => { E(o2, p1) }
-  opr(o1, p0);
-  const o4 = p2 => { E(o, p2) }
-  const o5 = p2 => { E(o, p2) }
-  const o3 = p1 => { pls(o4, p1); mns(o5, p1) }
-  E(o3, p0)
+const E = (o, p) => {if (i++ > 17) return; log("S", p);
+  a(o, p);
+  const o2 = p => { cpr(o,  p) }
+  const o1 = p => {   E(o2, p) }
+  opr(o1, p);
+  const o4 = p => {   E(o,  p) }
+  const o3 = p => { pls(o4, p)
+                    mns(o4, p) }
+  E(o3, p)
 }
 E(p => console.log("\n" + p), 0);
 const S = (ο, p0) => { if (i++ > 17) return; log("S", p0);
@@ -46,8 +46,7 @@ const S = (ο, p0) => { if (i++ > 17) return; log("S", p0);
 };
 //      p0        p0     p1
 //  S → term_b
-//      S term_a  thenS  orelse3
-//      S term_s  thenS  orelse3 S var
+//      term_a S thenS  orelse3 S var
 //
 const aaBa = (ο, p0) => {
   const c_aa = (p2) => {

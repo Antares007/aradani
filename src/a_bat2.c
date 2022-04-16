@@ -177,7 +177,6 @@ N(or_r_n   ) { TS(lp_t);
     // can be: left rec (bg), OTher var, TErminal, thenS or orelse (sub orelse)
     rhs,   os_soll_free, gor, and,                              044,  nar) O; }
 VarP(or_r  )(os_soll_n, or_r_n, and)
-
 // (p ‘thenS‘  q) j = union (map q (p j))
 // e.g., assuming that the input is "ssss", then (term_s ‘thenS‘ term_s) 1 => {3}
 N(ts_r_n   ) { TS(lp_t);
@@ -194,7 +193,6 @@ N(ts_r_n   ) { TS(lp_t);
     // do we create new pith for each right brunch?
                          dot, and,
     // continuation from right
-
     rhs,   os_soll_free,
     // cancaling current continuation until orelse, if there is one
                          gor, and,                              044,  nar) O; }
