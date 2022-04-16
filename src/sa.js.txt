@@ -1,0 +1,8 @@
+const S = ((ο, p) => { 
+  b(ο,  p);
+  S((p) => { a(ο, p); }, p);
+})
+
+inp = "b";
+
+S(p => console.log(p + "\n"), 0);

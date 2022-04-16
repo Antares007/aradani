@@ -11,7 +11,8 @@ const VP = (ο, pos) => {
   V((pos1) => NP(ο, pos1), pos);
   V((pos1) => S(ο, pos1), pos);
 };
-const inp = "a+(a-a)basaa"; const log = (...args) => 0; //console.log(...args)
+let inp = "a+(a-a)basaa";
+const log = (...args) => console.log(...args)
 const a   = (ο, p) => { log("a", p); if (inp[p] === "a") ο(p + 1); };
 const b   = (ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); };
 const s   = (ο, p) => { log("s", p); if (inp[p] === "s") ο(p + 1); };
@@ -21,7 +22,18 @@ const opr = (ο, p) => { log("(", p); if (inp[p] === "(") ο(p + 1); };
 const cpr = (ο, p) => { log(")", p); if (inp[p] === ")") ο(p + 1); };
 const ε = (ο, p) => { log("ε", p); ο(p); };
 let i = 0;
-const E = (o, p) => {if (i++ > 17) return; log("S", p);
+const M = f => {
+  const dict = {}
+  return (o, p) => {
+    if(dict[p]) return dict[p].forEach(o)
+    dict[p] = []
+    f((np) => {
+      if (dict[p].indexOf(np) < 0) dict[p].push(np)
+      o(np);
+    }, p) 
+  }
+}
+const E = M((o, p) => { log("E", p);
   a(o, p);
   const o2 = p => { cpr(o,  p) }
   const o1 = p => {   E(o2, p) }
@@ -30,20 +42,36 @@ const E = (o, p) => {if (i++ > 17) return; log("S", p);
   const o3 = p => { pls(o4, p)
                     mns(o4, p) }
   E(o3, p)
+})
+const E2 = (o, p) => { if(i++ > 50) return; log("E", p);
+  a(o, p);
+  opr(p=>{
+    E(p=>{
+      cpr(o, p)
+    },p)
+  },p);
+  E(p=>{
+    pls(p=>{
+      E(o, p)
+    },p)
+    mns(p=>{
+      E(o, p)
+    },p)
+  },p)
 }
-E(p => console.log("\n" + p), 0);
-const S = (ο, p0) => { if (i++ > 17) return; log("S", p0);
-  b(ο,  p0);
-  ε(ο,  p0);
-  S(
-      (p1) => { log("S & (a | s)",  p1);
-        a(ο, p1);
-        s(ο, p1);
-      }
-      ,
-      p0
-  );
-};
+//inp = "(a-a)+abasaa";
+//E2(p => console.log(p + "\n"), 0);
+
+const S = ((ο, p) => { if(i++>7)return; log("S", p);
+  b(ο,  p);
+  S(p => {//log("Sas", p)
+    a(ο, p);
+    //s(ο, p);
+  }, p);
+});
+
+inp = "baaa";
+S(p => console.log(p + "\n"), 0);
 //      p0        p0     p1
 //  S → term_b
 //      term_a S thenS  orelse3 S var
@@ -58,3 +86,4 @@ const aaBa = (ο, p0) => {
   a(c_a, p0);
 };
 //aaBa(p => console.log("\n" + p), 0);
+

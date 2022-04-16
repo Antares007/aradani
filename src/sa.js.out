@@ -1,41 +1,10 @@
-a 0
-a 1
-
-S 2   S 2   S 2   S 2   S 2
-b 2   b 2   b 2   b 2   b 2
-3     Sa3   Sa3   Sa3   Sa3
-      a 3   a 3   a 3   a 3
-      4     Sa4   Sa4   Sa4
-            a 4   a 4   a 4
-            5     Sa5   Sa5
-                  a 5   a 5
-                  6     Sa6
-                        a 6
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+S   0  S   0  S   0  S   0  S   0  S   0  S   0  S   0
+b   0  b   0  b   0  b   0  b   0  b   0  b   0  b   0
+1      Sas 1  Sas 1  Sas 1  Sas 1  Sas 1  Sas 1  Sas 1
+       a   1  a   1  a   1  a   1  a   1  a   1  a   1
+       2      Sas 2  Sas 2  Sas 2  Sas 2  Sas 2  Sas 2
+              a   2  a   2  a   2  a   2  a   2  a   2
+              3      Sas 3  Sas 3  Sas 3  Sas 3  Sas 3
+                     a   3  a   3  a   3  a   3  a   3
+                     4      Sas 4  Sas 4  Sas 4  Sas 4
+                            a   4  a   4  a   4  a   4
