@@ -117,7 +117,7 @@ Var(id     )("i", term)
 Var(opr    )("(", term)
 Var(cpr    )(")", term)
 Var(Exp    )(
-                           id, 
+                           id,      
   opr, Exp, thenS, cpr, thenS, orelse5,
   Exp, pls, thenS, Exp, thenS, orelse5,
   Exp, mns, thenS, Exp, thenS, orelse5,
@@ -125,19 +125,19 @@ Var(Exp    )(
   Exp, mul, thenS, Exp, thenS, orelse5,
   Exp,  var)
 /*
-      00007ff806e8b038 os_soll_free gor and
-0044Ψ 00007ff806e8a038 os_unsoll_free dot and
-      00007ff806e8a038 os_soll_free   gor and
-0044Ψ 00007ff806e89038 os_unsoll_free dot and
-      00007ff806e89038 os_soll_free   gor and
-0044Ψ 00007ff806e88038 os_unsoll_free dot and
-      00007ff806e88038 os_soll_free   gor and
-0044Ψ 00007ff806e87038 os_unsoll_free dot and
-      00007ff806e87038 os_soll_free   gor and
-0010Ψ god
+0044Ψ 00007fc01aad7038 os_unsoll_free dot and   
+      00007fc01aad7038 os_soll_free   gor and  // orelse5
+0044Ψ 00007fc01aad6038 os_unsoll_free dot and
+      00007fc01aad6038 os_soll_free   gor and  // orelse5
+0044Ψ 00007fc01aad5038 os_unsoll_free dot and
+      00007fc01aad5038 os_soll_free   gor and  // orelse5
+0044Ψ 00007fc01aad4038 os_unsoll_free dot and
+      00007fc01aad4038 os_soll_free   gor and  // orelse5
+0044Ψ 00007fc01aad3038 os_unsoll_free dot and
+      00007fc01aad3038 os_soll_free   gor and  // orelse5
+0010Ψ god                                      // var
 0010Ψ os_wordump
-0
- * */
+*/
 
 
 Var(term_a )("a", term)
@@ -160,7 +160,15 @@ NP(inc_rpos ) { TS(lp_t);
 }
 
 Var(sS     )(empty, term_s, sS, thenS, sS, thenS, orelse5,      sS,   var)
-Var(Sa     )(term_b, Sa, term_a, thenS, orelse3,                Sa,   var)
+Var(Sa     )(term_b,
+             Sa, term_a, thenS, orelse3,
+             Sa,   var)
+/*
+0044Ψ 00007f2e0581b038 os_unsoll_free dot and
+      00007f2e0581b038 os_soll_free gor and
+0010Ψ god
+0010Ψ os_wordump
+*/
 Var(sTs    )(term_a, term_s, thenS,                             sTs,  var)
 Var(sOs    )(term_b,
              term_a, empty, orelse, orelse3,                    sOs,  var)
@@ -225,7 +233,7 @@ VarP(va_r  )(drop,
 N(parser_pith);N(parse);
           // input   len lpos rpos
 Nar(example)("asas", 4,  0,   0,
-             Exp, parser_pith,
+             Sa, parser_pith,
                         parse, and,
                    os_wordump, and)
 

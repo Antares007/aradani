@@ -62,10 +62,10 @@ const E2 = (o, p) => { if(i++ > 50) return; log("E", p);
 //inp = "(a-a)+abasaa";
 //E2(p => console.log(p + "\n"), 0);
 
-const S = ((ο, p) => { if(i++>7)return; log("S", p);
-  b(ο,  p);
+const S = ((ο, p) => { if(i++ > 7) return; log("S", p);
+  ((ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); })(ο,  p);
   S(p => {//log("Sas", p)
-    a(ο, p);
+    ((ο, p) => { log("a", p); if (inp[p] === "a") ο(p + 1); })(ο, p);
     //s(ο, p);
   }, p);
 });
