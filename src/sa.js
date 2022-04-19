@@ -61,7 +61,6 @@ const E2 = (o, p) => { if(i++ > 50) return; log("E", p);
 }
 //inp = "(a-a)+abasaa";
 //E2(p => console.log(p + "\n"), 0);
-
 const S = ((ο, p) => { if(i++ > 7) return; log("S", p);
   ((ο, p) => { log("b", p); if (inp[p] === "b") ο(p + 1); })(ο,  p);
   S(p => {//log("Sas", p)
@@ -75,15 +74,13 @@ S(p => console.log(p + "\n"), 0);
 //      p0        p0     p1
 //  S → term_b
 //      term_a S thenS  orelse3 S var
-//
-const aaBa = (ο, p0) => {
-  const c_aa = (p2) => {
-    S(ο, p2);
-  };
-  const c_a = (p1) => {
-    a(c_aa, p1);
-  };
-  a(c_a, p0);
+const ABS = (o, p) => {
+  a(p => {
+    b(p => {
+      s(o, p)
+    }, p)
+  }, p);
 };
-//aaBa(p => console.log("\n" + p), 0);
 
+inp = "abs"
+ABS(p => console.log("\n" + p), 0);

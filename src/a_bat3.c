@@ -51,15 +51,34 @@ or4,                L)IN(L,
 or5,          imports);
 
 N(var     ) { C(1); }
-N(term    ) { C(1); }
-N(orelse4 ) { C(1); }
-N(orelse2 ) { C(1); }
-N(thenS2  ) { C(1); }
+// term_s = term ’s’
+// where term t j
+// = {}     , if j > l_input
+// = {j + 1}, if jth element of input = t
+// = {}     , otherwise
+N(term    ) { 
+  //  for each p in piths
+  //  if (p.pos < p.length && p.input[p.pos] == term)
+  //    piths[p] = p input len pos+1 term newpith, C(1)
+  //  else
+  //    piths[p] = null, C(0)
+}
+// (p ‘orelse‘ q) j = unite (p j) (q j)
+// e.g., assuming that the input is "sssss", then
+// (empty ‘orelse‘ term_s) 2 => {2, 3}
+N(orelse_n) { C(1); }
+// (p ‘thenS‘ q) j = union (map q (p j))
+// e.g., assuming that the input is "sssss", then
+// (term_s ‘thenS‘ term_s) 1 => {3}
+N(thenS_n ) {
+  //  for each p in piths
+  C(1);
+}
 
 N(Sa      ) {
   Α(Sa, var,
-    "b", term, orelse2,
-    Sa, "a", term, thenS2, orelse4
+    "b", term, 2, orelse_n,
+    Sa, "a", term, 2, thenS_n, 5, orelse_n
   ) O;
 }
 
