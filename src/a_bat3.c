@@ -50,49 +50,50 @@ or3,                L)IN(L,
 or4,                L)IN(L,
 or5,          imports);
 
-N(var     ) { C(1); }
+//static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
+//static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
+static N(pnl   ){                      print("\n"     ), C(1); }
+static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
+Nar(plunl )(plu, pnl, and)
+
+N(var   ) {
+  C(1);
+}
+
 // term_s = term ’s’
 // where term t j
 // = {}     , if j > l_input
 // = {j + 1}, if jth element of input = t
 // = {}     , otherwise
-N(term    ) { 
-  //  for each p in piths
-  //  if (p.pos < p.length && p.input[p.pos] == term)
-  //    piths[p] = p input len pos+1 term newpith, C(1)
-  //  else
-  //    piths[p] = null, C(0)
-}
-// (p ‘orelse‘ q) j = unite (p j) (q j)
-// e.g., assuming that the input is "sssss", then
-// (empty ‘orelse‘ term_s) 2 => {2, 3}
-N(orelse_n) { C(1); }
-// (p ‘thenS‘ q) j = union (map q (p j))
-// e.g., assuming that the input is "sssss", then
-// (term_s ‘thenS‘ term_s) 1 => {3}
-N(thenS_n ) {
-  //  for each p in piths
+N(term  ) { 
+//  o->c(o->pos + 1);
   C(1);
 }
 
-N(Sa      ) {
-  Α(Sa, var,
-    "b", term, 2, orelse_n,
-    Sa, "a", term, 2, thenS_n, 5, orelse_n
-  ) O;
+// (p ‘orelse‘ q) j = unite (p j) (q j)
+// e.g., assuming that the input is "sssss", then
+// (empty ‘orelse‘ term_s) 2 => {2, 3}
+N(orelse) {
+  C(1);
 }
 
-NP(seven) { print("7\n");  A2(4, 7) C(1); }
+// (p ‘thenS‘ q) j = union (map q (p j))
+// e.g., assuming that the input is "sssss", then
+// (term_s ‘thenS‘ term_s) 1 => {3}
+N(thenS ) {
+  C(1);
+}
 
-N(pith    ) { Α(seven, 1, os_soll_n) O; }
+N(Sa    ) {
+  Α(    "b", term,
+    Sa, "a", term, thenS, orelse, Sa, var) O;
+}
+N(coll   ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
+N(parse  ){ Α(plunl, 1, os_soll_n, coll, and) O; }
+N(example){ Α("baaa", 0, Sa, parse) O; }
 
-NP(dump) { os_wordump(T()); }
-NP(example ) { Α(co0, pith,
-                 1, os_call_n, and2,
-                         dump, and) O; }
-
-N(მთავარი ) { Α(example) O; }
-N(init    ) { C(1); }
+N(მთავარი ){ Α(example) O; }
+N(init    ){ C(1); }
 
 // clang-format off
 EN(tail,
