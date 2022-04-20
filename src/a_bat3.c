@@ -52,6 +52,7 @@ or5,          imports);
 typedef struct lp_t {
   n_t cont;
   const char* input;
+  Q_t len;
   Q_t pos;
 } lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
@@ -75,11 +76,12 @@ NP(var    ) { TS(lp_t);
 // = {}     , if j > l_input
 // = {j + 1}, if jth element of input = t
 // = {}     , otherwise
-NP(term   ) { 
-//  o->c(o->pos + 1);
+NP(term   ) { TS(lp_t);
   R(const char*, str);
-  (void)str;
-  C(1);
+  if (o->pos < o->len && o->input[o->pos] == str[0]) 
+    Α(o->pos + 1, o->cont) O;
+  else
+    C(0);
 }
 
 // (p ‘orelse‘ q) j = unite (p j) (q j)
@@ -97,14 +99,14 @@ NP(thenS  ) {
 }
 
 N(Sa     ) { TS(lp_t);
-  Α(    "b", term,
-    Sa, "a", term, thenS, orelse, Sa, var
+  Α(Sa, "a", term, thenS,
+        "b", term, orelse, Sa, var
   ) O;
 }
 N(coll   ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 
 Nar(plunl )("pos:", ps, plu, and, pnl, and)
-N(example){ Α(Sa, plunl, "baaa", 0, 3, os_soll_n, coll, and) O; }
+N(example){ Α(Sa, plunl, "baaa", 4, 0, 4, os_soll_n, coll, and) O; }
 
 N(მთავარი ){ Α(example) O; }
 N(init    ){ C(1); }
