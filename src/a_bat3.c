@@ -49,15 +49,25 @@ or2,                L)IN(L,
 or3,                L)IN(L,
 or4,                L)IN(L,
 or5,          imports);
+typedef struct lp_t {
+  n_t cont;
+  const char* input;
+  Q_t pos;
+} lp_t;
+#define TS(T) T*o=(T*)ο;(void)o
+#define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
+#define Var(Name) N(Name) Var_
+#define VarP(Name) NP(Name) Var_
 
-//static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
+static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 //static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
 static N(pnl   ){                      print("\n"     ), C(1); }
 static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
-Nar(plunl )(plu, pnl, and)
 
-N(var   ) {
-  C(1);
+NP(var    ) { TS(lp_t);
+  R(n_t, var_nar);
+  (void)var_nar;
+  Α(dot) O;
 }
 
 // term_s = term ’s’
@@ -65,32 +75,36 @@ N(var   ) {
 // = {}     , if j > l_input
 // = {j + 1}, if jth element of input = t
 // = {}     , otherwise
-N(term  ) { 
+NP(term   ) { 
 //  o->c(o->pos + 1);
+  R(const char*, str);
+  (void)str;
   C(1);
 }
 
 // (p ‘orelse‘ q) j = unite (p j) (q j)
 // e.g., assuming that the input is "sssss", then
 // (empty ‘orelse‘ term_s) 2 => {2, 3}
-N(orelse) {
-  C(1);
+NP(orelse ) {
+  Α(dot, dot, and) O;
 }
 
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "sssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
-N(thenS ) {
-  C(1);
+NP(thenS  ) {
+  Α(dot, dot, and) O;
 }
 
-N(Sa    ) {
+N(Sa     ) { TS(lp_t);
   Α(    "b", term,
-    Sa, "a", term, thenS, orelse, Sa, var) O;
+    Sa, "a", term, thenS, orelse, Sa, var
+  ) O;
 }
 N(coll   ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
-N(parse  ){ Α(plunl, 1, os_soll_n, coll, and) O; }
-N(example){ Α("baaa", 0, Sa, parse) O; }
+
+Nar(plunl )("pos:", ps, plu, and, pnl, and)
+N(example){ Α(Sa, plunl, "baaa", 0, 3, os_soll_n, coll, and) O; }
 
 N(მთავარი ){ Α(example) O; }
 N(init    ){ C(1); }
