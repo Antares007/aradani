@@ -85,12 +85,13 @@ NP(term   ) { TS(lp_t);
 NP(orelse ) {
   Α(dot, dot, dot, andor) O;
 }
-
+Q_t i = 0;
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "sssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
-NP(thenS  ) {
-  Α(dot, dot, god, andor) O;
+NP(thenS  ) { if (i++ < 10)
+  // how to make os_soll
+  Α(dot, dot, dot, andor) O;
 }
 
 N(Sa     ) { TS(lp_t);
@@ -98,10 +99,31 @@ N(Sa     ) { TS(lp_t);
         "b", term, orelse, Sa, var
   ) O;
 }
+N(co) {
+  Α(os_unsoll, dot, and) O;
+}
+
 N(coll   ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 
 Nar(plunl )("pos:", ps, plu, and, pnl, and)
-N(example){ Α(Sa, plunl, "baaa", 4, 0, 4, os_soll_n, coll, and) O; }
+N(Term) {
+  R(Q_t,          chr);
+  R(Q_t,          pos);
+  R(Q_t,          len);
+  R(const char*,  input);
+  Q_t ray = pos < len && input[pos] == chr;
+  Α(input, len, pos + ray) C(ray);
+}
+NP(Ta    ) { Α('a', Term) O; }
+NP(Tb    ) { Α('b', Term) O; }
+NP(soll  ) { Α(1, os_soll_n) O; }
+NP(unsoll  ) { Α(os_unsoll) O; }
+
+NP(SA    ) { Α(Tb,
+               ο,  unsoll, dot,  and,
+               SA, Ta, soll, coll, and, 045, nar) O;
+}
+N(example){ Α("baaa", 4, 0, SA, os_wordump, soll, coll, and) O; }
 
 N(მთავარი ){ Α(example) O; }
 N(init    ){ C(1); }
