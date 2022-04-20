@@ -49,12 +49,7 @@ or2,                L)IN(L,
 or3,                L)IN(L,
 or4,                L)IN(L,
 or5,          imports);
-typedef struct lp_t {
-  n_t cont;
-  const char* input;
-  Q_t len;
-  Q_t pos;
-} lp_t;
+typedef struct lp_t { n_t c; const char* input; Q_t len; Q_t pos; } lp_t;
 #define TS(T) T*o=(T*)ο;(void)o
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
@@ -79,7 +74,7 @@ NP(var    ) { TS(lp_t);
 NP(term   ) { TS(lp_t);
   R(const char*, str);
   if (o->pos < o->len && o->input[o->pos] == str[0]) 
-    Α(o->pos + 1, o->cont) O;
+    Α(o->pos + 1, o->c) O;
   else
     C(0);
 }
@@ -88,14 +83,14 @@ NP(term   ) { TS(lp_t);
 // e.g., assuming that the input is "sssss", then
 // (empty ‘orelse‘ term_s) 2 => {2, 3}
 NP(orelse ) {
-  Α(dot, dot, and) O;
+  Α(dot, dot, dot, andor) O;
 }
 
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "sssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
 NP(thenS  ) {
-  Α(dot, dot, and) O;
+  Α(dot, dot, god, andor) O;
 }
 
 N(Sa     ) { TS(lp_t);
