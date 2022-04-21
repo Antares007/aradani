@@ -75,13 +75,17 @@ NP(term         ){
   else
     print("drop/unsoll? pos:%lu\n", pos), C(1);
 }
-
+N(extend_c_pith) {
+  Α(ο, os_unsoll, dot, and, 4, os_soll_n) O;
+}
 N(orelse_n_n    ){
   R(p_t*, rhsoll);
   const char* input = σ[0].cs;
   Q_t len           = σ[1].Q;
   Q_t pos           = σ[2].Q;
-  Α(input, len, pos, rhsoll, os_unsoll_free, dot, and, ο, 7, os_queue_n) O;
+  Α(input, len, pos, rhsoll, os_unsoll_free, dot, and,
+                      extend_c_pith,
+                      7, os_queue_n, and2) O;
 }
 NP(orelse_n     ){
   R(Q_t, wc);
@@ -90,7 +94,7 @@ NP(orelse_n     ){
 }
 NP(thenS_n      ){
   R(Q_t, wc);
-  α -= wc, O;
+  Α(ο, os_unsoll, and2, dot, and, wc + 5, os_soll_n, coll, and) O;
 }
 NP(var          ){ Α(drop, dot, and) O; }
 
