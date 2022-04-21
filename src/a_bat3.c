@@ -63,6 +63,7 @@ N(coll          ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 N(drop          ){ α--, C(1); }
 N(empty_soll    ){ Α(0, os_soll_n) O; }
 N(empty_pith    ){ Α(empty_soll) O; }
+
 NP(term         ){
   R(const char*,  str);
   R(Q_t,          pos);
@@ -74,6 +75,7 @@ NP(term         ){
   else
     print("drop/unsoll? pos:%lu\n", pos), C(1);
 }
+
 N(orelse_n_n    ){
   R(p_t*, rhsoll);
   const char* input = σ[0].cs;
@@ -92,9 +94,9 @@ NP(thenS_n      ){
 }
 NP(var          ){ Α(drop, dot, and) O; }
 
-N(thenS        ){ Α(1, thenS_n) O; }
-N(orelse3      ){ Α(3, orelse_n) O; }
-N(orelse5      ){ Α(5, orelse_n) O; }
+N(thenS         ){ Α(1, thenS_n) O; }
+N(orelse3       ){ Α(3, orelse_n) O; }
+N(orelse5       ){ Α(5, orelse_n) O; }
 
 NarP(pls        )("+", term)
 NarP(mns        )("-", term)
