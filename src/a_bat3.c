@@ -55,78 +55,69 @@ typedef struct lp_t { n_t c; const char* input; Q_t len; Q_t pos; } lp_t;
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
 
-static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
+//static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 //static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
-static N(pnl   ){                      print("\n"     ), C(1); }
-static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
-
-NP(var    ) { TS(lp_t);
-  R(n_t, var_nar);
-  (void)var_nar;
-  Α(dot) O;
-}
-
-// term_s = term ’s’
-// where term t j
-// = {}     , if j > l_input
-// = {j + 1}, if jth element of input = t
-// = {}     , otherwise
-NP(term   ) { TS(lp_t);
-  R(const char*, str);
-  if (o->pos < o->len && o->input[o->pos] == str[0]) 
-    Α(o->pos + 1, o->c) O;
-  else
-    C(0);
-}
-
-// (p ‘orelse‘ q) j = unite (p j) (q j)
-// e.g., assuming that the input is "sssss", then
-// (empty ‘orelse‘ term_s) 2 => {2, 3}
-NP(orelse ) {
-  Α(dot, dot, dot, andor) O;
-}
-Q_t i = 0;
-// (p ‘thenS‘ q) j = union (map q (p j))
-// e.g., assuming that the input is "sssss", then
-// (term_s ‘thenS‘ term_s) 1 => {3}
-NP(thenS  ) { if (i++ < 10)
-  // how to make os_soll
-  Α(dot, dot, dot, andor) O;
-}
-
-N(Sa     ) { TS(lp_t);
-  Α(Sa, "a", term, thenS,
-        "b", term, orelse, Sa, var
-  ) O;
-}
-N(co) {
-  Α(os_unsoll, dot, and) O;
-}
-
-N(coll   ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
-
-Nar(plunl )("pos:", ps, plu, and, pnl, and)
-N(Term) {
-  R(Q_t,          chr);
+//static N(pnl   ){                      print("\n"     ), C(1); }
+//static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
+N(coll          ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
+N(drop          ){ α--, C(1); }
+N(empty_soll    ){ Α(0, os_soll_n) O; }
+N(empty_pith    ){ Α(empty_soll) O; }
+NP(term         ){
+  R(const char*,  str);
   R(Q_t,          pos);
   R(Q_t,          len);
   R(const char*,  input);
-  Q_t ray = pos < len && input[pos] == chr;
-  Α(input, len, pos + ray) C(ray);
+  print("input:%s len:%lu pos:%lu str:%s\n", input, len, pos, str);
+  if (pos < len && input[pos] == str[0])
+    Α(input, len, pos + 1, ο, os_unsoll_free, dot, and) O;
+  else
+    print("drop/unsoll? pos:%lu\n", pos), C(1);
 }
-NP(Ta    ) { Α('a', Term) O; }
-NP(Tb    ) { Α('b', Term) O; }
-NP(soll  ) { Α(1, os_soll_n) O; }
-NP(unsoll  ) { Α(os_unsoll) O; }
-
-NP(SA    ) { Α(Tb,
-               ο,  unsoll, dot,  and,
-               SA, Ta, soll, coll, and, 045, nar) O;
+N(orelse_n_n    ){
+  R(p_t*, rhsoll);
+  const char* input = σ[0].cs;
+  Q_t len           = σ[1].Q;
+  Q_t pos           = σ[2].Q;
+  Α(input, len, pos, rhsoll, os_unsoll_free, dot, and, ο, 7, os_queue_n) O;
 }
-N(example){ Α("baaa", 4, 0, SA, os_wordump, soll, coll, and) O; }
+NP(orelse_n     ){
+  R(Q_t, wc);
+  Α(wc, os_soll_n, orelse_n_n, and,
+                          dot, and) O;
+}
+NP(thenS_n      ){
+  R(Q_t, wc);
+  α -= wc, O;
+}
+NP(var          ){ Α(drop, dot, and) O; }
 
-N(მთავარი ){ Α(example) O; }
-N(init    ){ C(1); }
+N(thenS        ){ Α(1, thenS_n) O; }
+N(orelse3      ){ Α(3, orelse_n) O; }
+N(orelse5      ){ Α(5, orelse_n) O; }
+
+NarP(pls        )("+", term)
+NarP(mns        )("-", term)
+NarP(mul        )("*", term)
+NarP(div        )("/", term)
+NarP(id         )("a", term)
+NarP(opr        )("(", term)
+NarP(cpr        )(")", term)
+NarP(cma        )(",", term)
+NarP(Exp        )(
+  id,
+  opr, Exp, thenS, cpr, thenS, orelse5,
+  //Exp, pls, thenS, Exp, thenS, orelse5,
+  //Exp, mns, thenS, Exp, thenS, orelse5,
+  //Exp, div, thenS, Exp, thenS, orelse5,
+  //Exp, mul, thenS, Exp, thenS, orelse5,
+  Exp, var      )
+N(set_alfa_zero) { α = 0, C(1); }    
+NP(continuation ) { Α(os_wordump, set_alfa_zero, and, 3, os_soll_n) O; }
+NP(example      ) { Α("(a)+a*a", 7, 0, Exp, continuation, os_queue, and) O; }
+
+N(მთავარი       ){ Α(example) O; }
+N(init          ){ C(1); }
 
 // clang-format off
 EN(tail,
