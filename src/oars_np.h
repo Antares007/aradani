@@ -1,7 +1,7 @@
 #pragma once
 // clang-format off
 #include "os/pith_coords.h"
-#define FFF(σ) (ο[Φ].v ? (((Q_t)σ - ο[Φ].p[Φ].p[Φ].Q) >> 12) : 0)
+#define FFF(σ) (((Q_t)σ >> 12) & (Q_t)0xFF)
 #define PLog_(PRN)                                                             \
   PRN("ο%02lx %3ld %3ld σ%02lx %s:%s\n",                                       \
       FFF(ο), α, ρ,                                 \
