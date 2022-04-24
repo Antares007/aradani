@@ -186,7 +186,7 @@ Var(sOs)(empty, term_s, orelse, sOs, var)
 
 N(parse);
 
-//Nar(example)("sssss", sS,  parse)
+Nar(example)("sssss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
 //Nar(example)("(a+a)*a", Exp, parse)
