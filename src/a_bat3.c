@@ -76,11 +76,11 @@ N(soll_contains) {
 
 N(clear_sigma ) { α = 0, C(1); }    
 
-//static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
-//static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
-//static N(pnl   ){                      print("\n"     ), C(1); }
-//static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
-//
+N(ps    ){ R(const char*, str); print("%s", str), C(1); }
+N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
+N(pnl   ){                      print("\n"     ), C(1); }
+N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
+const char* name(void* addr);
 
 p_t *memo_soll;
 uint64_t inline MurmurOAAT64 (const char * beg, const char * end)
@@ -101,7 +101,8 @@ N(queue) {
   R(Q_t, wc);
   Q_t hash = MurmurOAAT64((void*)&σ[α-wc],(void*)&σ[α]);
   R(p_t *, oο);
-  //print("%lu %p %p\n", wc, oο, hash);
+  //if(wc == 4)
+  //  print("inp:%s pos:%lu %p %p %p\n", σ[α-wc].cs, σ[α-wc+2].Q, oο, σ[α-1].v, hash);
   Α(hash, memo_soll, soll_contains,
     wc + 1, drop_n,
     memo_soll, soll_push, oο, wc, os_queue_n, and3,  026, nar) O;
@@ -118,18 +119,26 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define VarP(Name) NP(Name) Var_
 
 N(empty) { Α(ο, os_unsoll, dot, and) O; }
-N(term){
+N(term ){
   R(const char*,  str);
   R(Q_t,          pos);
   R(Q_t,          len);
   R(const char*,  input);
-  print("inp:%s len:%lu pos:%lu\n", input, len, pos);
+  //print("inp:%s pos:%lu\n", input, pos);
   if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, ο, os_unsoll, dot, and) O;
-  else C(0);
+  else C(1);
+}
+N(psoll) {
+  R(p_t*, s);
+  for(Q_t i = 0; i < s[Ǎ].Q; i++)
+    print("%s ", name(s[i].v));
+  print("\n");
+  A(s) C(1);
 }
 N(orelse_n_n   ){
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, os_unsoll_free, dot, and, ο, 7, queue, dot, and) O;
+  print("\n%lu\n", σ[2].v);
+  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, psoll, os_unsoll_free, and, dot, and, ο, 9, queue, dot, and) O;
 }
 N(orelse_n     ){
   R(Q_t, wc);
@@ -179,13 +188,51 @@ N(dump) {
     os_wordump, clear_sigma, and,
     os_wordump, clear_sigma, and,
     os_wordump, clear_sigma, and, 0333, nar) O; }
-//Nar(example)("sssss", 5, 0, sS, dump, 1, os_soll_n, coll, and)
+Nar(example)("sssss", 5, 0, sS, dump, 1, os_soll_n, coll, and)
 //Nar(example)("as", 2, 0, aTs, dump, 1, os_soll_n, coll, and)
-Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
+//Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
 //Nar(example)("(a+a)*a", 7, 0, Exp, dump, god, or, 3, os_soll_n, coll, and)
 //Nar(example)("baaaa", 5, 0, Sa, dump, 1, os_soll_n, coll, and)
 Nar(მთავარი)(example)
-Nar(init   )(init_memo)
+void* names[1024][2];
+Q_t names_i = 0;
+const char* name(void* addr) {
+  for(Q_t i = 0; i < names_i; i++)
+    if(names[i][0] == addr) return names[i][1];
+  return "n/a";
+}
+#define Name(Nm) names[names_i][0] = Nm, names[names_i][1] = #Nm, names_i++
+N(init_names) {
+  Name(empty);
+  Name(term);
+  Name(orelse_n_n);
+  Name(orelse_n);
+  Name(thenS_n);
+  Name(var);
+  Name(thenS);
+  Name(orelse);
+  Name(orelse3);
+  Name(orelse5);
+  Name(a);
+  Name(b);
+  Name(Sa);
+  Name(pls);
+  Name(mns);
+  Name(mul);
+  Name(div);
+  Name(opr);
+  Name(cpr);
+  Name(Exp);
+  Name(term_a);
+  Name(term_b);
+  Name(term_s);
+  Name(sS);
+  Name(aTs);
+  Name(sOs);
+  Name(dump);
+  C(1);
+}
+Nar(init   )(init_memo, init_names, and)
 
 // clang-format off
 EN(tail,
