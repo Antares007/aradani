@@ -11,7 +11,7 @@ gor,                L)IN(L,
 got,                L)IN(L,
 nar,                L)IN(L,
 os_call_n,          L)IN(L,
-os_queue,           L)IN(L,
+os_queue_clear,     L)IN(L,
 os_queue_n,         L)IN(L,
 os_soll,            L)IN(L,
 os_soll_dup,        L)IN(L,
@@ -74,13 +74,38 @@ N(soll_contains) {
   C(0);
 }
 
-NP(clear_sigma ) { α = 0, C(1); }    
+N(clear_sigma ) { α = 0, C(1); }    
 
 //static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 //static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
 //static N(pnl   ){                      print("\n"     ), C(1); }
 //static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
 //
+
+p_t *memo_soll;
+uint64_t inline MurmurOAAT64 (const char * beg, const char * end)
+{
+  uint64_t h = 525201411107845655ull;
+  for (;beg!=end;++beg) {
+    h ^= *beg;
+    h *= 0x5bd1e9955bd1e995;
+    h ^= h >> 47;
+  }
+  return h;
+}
+
+N(set_memo) { R(p_t*, msoll); memo_soll = msoll; C(1); }
+N(init_memo) { Α(0, os_soll_n, set_memo, and) O; }
+N(drop_n) { R(Q_t, wc); α -= wc, C(1); }
+N(queue) {
+  R(Q_t, wc);
+  Q_t hash = MurmurOAAT64((void*)&σ[α-wc],(void*)&σ[α]);
+  R(p_t *, oο);
+  //print("%lu %p %p\n", wc, oο, hash);
+  Α(hash, memo_soll, soll_contains,
+    wc + 1, drop_n,
+    memo_soll, soll_push, oο, wc, os_queue_n, and3,  026, nar) O;
+}
 N(coll          ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 N(drop          ){ α--, C(1); }
 N(empty_soll    ){ Α(0, os_soll_n) O; }
@@ -91,38 +116,39 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
-NP(empty) { Α(ο, os_unsoll, dot, and) O; }
-NP(term){
+
+N(empty) { Α(ο, os_unsoll, dot, and) O; }
+N(term){
   R(const char*,  str);
   R(Q_t,          pos);
   R(Q_t,          len);
   R(const char*,  input);
   print("inp:%s len:%lu pos:%lu\n", input, len, pos);
   if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, ο, os_unsoll, dot, and) O;
-  else C(1);
+  else C(0);
 }
-N (orelse_n_n   ){
+N(orelse_n_n   ){
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, os_unsoll_free, dot, and, ο, 7, os_queue_n, dot, and) O;
+  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, os_unsoll_free, dot, and, ο, 7, queue, dot, and) O;
 }
-NP(orelse_n     ){
+N(orelse_n     ){
   R(Q_t, wc);
   Α(wc, os_soll_n, orelse_n_n, and) O;
 }
-NP(thenS_n      ){
+N(thenS_n      ){
   R(Q_t, wc);
-  Α(ο, wc + 3, os_queue_n, wc + 3, os_soll_n, coll, and) O;
+  Α(ο, wc + 3, queue, god, or, wc + 5, os_soll_n, coll, and) O;
 }
-NP(var          ){              Α(drop, dot, and) O; }
+N(var          ){              Α(drop, dot, and) O; }
 
 Var(thenS  )(1, thenS_n)
 Var(orelse )(1, orelse_n)
 Var(orelse3)(3, orelse_n)
 Var(orelse5)(5, orelse_n)
 
-VarP(a             )("a", term)
-VarP(b             )("b", term)
-VarP(Sa)(b,
+Var(a             )("a", term)
+Var(b             )("b", term)
+Var(Sa)(b,
          Sa, a, thenS, orelse3)
 
 Var(pls           )("+", term)
@@ -134,10 +160,10 @@ Var(cpr           )(")", term)
 
 Var(Exp         )(a,
                   opr, Exp, thenS, cpr, thenS, orelse5,
-                  Exp, pls, thenS, Exp, thenS, orelse5,
-                  Exp, mns, thenS, Exp, thenS, orelse5,
-                  Exp, div, thenS, Exp, thenS, orelse5,
                   Exp, mul, thenS, Exp, thenS, orelse5,
+                  Exp, pls, thenS, Exp, thenS, orelse5,
+                  //Exp, mns, thenS, Exp, thenS, orelse5,
+                  //Exp, div, thenS, Exp, thenS, orelse5,
                   Exp, var)
 Var(term_a)("a", term)
 Var(term_b)("b", term)
@@ -145,21 +171,21 @@ Var(term_s)("s", term)
 Var(sS )(empty, 
          term_s, sS, thenS, sS, thenS, orelse5,
          sS, var)
-VarP(aTs)(term_a, term_s, thenS)
-VarP(sOs)(empty, term_s, orelse, sOs, var)
+Var(aTs)(term_a, term_s, thenS)
+Var(sOs)(empty, term_s, orelse, sOs, var)
 
-NP(dump) {
+N(dump) {
   Α(god,
     os_wordump, clear_sigma, and,
     os_wordump, clear_sigma, and,
     os_wordump, clear_sigma, and, 0333, nar) O; }
 //Nar(example)("sssss", 5, 0, sS, dump, 1, os_soll_n, coll, and)
 //Nar(example)("as", 2, 0, aTs, dump, 1, os_soll_n, coll, and)
-//Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
-Nar(example)("(a+a)*a", 7, 0, Exp, dump, 1, os_soll_n, coll, and)
+Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
+//Nar(example)("(a+a)*a", 7, 0, Exp, dump, god, or, 3, os_soll_n, coll, and)
 //Nar(example)("baaaa", 5, 0, Sa, dump, 1, os_soll_n, coll, and)
 Nar(მთავარი)(example)
-Nar(init   )(god)
+Nar(init   )(init_memo)
 
 // clang-format off
 EN(tail,

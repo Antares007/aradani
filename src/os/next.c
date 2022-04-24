@@ -11,12 +11,14 @@ void os_soll(OARS);
 static Q_t qlen(QUEUE *h);
 
 QUEUE temp_queue;
+N(os_queue_clear) {
+  QUEUE_INIT(&temp_queue), C(1);
+}
 N(os_queue_soll) {
   R(p_t *, oο);
   R(p_t *, sοll);
   QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&sοll[Ψ]);
   sοll[Φ].p = oο;
-  printf("queued: ο%02lx, σ%02lx\n", FFF(oο), FFF(sοll) );
   C(1);
 }
 QUEUE main_queue;
@@ -43,7 +45,6 @@ N(os_next) {
   page_free(σ);
   p_t *nσ = ((p_t *)q) + 5, *nο = nσ[Φ].p;
   nσ[Φ].p = 0;
-  printf("next: ο%02lx, σ%02lx\n", FFF(nο), FFF(nσ) );
   dot(nο, nσ[Ǎ].Q, nσ[Σ].Q, nσ);
 }
 N(os_queue_n) {
