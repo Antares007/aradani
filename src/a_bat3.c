@@ -76,7 +76,7 @@ N(soll_contains) {
 
 NP(clear_sigma ) { α = 0, C(1); }    
 
-static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
+//static N(ps    ){ R(const char*, str); print("%s", str), C(1); }
 //static N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
 //static N(pnl   ){                      print("\n"     ), C(1); }
 //static N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
@@ -91,14 +91,15 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
-
+NP(empty) { Α(ο, os_unsoll, dot, and) O; }
 NP(term){
   R(const char*,  str);
   R(Q_t,          pos);
   R(Q_t,          len);
   R(const char*,  input);
+  print("inp:%s len:%lu pos:%lu\n", input, len, pos);
   if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, ο, os_unsoll, dot, and) O;
-  else Α(input, len, pos) C(1);
+  else C(1);
 }
 N (orelse_n_n   ){
   R(p_t*, rhsoll);
@@ -110,31 +111,19 @@ NP(orelse_n     ){
 }
 NP(thenS_n      ){
   R(Q_t, wc);
-  Α(ο, os_unsoll, and2, dot, and, wc + 5, os_soll_n, coll, and) O;
+  Α(ο, wc + 3, os_queue_n, wc + 3, os_soll_n, coll, and) O;
 }
 NP(var          ){              Α(drop, dot, and) O; }
 
 Var(thenS  )(1, thenS_n)
+Var(orelse )(1, orelse_n)
 Var(orelse3)(3, orelse_n)
+Var(orelse5)(5, orelse_n)
 
 VarP(a             )("a", term)
 VarP(b             )("b", term)
 VarP(Sa)(b,
          Sa, a, thenS, orelse3)
-NP(dump) {
-  Α(god,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and, 0333, nar) O; }
-Nar(example)("baaaa", 5, 0, Sa,
-             dump, 1, os_soll_n,
-             coll, and)
-Nar(მთავარი)(example)
-Nar(init   )(god)
-
-// clang-format off
-EN(tail,
-მთავარი,      exports);
 
 Var(pls           )("+", term)
 Var(mns           )("-", term)
@@ -143,13 +132,37 @@ Var(div           )("/", term)
 Var(opr           )("(", term)
 Var(cpr           )(")", term)
 
-Var(Exp         )(opr, a, thenS,
-                  //id,
-                  //opr, Exp, thenS, cpr, thenS, orelse,
-                  //Exp, pls, thenS, Exp, thenS, orelse,
-                  //Exp, mns, thenS, Exp, thenS, orelse,
-                  //Exp, div, thenS, Exp, thenS, orelse,
-                  //Exp, mul, thenS, Exp, thenS, orelse,
+Var(Exp         )(a,
+                  opr, Exp, thenS, cpr, thenS, orelse5,
+                  Exp, pls, thenS, Exp, thenS, orelse5,
+                  Exp, mns, thenS, Exp, thenS, orelse5,
+                  Exp, div, thenS, Exp, thenS, orelse5,
+                  Exp, mul, thenS, Exp, thenS, orelse5,
                   Exp, var)
+Var(term_a)("a", term)
+Var(term_b)("b", term)
+Var(term_s)("s", term)
+Var(sS )(empty, 
+         term_s, sS, thenS, sS, thenS, orelse5,
+         sS, var)
+VarP(aTs)(term_a, term_s, thenS)
+VarP(sOs)(empty, term_s, orelse, sOs, var)
+
+NP(dump) {
+  Α(god,
+    os_wordump, clear_sigma, and,
+    os_wordump, clear_sigma, and,
+    os_wordump, clear_sigma, and, 0333, nar) O; }
+//Nar(example)("sssss", 5, 0, sS, dump, 1, os_soll_n, coll, and)
+//Nar(example)("as", 2, 0, aTs, dump, 1, os_soll_n, coll, and)
+//Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
+Nar(example)("(a+a)*a", 7, 0, Exp, dump, 1, os_soll_n, coll, and)
+//Nar(example)("baaaa", 5, 0, Sa, dump, 1, os_soll_n, coll, and)
+Nar(მთავარი)(example)
+Nar(init   )(god)
+
+// clang-format off
+EN(tail,
+მთავარი,      exports);
 
 // continuation is chained entered_set and representing long sentence 
