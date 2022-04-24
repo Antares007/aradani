@@ -135,10 +135,10 @@ N(psoll) {
   print("\n");
   A(s) C(1);
 }
+N(pσ) { for(Q_t i = 0; i < α; i++) print("%s ", name(σ[i].v)); print("\n"); C(1); }
 N(orelse_n_n   ){
   R(p_t*, rhsoll);
-  print("\n%lu\n", σ[2].v);
-  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, psoll, os_unsoll_free, and, dot, and, ο, 9, queue, dot, and) O;
+  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, "\n>", ps, psoll, and, os_unsoll_free, and, dot, and, ο, 12, queue, dot, and) O;
 }
 N(orelse_n     ){
   R(Q_t, wc);
@@ -146,7 +146,7 @@ N(orelse_n     ){
 }
 N(thenS_n      ){
   R(Q_t, wc);
-  Α(ο, wc + 3, queue, god, or, wc + 5, os_soll_n, coll, and) O;
+  Α(ο, wc + 3, pσ, queue, and, wc + 5, os_soll_n, "left:", ps,  and2, pσ, and, coll, and) O;
 }
 N(var          ){              Α(drop, dot, and) O; }
 
