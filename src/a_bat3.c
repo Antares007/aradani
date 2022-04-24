@@ -121,11 +121,12 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 N(empty) { Α(ο, os_unsoll, dot, and) O; }
 N(term ){
   R(const char*,  str);
+  R(p_t*,         solls);
   R(Q_t,          pos);
   R(Q_t,          len);
   R(const char*,  input);
   //print("inp:%s pos:%lu\n", input, pos);
-  if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, ο, os_unsoll, dot, and) O;
+  if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, solls, ο, os_unsoll, dot, and) O;
   else C(1);
 }
 N(psoll) {
@@ -138,7 +139,7 @@ N(psoll) {
 N(pσ) { for(Q_t i = 0; i < α; i++) print("%s ", name(σ[i].v)); print("\n"); C(1); }
 N(orelse_n_n   ){
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, "\n>", ps, psoll, and, os_unsoll_free, and, dot, and, ο, 12, queue, dot, and) O;
+  Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, os_unsoll_free, dot, and, ο, 8, queue, dot, and) O;
 }
 N(orelse_n     ){
   R(Q_t, wc);
@@ -146,7 +147,7 @@ N(orelse_n     ){
 }
 N(thenS_n      ){
   R(Q_t, wc);
-  Α(ο, wc + 3, pσ, queue, and, wc + 5, os_soll_n, "left:", ps,  and2, pσ, and, coll, and) O;
+  Α(ο, wc + 4, pσ, queue, and, wc + 5, os_soll_n, "left:", ps,  and2, pσ, and, coll, and) O;
 }
 N(var          ){              Α(drop, dot, and) O; }
 
@@ -183,17 +184,15 @@ Var(sS )(empty,
 Var(aTs)(term_a, term_s, thenS)
 Var(sOs)(empty, term_s, orelse, sOs, var)
 
-N(dump) {
-  Α(god,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and, 0333, nar) O; }
-Nar(example)("sssss", 5, 0, sS, dump, 1, os_soll_n, coll, and)
-//Nar(example)("as", 2, 0, aTs, dump, 1, os_soll_n, coll, and)
-//Nar(example)("sssss", 5, 0, sOs, dump, 1, os_soll_n, coll, and)
-//Nar(example)("(a+a)*a", 7, 0, Exp, dump, god, or, 3, os_soll_n, coll, and)
-//Nar(example)("baaaa", 5, 0, Sa, dump, 1, os_soll_n, coll, and)
+N(parse);
+
+//Nar(example)("sssss", sS,  parse)
+//Nar(example)("as", aTs, parse)
+//Nar(example)("sssss", sOs, parse)
+//Nar(example)("(a+a)*a", Exp, parse)
+//Nar(example)("baaaa", Sa, parse)
 Nar(მთავარი)(example)
+
 void* names[1024][2];
 Q_t names_i = 0;
 const char* name(void* addr) {
@@ -229,7 +228,6 @@ N(init_names) {
   Name(sS);
   Name(aTs);
   Name(sOs);
-  Name(dump);
   C(1);
 }
 Nar(init   )(init_memo, init_names, and)
@@ -239,3 +237,15 @@ EN(tail,
 მთავარი,      exports);
 
 // continuation is chained entered_set and representing long sentence 
+
+N(dump) {
+  Α(god,
+    os_wordump, clear_sigma, and,
+    os_wordump, clear_sigma, and,
+    os_wordump, clear_sigma, and, 0333, nar) O; }
+Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
+N(parse) {
+  R(n_t, symb);
+  R(const char*, input);
+  Α(input, cslen(input), 0, 0, os_soll_n, symb, dump, 1, os_soll_n, and4, coll, and) O; }
+
