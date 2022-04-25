@@ -81,6 +81,14 @@ N(pld   ){ R(q_t, v); print("%ld", v), C(1); }
 N(pnl   ){                      print("\n"     ), C(1); }
 N(plu   ){ R(Q_t, v); print("%lu", v), C(1); }
 const char* name(void* addr);
+N(psoll) {
+  R(p_t*, s);
+  for(Q_t i = 0; i < s[Ǎ].Q; i++)
+    print("%s ", name(s[i].v));
+  print("\n");
+  A(s) C(1);
+}
+N(pσ) { for(Q_t i = 0; i < α; i++) print("%s ", name(σ[i].v)); print("\n"); C(1); }
 
 p_t *memo_soll;
 uint64_t inline MurmurOAAT64 (const char * beg, const char * end)
@@ -117,29 +125,25 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
-
+N(cpp) { σ[0].p[3].Q+=2, C(1); }
+N(cm ) { σ[0].p[3].Q-=1, C(1); }
 N(empty) { Α(ο, os_unsoll, dot, and) O; }
 N(term ){
-  R(const char*,  str);
-  R(p_t*,         solls);
-  R(Q_t,          pos);
-  R(Q_t,          len);
-  R(const char*,  input);
-  //print("inp:%s pos:%lu\n", input, pos);
-  if(pos < len && input[pos] == str[0]) Α(input, len, pos + 1, solls, ο, os_unsoll, dot, and) O;
-  else C(1);
+  R(const char*,    str);
+  R(p_t*,           s);
+  Q_t c             = s[3].Q;
+  Q_t pos           = s[2].Q;
+  Q_t len           = s[1].Q;
+  const char* input = s[0].cs;
+  //  print("inp:%s pos:%lu\n", input, pos);
+  if (pos < len && input[pos] == str[0])
+    Α(input, len, pos + 1, c, 4, os_soll_n, ο, os_unsoll, and2, dot, and) O;
+  else
+    C(1);
 }
-N(psoll) {
-  R(p_t*, s);
-  for(Q_t i = 0; i < s[Ǎ].Q; i++)
-    print("%s ", name(s[i].v));
-  print("\n");
-  A(s) C(1);
-}
-N(pσ) { for(Q_t i = 0; i < α; i++) print("%s ", name(σ[i].v)); print("\n"); C(1); }
 N(orelse_n_n   ){
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, os_unsoll_free, dot, and, ο, 8, queue, dot, and) O;
+  Α(σ[0].v, rhsoll, os_unsoll_free, dot, and, ο, 5, queue, dot, and) O;
 }
 N(orelse_n     ){
   R(Q_t, wc);
@@ -147,19 +151,26 @@ N(orelse_n     ){
 }
 N(thenS_n      ){
   R(Q_t, wc);
-  Α(ο, wc + 4, pσ, queue, and, wc + 5, os_soll_n, "left:", ps,  and2, pσ, and, coll, and) O;
+  Α(ο, os_unsoll, dot, and, 4, os_soll_n, wc + 1, queue, wc + 3, os_soll_n, and4, cpp, and, coll, and) O;
 }
-N(var          ){              Α(drop, dot, and) O; }
+N(var           ){ Α(drop, dot, and) O; }
+Var(thenS       )(1, thenS_n)
+Var(orelse      )(1, orelse_n)
+Var(orelse3     )(3, orelse_n)
+Var(orelse5     )(5, orelse_n)
+Var(term_a      )("a", term)
+Var(term_b      )("b", term)
 
-Var(thenS  )(1, thenS_n)
-Var(orelse )(1, orelse_n)
-Var(orelse3)(3, orelse_n)
-Var(orelse5)(5, orelse_n)
+VarP(term_s     )("s", term)
+VarP(sS         )(empty, 
+                  term_s, sS, thenS, sS, thenS, orelse5,
+                  sS, var)
+
 
 Var(a             )("a", term)
 Var(b             )("b", term)
 Var(Sa)(b,
-         Sa, a, thenS, orelse3)
+        Sa, a, thenS, orelse3)
 
 Var(pls           )("+", term)
 Var(mns           )("-", term)
@@ -175,12 +186,6 @@ Var(Exp         )(a,
                   //Exp, mns, thenS, Exp, thenS, orelse5,
                   //Exp, div, thenS, Exp, thenS, orelse5,
                   Exp, var)
-Var(term_a)("a", term)
-Var(term_b)("b", term)
-Var(term_s)("s", term)
-Var(sS )(empty, 
-         term_s, sS, thenS, sS, thenS, orelse5,
-         sS, var)
 Var(aTs)(term_a, term_s, thenS)
 Var(sOs)(empty, term_s, orelse, sOs, var)
 
@@ -237,15 +242,14 @@ EN(tail,
 მთავარი,      exports);
 
 // continuation is chained entered_set and representing long sentence 
-
-N(dump) {
-  Α(god,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and,
-    os_wordump, clear_sigma, and, 0333, nar) O; }
+N(phead){
+  R(p_t*,s);
+  print("input:%s len:%lu pos:%lu\n", s[0].cs, s[1].Q, s[2].Q);
+  C(1);
+}
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
-  Α(input, cslen(input), 0, 0, os_soll_n, symb, dump, 1, os_soll_n, and4, coll, and) O; }
+  Α(input, cslen(input), 0, 0, 4, os_soll_n, symb, phead, 1, os_soll_n, and4, coll, and) O; }
 
