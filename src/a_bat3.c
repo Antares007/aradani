@@ -69,8 +69,9 @@ N(soll_push) {
 }
 N(soll_contains) {
   R(p_t *, sο);
+  R(void *, v);
   for (Q_t i = 0; i < sο[Ǎ].Q; i++)
-    if (sο[i].v == σ[α - 1].v)
+    if (sο[i].v == v)
       return C(1);
   C(0);
 }
@@ -97,58 +98,57 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define Var_(...) {TS(lp_t);Α(__VA_ARGS__) O;}
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
-
-N(cpp) { σ[0].p[3].Q+=2, C(1); }
-N(cm ) { σ[0].p[3].Q-=1, C(1); }
-S(empty) { Α(ο, os_unsoll, dot, and) O; }
+N(continuation) {
+  R(p_t*, s);
+  Α(s, soll_pop, os_unsoll_free, and,
+    s, soll_pop, and2, coll, and) O;
+}
+SP(empty) { Α(ο, os_unsoll, dot, and) O; }
 N(term ){
   R(const char*,    str);
   R(p_t*,           s);
   p_t*hsoll         = s[4].p;
-  Q_t c             = s[3].Q;
   Q_t pos           = s[2].Q;
   Q_t len           = s[1].Q;
   const char* input = s[0].cs;
   if (pos < len && input[pos] == str[0])
-    Α(input, len, pos + 1, c, hsoll, 5, os_soll_n, ο, os_unsoll, and2, dot, and) O;
-  else if (pos < len)
-    Α(s[4].v, soll_pop, os_unsoll_free, and,
-      s[4].v, soll_pop, and2, coll, and) O;
-  else
-    print("input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2), C(1);
+    Α(input, len, pos + 1, 0, os_soll_n, hsoll, 5, os_soll_n, and3, ο, os_unsoll, and2, dot, and) O;
+  else 
+    print("input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2),
+    Α(s[4].v, continuation) O;
 }
 N(queue_soll) {
   R(p_t*, pith);
   R(p_t*, rhsoll);
-  Α(  pith, σ[0].p[4].p, soll_push,
-    rhsoll, σ[0].p[4].p, soll_push, and3) O;
+  Α(pith, σ[0].p[4].p, soll_push,
+  rhsoll, σ[0].p[4].p, soll_push, and3) O;
 }
 N(orelse_n_n) {
   R(p_t*, rhsoll);
   Α(σ[0].v, rhsoll, os_unsoll_free, dot, and, 5, os_soll_n, ο, queue_soll, and2, dot, and) O; }
 N(orelse_n   ) { Α(os_soll_n, orelse_n_n, and) O; }
+N(is_true_pith) {
+  Q_t ray = ο[Σ - σ[0].p[2].Q].Q == 0x757575;
+  ο[Σ - σ[0].p[2].Q].Q = 0x757575;
+  C(ray);
+}
 N(thenS_n_n  ) {
   R(p_t*, rsoll);
-  Α(rsoll, cm, os_unsoll, and, ο, coll, and2, 7, os_soll_n, cpp, and, coll, and) O;
+  Α(is_true_pith,
+    σ[0].p[4].v, continuation,
+    rsoll, os_unsoll, ο, coll, and2, 025, nar, 10, os_soll_n, coll, and) O;
 }
-N(thenS_n    ) {
-  R(Q_t, wc);
-  //if(wc == 1) {
-  //  R(n_t, symb);
-  //  Α(symb, σ[0].v, soll_contains, symb, symb, 011, nar, 7, os_soll_n, thenS_n_n, and) O;
-  //} else
-  Α(wc, os_soll_n, thenS_n_n, and) O;
-}
+N(thenS_n    ) { R(Q_t, wc); Α(wc, os_soll_n, thenS_n_n, and) O; }
 N(var        ) { Α(σ[0].v, soll_push, dot, and) O; }
 
 Var(thenS    )(1,  thenS_n)
 Var(orelse   )(1, orelse_n)
 Var(orelse3  )(3, orelse_n)
 Var(orelse5  )(5, orelse_n)
-VarP(term_a  )("a", term)
-Var(term_b   )("b", term)
+VarP(term_a   )("a", term)
+VarP(term_b   )("b", term)
 
-Var(term_s  )("s", term)
+VarP(term_s  )("s", term)
 VarP(sS       )(empty, 
                term_s, sS, thenS, sS, thenS, orelse5,
                sS, var)
@@ -172,8 +172,8 @@ VarP(Exp       )(a,
                 //Exp, mns, thenS, Exp, thenS, orelse5,
                 //Exp, div, thenS, Exp, thenS, orelse5,
                 Exp, var)
-Var(aTs       )(term_a, term_s, thenS)
-Var(sOs       )(empty, term_s, orelse, sOs, var)
+VarP(aTs       )(term_a, term_s, thenS)
+Var(sOs        )(empty, term_s, orelse, sOs, var)
 
 N(parse);
 //Nar(example)("sssss", sS,  parse)
@@ -189,10 +189,13 @@ N(phead){
   Α(s[4].v, soll_pop, os_unsoll_free, and, s[4].v, soll_pop, and2, coll, and) O;
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
+N(s_pith) { Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
-  Α(input, cslen(input), 0, 0, 0, os_soll_n, 5, os_soll_n, and2, symb, phead, 1, os_soll_n, and4, coll, and) O; }
+  Α(input, cslen(input), 0, 0, os_soll_n,
+                            0, os_soll_n, and2,
+                            5, os_soll_n, and2, symb, s_pith, and2, coll, and) O; }
 
 void* names[1024][2];
 Q_t names_i = 0;
