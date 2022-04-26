@@ -103,7 +103,7 @@ N(continuation) {
   Α(s, soll_pop, os_unsoll_free, and,
     s, soll_pop, and2, coll, and) O;
 }
-SP(empty) { Α(ο, os_unsoll, dot, and) O; }
+S(empty) { Α(                                                         ο, os_unsoll,       dot, and) O; }
 N(term ){
   R(const char*,    str);
   R(p_t*,           s);
@@ -112,7 +112,7 @@ N(term ){
   Q_t len           = s[1].Q;
   const char* input = s[0].cs;
   if (pos < len && input[pos] == str[0])
-    Α(input, len, pos + 1, 0, os_soll_n, hsoll, 5, os_soll_n, and3, ο, os_unsoll, and2, dot, and) O;
+    Α(input, len, pos + 1, 0, os_soll_n, hsoll, 5, os_soll_n, and3,   ο, os_unsoll, and2, dot, and) O;
   else 
     print("input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2),
     Α(s[4].v, continuation) O;
@@ -127,31 +127,36 @@ N(orelse_n_n) {
   R(p_t*, rhsoll);
   Α(σ[0].v, rhsoll, os_unsoll_free, dot, and, 5, os_soll_n, ο, queue_soll, and2, dot, and) O; }
 N(orelse_n   ) { Α(os_soll_n, orelse_n_n, and) O; }
+
 N(is_true_pith) {
-  Q_t ray = ο[Σ - σ[0].p[2].Q].Q == 0x757575;
-  ο[Σ - σ[0].p[2].Q].Q = 0x757575;
+  R(p_t*, oο);
+  Q_t pos = σ[0].p[2].Q;
+  Q_t ray = oο[Σ - pos].Q == 0x757575;
+  oο[Σ - pos].Q = 0x757575;
+//  print("pith: %p pos: %lu ray: %lu\n", oο, pos, ray);
   C(ray);
 }
+NP(pcontinuation) { continuation(T()); }
 N(thenS_n_n  ) {
   R(p_t*, rsoll);
-  Α(is_true_pith,
-    σ[0].p[4].v, continuation,
-    rsoll, os_unsoll, ο, coll, and2, 025, nar, 10, os_soll_n, coll, and) O;
+  Α(ο, is_true_pith,
+    σ[0].p[4].v, pcontinuation,
+    rsoll, os_unsoll, ο, coll, and2, 025, nar, 11, os_soll_n, coll, and) O;
 }
-N(thenS_n    ) { R(Q_t, wc); Α(wc, os_soll_n, thenS_n_n, and) O; }
+N(thenS_n    ) { Α(os_soll_n, thenS_n_n, and) O; }
 N(var        ) { Α(σ[0].v, soll_push, dot, and) O; }
 
 Var(thenS    )(1,  thenS_n)
 Var(orelse   )(1, orelse_n)
 Var(orelse3  )(3, orelse_n)
 Var(orelse5  )(5, orelse_n)
-VarP(term_a   )("a", term)
-VarP(term_b   )("b", term)
+VarP(term_a  )("a", term)
+VarP(term_b  )("b", term)
 
 VarP(term_s  )("s", term)
-VarP(sS       )(empty, 
-               term_s, sS, thenS, sS, thenS, orelse5,
-               sS, var)
+VarP(sS      )(empty, 
+              term_s, sS, thenS, sS, thenS, orelse5,
+              sS, var)
 
 
 VarP(a       )("a", term)
@@ -176,11 +181,11 @@ VarP(aTs       )(term_a, term_s, thenS)
 Var(sOs        )(empty, term_s, orelse, sOs, var)
 
 N(parse);
-//Nar(example)("sssss", sS,  parse)
+//Nar(example)("ss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
-//Nar(example)("(a+a)+a", Exp, parse)
-Nar(example)("baaaa", Sa, parse)
+Nar(example)("(a+a)+a", Exp, parse)
+//Nar(example)("baaaa", Sa, parse)
 Nar(მთავარი)(example)
 
 N(phead){
