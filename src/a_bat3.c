@@ -41,6 +41,7 @@ and5or,             L)IN(L,
 and5or3,            L)IN(L,
 and5or4,            L)IN(L,
 and6or4,            L)IN(L,
+and7,               L)IN(L,
 and7or,             L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
@@ -103,8 +104,14 @@ N(continuation) {
   Α(s, soll_pop, os_unsoll_free, and,
     s, soll_pop, and2, coll, and) O;
 }
-S(empty) { Α(                                                         ο, os_unsoll,       dot, and) O; }
-N(term ){
+N(queue_soll) {
+  R(p_t*, pith);
+  R(p_t*, rhsoll);
+  Α(pith, σ[0].p[4].p, soll_push,
+  rhsoll, σ[0].p[4].p, soll_push, and3) O;
+}
+SP(empty) { Α(ο, os_unsoll, dot, and) O; }
+NP(term ){
   R(const char*,    str);
   R(p_t*,           s);
   p_t*hsoll         = s[4].p;
@@ -112,39 +119,22 @@ N(term ){
   Q_t len           = s[1].Q;
   const char* input = s[0].cs;
   if (pos < len && input[pos] == str[0])
-    Α(input, len, pos + 1, 0, os_soll_n, hsoll, 5, os_soll_n, and3,   ο, os_unsoll, and2, dot, and) O;
+    Α(input, len, pos + 1, 0, os_soll_n, hsoll, 5, os_soll_n, and3, ο, os_unsoll, and2, dot, and) O;
   else 
     print("input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2),
     Α(s[4].v, continuation) O;
 }
-N(queue_soll) {
-  R(p_t*, pith);
-  R(p_t*, rhsoll);
-  Α(pith, σ[0].p[4].p, soll_push,
-  rhsoll, σ[0].p[4].p, soll_push, and3) O;
-}
 N(orelse_n_n) {
   R(p_t*, rhsoll);
   Α(σ[0].v, rhsoll, os_unsoll_free, dot, and, 5, os_soll_n, ο, queue_soll, and2, dot, and) O; }
-N(orelse_n   ) { Α(os_soll_n, orelse_n_n, and) O; }
+NP(orelse_n   ) { Α(os_soll_n, orelse_n_n, and) O; }
 
-N(is_true_pith) {
-  R(p_t*, oο);
-  Q_t pos = σ[0].p[2].Q;
-  Q_t ray = oο[Σ - pos].Q == 0x757575;
-  oο[Σ - pos].Q = 0x757575;
-//  print("pith: %p pos: %lu ray: %lu\n", oο, pos, ray);
-  C(ray);
-}
-NP(pcontinuation) { continuation(T()); }
 N(thenS_n_n  ) {
   R(p_t*, rsoll);
-  Α(ο, is_true_pith,
-    σ[0].p[4].v, pcontinuation,
-    rsoll, os_unsoll, ο, coll, and2, 025, nar, 11, os_soll_n, coll, and) O;
+  Α(rsoll, os_unsoll, ο, coll, and2, 5, os_soll_n, coll, and) O;
 }
-N(thenS_n    ) { Α(os_soll_n, thenS_n_n, and) O; }
-N(var        ) { Α(σ[0].v, soll_push, dot, and) O; }
+NP(thenS_n    ) { Α(os_soll_n, thenS_n_n, and) O; }
+NP(var        ) { Α(drop, dot, and) O; }
 
 Var(thenS    )(1,  thenS_n)
 Var(orelse   )(1, orelse_n)
@@ -159,9 +149,13 @@ VarP(sS      )(empty,
               sS, var)
 
 
-VarP(a       )("a", term)
-VarP(b       )("b", term)
-VarP(Sa)(b, Sa, a, thenS, orelse3)
+Var(a       )("a", term)
+Var(b       )("b", term)
+Var(c       )("c", term)
+Var(Sa)(b,
+        Sa, a, thenS, orelse3,
+//        Sa, c, thenS, orelse3,
+        Sa, var)
 
 VarP(pls       )("+", term)
 VarP(mns       )("-", term)
@@ -181,26 +175,35 @@ VarP(aTs       )(term_a, term_s, thenS)
 Var(sOs        )(empty, term_s, orelse, sOs, var)
 
 N(parse);
+Nar(example)("bas", Sa, parse)
 //Nar(example)("ss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
-Nar(example)("(a+a)+a", Exp, parse)
-//Nar(example)("baaaa", Sa, parse)
+//Nar(example)("(a+a)+a", Exp, parse)
 Nar(მთავარი)(example)
 
 N(phead){
   R(p_t*,s);
-//  print("input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2);
-  Α(s[4].v, soll_pop, os_unsoll_free, and, s[4].v, soll_pop, and2, coll, and) O;
+  print("B input:%s len:%lu pos:%lu queue:%lu\n", s[0].cs, s[1].Q, s[2].Q, s[4].p[Ǎ].Q / 2);
+  Α(s[4].v, soll_pop, os_unsoll_free, and,
+    s[4].v, soll_pop, and2, coll, and) O;
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
 N(s_pith) { Α(phead, 1, os_soll_n) O; }
+N(bark) {
+  R(n_t,          symb);
+  R(Q_t,           pos);
+  R(Q_t,           len);
+  R(const char*, input);
+  Α(input, len, pos, 0, os_soll_n,
+                     0, os_soll_n, and2,
+                     5, os_soll_n, and2,
+                        symb, god, and2) O;
+}
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
-  Α(input, cslen(input), 0, 0, os_soll_n,
-                            0, os_soll_n, and2,
-                            5, os_soll_n, and2, symb, s_pith, and2, coll, and) O; }
+  Α(input, cslen(input), 0, symb, bark, s_pith, and, coll, and) O; }
 
 void* names[1024][2];
 Q_t names_i = 0;
