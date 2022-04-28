@@ -112,12 +112,12 @@ N(term ) { VLog;
   R(Q_t,            pos);
   R(Q_t,            len);
   R(const char*,    input);
-  if (pos >= len)
-    print("pos(%lu) >= len(%lu)\n", pos, len), C(1);
-  else if (input[pos] == str[0])
+  if (pos < len && input[pos] == str[0])
     Α(input, len, pos + 1, depth, ο, eval_pith) O;
-  else 
-    print("input[pos](%c) == str[0](%c)\n", input[pos], str[0]), C(1);
+  else {
+    print("pos >= len || input[pos](%c) != str[0](%c)\n", pos, len, input[pos], str[0]);
+    C(1);
+  }
 }
 N(orelse_n_n) {
   R(p_t*, rhsoll);
@@ -186,7 +186,7 @@ VarP(aTs       )(term_a, term_s, thenS)
 Var(sOs        )(empty, term_s, orelse, sOs, var)
 
 N(parse);
-Nar(example)("baaaa", Sa, parse)
+Nar(example)("b", Sa, parse)
 //Nar(example)("sss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
