@@ -103,8 +103,10 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 #define VarP(Name) NP(Name) Var_
 N(eval_pith) { Α(os_unsoll, dot, and) O; }
 #define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].Q, σ[3].Q); PLog
+
 N(depth_pp) { σ[3].Q++, C(1); }
 N(depth_mm) { σ[3].Q--, C(1); }
+
 N(empty) { VLog; Α(ο, eval_pith) O; }
 N(term ) { VLog;
   R(const char*,    str);
@@ -115,17 +117,24 @@ N(term ) { VLog;
   if (pos < len && input[pos] == str[0])
     Α(input, len, pos + 1, depth, ο, eval_pith) O;
   else {
-    print("pos >= len || input[pos](%c) != str[0](%c)\n", pos, len, input[pos], str[0]);
+    //print("pos >= len || input[pos](%c) != str[0](%c)\n", pos, len, input[pos], str[0]);
+    σ[122].p[Φ].Q = 'DONE';
     C(1);
   }
 }
+N(run) {
+  if(ο[Φ].Q == 'DONE')
+    α = 0, C(1);
+  else
+    Α(os_unsoll_free, dot, and) O;
+}
 N(orelse_n_n) {
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, os_unsoll_free, dot, and, 4+4, os_soll_n,
+  Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, run, 4+2, os_soll_n,
                                                                     ο, os_queue_soll, and2,
                                                                                  dot, and) O; }
 N(orelse_n  ) { VLog; R(Q_t, wc); Α(wc, os_soll_n, orelse_n_n, and) O; }
-N(cont_eval ) {
+N(cont_eval ) { VLog;
   R(p_t*, oο);
   R(p_t*, rhsoll);
   Α(rhsoll, os_unsoll, oο, depth_mm, and2, coll, and) O;
@@ -145,7 +154,7 @@ N(thenS_n_n ) {
                                              coll, and) O;
 }
 N(thenS_n   ) { VLog; Α(os_soll_n, thenS_n_n, and) O; }
-N(var       ) { VLog; Α(drop, dot, and) O; }
+N(var       ) { VLog; σ[122].p = ο; Α(drop, dot, and) O; }
 
 Var(thenS    )(1,  thenS_n)
 Var(orelse   )(1, orelse_n)
@@ -168,14 +177,14 @@ Var(Sa)(b,
 //        Sa, c, thenS, orelse3,
         Sa, var)
 
-VarP(pls       )("+", term)
-VarP(mns       )("-", term)
-VarP(mul       )("*", term)
-VarP(div       )("/", term)
-VarP(opr       )("(", term)
-VarP(cpr       )(")", term)
+Var(pls       )("+", term)
+Var(mns       )("-", term)
+Var(mul       )("*", term)
+Var(div       )("/", term)
+Var(opr       )("(", term)
+Var(cpr       )(")", term)
                
-VarP(Exp       )(a,
+Var(Exp       )(a,
                 opr, Exp, thenS, cpr, thenS, orelse5,
                 //Exp, mul, thenS, Exp, thenS, orelse5,
                 Exp, pls, thenS, Exp, thenS, orelse5,
@@ -186,11 +195,11 @@ VarP(aTs       )(term_a, term_s, thenS)
 Var(sOs        )(empty, term_s, orelse, sOs, var)
 
 N(parse);
-Nar(example)("b", Sa, parse)
+Nar(example)("baaaa", Sa, parse)
 //Nar(example)("sss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
-//Nar(example)("(a+a)+a", Exp, parse)
+//Nar(example)("a+a+a", Exp, parse)
 Nar(მთავარი)(example)
 
 N(phead){
