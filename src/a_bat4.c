@@ -106,14 +106,12 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 
 N(eval_pith) { Α(os_unsoll, dot, and) O; }
 
-#define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].Q, σ[3].Q); PLog
+#define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].Q, σ[3].p[Ǎ].Q); PLog
 
-N(depth_pp) { σ[3].Q++, C(1); }
-N(depth_mm) { σ[3].Q--, C(1); }
 N(cont_eval ) { VLog;
   R(p_t*, oο);
   R(p_t*, rhsoll);
-  Α(rhsoll, os_unsoll, oο, depth_mm, and2, coll, and) O;
+  Α(rhsoll, os_unsoll, oο, coll, and2) O;
 }
 N(is_true_pith) {
   Q_t ray = ο[ο[Σ].Q - σ[2].Q].Q == 0x75757575;
@@ -125,12 +123,12 @@ N(run) { if(ο[Φ].Q == 'DONE') α = 0, C(1); else Α(os_unsoll_free, dot, and) 
 N(empty) { VLog; Α(ο, eval_pith) O; }
 N(term ) { VLog;
   R(const char*,    str);
-  R(Q_t,            depth);
+  R(p_t*,           vsoll);
   R(Q_t,            pos);
   R(Q_t,            len);
   R(const char*,    input);
   if (pos < len && input[pos] == str[0])
-    Α(input, len, pos + 1, depth, ο, eval_pith) O;
+    Α(input, len, pos + 1, vsoll, ο, eval_pith) O;
   else
     σ[125].p[Φ].Q = 'DONE', C(1);
 }
@@ -145,7 +143,6 @@ N(thenS_n_n ) {
   Α(is_true_pith,
       4, drop_n,
       rhsoll, ο, cont_eval, and2or3, 7, os_soll_n,
-                                         depth_pp, and,
                                              coll, and) O;
 }
 N(thenS_n   ) { VLog; Α(os_soll_n, thenS_n_n, and) O; }
@@ -191,19 +188,20 @@ Nar(example)("baa", Sa, parse)
 Nar(მთავარი)(example)
 
 N(phead){
-  R(Q_t,            depth);
+  R(p_t*,           vsoll);
   R(Q_t,            pos);
   R(Q_t,            len);
   R(const char*,    input);
-  print("B input:%s len:%lu pos:%lu depth:%lu\n", input, len, pos, depth), C(1);
+  print("B input:%s len:%lu pos:%lu queue:%lu\n", input, len, pos, vsoll[Ǎ].Q), C(1);
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
 N(s_pith) { Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
-  Α(input, cslen(input), 0, 0, symb, s_pith,
-                                       coll, and) O; }
+  Α(input, cslen(input), 0, 0, os_soll_n,
+                            symb, s_pith, and2,
+                                    coll, and) O; }
 
 void* names[1024][2];
 Q_t names_i = 0;
