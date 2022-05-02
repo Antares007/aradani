@@ -4,6 +4,7 @@ IBS(                L)IN(L,
 co0,                L)IN(L,
 co1,                L)IN(L,
 co2,                L)IN(L,
+debugger,           L)IN(L,
 god,                L)IN(L,
 gor,                L)IN(L,
 got,                L)IN(L,
@@ -53,7 +54,7 @@ SP(counter_n) {
 }
 
 S(counter) { Α(mconsumer, mproducer, and, counter_n, and) O; }
-S(მთავარი) { Α(0, counter) O; }
+S(მთავარი) { Α(debugger, 0, counter, and2) O; }
 
 // clang-format off
 EN(tail, 
