@@ -106,11 +106,15 @@ typedef struct lp_t { p_t* continuation;  p_t* entered_set; } lp_t;
 
 N(eval_pith) { Α(os_unsoll, dot, and) O; }
 
-#define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].Q, σ[3].p[Ǎ].Q); PLog
+#define VLog print("%lu/%lu/%lu ", σ[0].p[1].Q, σ[1].Q, σ[2].p[Ǎ].Q); PLog
+typedef struct ob_t {
+  const char* input;
+  Q_t len;
+} ob_t;
 
 N(is_true_pith) {
-  Q_t ray = ο[ο[Σ].Q - σ[2].Q].Q == 0x75757575;
-  ο[ο[Σ].Q - σ[2].Q].Q = 0x75757575;
+  Q_t ray = ο[ο[Σ].Q - σ[1].Q].Q == 0x75757575;
+  ο[ο[Σ].Q - σ[1].Q].Q = 0x75757575;
   if (ray) print("true pith\n");
   C(ray);
 }
@@ -119,10 +123,9 @@ N(term ) { VLog;
   R(const char*,    str);
   R(p_t*,           vsoll);
   R(Q_t,            pos);
-  R(Q_t,            len);
-  R(const char*,    input);
-  if (pos < len && input[pos] == str[0])
-    Α(input, len, pos + 1, vsoll, ο, eval_pith) O;
+  R(ob_t*,          ob);
+  if (pos < ob->len && ob->input[pos] == str[0])
+    Α(ob, pos + 1, vsoll, ο, eval_pith) O;
   else
     C(1);
 }
@@ -130,16 +133,16 @@ N(term ) { VLog;
 N(run) { Α(os_unsoll_free, dot, and) O; }
 N(orelse_n_n) {
   R(p_t*, rhsoll);
-  Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, run, 4+2, os_soll_n,
-                                                                    ο, os_queue_soll, and2,
-                                                                                 dot, and) O; }
+  Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, run, 5, os_soll_n,
+                                     ο, os_queue_soll, and2,
+                                                  dot, and) O; }
 N(orelse_n  ) { VLog; R(Q_t, wc); Α(wc, os_soll_n, orelse_n_n, and) O; }
 
 N(cont_eval ) { VLog; R(p_t*, oο); R(p_t*, rhsoll); Α(rhsoll, os_unsoll, oο, coll, and2) O; }
 N(thenS_n_n ) {
   R(p_t*, rhsoll);
   Α(is_true_pith,
-      4, drop_n,
+      3, drop_n,
       rhsoll, ο, cont_eval, and2or3, 7, os_soll_n,
                                              coll, and) O;
 }
@@ -188,18 +191,19 @@ Nar(მთავარი)(example)
 N(phead){
   R(p_t*,           vsoll);
   R(Q_t,            pos);
-  R(Q_t,            len);
-  R(const char*,    input);
-  print("B input:%s len:%lu pos:%lu queue:%lu\n", input, len, pos, vsoll[Ǎ].Q), C(1);
+  R(ob_t*,          ob);
+  print("B input:%s len:%lu pos:%lu queue:%lu\n", ob->input, ob->len, pos, vsoll[Ǎ].Q), C(1);
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
 N(s_pith) { Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
-  Α(input, cslen(input), 0, 0, os_soll_n,
-                            symb, s_pith, and2,
-                                    coll, and) O; }
+  Α(input, cslen(input), 2, os_soll_n, //ob_t
+                         0,
+                         0, os_soll_n, and3,
+                         symb, s_pith, and2,
+                                 coll, and) O; }
 
 void* names[1024][2];
 Q_t names_i = 0;
