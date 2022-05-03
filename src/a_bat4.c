@@ -108,18 +108,12 @@ N(eval_pith) { Α(os_unsoll, dot, and) O; }
 
 #define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].Q, σ[3].p[Ǎ].Q); PLog
 
-N(cont_eval ) { VLog;
-  R(p_t*, oο);
-  R(p_t*, rhsoll);
-  Α(rhsoll, os_unsoll, oο, coll, and2) O;
-}
 N(is_true_pith) {
   Q_t ray = ο[ο[Σ].Q - σ[2].Q].Q == 0x75757575;
   ο[ο[Σ].Q - σ[2].Q].Q = 0x75757575;
   if (ray) print("true pith\n");
   C(ray);
 }
-N(run) { if(ο[Φ].Q == 'DONE') α = 0, C(1); else Α(os_unsoll_free, dot, and) O; }
 N(empty) { VLog; Α(ο, eval_pith) O; }
 N(term ) { VLog;
   R(const char*,    str);
@@ -130,14 +124,18 @@ N(term ) { VLog;
   if (pos < len && input[pos] == str[0])
     Α(input, len, pos + 1, vsoll, ο, eval_pith) O;
   else
-    σ[125].p[Φ].Q = 'DONE', C(1);
+    C(1);
 }
+
+N(run) { Α(os_unsoll_free, dot, and) O; }
 N(orelse_n_n) {
   R(p_t*, rhsoll);
   Α(σ[0].v, σ[1].v, σ[2].v, σ[3].v, rhsoll, run, 4+2, os_soll_n,
                                                                     ο, os_queue_soll, and2,
                                                                                  dot, and) O; }
 N(orelse_n  ) { VLog; R(Q_t, wc); Α(wc, os_soll_n, orelse_n_n, and) O; }
+
+N(cont_eval ) { VLog; R(p_t*, oο); R(p_t*, rhsoll); Α(rhsoll, os_unsoll, oο, coll, and2) O; }
 N(thenS_n_n ) {
   R(p_t*, rhsoll);
   Α(is_true_pith,
@@ -146,7 +144,7 @@ N(thenS_n_n ) {
                                              coll, and) O;
 }
 N(thenS_n   ) { VLog; Α(os_soll_n, thenS_n_n, and) O; }
-N(var       ) { VLog; σ[125].p = ο; Α(drop, dot, and) O; }
+N(var       ) { VLog; Α(drop, dot, and) O; }
 Var(thenS    )(1,  thenS_n)
 Var(orelse   )(1, orelse_n)
 Var(orelse3  )(3, orelse_n)
