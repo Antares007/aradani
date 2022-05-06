@@ -118,53 +118,36 @@ N(is_true_pith) {
   if (ray) print("true pith\n");
   C(ray);
 }
-N(empty) { VLog; Α(ο[1].c) O; }
+N(empty) { VLog; Α(ο, eval_pith) O; }
 N(term ) { VLog;
   R(const char*,    str);
   R(p_t*,           vsoll);
   R(Q_t,            pos);
   R(ob_t*,          ob);
-  print("%lu\n", ο[Ǎ].Q);
+  print("->%lu\n", ο[Ǎ].Q);
   if (pos < ob->len && ob->input[pos] == str[0])
-    Α(ob, pos + 1, vsoll, ο[1].c) O;
+    Α(ob, pos + 1, vsoll, ο, eval_pith) O;
   else
     C(1);
 }
 
-N(run) { Α(os_unsoll_free, dot, and) O; }
+N(run) { Α("<-", ps, psoll, and, os_unsoll_free, and, dot, and) O; }
 N(orelse_n_n) {
   R(p_t*, rhsoll);
   Α(σ[0].v, σ[1].v, σ[2].v, rhsoll, run, 5, os_soll_n,
                                      ο, os_queue_soll, and2,
+                                        rhsoll, psoll, and2,
+                                                 drop, and,
                                                   dot, and) O; }
 N(orelse_n  ) { VLog; R(Q_t, wc); Α(wc, os_soll_n, orelse_n_n, and) O; }
 
 N(cont_eval ) { VLog; R(p_t*, oο); R(p_t*, rhsoll); Α(rhsoll, os_unsoll, oο, coll, and2) O; }
 
-N(thenS_ray0) { VLog; R(p_t*, rhsoll); }
-N(thenS_ray1) { VLog;
-  Α(ο[4].p, os_unsoll, dot, and) O;
-}
-N(thenS_ray2) { VLog; R(p_t*, rhsoll); }
-
-N(thenS_ray0_soll) { VLog; C(1); }
-N(thenS_ray1_soll) {
+N(thenS_n_n ) {      
   R(p_t*, rhsoll);
   Α(is_true_pith,
       3, drop_n,
-      rhsoll, ο, cont_eval, and2or3, 7, os_soll_n) O;
-}
-N(thenS_ray2_soll) { VLog; C(1); }
-N(thenS_n_n ) { VLog;
-  R(p_t*, rhsoll);
-  Α(thenS_ray0,
-    thenS_ray1,
-    thenS_ray2,
-    rhsoll, thenS_ray0_soll,
-    rhsoll, thenS_ray1_soll, and2,
-    rhsoll, thenS_ray2_soll, and2,
-               6, os_soll_n, and2,
-                       coll, and) O; }
+      rhsoll, ο, cont_eval, and2or3, 7, os_soll_n, coll, and) O; }
 N(thenS_n   ) { VLog; Α(os_soll_n, thenS_n_n, and) O; }
 N(var       ) { VLog; Α(drop, dot, and) O; }
 Var(thenS    )(1,  thenS_n)
@@ -192,19 +175,19 @@ Var(cpr       )(")", term)
 Var(Exp       )(a,
                 opr, Exp, thenS, cpr, thenS, orelse5,
                 Exp, mul, thenS, Exp, thenS, orelse5,
-                Exp, pls, thenS, Exp, thenS, orelse5,
-                Exp, mns, thenS, Exp, thenS, orelse5,
                 Exp, div, thenS, Exp, thenS, orelse5,
+                Exp, mns, thenS, Exp, thenS, orelse5,
+                Exp, pls, thenS, Exp, thenS, orelse5,
                 Exp, var)
 Var(aTs       )(term_a, term_s, thenS)
 Var(sOs       )(empty, term_s, orelse, sOs, var)
 
 N(parse);
-Nar(example)("baa", Sa, parse)
+//Nar(example)("baa", Sa, parse)
 //Nar(example)("sss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
-//Nar(example)("a+a+a", Exp, parse)
+Nar(example)("", Exp, parse)
 Nar(მთავარი)(example)
 
 N(phead){
@@ -214,15 +197,8 @@ N(phead){
   print("B input:%s len:%lu pos:%lu queue:%lu\n", ob->input, ob->len, pos, vsoll[Ǎ].Q), C(1);
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
-N(s_pith_ray0) { VLog; }
-N(s_pith_ray1) { VLog; Α(ο[3].p, os_unsoll, dot, and) O; }
-N(s_pith_ray2) { VLog; }
 N(s_pith) {
-  Α(s_pith_ray0,
-    s_pith_ray1,
-    s_pith_ray2,
-    phead, 1, os_soll_n,
-           4, os_soll_n, and2) O; }
+  Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);

@@ -1,0 +1,68 @@
+0/0/0 o_0  35 504 σe6 var:src/a_bat4.c
+0/0/0 o_0  34 504 σe6 orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 o_0  28 504 σe6 orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 o_0  22 504 σe6 orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 o_0  16 504 σe6 orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 o_0  10 504 σe6 orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 o_0   4 504 σe6 term:src/a_bat4.c
+->1
+<-Exp pls thenS Exp thenS
+0/0/0 o_0   8 504 σea thenS_n:src/a_bat4.c
+0/0/0 o_1   6 504 σea thenS_n:src/a_bat4.c
+0/0/0 o_2  35 504 σea var:src/a_bat4.c
+0/0/0 o_2  34 504 σea orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 o_2  28 504 σea orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 o_2  22 504 σea orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 o_2  16 504 σea orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 o_2  10 504 σea orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 o_2   4 504 σea term:src/a_bat4.c
+->7
+<-Exp mns thenS Exp thenS
+0/0/0 o_0   8 504 σec thenS_n:src/a_bat4.c
+0/0/0 o_3   6 504 σec thenS_n:src/a_bat4.c
+0/0/0 o_4  35 504 σec var:src/a_bat4.c
+0/0/0 o_4  34 504 σec orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 o_4  28 504 σec orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 o_4  22 504 σec orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 o_4  16 504 σec orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 o_4  10 504 σec orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 o_4   4 504 σec term:src/a_bat4.c
+->7
+<-Exp div thenS Exp thenS
+0/0/0 o_0   8 504 σee thenS_n:src/a_bat4.c
+0/0/0 o_5   6 504 σee thenS_n:src/a_bat4.c
+0/0/0 o_6  35 504 σee var:src/a_bat4.c
+0/0/0 o_6  34 504 σee orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 o_6  28 504 σee orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 o_6  22 504 σee orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 o_6  16 504 σee orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 o_6  10 504 σee orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 o_6   4 504 σee term:src/a_bat4.c
+->7
+<-Exp mul thenS Exp thenS
+0/0/0 o_0   8 504 σf0 thenS_n:src/a_bat4.c
+0/0/0 o_7   6 504 σf0 thenS_n:src/a_bat4.c
+0/0/0 o_8  35 504 σf0 var:src/a_bat4.c
+0/0/0 o_8  34 504 σf0 orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 o_8  28 504 σf0 orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 o_8  22 504 σf0 orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 o_8  16 504 σf0 orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 o_8  10 504 σf0 orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 o_8   4 504 σf0 term:src/a_bat4.c
+->7
+<-opr Exp thenS cpr thenS
+0/0/0 o_0   8 504 σf2 thenS_n:src/a_bat4.c
+0/0/0 οf1   6 504 σf2 thenS_n:src/a_bat4.c
+0/0/0 ο24   4 504 σf2 term:src/a_bat4.c
+->7
+<-Exp pls thenS Exp thenS
+0/0/0 o_2   8 504 σf6 thenS_n:src/a_bat4.c
+0/0/0 οf5   6 504 σf6 thenS_n:src/a_bat4.c
+0/0/0 ο26  35 504 σf6 var:src/a_bat4.c
+0/0/0 ο26  34 504 σf6 orelse_n:src/a_bat4.c Exp pls thenS Exp thenS
+0/0/0 ο26  28 504 σf6 orelse_n:src/a_bat4.c Exp mns thenS Exp thenS
+0/0/0 ο26  22 504 σf6 orelse_n:src/a_bat4.c Exp div thenS Exp thenS
+0/0/0 ο26  16 504 σf6 orelse_n:src/a_bat4.c Exp mul thenS Exp thenS
+0/0/0 ο26  10 504 σf6 orelse_n:src/a_bat4.c opr Exp thenS cpr thenS
+0/0/0 ο26   4 504 σf6 term:src/a_bat4.c
+->7
