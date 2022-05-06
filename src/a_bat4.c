@@ -118,14 +118,15 @@ N(is_true_pith) {
   if (ray) print("true pith\n");
   C(ray);
 }
-N(empty) { VLog; Α(ο, eval_pith) O; }
+N(empty) { VLog; Α(ο[1].c) O; }
 N(term ) { VLog;
   R(const char*,    str);
   R(p_t*,           vsoll);
   R(Q_t,            pos);
   R(ob_t*,          ob);
+  print("%lu\n", ο[Ǎ].Q);
   if (pos < ob->len && ob->input[pos] == str[0])
-    Α(ob, pos + 1, vsoll, ο, eval_pith) O;
+    Α(ob, pos + 1, vsoll, ο[1].c) O;
   else
     C(1);
 }
@@ -139,13 +140,31 @@ N(orelse_n_n) {
 N(orelse_n  ) { VLog; R(Q_t, wc); Α(wc, os_soll_n, orelse_n_n, and) O; }
 
 N(cont_eval ) { VLog; R(p_t*, oο); R(p_t*, rhsoll); Α(rhsoll, os_unsoll, oο, coll, and2) O; }
-N(thenS_n_n ) {
+
+N(thenS_ray0) { VLog; R(p_t*, rhsoll); }
+N(thenS_ray1) { VLog;
+  Α(ο[4].p, os_unsoll, dot, and) O;
+}
+N(thenS_ray2) { VLog; R(p_t*, rhsoll); }
+
+N(thenS_ray0_soll) { VLog; C(1); }
+N(thenS_ray1_soll) {
   R(p_t*, rhsoll);
   Α(is_true_pith,
       3, drop_n,
-      rhsoll, ο, cont_eval, and2or3, 7, os_soll_n,
-                                             coll, and) O;
+      rhsoll, ο, cont_eval, and2or3, 7, os_soll_n) O;
 }
+N(thenS_ray2_soll) { VLog; C(1); }
+N(thenS_n_n ) { VLog;
+  R(p_t*, rhsoll);
+  Α(thenS_ray0,
+    thenS_ray1,
+    thenS_ray2,
+    rhsoll, thenS_ray0_soll,
+    rhsoll, thenS_ray1_soll, and2,
+    rhsoll, thenS_ray2_soll, and2,
+               6, os_soll_n, and2,
+                       coll, and) O; }
 N(thenS_n   ) { VLog; Α(os_soll_n, thenS_n_n, and) O; }
 N(var       ) { VLog; Α(drop, dot, and) O; }
 Var(thenS    )(1,  thenS_n)
@@ -195,7 +214,15 @@ N(phead){
   print("B input:%s len:%lu pos:%lu queue:%lu\n", ob->input, ob->len, pos, vsoll[Ǎ].Q), C(1);
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
-N(s_pith) { Α(phead, 1, os_soll_n) O; }
+N(s_pith_ray0) { VLog; }
+N(s_pith_ray1) { VLog; Α(ο[3].p, os_unsoll, dot, and) O; }
+N(s_pith_ray2) { VLog; }
+N(s_pith) {
+  Α(s_pith_ray0,
+    s_pith_ray1,
+    s_pith_ray2,
+    phead, 1, os_soll_n,
+           4, os_soll_n, and2) O; }
 N(parse) {
   R(n_t, symb);
   R(const char*, input);
