@@ -186,7 +186,7 @@ Var(sOs       )(empty, term_s, orelse, sOs, var)
 
 N(parse);
 
-//Nar(example)("baa", Sa, parse)
+Nar(example)("baa", Sa, parse)
 //Nar(example)("sss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
@@ -199,61 +199,6 @@ N(phead){
   print("B input:%s len:%lu pos:%lu queue:%lu\n", ob->input, ob->len, pos, vsoll[Ǎ].Q), C(1);
 }
 Q_t cslen(const char *cs) { Q_t len = 0; while (cs[len]) len++; return len; }
-typedef struct vpith_t {
-  n_t orelse, thenS, empty, term, var;
-  Q_t c;
-  p_t* branches;
-} vpith_t;
-N(push_branch           ) { TS(vpith_t); R(n_t, type); Α(type,      o->branches, soll_push,
-                                                         os_soll_n, o->branches, soll_push, and3) O; }
-N(pop_branch            ) { TS(vpith_t); Α(o->branches, soll_pop,
-                                           o->branches, soll_pop, and2) O; }
-N(is_left_rec           ) {}
-N(lenter                ) { Α(is_left_rec) O; }
-
-N(o_orelse_n            ) { R(p_t*, rhsoll); Α(σ[0].p, σ[1].Q, rhsoll, 3, os_soll_n,
-                                                                        extend_pith, and) O; }
-N(o_orelse              ) { Α(os_soll_n, o_orelse_n, and) O; }
-
-N(o_thenS               ) { Α(os_soll_n, extend_pith, and) O; }
-
-N(o_empty               ) { Α(0) O; }
-N(grow                  );
-N(prune                 ) { TS(vpith_t); Α(pop_branch, dot, and,
-                                            prune, // how to enter rhs and continue
-                                            grow,  // how to continue with or case
-                                                andor) O; }
-N(cut_off               ) { TS(vpith_t); Α(pop_branch, dot, and,
-                                            cut_off,
-                                            // position?????
-                                            os_unsoll_free, lenter, and, andor3) O; }
-N(o_term                ) {
-  R(const char*,     str);
-  R(Q_t,             pos);
-  R(ob_t*,            ob);
-  if (pos < ob->len && ob->input[pos] == str[0]) Α(ob, pos+1, prune  ) O;
-  else                                           Α(ob, pos  , cut_off) O;
-}
-N(o_var                 ) { Α(set_var_once, dot, and) O; }
-N(o_pith                ) {
-  Α(o_orelse,
-    o_thenS,
-    o_empty,
-    o_term,
-    o_var,
-    0,
-    0, os_soll_n,
-    7, os_soll_n, and2) O; }
-N(grow) {
-  R(p_t*, gsoll);
-  R(Q_t,    pos);
-  R(ob_t*,   ob);
-  C(1);
-  //Α(ob, pos, gsoll, os_unsoll_free,
-  //                          o_pith, and,
-  //                            coll, and) O;
-}
-Nar(example )("", 0, 2, os_soll_n,    0, Exp, 1, os_soll_n, and4,    grow, and)
 Nar(მთავარი )(example)
 
 N(s_pith                ) { Α(phead, 1, os_soll_n) O; }
