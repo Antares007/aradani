@@ -190,8 +190,7 @@ N(parse);
 //Nar(example)("sss", sS,  parse)
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
-Nar(example )("", Exp, parse)
-Nar(მთავარი )(example)
+//Nar(example )("", Exp, parse)
 
 N(phead){
   R(p_t*,           vsoll);
@@ -211,8 +210,12 @@ N(pop_branch            ) { TS(vpith_t); Α(o->branches, soll_pop,
                                            o->branches, soll_pop, and2) O; }
 N(is_left_rec           ) {}
 N(lenter                ) { Α(is_left_rec) O; }
-N(o_orelse              ) { Α(got, push_branch, lenter, and) O; }
-N(o_thenS               ) { Α(god, push_branch, lenter, and) O; }
+
+N(o_orelse_n            ) { R(p_t*, rhsoll); Α(σ[0].p, σ[1].Q, rhsoll, 3, os_soll_n,
+                                                                        extend_pith, and) O; }
+N(o_orelse              ) { Α(os_soll_n, o_orelse_n, and) O; }
+
+N(o_thenS               ) { Α(os_soll_n, extend_pith, and) O; }
 
 N(o_empty               ) { Α(0) O; }
 N(grow                  );
@@ -228,12 +231,10 @@ N(o_term                ) {
   R(const char*,     str);
   R(Q_t,             pos);
   R(ob_t*,            ob);
-  if (pos < ob->len && ob->input[pos] == str[0])
-    Α(ob, pos+1, prune) O;
-  else
-    Α(ob, pos  , cut_off) O;
+  if (pos < ob->len && ob->input[pos] == str[0]) Α(ob, pos+1, prune  ) O;
+  else                                           Α(ob, pos  , cut_off) O;
 }
-N(o_var                 ) { Α(0) O; }
+N(o_var                 ) { Α(set_var_once, dot, and) O; }
 N(o_pith                ) {
   Α(o_orelse,
     o_thenS,
@@ -247,7 +248,14 @@ N(grow) {
   R(p_t*, gsoll);
   R(Q_t,    pos);
   R(ob_t*,   ob);
-  Α(ob, pos, gsoll, os_unsoll_free, o_pith, and, coll, and) O; }
+  C(1);
+  //Α(ob, pos, gsoll, os_unsoll_free,
+  //                          o_pith, and,
+  //                            coll, and) O;
+}
+Nar(example )("", 0, 2, os_soll_n,    0, Exp, 1, os_soll_n, and4,    grow, and)
+Nar(მთავარი )(example)
+
 N(s_pith                ) { Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
