@@ -204,17 +204,22 @@ typedef struct vpith_t {
   Q_t c;
   p_t* branches;
 } vpith_t;
-N(o_push_to_branches    ) { TS(vpith_t); Α(o->branches, soll_push) O; }
-N(o_push_to_queue       ) { TS(vpith_t); Α(0) O; }
-N(o_orelse              ) { Α(os_soll_n, o_push_to_queue, and) O; }
-N(o_thenS               ) { Α(os_soll_n, o_push_to_branches, and) O; }
+N(push_branch           ) { TS(vpith_t); R(n_t, type); Α(type,      o->branches, soll_push,
+                                                         os_soll_n, o->branches, soll_push, and3) O; }
+N(pop_branch            ) { TS(vpith_t); Α(o->branches, soll_pop,
+                                           o->branches, soll_pop, and2) O; }
+N(is_left_rec           ) {}
+N(lenter                ) { Α(is_left_rec) O; }
+N(o_orelse              ) { Α(got, push_branch, lenter, and) O; }
+N(o_thenS               ) { Α(god, push_branch, lenter, and) O; }
+
 N(o_empty               ) { Α(0) O; }
-N(grow                  ) { Α(0) O; }
-N(prune                 ) { Α(0) O; }
-N(cut_off               ) { TS(vpith_t); Α(o->branches, soll_pop,
-                                           o->branches, soll_pop, and2,
-                                                             dot, and,
-                                                   cut_off, grow, andor) O; }
+N(grow                  );
+N(prune                 ) { TS(vpith_t); Α(pop_branch, dot, and, prune, grow, andor) O; }
+N(cut_off               ) { TS(vpith_t); Α(pop_branch, dot, and,
+                                            cut_off,
+                                            // position?????
+                                            os_unsoll_free, lenter, and, andor3) O; }
 N(o_term                ) {
   R(const char*,     str);
   R(Q_t,             pos);
@@ -225,7 +230,7 @@ N(o_term                ) {
     Α(ob, pos  , cut_off) O;
 }
 N(o_var                 ) { Α(0) O; }
-N(o_pith                ) {
+N(o_pith                ) 
   Α(o_orelse,
     o_thenS,
     o_empty,
@@ -234,6 +239,11 @@ N(o_pith                ) {
     0,
     0, os_soll_n,
     7, os_soll_n, and2) O; }
+N(grow) {
+  R(p_t*, gsoll);
+  R(Q_t,    pos);
+  R(ob_t*,   ob);
+  Α(ob, pos, gsoll, os_unsoll_free, o_pith, and, coll, and) O; }
 N(s_pith                ) { Α(phead, 1, os_soll_n) O; }
 N(parse) {
   R(n_t, symb);
