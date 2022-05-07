@@ -46,6 +46,7 @@ and7,               L)IN(L,
 and7or,             L)IN(L,
 andor,              L)IN(L,
 andor2,             L)IN(L,
+andor3,             L)IN(L,
 andor4,             L)IN(L,
 andor5,             L)IN(L,
 or,                 L)IN(L,
@@ -215,7 +216,10 @@ N(o_thenS               ) { Α(god, push_branch, lenter, and) O; }
 
 N(o_empty               ) { Α(0) O; }
 N(grow                  );
-N(prune                 ) { TS(vpith_t); Α(pop_branch, dot, and, prune, grow, andor) O; }
+N(prune                 ) { TS(vpith_t); Α(pop_branch, dot, and,
+                                            prune, // how to enter rhs and continue
+                                            grow,  // how to continue with or case
+                                                andor) O; }
 N(cut_off               ) { TS(vpith_t); Α(pop_branch, dot, and,
                                             cut_off,
                                             // position?????
@@ -230,7 +234,7 @@ N(o_term                ) {
     Α(ob, pos  , cut_off) O;
 }
 N(o_var                 ) { Α(0) O; }
-N(o_pith                ) 
+N(o_pith                ) {
   Α(o_orelse,
     o_thenS,
     o_empty,
