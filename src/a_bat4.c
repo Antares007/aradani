@@ -169,21 +169,6 @@ Var(b        )("b", term)
 Var(c        )("c", term)
 Var(Sa       )(b, Sa, a, thenS, orelse3,     Sa, var)
 
-Var(pls       )("+", term)
-Var(mns       )("-", term)
-Var(mul       )("*", term)
-Var(div       )("/", term)
-Var(opr       )("(", term)
-Var(cpr       )(")", term)
-
-Var(Exp       )("a", term,
-                opr, Exp, thenS, cpr, thenS, orelse5,
-                Exp, mul, thenS, Exp, thenS, orelse5,
-                Exp, div, thenS, Exp, thenS, orelse5,
-                Exp, mns, thenS, Exp, thenS, orelse5,
-                Exp, pls, thenS, Exp, thenS, orelse5,
-                Exp, var)
-
 Var(aTs       )(term_a, term_s, thenS)
 Var(sOs       )(empty, term_s, orelse, sOs, var)
 
@@ -195,28 +180,43 @@ N(parse);
 //Nar(example)("sssss", sOs, parse)
 //Nar(example )("", Exp, parse)
 N(init_soll_queue     ) { R(p_t*, s); s[Ψ+0].p = &s[Ψ], s[Ψ+1].p = &s[Ψ]; Α(s) C(1); }
-N(q_soll_n) { Α(os_soll_n, init_soll_queue, and) O; }
-N(o_orelse) {}
-N(o_thens ) {}
-N(o_empty ) { Α(0) O; }
-N(o_term  ) {
+N(q_soll_n  ) { Α(os_soll_n, init_soll_queue, and) O; }
+
+NP(o_orelse_n) { R(Q_t, wc); α -= wc, O; }
+NP(o_thenS_n ) { R(Q_t, wc); α -= wc, O; }
+NP(o_empty   ) { C(1); }
+NP(o_term    ) {
   R(const char*,    str);
   R(Q_t,            pos);
   R(p_t*,           vsoll);
   R(Q_t,            len);
   R(const char*,    input);
-  print("->%lu\n", ο[Ǎ].Q);
-  if (pos < len && input[pos] == str[0]) Α(input, len, vsoll, pos + 1, vsoll, ο, eval_pith) O;
-  else C(1);
+  C(1);
+  //print("->%lu\n", ο[Ǎ].Q);
+  //if (pos < len && input[pos] == str[0]) Α(input, len, vsoll, pos + 1, vsoll, ο, eval_pith) O;
+  //else C(1);
 }
-N(o_var   ) {
+NP(o_var   ) {
   R(n_t, v);
   if (ο[0].v == v) O;
-  else   Α(v, 1, q_soll_n, coll, and) O;
+  else  Α(v, 1, q_soll_n, coll, and) O;
 }
 
+Var(pls       )("+", o_term)
+Var(mns       )("-", o_term)
+Var(mul       )("*", o_term)
+Var(div       )("/", o_term)
+Var(opr       )("(", o_term)
+Var(cpr       )(")", o_term)
+Var(Exp       )("a", o_term,
+                opr, Exp, 1, o_thenS_n, cpr, 1, o_thenS_n, 7, o_orelse_n,
+                Exp, mul, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
+                Exp, div, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
+                Exp, mns, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
+                Exp, pls, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
+                Exp, o_var)
 N(print_result) { C(1); }
-N(s_pith      ) { Α(print_result, 1, q_soll_n, and) O; }
+N(s_pith      ) { Α(print_result, 1, q_soll_n) O; }
 Nar(vsoll     )(0, q_soll_n)
 Nar(example   )("a", 1, vsoll,
                         0, 
