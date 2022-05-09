@@ -179,29 +179,34 @@ N(parse);
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
 //Nar(example )("", Exp, parse)
-N(init_soll_queue     ) { R(p_t*, s); s[Ψ+0].p = &s[Ψ], s[Ψ+1].p = &s[Ψ]; Α(s) C(1); }
-N(q_soll_n  ) { Α(os_soll_n, init_soll_queue, and) O; }
+#undef  VLog
+#define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].p[Ǎ].Q, σ[3].Q); PLog
 
-NP(o_orelse_n) { R(Q_t, wc); α -= wc, O; }
-NP(o_thenS_n ) { R(Q_t, wc); α -= wc, O; }
-NP(o_empty   ) { C(1); }
-NP(o_term    ) {
+N(o_orelse_nn) { VLog; R(p_t*, rhsoll); Α(0, os_soll_n,
+                                                 coll, and) O; }
+N(o_orelse_n ) { VLog; Α(os_soll_n, o_orelse_nn, and) O; }
+
+N(o_thenS_nn) { VLog; R(p_t*, rhsoll); Α(0, os_soll_n,
+                                                 coll, and) O; }
+N(o_thenS_n  ) { VLog; Α(os_soll_n, o_thenS_nn, and) O; }
+N(o_empty    ) { VLog; C(1); }
+N(o_term     ) { VLog;
   R(const char*,    str);
   R(Q_t,            pos);
   R(p_t*,           vsoll);
   R(Q_t,            len);
   R(const char*,    input);
-  C(1);
-  //print("->%lu\n", ο[Ǎ].Q);
-  //if (pos < len && input[pos] == str[0]) Α(input, len, vsoll, pos + 1, vsoll, ο, eval_pith) O;
-  //else C(1);
+  if (pos < len && input[pos] == str[0])
+    Α(input, len, vsoll, pos+1, ο, os_unsoll_free, dot, and) O;
+  else
+    C(1);
 }
-NP(o_var   ) {
+N(o_var     ) { VLog;
   R(n_t, v);
   if (ο[0].v == v) O;
-  else  Α(v, 1, q_soll_n, coll, and) O;
-}
-
+  else Α(v, ο, os_unsoll_free, dot, and, 5, os_soll_n,
+                                                 coll, and) O; }
+Var(Va)("a", o_term, Va, o_var)
 Var(pls       )("+", o_term)
 Var(mns       )("-", o_term)
 Var(mul       )("*", o_term)
@@ -215,13 +220,11 @@ Var(Exp       )("a", o_term,
                 Exp, mns, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
                 Exp, pls, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
                 Exp, o_var)
-N(print_result) { C(1); }
-N(s_pith      ) { Α(print_result, 1, q_soll_n) O; }
-Nar(vsoll     )(0, q_soll_n)
-Nar(example   )("a", 1, vsoll,
-                        0, 
-                        Exp, s_pith, and3,
-                               coll, and)
+N(print_result) { VLog; α = 0; C(1); }
+N(s_pith      ) { Α(print_result, 1, os_soll_n) O; }
+Nar(example   )("a", 1, 0, os_soll_n,
+                                  0, Va, s_pith, and3,
+                                           coll, and)
 
 N(phead){
   R(p_t*,           vsoll);
