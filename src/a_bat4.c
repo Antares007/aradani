@@ -194,9 +194,9 @@ N(o_orelse_nn ) {VL;
   Α(ο, s, o_orelse_pru, ο, s, o_orelse_cut, and3or3, 7, os_soll_n, coll, and) O;
 }
 N(o_orelse_n  ) {VL; Α(os_soll_n, o_orelse_nn, and) O; }
-N(o_thenS_pru) {VL; R(p_t*, s); R(p_t*, oο); R(Q_t, pos); R(n_t, svar);
-  svar = 0;
-  Α(svar, pos, s, os_unsoll_free, oο, coll, and2) O;
+N(o_thenS_pru) {VL; R(p_t*, s); R(p_t*, oο); R(Q_t, pos); R(n_t, sVar);
+  sVar = 0;
+  Α(sVar, pos, s, os_unsoll_free, oο, coll, and2) O;
 }
 N(o_thenS_cut) {VL; R(p_t*, s); R(p_t*, oο);
   Α(s, os_soll_free, oο, cut_off, and2) O;
@@ -206,17 +206,17 @@ N(o_thenS_nn ) {VL;
   Α(ο, s, o_thenS_pru, ο, s, o_thenS_cut, and3or3, 7, os_soll_n, coll, and) O;
 }
 N(o_thenS_n  ) {VL; Α(os_soll_n, o_thenS_nn, and) O; }
-N(o_empty    ){VL;C(1); }
-N(o_cut_off  ){VL;C(1); }
-N(o_term     ){VL;
+N(o_empty    ) {VL;C(1); }
+N(o_cut_off  ) {VL;C(1); }
+N(o_term     ) {VL;
   R(const char*,  str);
   R(Q_t,          pos);
   if (pos < σ[1].Q && σ[0].cs[pos] == str[0])
-    Α(pos+1, god, ο, os_unsoll_free, dot, and) O;
+    Α(pos+1, ο, prune) O;
   else
-    Α(       got, ο, os_unsoll_free, dot, and) O;
+    Α(       ο, cut_off) O;
 }
-N(o_var      ){VL; R(n_t, v); if  (σ[2].v == v) O; else σ[2].v =  v, O; }
+N(o_var      ) {VL; R(n_t, v); if (σ[2].v == v) O; else σ[2].v = v, O; }
 Var(Va)("a", o_term, Va, o_var)
 Var(pls       )("+", o_term)
 Var(mns       )("-", o_term)
