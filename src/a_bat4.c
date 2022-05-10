@@ -186,21 +186,21 @@ N(cut_off   ) {VL; R(p_t*, oο); Α(got, oο, os_unsoll_free, dot, and) O; }
 N(o_orelse_pru) {VL; R(p_t*,  s); R(p_t*, oο);
   Α(s, 1, os_soll_n, coll, and) O;
 }
+N(o_thenS_pru) {VL; R(p_t*, s); R(p_t*, oο); R(Q_t, pos); R(n_t, sVar);
+  sVar = 0; // we need soll rolls (o usfd_a o usfd_a ooo usfd_a) here
+  Α(sVar, pos, s, os_unsoll_free, oο, coll, and2) O;
+}
 N(o_orelse_cut) {VL; R(p_t*,  s); R(p_t*, oο); R(Q_t, pos); (void)pos;
   Α(s, os_unsoll_free, oο, coll, and2) O;
-}
-N(o_orelse_nn ) {VL;
-  R(p_t*, s);
-  Α(ο, s, o_orelse_pru, ο, s, o_orelse_cut, and3or3, 7, os_soll_n, coll, and) O;
-}
-N(o_orelse_n  ) {VL; Α(os_soll_n, o_orelse_nn, and) O; }
-N(o_thenS_pru) {VL; R(p_t*, s); R(p_t*, oο); R(Q_t, pos); R(n_t, sVar);
-  sVar = 0;
-  Α(sVar, pos, s, os_unsoll_free, oο, coll, and2) O;
 }
 N(o_thenS_cut) {VL; R(p_t*, s); R(p_t*, oο);
   Α(s, os_soll_free, oο, cut_off, and2) O;
 }
+N(o_orelse_nn) {VL;
+  R(p_t*, s);
+  Α(ο, s, o_orelse_pru, ο, s, o_orelse_cut, and3or3, 7, os_soll_n, coll, and) O;
+}
+N(o_orelse_n ) {VL; Α(os_soll_n, o_orelse_nn, and) O; }
 N(o_thenS_nn ) {VL;
   R(p_t*, s);
   Α(ο, s, o_thenS_pru, ο, s, o_thenS_cut, and3or3, 7, os_soll_n, coll, and) O;
