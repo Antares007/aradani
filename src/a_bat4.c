@@ -179,33 +179,33 @@ N(parse);
 //Nar(example)("as", aTs, parse)
 //Nar(example)("sssss", sOs, parse)
 //Nar(example )("", Exp, parse)
-#undef  VLog
-#define VLog print("%lu/%lu/%lu ", σ[1].Q, σ[2].p[Ǎ].Q, σ[3].Q); PLog
+#define VL print("%lu/%lu/%lu ", σ[1].Q, !!σ[2].Q, σ[3].Q); PLog
 
-N(o_orelse_nn) { VLog; R(p_t*, rhsoll); Α(0, os_soll_n,
-                                                 coll, and) O; }
-N(o_orelse_n ) { VLog; Α(os_soll_n, o_orelse_nn, and) O; }
+N(o_orelse_nn){VL;R(p_t*, s); Α(s, 1, os_soll_n, coll, and) O; }
+N(o_orelse_n ){VL;Α(os_soll_n, o_orelse_nn, and) O; }
 
-N(o_thenS_nn) { VLog; R(p_t*, rhsoll); Α(0, os_soll_n,
-                                                 coll, and) O; }
-N(o_thenS_n  ) { VLog; Α(os_soll_n, o_thenS_nn, and) O; }
-N(o_empty    ) { VLog; C(1); }
-N(o_term     ) { VLog;
-  R(const char*,    str);
-  R(Q_t,            pos);
-  R(p_t*,           vsoll);
-  R(Q_t,            len);
-  R(const char*,    input);
-  if (pos < len && input[pos] == str[0])
-    Α(input, len, vsoll, pos+1, ο, os_unsoll_free, dot, and) O;
+N(o_thenS_pru){VL;R(p_t*, s); Α(s, os_unsoll_free) O; }
+N(o_thenS_cut){VL;R(p_t*, s); Α(s, os_soll_free) O; }
+N(o_thenS_nn ){VL;R(p_t*, s); Α(ο, s, o_thenS_pru,
+                                ο, s, o_thenS_cut, and3or3, 7, os_soll_n,
+                                                                    coll, and) O; }
+N(o_thenS_n  ){VL;Α(os_soll_n, o_thenS_nn, and) O; }
+
+N(o_empty    ){VL;C(1); }
+N(o_cut_off  ){VL;C(1); }
+N(o_term     ){VL;
+  R(const char*,  str);
+  R(Q_t,          pos);
+  if (pos < σ[1].Q && σ[0].cs[pos] == str[0])
+    Α(pos+1, god, ο, os_unsoll_free, dot, and) O;
   else
-    C(1);
+    Α(       got, ο, os_unsoll_free, dot, and) O;
 }
-N(o_var     ) { VLog;
+N(o_var      ){VL;
   R(n_t, v);
-  if (ο[0].v == v) O;
-  else Α(v, ο, os_unsoll_free, dot, and, 5, os_soll_n,
-                                                 coll, and) O; }
+  if  (σ[2].v == v) O;
+  else σ[2].v =  v, O;
+}
 Var(Va)("a", o_term, Va, o_var)
 Var(pls       )("+", o_term)
 Var(mns       )("-", o_term)
@@ -220,11 +220,9 @@ Var(Exp       )("a", o_term,
                 Exp, mns, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
                 Exp, pls, 1, o_thenS_n, Exp, 1, o_thenS_n, 7, o_orelse_n,
                 Exp, o_var)
-N(print_result) { VLog; α = 0; C(1); }
+N(print_result) { VL; α = 0; C(1); }
 N(s_pith      ) { Α(print_result, 1, os_soll_n) O; }
-Nar(example   )("a", 1, 0, os_soll_n,
-                                  0, Va, s_pith, and3,
-                                           coll, and)
+Nar(example   )("a", 1, 0, 0, Va, s_pith, coll, and)
 
 N(phead){
   R(p_t*,           vsoll);
