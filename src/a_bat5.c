@@ -93,11 +93,12 @@ N(drop_n      ) { R(Q_t, wc); α -= wc, C(1); }
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
 #define VLog print("V "); PLog
-N(orelse_n) { ο[0].c(T()); }
-N(thenS_n ) { ο[1].c(T()); }
-N(term    ) { ο[2].c(T()); }
-N(empty   ) { ο[3].c(T()); }
-N(variable) { ο[4].c(T()); }
+N(orelse_n    ) { ο[0].c(T()); }
+N(thenS_n     ) { ο[1].c(T()); }
+N(term        ) { ο[2].c(T()); }
+N(empty       ) { ο[3].c(T()); }
+N(variable    ) { ο[4].c(T()); }
+
 Var(pls       )("+", term)
 Var(mns       )("-", term)
 Var(mul       )("*", term)
@@ -105,23 +106,41 @@ Var(div       )("/", term)
 Var(opr       )("(", term)
 Var(cpr       )(")", term)
 Var(Exp       )("a", term,
-                opr, Exp, 1, thenS_n, cpr, 1, thenS_n, 7, ο[0].c,
-                Exp, mul, 1, thenS_n, Exp, 1, thenS_n, 7, ο[0].c,
-                Exp, div, 1, thenS_n, Exp, 1, thenS_n, 7, ο[0].c,
-                Exp, mns, 1, thenS_n, Exp, 1, thenS_n, 7, ο[0].c,
-                Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, ο[0].c,
+                opr, Exp, 1, thenS_n, cpr, 1, thenS_n, 7, orelse_n,
+                Exp, mul, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, div, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, mns, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, variable)
-
-N(o_orelse_n    ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(o_thenS_n     ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(o_empty       ) { VLog;      C(1); }
-N(o_term        ) { VLog; α--, C(1); }
-N(o_variable    ) { VLog; α--, O; }
+N(o_orelse_nn ) {
+  R(p_t*, rο);
+  R(p_t*, oο);
+  R(p_t*, sο);
+  R(Q_t, pos);
+  Α(pos, sο, rο, oο, 2, os_soll_n) O; }
+N(o_orelse_n  ) { VLog; Α(os_soll_n, o_orelse_nn, and, dot, and) O; }
+N(o_thenS_n   ) { VLog; R(Q_t, wc); α -= wc, O; }
+N(o_empty     ) { VLog;      C(1); }
+N(o_term      ) { VLog; α--, C(1); }
+N(o_variable  ) { VLog; α--, O; }
 
 Nar(p_pith    )(o_orelse_n, o_thenS_n, o_term, o_empty, o_variable, 5, os_soll_n)
-Nar(example   )("a+a*a", 0, 5, 0, Exp, p_pith, coll, and, os_wordump, and)
+NarP(rsoll    )(0, os_soll_n)
+NarP(ssoll    )(0, os_soll_n)
+Nar(example   )("a+a*a", 0, 5, 0, ssoll, rsoll, and, Exp, p_pith, and2, coll, and, os_wordump, and)
+
 Nar(init      )(god)
-Nar(მთავარი   )(example)
+
+Nar(s1234     )(1, 2, 3, 4, gor, 1, os_soll_n,
+                            god, 3, os_soll_n, and3,
+                            god, 3, os_soll_n, and3,
+                            god, 3, os_soll_n, and3)
+
+N(smap) { R(p_t*, s); Α(s, os_unsoll_free, dot, and, smap, god, andor) O; }
+
+Nar(example2  )(s1234, smap, and, os_wordump, and)
+
+Nar(მთავარი   )(example2)
 // clang-format off
 EN(tail,
 მთავარი,      exports);
