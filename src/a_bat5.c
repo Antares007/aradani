@@ -106,8 +106,10 @@ Var(div       )("/", term)
 Var(opr       )("(", term)
 Var(cpr       )(")", term)
 Var(Exp       )("a", term,
-                opr, Exp, 1, thenS_n, cpr, 1, thenS_n, 7, orelse_n,
-                Exp, mul, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                opr, Exp, 1, thenS_n,
+                     cpr, 1, thenS_n, 7, orelse_n,
+                Exp, mul, 1, thenS_n,
+                     Exp, 1, thenS_n, 7, orelse_n,
                 Exp, div, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, mns, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
@@ -131,14 +133,40 @@ Nar(example   )("a+a*a", 0, 5, 0, ssoll, rsoll, and, Exp, p_pith, and2, coll, an
 
 Nar(init      )(god)
 
-Nar(s1234     )(1, 2, 3, 4, gor, 1, os_soll_n,
-                            god, 3, os_soll_n, and3,
-                            god, 3, os_soll_n, and3,
-                            god, 3, os_soll_n, and3)
+NP(sar_nnnn) {
+  R(p_t*, soor);
+  R(p_t*, sand);
+  R(p_t*, snot);
+  R(p_t*, slhs);
+  Α(slhs, os_unsoll_free, dot, and,
+      snot, os_unsoll_free, dot, and,
+      sand, os_unsoll_free, dot, and,
+      soor, os_unsoll_free, dot, and, 0444, nar, 4+4+4+4+2, os_soll_n) O; }
+NP(sar_nnn ) {
+  R(Q_t, j);
+  R(p_t*, soor);
+  R(p_t*, sand);
+  R(p_t*, snot);
+  Α(dot, snot, sand, soor, sar_nnnn, and4) O;
+}
+NP(sar_nn  ) {
+  R(Q_t, j);
+  R(p_t*, soor);
+  R(p_t*, sand);
+  Α((j >> 16) & 0xff, os_soll_n, sand, soor, j, sar_nnn, and4) O;
+}
+NP(sar_n   ) {
+  R(Q_t, j);
+  R(p_t*, soor);
+  Α((j >>  8) & 0xff, os_soll_n, soor, j, sar_nn, and3) O; }
+NP(sar     ) {
+  R(Q_t, j);
+  Α((j >>  0) & 0xff, os_soll_n, j, sar_n, and2) O; }
 
-N(smap) { R(p_t*, s); Α(s, os_unsoll_free, dot, and, smap, god, andor) O; }
-
-Nar(example2  )(s1234, smap, and, os_wordump, and)
+Nar(example2  )(god, 1, os_soll_n,
+                god, god, and,
+                god, god, and,
+                god, god, and, 0x030303, sar, os_unsoll_free, and, dot, and)
 
 Nar(მთავარი   )(example2)
 // clang-format off
