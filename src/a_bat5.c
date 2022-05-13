@@ -84,7 +84,7 @@ N(ps          ) { R(const char*, str); print("%s", str), C(1); }
 N(pld         ) { R(q_t, v); print("%ld", v), C(1); }
 N(pnl         ) {                      print("\n"     ), C(1); }
 N(plu         ) { R(Q_t, v); print("%lu", v), C(1); }
-S(coll        ) { R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
+N(coll        ) { R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 N(drop        ) { α--, C(1); }
 N(drop_n      ) { R(Q_t, wc); α -= wc, C(1); }
 
@@ -93,11 +93,11 @@ N(drop_n      ) { R(Q_t, wc); α -= wc, C(1); }
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
 #define VLog print("V "); PLog
-N(orelse_n    ) { ο[0].c(T()); }
-N(thenS_n     ) { ο[1].c(T()); }
-N(term        ) { ο[2].c(T()); }
-N(empty       ) { ο[3].c(T()); }
-N(variable    ) { ο[4].c(T()); }
+N(orelse_n    );
+N(thenS_n     );
+N(term        );
+N(empty       );
+N(variable    );
 
 Var(pls       )("+", term)
 Var(mns       )("-", term)
@@ -139,19 +139,18 @@ N(o_orelse_nn ) {
   R(p_t*, sο);
   R(Q_t, pos);
   Α(pos, sο, rο, oο, 2, os_soll_n) O; }
-N(o_orelse_n  ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(o_thenS_n   ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(o_empty     ) { VLog;      C(1); }
-N(o_term      ) { VLog; α--, C(1); }
+N(orelse_n  ) { VLog; R(Q_t, wc); α -= wc, O; }
+N(thenS_n   ) { VLog; R(Q_t, wc); α -= wc, O; }
+N(empty     ) { VLog;      C(1); }
+N(term      ) { VLog; α--, C(1); }
 N(dump) {VLog; os_wordump(T()); }
-N(o_variable  ) { VLog;
+N(variable  ) { VLog;
   Α(drop, dot, and, dump, and) O;
 }
 
-Nar(p_pith    )(o_orelse_n, o_thenS_n, o_term, o_empty, o_variable, 5, os_soll_n)
 NarP(rsoll    )(0, os_soll_n)
 NarP(ssoll    )(0, os_soll_n)
-Nar(example   )("a+a*a", 0, 5, 0, ssoll, rsoll, and, Exp, p_pith, and2, coll, and, os_wordump, and)
+Nar(example   )("a+a*a", 0, 5, 0, ssoll, rsoll, and, Exp, and, os_wordump, and)
 Nar(init      )(god)
 
 Nar(მთავარი   )(example)
