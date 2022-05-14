@@ -133,24 +133,27 @@ Var(Exp       )("a", term,
                 Exp, pls, 1, thenS_n,
                      Exp, 1, thenS_n, 7, orelse_n,
                 Exp, variable)
-N(o_orelse_nn ) {
-  R(p_t*, rο);
-  R(p_t*, oο);
-  R(p_t*, sο);
-  R(Q_t, pos);
-  Α(pos, sο, rο, oο, 2, os_soll_n) O; }
-N(orelse_n  ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(thenS_n   ) { VLog; R(Q_t, wc); α -= wc, O; }
-N(empty     ) { VLog;      C(1); }
-N(term      ) { VLog; α--, C(1); }
-N(dump) {VLog; os_wordump(T()); }
-N(variable  ) { VLog;
-  Α(drop, dot, and, dump, and) O;
-}
+N(Cor       ) { R(p_t*, oο); Α(gor, oο, os_unsoll_free, coll, and) O; }
+N(orelse_n  ) { VLog;
+  Α(os_soll_n, coll, and) O; }
 
-NarP(rsoll    )(0, os_soll_n)
-NarP(ssoll    )(0, os_soll_n)
-Nar(example   )("a+a*a", 0, 5, 0, ssoll, rsoll, and, Exp, and, os_wordump, and)
+N(thenS_n   ) { VLog; R(Q_t, wc); Α(wc, os_soll_n,
+                                             coll, and) O; }
+N(empty     ) { VLog; C(1); }
+N(term      ) { VLog;
+  α--, C(1);
+  //Α(got, ο, os_unsoll_free, dot, and,
+  //                      god, god,
+  //                      gor, god, not2and2or2, ) O;
+}
+N(dump      ) { VLog; print("dump %p\n", ο); os_wordump(T()); }
+N(variable  ) { VLog; print("vari %p\n", ο);
+  Α(drop, dot, and, dump, and) O; }
+
+Nar(s_pith    )(7, god, and2, 3, os_soll_n)
+Nar(example   )("a+a*a", 5, 0, Exp, s_pith,
+                                      coll, and,
+                                os_wordump, and)
 Nar(init      )(god)
 
 Nar(მთავარი   )(example)
