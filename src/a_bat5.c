@@ -122,20 +122,19 @@ Var(cpr       )(")", term)
   // e.g., assuming that the input is "ssss", then
   // (term_s ‘thenS‘ term_s) 1 => {3}
 Var(Exp       )("a", term,
-                opr, Exp, 1, thenS_n,
-                     cpr, 1, thenS_n, 7, orelse_n,
-                Exp, mul, 1, thenS_n,
-                     Exp, 1, thenS_n, 7, orelse_n,
-                Exp, div, 1, thenS_n,
-                     Exp, 1, thenS_n, 7, orelse_n,
-                Exp, mns, 1, thenS_n,
-                     Exp, 1, thenS_n, 7, orelse_n,
-                Exp, pls, 1, thenS_n,
-                     Exp, 1, thenS_n, 7, orelse_n,
+                opr, Exp, 1, thenS_n, cpr, 1, thenS_n, 7, orelse_n,
+                Exp, mul, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, div, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, mns, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
+                Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, variable)
 N(Cor       ) { R(p_t*, oο); Α(gor, oο, os_unsoll_free, coll, and) O; }
-N(orelse_n  ) { VLog;
-  Α(os_soll_n, coll, and) O; }
+
+N(orelse_nn ) { VLog;
+  R(p_t*, rhsoll);
+  Α(rhsoll, os_unsoll_free, dot, and,
+    04, nar, os_soll_n, coll, and) O; }
+N(orelse_n  ) { VLog; Α(os_soll_n, orelse_nn, and) O; }
 
 N(thenS_n   ) { VLog; R(Q_t, wc); Α(wc, os_soll_n,
                                              coll, and) O; }
@@ -155,8 +154,15 @@ Nar(example   )("a+a*a", 5, 0, Exp, s_pith,
                                       coll, and,
                                 os_wordump, and)
 Nar(init      )(god)
+Nar(ss1)(     1, gor, 2, os_soll_n)
+Nar(ss2)(ss1, 2, god, 2, os_soll_n, and4)
 
-Nar(მთავარი   )(example)
+Nar(example2  )(ss2,
+                os_unsoll_free, and,
+                dot, and,
+                os_wordump, and)
+
+Nar(მთავარი   )(example2)
 // clang-format off
 EN(tail,
 მთავარი,      exports);
