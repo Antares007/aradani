@@ -93,11 +93,11 @@ N(drop_n      ) { R(Q_t, wc); α -= wc, C(1); }
 #define Var(Name) N(Name) Var_
 #define VarP(Name) NP(Name) Var_
 #define VLog print("V "); PLog
-N(orelse_n    );
-N(thenS_n     );
-N(term        );
-N(empty       );
-N(variable    );
+N(orelse_n    ){ ο[0].c(T()); }
+N(thenS_n     ){ ο[1].c(T()); }
+N(term        ){ ο[2].c(T()); }
+N(empty       ){ ο[3].c(T()); }
+N(variable    ){ ο[4].c(T()); }
 
 Var(pls       )("+", term)
 Var(mns       )("-", term)
@@ -128,28 +128,22 @@ Var(Exp       )("a", term,
                 Exp, mns, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, variable)
-N(Cor       ) { R(p_t*, oο); Α(gor, oο, os_unsoll_free, coll, and) O; }
 
-N(orelse_nn ) { VLog;
-  R(p_t*, rhsoll);
-  Α(rhsoll, os_unsoll_free, dot, and,
-    04, nar, os_soll_n, coll, and) O; }
-N(orelse_n  ) { VLog; Α(os_soll_n, orelse_nn, and) O; }
+N(o_orelse_n  ) { VLog; Α(os_soll_n, drop, and, dot, and) O; }
 
-N(thenS_n   ) { VLog; R(Q_t, wc); Α(wc, os_soll_n,
-                                             coll, and) O; }
-N(empty     ) { VLog; C(1); }
-N(term      ) { VLog;
+N(o_thenS_n   ) { VLog; Α(os_soll_n, drop, and, dot, and) O; }
+N(o_empty     ) { VLog; C(1); }
+N(o_term      ) { VLog;
   α--, C(1);
   //Α(got, ο, os_unsoll_free, dot, and,
   //                      god, god,
   //                      gor, god, not2and2or2, ) O;
 }
-N(dump      ) { VLog; print("dump %p\n", ο); os_wordump(T()); }
-N(variable  ) { VLog; print("vari %p\n", ο);
+N(dump        ) { VLog; print("dump %p\n", ο); os_wordump(T()); }
+N(o_variable  ) { VLog; print("vari %p\n", ο);
   Α(drop, dot, and, dump, and) O; }
 
-Nar(s_pith    )(7, god, and2, 3, os_soll_n)
+Nar(s_pith    )(o_orelse_n, o_thenS_n, o_term, o_empty, o_variable, 5, os_soll_n)
 Nar(example   )("a+a*a", 5, 0, Exp, s_pith,
                                       coll, and,
                                 os_wordump, and)
@@ -162,7 +156,7 @@ Nar(example2  )(ss2,
                 dot, and,
                 os_wordump, and)
 
-Nar(მთავარი   )(example2)
+Nar(მთავარი   )(example)
 // clang-format off
 EN(tail,
 მთავარი,      exports);
