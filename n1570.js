@@ -1,4 +1,5 @@
-const opt_fun_map = {};
+const { printf, opt, oneof } = require("./grammar_funs");
+
 // A.1 Lexical grammar
 // A.1.1 Lexical elements
 
@@ -157,9 +158,9 @@ function hex_quad(o) {
 // A.1.5 Constants
 
 function constant(o) {
-  //o(integer_constant);
+  o(integer_constant);
   o(floating_constant);
-  //o(enumeration_constant);
+  o(enumeration_constant);
   o(character_constant);
 }
 function integer_constant(o) {
@@ -453,7 +454,7 @@ function primary_expression(o) {
   o(constant);
   o(string_literal);
   o("(", expression, ")");
-  //o(generic_selection);
+  o(generic_selection);
 }
 function generic_selection(o) {
   o("_Generic", "(", assignment_expression, ",", generic_assoc_list, ")");
@@ -474,8 +475,8 @@ function postfix_expression(o) {
   o(postfix_expression, "->", identifier);
   o(postfix_expression, "++");
   o(postfix_expression, "--");
-  //o("(", type_name, ")", "{", initializer_list, "}");
-  //o("(", type_name, ")", "{", initializer_list, ",", "}");
+  o("(", type_name, ")", "{", initializer_list, "}");
+  o("(", type_name, ")", "{", initializer_list, ",", "}");
 }
 function argument_expression_list(o) {
   o(assignment_expression);
@@ -487,15 +488,15 @@ function unary_expression(o) {
   o("--", unary_expression);
   o(unary_operator, cast_expression);
   o("sizeof", unary_expression);
-  //o("sizeof", "(", type_name, ")");
-  //o("_Alignof", "(", type_name, ")");
+  o("sizeof", "(", type_name, ")");
+  o("_Alignof", "(", type_name, ")");
 }
 function unary_operator(o) {
   oneof("&", "*", "+", "-", "~", "!")(o);
 }
 function cast_expression(o) {
   o(unary_expression);
-  //o("(", type_name, ")", cast_expression);
+  o("(", type_name, ")", cast_expression);
 }
 function multiplicative_expression(o) {
   o(cast_expression);
@@ -605,9 +606,9 @@ function type_specifier(o) {
   o("unsigned");
   o("_Bool");
   o("_Complex");
-  //o(atomic_type_specifier);
-  //o(struct_or_union_specifier);
-  //o(enum_specifier);
+  o(atomic_type_specifier);
+  o(struct_or_union_specifier);
+  o(enum_specifier);
   o(typedef_name);
 }
 function struct_or_union_specifier(o) {
@@ -961,70 +962,6 @@ function pp_tokens(o) {
   o(pp_tokens, preprocessing_token);
 }
 function new_line(o) {
-  //o(the new_line character)
-}
-
-function opt(nar) {
-  const name = get_name(nar);
-  return opt_fun_map[name]
-    ? opt_fun_map[name]
-    : (opt_fun_map[name] = new Function(
-        "const nar=arguments[0];return function " +
-          nar.name +
-          "_opt(o){o(nar);o('');}"
-      )(nar));
-}
-function oneof(...terms) {
-  return (o) => terms.forEach((t) => o(t));
-}
-function get_name(f) {
-  if (typeof f.name !== "string") throw new Error("f.name");
-  return f.name;
-}
-function print(g, visited = []) {
-  if (visited.indexOf(g) !== -1) return;
-  visited.push(g);
-  const defered = [];
-  console.log(get_name(g), "→");
-  const prods = [];
-  g(function pith(...args) {
-    const prod = args
-      .map((x) => {
-        if ("function" === typeof x) {
-          defered.push(x);
-          return get_name(x);
-        } else {
-          return x ? JSON.stringify(x) : "∈";
-        }
-      })
-      .join(" ");
-    prods.push(prod);
-  });
-  console.log("    " + prods.join("\n  | "));
-  defered.forEach((f) => print(f, visited));
-}
-function printf(g, visited = []) {
-  if (visited.indexOf(g) !== -1) return;
-  visited.push(g);
-  const defered = [];
-  console.log("function " + get_name(g) + "(o) {");
-  const prods = [];
-  g(function pith(...args) {
-    const prod = args
-      .map((x) => {
-        if ("function" === typeof x) {
-          defered.push(x);
-          return get_name(x);
-        } else {
-          return x ? JSON.stringify(x) : '""';
-        }
-      })
-      .join(", ");
-    prods.push("  o("+prod+")");
-  });
-  console.log(prods.join("\n"));
-  console.log("}");
-  defered.forEach((f) => printf(f, visited));
+  o("\n");
 }
 printf(cast_expression);
-console.log("done!");
