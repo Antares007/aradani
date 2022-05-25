@@ -129,12 +129,11 @@ Var(Exp       )("a", term,
                 Exp, pls, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
                 Exp, variable)
 
-N(o_orelse_n  ) { VLog; Α(os_soll_n, drop, and, dot, and) O; }
-N(o_thenS_n   ) { VLog; Α(os_soll_n, drop, and, dot, and) O; }
+N(o_orelse_n  ) { VLog; Α(os_soll_n, os_soll_free, and, dot, and) O; }
+N(o_thenS_n   ) { VLog; Α(os_soll_n, os_soll_free, and, dot, and) O; }
 N(o_empty     ) { VLog;      C(1); }
-N(o_term      ) { VLog; α--, C(1);
-  //Α(got, ο, os_unsoll_free, dot, and, god, god, gor, god, not2and2or2, ) O;
-}
+N(o_term      ) { VLog; α--, C(1); }
+N(o_variable  ) { Α(drop, dot, and) O; }
 // bSaTO3SV
 //                  b
 //                  V₁
@@ -157,11 +156,6 @@ N(o_term      ) { VLog; α--, C(1);
 //  |       \|
 // SV₀  s   SV₀
 //  |        |
-N(dump        ) { VLog; print("dump %p\n", ο); os_wordump(T()); }
-N(o_variable  ) { VLog; print("vari %p\n", ο);
-  R(n_t, v);
-  if (1);
-  Α(drop, dot, and, dump, and) O; }
 
 Nar(o_pith    )(o_orelse_n, o_thenS_n, o_term, o_empty, o_variable, 5, os_soll_n)
 Nar(example   )("a+a*a", 5, 0, Exp, o_pith,
