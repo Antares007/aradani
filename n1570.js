@@ -16,8 +16,7 @@ function preprocessing_token(o) {
   o(character_constant);
   o(string_literal);
   o(punctuator);
-  //o(each non_white_space character that cannot be
-  //  one of the above)
+  //o(each non_white_space character that cannot be one of the above)
 }
 
 // A.1.2 Keywords
@@ -1004,5 +1003,28 @@ function print(g, visited = []) {
   console.log("    " + prods.join("\n  | "));
   defered.forEach((f) => print(f, visited));
 }
-print(cast_expression);
+function printf(g, visited = []) {
+  if (visited.indexOf(g) !== -1) return;
+  visited.push(g);
+  const defered = [];
+  console.log("function " + get_name(g) + "(o) {");
+  const prods = [];
+  g(function pith(...args) {
+    const prod = args
+      .map((x) => {
+        if ("function" === typeof x) {
+          defered.push(x);
+          return get_name(x);
+        } else {
+          return x ? JSON.stringify(x) : '""';
+        }
+      })
+      .join(", ");
+    prods.push("  o("+prod+")");
+  });
+  console.log(prods.join("\n"));
+  console.log("}");
+  defered.forEach((f) => printf(f, visited));
+}
+printf(cast_expression);
 console.log("done!");
