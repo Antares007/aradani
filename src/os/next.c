@@ -42,7 +42,7 @@ N(os_next) {
   if (&main_queue == (q = QUEUE_NEXT(&main_queue)))
     return (printf("The End!\n"), (void)0);
   QUEUE_REMOVE(q);
-  page_free(σ);
+  page_free(σ-5);
   p_t *nσ = ((p_t *)q) + 5, *nο = nσ[Φ].p;
   nσ[Φ].p = 0;
   dot(nο, nσ[Ǎ].Q, nσ[Σ].Q, nσ);

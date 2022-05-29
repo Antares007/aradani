@@ -23,6 +23,7 @@ void *page_alloc() {
           freemap_cells[i] &= ~cellmask;
           Q_t pagenumber = i * CELL_BITS + j;
           void *pageaddr = (pagenumber << PAGE_BITS) + freemap;
+          printf("page %p\n", pageaddr);
           return pageaddr;
         }
       }
@@ -34,7 +35,7 @@ void *page_alloc() {
 void page_free(void *pageaddr) {
   Q_t pagenumber = (pageaddr - freemap) >> PAGE_BITS;
   if (pagenumber >= (8 * sizeof(freemap_cells)))
-    return printf("Señor, a page address is not from our memory space.\n"), exit(9);
+    return printf("Señor, a page %p is not from our memory space %p.\n", pageaddr, freemap), exit(9);
   Q_t cellnumber = pagenumber / CELL_BITS;
   Q_t celloffset = pagenumber % CELL_BITS;
   Q_t cellmask = ((Q_t)1 << celloffset);

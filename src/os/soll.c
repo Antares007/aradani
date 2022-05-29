@@ -16,6 +16,7 @@ static NP(soll_oor) {}
 void os_soll_init() { page_init(); }
 p_t *os_soll_alloc() {
   p_t *sοll    = page_alloc();
+  if(sοll == 0) return sοll;
   sοll        += 5;
   sοll[Ǎ].Q    = sοll[Φ].Q = 0;
   sοll[Σ].Q    = 504;
@@ -59,7 +60,8 @@ N(os_soll_dup) {
 }
 N(os_soll_free) {
   R(p_t *, sοll);
-  page_free(sοll), C(1);
+  printf("aa\n");
+  page_free(sοll - 5), C(1);
 }
 N(os_unsoll_free) {
   R(p_t *, sοll);

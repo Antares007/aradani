@@ -105,22 +105,6 @@ Var(mul       )("*", term)
 Var(div       )("/", term)
 Var(opr       )("(", term)
 Var(cpr       )(")", term)
-  // term capture terminal sentence operation 
-  // A recognizer corresponding to a construct p | q in the grammar is built by combining recognizers
-  // for p and q, using the parser combinator ‘orelse‘.
-  // When the composite recognizer is applied to index j, it applies p to j, then it applies q to j,
-  // and subsequently unites the resulting sets.:
-  // (p ‘orelse‘ q) j = unite (p j) (q j)
-  // e.g, assuming that the input is "ssss", then
-  // (empty ‘orelse‘ term_s) 2 => {2, 3}
-  //
-  // A composite recognizer corresponding to a sequence of recognizers p q on the right hand side of
-  // a grammar rule, is built by combining those recognizers using the parser combinator ‘thenS‘.
-  // When the composite recognizer is applied to an index j, it first applies p to j, then it applies
-  // q to each index in the set of results returned by p. It returns the union of these applications of q.
-  // (p ‘thenS‘ q) j = union (map q (p j))
-  // e.g., assuming that the input is "ssss", then
-  // (term_s ‘thenS‘ term_s) 1 => {3}
 Var(Exp       )("a", term,
                 opr, Exp, 1, thenS_n, cpr, 1, thenS_n, 7, orelse_n,
                 Exp, mul, 1, thenS_n, Exp, 1, thenS_n, 7, orelse_n,
@@ -158,7 +142,7 @@ N(o_variable  ) { Α(drop, dot, and) O; }
 //  |        |
 
 Nar(o_pith    )(o_orelse_n, o_thenS_n, o_term, o_empty, o_variable, 5, os_soll_n)
-Nar(example   )("a+a*a", 5, 0, Exp, o_pith,
+Nar(example_0 )("a+a*a", 5, 0, Exp, o_pith,
                                       coll, and,
                                 os_wordump, and)
 Nar(init      )(god)

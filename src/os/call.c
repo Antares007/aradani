@@ -11,7 +11,7 @@ static N(cb) {
   for(Q_t i = 0; i < α; i++)
     oσ[oσ[Ǎ].Q + i].v = σ[i].v;
   oσ[Ǎ].Q += α;
-  page_free(σ);
+  page_free(σ - 5);
   oσ[oρ + ray].c(oο, oσ[Ǎ].Q, oρ, oσ);
 }
 static N(call_n_n) {
