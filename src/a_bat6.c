@@ -14,10 +14,12 @@ os_call_n,          L)IN(L,
 os_queue_clear,     L)IN(L,
 os_queue_n,         L)IN(L,
 os_queue_soll,      L)IN(L,
+os_roll,            L)IN(L,
 os_soll,            L)IN(L,
 os_soll_dup,        L)IN(L,
 os_soll_free,       L)IN(L,
 os_soll_n,          L)IN(L,
+os_unroll,          L)IN(L,
 os_unsoll,          L)IN(L,
 os_unsoll_free,     L)IN(L,
 os_wordump,         L)IN(L,
@@ -71,32 +73,38 @@ or5,          imports);
   // (p ‘thenS‘ q) j = union (map q (p j))
   // e.g., assuming that the input is "ssss", then
   // (term_s ‘thenS‘ term_s) 1 => {3}
+N(ps        ){ R(const char*, str); print("%s", str), C(1); }
+N(pnl       ){ print("\n"), C(1); }
+N(drop      ){ VLog; α--, C(1); }
 N(Ο         ){ VLog; O; }
-N(Τn        ){ VLog; Α(os_soll_n, os_soll_free, and, dot, and) O; }
-N(ε         ){ VLog; O; }
-N(Ε         ){ VLog; α--, O; } 
-N(Ϋ         ){ VLog; R(const char*, name); R(n_t, svar); print("%s %p\n", name, svar); O; }
-
+N(Τnn       ){ VLog; R(p_t*, rhsoll); Α( dot,rhsoll, os_soll_free, and2) O; }
+N(Τn        ){ VLog; Α(os_soll_n, Τnn, and) O; }
+N(ε         ){ VLog; Α("ε", ps, pnl, and,
+                                dot, and,
+                                god, and,
+                                god, and,
+                                god, and) O; }
+N(Ξ         ){ VLog; Α(ps, pnl, and, dot, and) O; } 
+N(Ϋ         ){ VLog; R(const char*, name); R(n_t, svar); print("\t%s %p\n", name, svar); O; }
 N(Τ         ){ Α(1, Τn) O; }
 N(Τ2        ){ Α(2, Τn) O; }
-Var(o,                  "o", Ε)
-Var(b,                  "b", Ε)
-Var(B,                  "B", Ε)
-Var(a,                  "a", Ε)
-Var(s,                  "s", Ε)
-Var(εΟaΟsoΤΟSbΤBΤΟSoΤ,  ε,
+Var(o,                "o", Ξ)
+Var(b,                "b", Ξ)
+Var(B,                "B", Ξ)
+Var(a,                "a", Ξ)
+Var(s,                "s", Ξ)
+Var(εΟaΟsoΤΟSoΤΟSbΤBΤ,  ε,
                     Ο,  a,
                     Ο,  s, o, Τ,
-                    Ο,  εΟaΟsoΤΟSbΤBΤΟSoΤ, b, Τ, B, Τ,
-                    Ο,  εΟaΟsoΤΟSbΤBΤΟSoΤ, o, Τ)
+                    Ο,  εΟaΟsoΤΟSoΤΟSbΤBΤ, o, Τ,
+                    Ο,  εΟaΟsoΤΟSoΤΟSbΤBΤ, b, Τ, B, Τ)
 Var(εΟs,                ε, Ο, s)
 Var(ssΤ,                s, s, Τ)
 Var(bΟSaΤ,              b, Ο, bΟSaΤ, a, Τ)
 
-N(pgod      ){ VLog; C(1); }
-Nar(example )(pgod, εΟaΟsoΤΟSbΤBΤΟSoΤ)
-
-
+N(pgod      ){ VLog; print("---->%lu\n", ο[0].Q), C(1); }
+N(prn       ){ VLog; R(p_t*, s); Α(s[Ǎ].Q, os_wordump) O; }
+Nar(example )(pgod, εΟs)
 
 Nar(მთავარი   )(example)
 Nar(init)(god)

@@ -23,7 +23,6 @@ void *page_alloc() {
           freemap_cells[i] &= ~cellmask;
           Q_t pagenumber = i * CELL_BITS + j;
           void *pageaddr = (pagenumber << PAGE_BITS) + freemap;
-          printf("page %p\n", pageaddr);
           return pageaddr;
         }
       }
