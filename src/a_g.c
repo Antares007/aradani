@@ -16,23 +16,21 @@ and2,         imports)
 N(ps        ){ R(const char*, str); print("%s", str), C(1); }
 N(pnl       ){ print("\n"), C(1); }
 N(drop      ){ VLog; α--, C(1); }
-N(Ο         ){ VLog; O; }
-N(Τnn       ){ VLog; R(p_t*, rhsoll); Α( dot,rhsoll, os_soll_free, and2) O; }
-N(Τn        ){ VLog; Α(os_soll_n, Τnn, and) O; }
-N(ε         ){ VLog; Α("ε", ps, pnl, and,
-                                dot, and,
-                                god, and,
-                                god, and,
-                                god, and) O; }
-N(Ξ         ){ VLog; Α(ps, pnl, and, dot, and) O; } 
-N(Ϋ         ){ VLog; R(const char*, name); R(n_t, svar); print("\t%s %p\n", name, svar); O; }
-N(Τ         ){ Α(1, Τn) O; }
+N(Ο         ){ VLog; ο[0].c(T()); }
+N(ε         ){ VLog; ο[0].c(T()); }
+N(Ξ         ){ VLog; ο[1].c(T()); }
+N(Ϋ         ){ VLog; ο[2].c(T()); }
 
+N(drop1dot  ){ VLog; α-=1, O; }
+N(drop2dot  ){ VLog; α-=2, O; }
+NP(coll     ) { R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
+Nar(d_pith  )(dot, drop1dot, drop2dot, 3, os_soll_n)
 Nar(init)(god)
 // clang-format off
 EN(tail,
+coll,               L)EN(L,
+d_pith,             L)EN(L,
 Ξ,                  L)EN(L,
 Ο,                  L)EN(L,
-Τ,                  L)EN(L,
 Ϋ,                  L)EN(L,
 ε,            exports);      

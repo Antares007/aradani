@@ -10,9 +10,13 @@ nm: nm.c src/os/page.o
 
 src/a_a.arsi:       \
 	src/a_a.oars      \
+	src/a_7.arsi
+	cat $^ > $@
+
+src/a_7.arsi:       \
 	src/a_7.oars      \
 	src/a_g.oars      \
-	src/a_parsers.arsi
+	src/os.arsi
 	cat $^ > $@
 
 src/a_pp.arsi:       \
