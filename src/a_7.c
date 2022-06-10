@@ -36,7 +36,7 @@ Var(ss, s, s)
 N(pgod      ){ VLog; print("---->%lu\n", ο[Ǎ].Q), C(1); }
 Nar(example )(pgod, εΟs, d_pith, coll, and)
 
-Nar(მთავარი   )(example)
+Nar(მთავარი )(example)
 
 Nar(init)(god)
 // clang-format off

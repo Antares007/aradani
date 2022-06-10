@@ -23,8 +23,10 @@ N(Ϋ         ){ VLog; ο[2].c(T()); }
 
 N(drop1dot  ){ VLog; α-=1, O; }
 N(drop2dot  ){ VLog; α-=2, O; }
-NP(coll     ) { R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
+NP(coll     ){ R(p_t*, oο); R(n_t, nar); nar(oο, α, ρ, σ); }
 Nar(d_pith  )(dot, drop1dot, drop2dot, 3, os_soll_n)
+//Nar(z_pith  )(orelse_z, term_z, variable_z, 3, os_soll_n)
+//Nar(s_pith  )(orelse_s, term_s, variable_s, 3, os_soll_n)
 Nar(init)(god)
 // clang-format off
 EN(tail,
