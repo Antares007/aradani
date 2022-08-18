@@ -73,6 +73,11 @@ src/os_run:                  \
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
+src/main:			\
+	src/main.c		\
+	src/map.o		\
+	src/notandor.o
+	${CC} $^ -o $@ ${CFLAGS} -lraylib
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
@@ -103,6 +108,7 @@ clean:
 		src/*.tarsi           \
 		src/os/*.o            \
 		src/os_run            \
+		src/main              \
 		src/etc/epoll_client  \
 		src/etc/epoll_server  \
 		src/etc/epoll_stdin   \
