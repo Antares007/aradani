@@ -73,16 +73,18 @@ src/os_run:                  \
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src/a_rsi3.tarsi:			\
-	src/a_rsi3.oars		\
-	src/a_rsi2.oars		\
+src2/a_rsi3.tarsi:		\
+	src2/a_rsi3.oars		\
+	src2/a_rsi2.oars		\
 	src/goto.bin
 	cat $^ > $@
-src/main:			\
-	src/main.c		\
-	src/map.o		\
-	src/notandor.o
+
+src2/main:						\
+	src2/main.c					\
+	src2/map.o					\
+	src2/notandor.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
+
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
@@ -104,7 +106,7 @@ src/main:			\
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
 
-src/a_%.tarsi: src/a_%.oars src/goto.bin
+%.tarsi: %.oars src/goto.bin
 	cat $^ > $@
 
 clean:
@@ -114,9 +116,14 @@ clean:
 		src/*.o               \
 		src/*.arsi            \
 		src/*.tarsi           \
+		src2/*.bin            \
+		src2/*.oars           \
+		src2/*.o              \
+		src2/*.arsi           \
+		src2/*.tarsi          \
 		src/os/*.o            \
 		src/os_run            \
-		src/main              \
+		src2/main							\
 		src/etc/epoll_client  \
 		src/etc/epoll_server  \
 		src/etc/epoll_stdin   \

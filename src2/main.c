@@ -50,10 +50,9 @@ N(import) {
 }
 N(qvemdebare) { A(exports, god) O; }
 N(Main_nnn) {
-  RN(n_t, exps);
+  (void)R;
   RN(n_t, addr);
-  RN(const char *, name);
-  printf("name:%s nexp:%p\n", name, exps);
+  (void)R;
   A(addr) O;
 }
 N(Main_nn) { A(Main_nnn, and) O; }
@@ -61,7 +60,10 @@ N(Main_n) {
   RN(n_t, pith);
   A(got, god, gor, notandor, import, pith, Main_nn, and) O;
 }
-N(Main) { A("src/a_rsi3.tarsi", qvemdebare, mapfile, Main_n, and) O; }
+N(MM) {
+  A(mapfile, Main_n, and) O;
+}
+N(Main) { A("src2/a_rsi3.tarsi", qvemdebare, MM) O; }
 N(not_ray) { printf("NOT_ray\n"); }
 N(and_ray) { printf("AND_ray\n"); }
 N(oor_ray) { printf("OOR_ray\n"); }

@@ -21,7 +21,7 @@ typedef void (*n_t)(OARS);
 
 #define N(n) void n(OARS)
 #define Α(vs) σ[α++].v = (void *)(vs),
-#include "etc/evalmap.h"
+#include "evalmap.h"
 #define A(...) EVAL(MAP(Α, __VA_ARGS__))
 #define R σ[--α]
 #define RN(Type, Name) Type Name = (Type)R.v
