@@ -6,8 +6,7 @@ static N(imports);
 static N(exports);
 N(geno_n) {
   tail = R.v;
-  A(imports, tail, import, exports, god,
-                           exports, god, 022, aradani) O;
+  A(imports, tail, import, exports, god, 020, aradani) O;
 }
 N(zia) __attribute__((section(".text.end")));
 N(zia){};

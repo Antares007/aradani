@@ -8,7 +8,7 @@ N(god);
 N(gor);
 
 N(and);
-N(and3);
+N(and3or);
 N(notandor);
 N(mapfile);
 
@@ -18,10 +18,10 @@ N(one) {
 }
 // clang-format off
 E(got,
-"nar1", god,        L)E(L,
-"nar2", god,        L)E(L,
-"nar3", god,        L)E(L,
-"nar4", god,  exports);
+"nar1", one,        L)E(L,
+"nar2", one,        L)E(L,
+"nar3", one,        L)E(L,
+"nar4", one,  exports);
 // clang-format on
 
 static int cmp(const char *s1, const char *s2) {
@@ -31,7 +31,7 @@ static int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 N(import);
-N(import_n) {LOG;
+N(import_n) {
   RN(n_t, exps);
   RN(n_t, eaddr);
   RN(const char *, ename);
@@ -44,26 +44,21 @@ N(import_n) {LOG;
     *iaddr = eaddr, A(imps, exps, import) O;
 }
 N(import) {
-  LOG;
   RN(n_t, exps);
   RN(n_t, imps);
-  A(imps, exps, import_n, and, and3) O;
+  A(imps, exps, import_n, and, god, and3or) O;
 }
-N(qvemdebare) {
-  LOG;
-  printf("%d\n", R.v == import);
-  printf("%d\n", R.v == notandor);
-  printf("%d\n", R.v == gor);
-  printf("%d\n", R.v == god);
-  printf("%d\n", R.v == got);
-  A(exports, god) O;
+N(qvemdebare) { A(exports, god) O; }
+N(Main_nnn) {
+  RN(n_t, exps);
+  RN(n_t, addr);
+  RN(const char *, name);
+  printf("name:%s nexp:%p\n", name, exps);
+  A(addr) O;
 }
-
-N(Main_nn) { LOG; }
+N(Main_nn) { A(Main_nnn, and) O; }
 N(Main_n) {
-  LOG;
   RN(n_t, pith);
-  printf("hello world! %p\n", pith);
   A(got, god, gor, notandor, import, pith, Main_nn, and) O;
 }
 N(Main) { A("src/a_rsi2.tarsi", qvemdebare, mapfile, Main_n, and) O; }

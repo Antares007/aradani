@@ -34,6 +34,7 @@ N(and2) { A(020, notandor) O; }
 N(and3) { A(030, notandor) O; }
 N(and4) { A(040, notandor) O; }
 N(and5) { A(050, notandor) O; }
+N(and3or) { A(031, notandor) O; }
 N(or) { A(001, notandor) O; }
 N(or3) { A(003, notandor) O; }
 N(or4) { A(004, notandor) O; }
