@@ -61,7 +61,7 @@ N(Main_n) {
   RN(n_t, pith);
   A(got, god, gor, notandor, import, pith, Main_nn, and) O;
 }
-N(Main) { A("src/a_rsi2.tarsi", qvemdebare, mapfile, Main_n, and) O; }
+N(Main) { A("src/a_rsi3.tarsi", qvemdebare, mapfile, Main_n, and) O; }
 N(not_ray) { printf("NOT_ray\n"); }
 N(and_ray) { printf("AND_ray\n"); }
 N(oor_ray) { printf("OOR_ray\n"); }

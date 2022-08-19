@@ -73,6 +73,11 @@ src/os_run:                  \
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
+src/a_rsi3.tarsi:			\
+	src/a_rsi3.oars		\
+	src/a_rsi2.oars		\
+	src/goto.bin
+	cat $^ > $@
 src/main:			\
 	src/main.c		\
 	src/map.o		\
@@ -95,10 +100,13 @@ src/main:			\
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
+
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
+
 src/a_%.tarsi: src/a_%.oars src/goto.bin
 	cat $^ > $@
+
 clean:
 	rm -f                   \
 		src/*.bin             \
