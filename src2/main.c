@@ -65,7 +65,7 @@ N(MM) {
 }
 N(Main) { A("src2/a_rsi3.tarsi", qvemdebare, MM) O; }
 N(not_ray) { printf("NOT_ray\n"); }
-N(and_ray) { printf("AND_ray\n"); }
+N(and_ray) { printf("AND_ray %lu\n", R.Q); }
 N(oor_ray) { printf("OOR_ray\n"); }
 
 int main() {

@@ -6,7 +6,8 @@ nar1,             L)IN(L,
 nar2,             L)IN(L,
 nar3,             L)IN(L,
 nar4,       imports)
-N(and) { A(010, aradani) O; }
+
+N(and ) { A(010, aradani) O; }
 N(nar5) { A(god) O; }
 N(nar6) { A(nar1, nar2, and, nar3, and, nar4, and) O; }
 

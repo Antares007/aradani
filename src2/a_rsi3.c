@@ -9,8 +9,17 @@ nar4,             L)IN(L,
 nar6,       imports)
 
 N(and) { A(010, aradani) O; }
-
-N(nar7) { A(nar1, nar2, and, nar3, and, nar4, and, nar6, and) O; }
-
+N(one) { A(1, god) O; }
+N(add) {
+  RN(Q_t, r);
+  RN(Q_t, l);
+  A(l + r, god) O;
+} 
+N(two) { A(one, one, and, add, and) O; }
+N(nar7) {
+  A(one, two, and, add, and,
+         two, and, add, and,
+         two, and, add, and) O;
+}
                     EN(tail,
 nar7,       exports)
