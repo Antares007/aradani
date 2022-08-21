@@ -64,9 +64,9 @@ N(MM) {
   A(mapfile, Main_n, and) O;
 }
 N(Main) { A("src2/a_rsi3.tarsi", qvemdebare, MM) O; }
-N(not_ray) { printf("NOT_ray\n"); }
-N(and_ray) { printf("AND_ray %lu\n", R.Q); }
-N(oor_ray) { printf("OOR_ray\n"); }
+N(not_ray) {LOG; printf("\n"); }
+N(and_ray) {LOG; printf("%lu\n", R.Q); }
+N(oor_ray) {LOG; printf("\n"); }
 
 int main() {
   p_t σ[512];
