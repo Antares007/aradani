@@ -3,11 +3,8 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: all
-	./src/os_run src/a_dynamic.arsi
-all: src/os_run src/a_cycle.arsi src/a_async.arsi src/a_parse.arsi src/a_dynamic.arsi
-nm: nm.c src/os/page.o
-
+run: src2/main src2/a_rsi3.tarsi
+	./src2/main
 src/a_a.arsi:       \
 	src/a_a.oars      \
 	src/a_7.arsi
@@ -129,4 +126,4 @@ clean:
 		src/etc/epoll_stdin   \
 		src/etc/epoll_server_oneshot   \
 		src/gui/ui
-.PHONY: clean run all
+.PHONY: clean run

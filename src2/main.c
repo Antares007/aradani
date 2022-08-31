@@ -83,5 +83,5 @@ int main() {
   ο[--ρ].c = not_ray;
   ο[--ρ].Q = 0111;
   Main(T);
-  return 9;
+  return 0;
 }
