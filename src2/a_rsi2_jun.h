@@ -1,9 +1,9 @@
 #pragma once
 #define L CAT(expimp_, __LINE__)
 #define I(Tail, Name, Address, Head)                                           \
-  static N(Head) { A(Name, &Address, Tail, god) O; }
+  static N(Head) { A(Name, &Address, Tail, σ1) O; }
 #define E(Tail, Name, Address, Head)                                           \
-  static N(Head) { A(Name, Address, Tail, god) O; }
+  static N(Head) { A(Name, Address, Tail, σ1) O; }
 
 #define IN(Tail, Name, Head)                                                   \
   static n_t Name;                                                             \

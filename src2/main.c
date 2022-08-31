@@ -18,10 +18,15 @@ N(one) {
 }
 // clang-format off
 E(got,
-"nar1", one,        L)E(L,
-"nar2", one,        L)E(L,
-"nar3", one,        L)E(L,
-"nar4", one,  exports);
+"aradani",  notandor,       L)E(L,
+"god",      god,            L)E(L,
+"gor",      gor,            L)E(L,
+"got",      got,            L)E(L,
+"nar1",     one,            L)E(L,
+"nar2",     one,            L)E(L,
+"nar3",     one,            L)E(L,
+"nar4",     one,            L)E(L,
+"notandor", notandor, exports);
 // clang-format on
 
 static int cmp(const char *s1, const char *s2) {

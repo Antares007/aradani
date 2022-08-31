@@ -31,3 +31,11 @@ typedef void (*n_t)(OARS);
 #define wordCountOf(T) ALIGN(sizeof(T), sizeof(void*))
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
+
+// clang-format on
+static N(σ4);
+static N(σ0) { σ[0].c(T), (void)σ4; }
+static N(σ1) { σ[1].c(T); }
+static N(σ2) { σ[2].c(T); }
+static N(σ3) { σ[3].c(T); }
+static N(σ4) { σ[4].c(T), (void)σ0, (void)σ1, (void)σ2, (void)σ3; }

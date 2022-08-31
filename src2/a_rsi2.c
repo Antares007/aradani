@@ -1,15 +1,14 @@
 #include "a_rsi2.h"
 
 // clang-format off
-                    IN(gor,
+                    IN(σ2,
 nar1,             L)IN(L,
 nar2,             L)IN(L,
 nar3,             L)IN(L,
 nar4,       imports)
 
-N(and ) { A(010, aradani) O; }
-N(nar5) { A(god) O; }
-N(nar6) { A(nar1, nar2, and, nar3, and, nar4, and) O; }
+N(nar5) { A(7, σ1) O; }
+N(nar6) { A(7, σ1) O; }
 
                     EN(tail,
 nar5,             L)EN(L,
