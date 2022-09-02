@@ -12,28 +12,13 @@ N(add) {
   q_t l = R.q;
   A(l + r) C(1);
 }
-N(and) {
-  ρ--;
-  ο[ρ - σ * 0].v = gor;
-  ο[ρ - σ * 1].v = ο[--α].v;
-  ο[ρ - σ * 2].v = got;
-  ο[α - 1].c(ο, α - 1, ρ, σ);
-}
-N(and2) {
-  ρ--;
-  ο[ρ - σ * 0].v = gor;
-  ο[ρ - σ * 1].v = ο[--α].v;
-  ο[ρ - σ * 2].v = got;
-  ο[α - 1].c(ο, α - 1, ρ, σ);
-}
 N(ray_not) { LOG; }
 N(ray_and) {
   LOG;
   printf("%lu\n", ο[--α].q);
 }
 N(ray_oor) { LOG; }
-N(da1);
-N(da2);
+N(da);
 N(da4);
 int main() {
   p_t ο[4096];
@@ -42,6 +27,6 @@ int main() {
   ο[ρ - σ * 2].v = ray_not;
   ο[ρ - σ * 1].v = ray_and;
   ο[ρ - σ * 0].v = ray_oor;
-  A8(one, 8, god, god, da1, da4, add, da1) O;
+  A8(one, 7, god, god, da, da4, add, da) O;
   return 0;
 }

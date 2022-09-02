@@ -21,9 +21,7 @@ for (let i = 1; i < 9; i++) {
   gfun(i, 2);
 }
 for (let i = 2; i < 8; i++) {
-  ufun(i, 0),
-  ufun(i, 1),
-  ufun(i, 2);
+  ufun(i, 0), ufun(i, 1), ufun(i, 2);
 }
 for (let g = 01; g < 01000; g++) {
   const nc = (g >> 6) & 7;
@@ -31,7 +29,9 @@ for (let g = 01; g < 01000; g++) {
   const oc = (g >> 0) & 7;
   const mc = ac < nc ? (nc < oc ? oc : nc) : ac < oc ? oc : ac;
   console.log(
-    `N(${nc ? "ara" + nc : ""}${ac ? "da" + ac : ""}${oc ? "an" + oc : ""}) {`
+    `N(${nc ? "ara" + (nc > 1 ? nc : "") : ""}${
+      ac ? "da" + (ac > 1 ? ac : "") : ""
+    }${oc ? "an" + (oc > 1 ? oc : "") : ""}) {`
   );
   if (mc === 1) {
     fun1(0, oc);
