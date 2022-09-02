@@ -18,6 +18,13 @@ N(and) {
   ο[ρ - σ * 2].v = got;
   ο[α - 1].c(ο, α - 1, ρ, σ);
 }
+N(and2) {
+  ρ--;
+  ο[ρ - σ * 0].v = gor;
+  ο[ρ - σ * 1].v = ο[--α].v;
+  ο[ρ - σ * 2].v = got;
+  ο[α - 1].c(ο, α - 1, ρ, σ);
+}
 N(ray_not) { printf("NOT\n"); }
 N(ray_and) { printf("AND %lu\n", ο[--α].q); }
 N(ray_oor) { printf("OOR\n"); }
