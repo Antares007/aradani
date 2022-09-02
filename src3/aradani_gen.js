@@ -11,8 +11,8 @@ function gfun(i, ray, name) {
 function ufun(c, ray) {
   console.log(`N(u${rni(ray, c)}) {`);
   for (let i = 0; i < c - 1; i++)
-    console.log(`ο[α++].v = ο[ρ++ - σ * ${ray}].v;`);
-  console.log(`C(${ray});`);
+    console.log(`  ο[α++].v = ο[ρ++ - σ * ${ray}].v;`);
+  console.log(`  C(${ray});`);
   console.log(`}`);
 }
 for (let i = 1; i < 9; i++) {
@@ -37,24 +37,26 @@ for (let g = 01; g < 01000; g++) {
     fun1(0, oc);
     fun1(1, ac);
     fun1(2, nc);
-    console.log(`ο[α - 1].c(ο, α - 1, ρ - 1, σ);`);
+    console.log(`  ο[α - 1].c(ο, α - 1, ρ - 1, σ);`);
   } else {
     fun(mc, 0, oc);
     fun(mc, 1, ac);
     fun(mc, 2, nc);
-    console.log(`ο[α - 1].c(ο, α - 1, ρ - ${mc + 1}, σ);`);
+    console.log(`  ο[α - 1].c(ο, α - 1, ρ - ${mc + 1}, σ);`);
   }
   console.log(`}`);
 }
 function fun(mc, ray, xc) {
   let i = 0;
-  for (; i < xc; i++) console.log(`ο[ρ - ${i + 1} - σ * ${ray}].v = ο[--α].v;`);
-  if (i > 1) console.log(`ο[ρ - ${i + 1} - σ * ${ray}].v = u${rni(ray, xc)};`);
+  for (; i < xc; i++)
+    console.log(`  ο[ρ - ${i + 1} - σ * ${ray}].v = ο[--α].v;`);
+  if (i > 1)
+    console.log(`  ο[ρ - ${i + 1} - σ * ${ray}].v = u${rni(ray, xc)};`);
   else i--;
   if (mc - i)
-    console.log(`ο[ρ - ${mc + 1} - σ * ${ray}].v = ${rni(ray, mc - i)};`);
+    console.log(`  ο[ρ - ${mc + 1} - σ * ${ray}].v = ${rni(ray, mc - i)};`);
   console.log();
 }
 function fun1(ray, xc) {
-  console.log(`ο[ρ - 1 - σ * ${ray}].v = ${xc ? `ο[--α].v` : rni(ray, 1)};`);
+  console.log(`  ο[ρ - 1 - σ * ${ray}].v = ${xc ? `ο[--α].v` : rni(ray, 1)};`);
 }
