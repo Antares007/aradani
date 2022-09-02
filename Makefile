@@ -3,8 +3,8 @@ LD=ld -melf_x86_64
 CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: src2/main src2/a_rsi3.tarsi
-	./src2/main
+run: src3/main
+	./src3/main
 src/a_a.arsi:       \
 	src/a_a.oars      \
 	src/a_7.arsi
@@ -82,6 +82,9 @@ src2/main:						\
 	src2/notandor.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
+src3/main: src3/main.c
+	${CC} $^ -o $@ ${CFLAGS} -lraylib
+
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
@@ -113,14 +116,20 @@ clean:
 		src/*.o               \
 		src/*.arsi            \
 		src/*.tarsi           \
+		src/os/*.o            \
+		src/os_run            \
 		src2/*.bin            \
 		src2/*.oars           \
 		src2/*.o              \
 		src2/*.arsi           \
 		src2/*.tarsi          \
-		src/os/*.o            \
-		src/os_run            \
 		src2/main							\
+		src3/*.bin            \
+		src3/*.oars           \
+		src3/*.o              \
+		src3/*.arsi           \
+		src3/*.tarsi          \
+		src3/main							\
 		src/etc/epoll_client  \
 		src/etc/epoll_server  \
 		src/etc/epoll_stdin   \
