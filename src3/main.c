@@ -1,9 +1,10 @@
 #include "oars.h"
 #include <stdio.h>
+#define LOG printf("α:%lu ρ:%lu %s\n", α, ρ, __FUNCTION__)
 
-N(got) { C(2); }
-N(god) { C(1); }
-N(gor) { C(0); }
+N(got);
+N(god);
+N(gor);
 
 N(one) { A(7) C(1); }
 N(add) {
@@ -25,9 +26,15 @@ N(and2) {
   ο[ρ - σ * 2].v = got;
   ο[α - 1].c(ο, α - 1, ρ, σ);
 }
-N(ray_not) { printf("NOT\n"); }
-N(ray_and) { printf("AND %lu\n", ο[--α].q); }
-N(ray_oor) { printf("OOR\n"); }
+N(ray_not) { LOG; }
+N(ray_and) {
+  LOG;
+  printf("%lu\n", ο[--α].q);
+}
+N(ray_oor) { LOG; }
+N(da1);
+N(da2);
+N(da4);
 int main() {
   p_t ο[4096];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
@@ -35,6 +42,6 @@ int main() {
   ο[ρ - σ * 2].v = ray_not;
   ο[ρ - σ * 1].v = ray_and;
   ο[ρ - σ * 0].v = ray_oor;
-  A5(one, one, and, add, and) O;
+  A8(one, 8, god, god, da1, da4, add, da1) O;
   return 0;
 }

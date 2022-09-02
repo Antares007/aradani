@@ -82,7 +82,7 @@ src2/main:						\
 	src2/notandor.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src3/main: src3/main.c
+src3/main: src3/main.c src3/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 %.o: %.c
