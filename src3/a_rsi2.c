@@ -1,5 +1,4 @@
 #include "a_rsi2.h"
-
 // clang-format off
                     IN(gor,
 nar1,             L)IN(L,
