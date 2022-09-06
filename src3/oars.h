@@ -1,10 +1,13 @@
 #pragma once
 // clang-format off
-#include <stdint.h>
-
-typedef  int8_t  b_t; typedef  int16_t w_t; typedef  int32_t d_t; typedef  int64_t q_t;
-typedef uint8_t  B_t; typedef uint16_t W_t; typedef uint32_t D_t; typedef uint64_t Q_t;
-
+typedef   signed char   b_t;
+typedef   signed short  w_t;
+typedef   signed int    d_t;
+typedef   signed long   q_t;
+typedef unsigned char   B_t;
+typedef unsigned short  W_t;
+typedef unsigned int    D_t;
+typedef unsigned long   Q_t;
 typedef struct p_t {
   union {
     struct p_t *p;
@@ -33,4 +36,4 @@ typedef void (*n_t)(OARS);
 #define wordCountOf(T) ALIGN(sizeof(T), sizeof(void*))
 #define CAT_(a, b) a##b
 #define CAT(a, b) CAT_(a, b)
-#include "oars_a21.h"
+#include "oars_a26.h"

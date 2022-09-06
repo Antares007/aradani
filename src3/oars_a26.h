@@ -1,7 +1,7 @@
 #pragma once
 /*
 console.log(
-  Array(7 + 7 + 7 + 1)
+  Array(2.7 * 10)
     .fill()
     .map((_, a) => String.fromCharCode(a + 0x61))
     .map(
@@ -11,11 +11,12 @@ console.log(
           .map((v) => `A(${v})`)
           .join("")}`
     )
-    .slice(2)
+    .slice(1)
     .join("\n")
 );
 */
 // clang-format off
+#define A1(a) A(a)
 #define A2(a,b) A(a)A(b)
 #define A3(a,b,c) A(a)A(b)A(c)
 #define A4(a,b,c,d) A(a)A(b)A(c)A(d)
@@ -36,3 +37,8 @@ console.log(
 #define A19(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)
 #define A20(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)
 #define A21(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)
+#define A22(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)A(v)
+#define A23(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)A(v)A(w)
+#define A24(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)A(v)A(w)A(x)
+#define A25(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)A(v)A(w)A(x)A(y)
+#define A26(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z) A(a)A(b)A(c)A(d)A(e)A(f)A(g)A(h)A(i)A(j)A(k)A(l)A(m)A(n)A(o)A(p)A(q)A(r)A(s)A(t)A(u)A(v)A(w)A(x)A(y)A(z)
