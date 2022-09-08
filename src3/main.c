@@ -27,6 +27,6 @@ int main() {
   ο[ρ - σ * 2].v = ray_not;
   ο[ρ - σ * 1].v = ray_and;
   ο[ρ - σ * 0].v = ray_oor;
-  A8(one, 7, god, god, da, da4, add, da) O;
+  A8(one, 7, god, god, da, da4, add, da);
   return 0;
 }

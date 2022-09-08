@@ -1,6 +1,4 @@
 #include "oars.h"
-N(da);
-N(da4);
 // In functional compositional style, meaning composing computation
 // with functions, we don't have a clearly defined continuation line
 // of process execution in time.
@@ -20,13 +18,15 @@ N(da4);
 // applies p to j, then it applies q to each index in the set of
 // results returned by p. It returns the union of these applications of q.
 
+N(da);
+N(da2);
 // (p ‘thenS‘ q) j = union (map q (p j))
 // e.g., assuming that the input is "ssss", then
 // (term_s ‘thenS‘ term_s) 1 => {3}
 N(thenS) {
   RN(n_t, rar);
   RN(n_t, lar);
-  A2(lar, rar) O;
+  A2(lar, rar);
 }
 // (p ‘orelse‘ q) j = unite (p j) (q j)
 // e.g, assuming that the input is "ssss", then
@@ -39,20 +39,19 @@ N(term) {
 
 N(Ta) {}
 N(Tb) {}
+N(ǒ) {
 
-N(S) {
-  A1(Tb) O;
-  A3(S, Ta, da) O;
+  O; 
 }
-void Sa(p_t *ο, Q_t α, Q_t ρ, Q_t σ) {
-
-  ο[α++].c = Tb;
-  ο[α++].c = orelse;
-  ο[α - 1].c(ο, α - 1, ρ, σ);
-
-  ο[α++].c = Sa;
-  ο[α++].c = Ta;
-  ο[α++].c = thenS;
-  ο[α++].c = orelse;
-  ο[α - 1].c(ο, α - 1, ρ, σ);
+N(BA1) {
+  A2("b", term);
+  A5("b", term, "a", term, da2);
+}
+N(BA2) { A10(
+  "b", term, ǒ,
+  "b", term, da2, "a", term, da2, ǒ
+); }
+N(S) {
+  A1(Tb);
+  A3(S, Ta, da);
 }
