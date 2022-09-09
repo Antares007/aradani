@@ -9,7 +9,23 @@
  *   Copyright (c) 2017 Ramon Santamaria (@raysan5)
  *
  ************************************************************************************/
+#include "oars.h"
+#include "oars_logn.h"
 #include "raylib.h"
+void da(OARS);
+N(empty_ring) { C(1); }
+N(counter) {
+  RN(p_t *, o);
+  A2(empty_ring, o[0].c);
+  A2(empty_ring, o[0].c);
+}
+N(show_counter) {
+  RN(p_t *, o);
+  A2(counter, o[0].c);
+}
+N(make_pith) { C(1); }
+N(sample) { A3(make_pith, show_counter, da); }
+
 #define MAX_INPUT_CHARS 99
 int main(void) {
   //---------------------------------------------------------------------------------

@@ -4,5 +4,8 @@
 #undef N
 #define N(Name)                                                                \
   void Name##fun(OARS);                                                        \
-  void Name(OARS) {LOG; Name##fun(T); }                                            \
+  void Name(OARS) {                                                            \
+    LOG;                                                                       \
+    Name##fun(T);                                                              \
+  }                                                                            \
   void Name##fun(OARS)

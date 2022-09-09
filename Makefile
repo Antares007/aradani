@@ -71,7 +71,7 @@ src/os_run:                  \
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src3/gui: src3/gui.c
+src3/gui: src3/gui.c src3/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 src2/a_rsi3.tarsi:		\
