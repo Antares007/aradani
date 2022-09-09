@@ -31,7 +31,9 @@ N(thenS) {
 // (p ‘orelse‘ q) j = unite (p j) (q j)
 // e.g, assuming that the input is "ssss", then
 // (empty ‘orelse‘ term_s) 2 => {2, 3}
-N(orelse) {}
+N(orelse) {
+  O;
+}
 N(term) {
   RN(Q_t, j);
   RN(Q_t, c);
@@ -39,19 +41,16 @@ N(term) {
 
 N(Ta) {}
 N(Tb) {}
-N(ǒ) {
-
-  O; 
-}
+N(BA2) { A10(
+  "b", term, orelse,
+  "b", term, da2, "a", term, da2, orelse
+); }
 N(BA1) {
   A2("b", term);
   A5("b", term, "a", term, da2);
 }
-N(BA2) { A10(
-  "b", term, ǒ,
-  "b", term, da2, "a", term, da2, ǒ
-); }
 N(S) {
   A1(Tb);
   A3(S, Ta, da);
 }
+N(show_BA2) { A4("ba", 0, 0, BA2); }

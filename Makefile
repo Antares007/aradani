@@ -1,6 +1,7 @@
 CC|=clang
 LD=ld -melf_x86_64
-CFLAGS+=-std=gnu99 -Wall -Wno-multichar -fno-stack-clash-protection -fno-stack-protector
+CFLAGS+=-std=gnu99 -Wall
+#-Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
 run: src3/main
