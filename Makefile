@@ -71,6 +71,9 @@ src/os_run:                  \
 src/gui/ui: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
+src3/gui: src3/gui.c
+	${CC} $^ -o $@ ${CFLAGS} -lraylib
+
 src2/a_rsi3.tarsi:		\
 	src2/a_rsi3.oars		\
 	src2/a_rsi2.oars		\
@@ -131,6 +134,7 @@ clean:
 		src3/*.arsi           \
 		src3/*.tarsi          \
 		src3/main							\
+		src3/gui							\
 		src/etc/epoll_client  \
 		src/etc/epoll_server  \
 		src/etc/epoll_stdin   \
