@@ -10,10 +10,12 @@
  *
  ************************************************************************************/
 #include "oars.h"
-//#include "oars_logn.h"
+#include "oars_logn.h"
 #include "raylib.h"
 void da(OARS);
+void got(OARS);
 void god(OARS);
+void gor(OARS);
 N(empty_ring) { A1(god); }
 N(counter) {
   RN(p_t *, o);
@@ -29,14 +31,21 @@ N(show_counter) {
 N(div) {
   //  RN(p_t *, o);
   //  RN(n_t, ring);
-  A1(god);
+  A1(gor);
 }
 N(make_pith) { A2(1, god); }
 N(sample) { A3(make_pith, show_counter, da); }
+N(ray_not) {}
+N(ray_and) {}
+N(ray_oor) {}
 int gui_sample(void);
 int main() {
   p_t ο[4096];
   Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
+  ρ--;
+  ο[ρ - σ * 2].c = ray_not;
+  ο[ρ - σ * 1].c = ray_and;
+  ο[ρ - σ * 0].c = ray_oor;
   div(T);
   const int screenWidth = 800;
   const int screenHeight = 450;
