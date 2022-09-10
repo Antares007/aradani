@@ -10,24 +10,51 @@
  *
  ************************************************************************************/
 #include "oars.h"
-#include "oars_logn.h"
+//#include "oars_logn.h"
 #include "raylib.h"
 void da(OARS);
-N(empty_ring) { C(1); }
+void god(OARS);
+N(empty_ring) { A1(god); }
 N(counter) {
   RN(p_t *, o);
-  A2(empty_ring, o[0].c);
-  A2(empty_ring, o[0].c);
+  A3(empty_ring, o, o[0].c);
+  A3(empty_ring, o, o[0].c);
+  A3(empty_ring, o, o[0].c);
 }
 N(show_counter) {
   RN(p_t *, o);
-  A2(counter, o[0].c);
+  A3(counter, o, o[0].c);
+  A3(empty_ring, o, o[0].c);
 }
-N(make_pith) { C(1); }
+N(div) {
+  //  RN(p_t *, o);
+  //  RN(n_t, ring);
+  A1(god);
+}
+N(make_pith) { A2(1, god); }
 N(sample) { A3(make_pith, show_counter, da); }
+int gui_sample(void);
+int main() {
+  p_t ο[4096];
+  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
+  div(T);
+  const int screenWidth = 800;
+  const int screenHeight = 450;
+  InitWindow(screenWidth, screenHeight, "raylib [text] example - input box");
+  SetTargetFPS(0);
+  // Detect window close button or ESC key
+  while (!WindowShouldClose()) {
+    BeginDrawing();
+    ClearBackground(GOLD);
+    DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, BLACK);
+    DrawText(TextFormat("fps: %i", GetFPS()), 315, 270, 40, BLACK);
+    EndDrawing();
+  }
+  return 0;
+}
 
 #define MAX_INPUT_CHARS 99
-int main(void) {
+int gui_sample(void) {
   //---------------------------------------------------------------------------------
   // Initialization
   //---------------------------------------------------------------------------------
