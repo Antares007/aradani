@@ -38,14 +38,9 @@ N(sample) { A3(make_pith, show_counter, da); }
 N(ray_not) {}
 N(ray_and) {}
 N(ray_oor) {}
-int gui_sample(void);
-int main() {
-  p_t ο[4096];
-  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
-  ρ--;
-  ο[ρ - σ * 2].c = ray_not;
-  ο[ρ - σ * 1].c = ray_and;
-  ο[ρ - σ * 0].c = ray_oor;
+N(Main) {
+  RN(n_t, gui_nar);
+  (void)gui_nar;
   div(T);
   const int screenWidth = 800;
   const int screenHeight = 450;
@@ -59,6 +54,16 @@ int main() {
     DrawText(TextFormat("fps: %i", GetFPS()), 315, 270, 40, BLACK);
     EndDrawing();
   }
+}
+int gui_sample(void);
+int main() {
+  p_t ο[4096];
+  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
+  ρ--;
+  ο[ρ - σ * 2].c = ray_not;
+  ο[ρ - σ * 1].c = ray_and;
+  ο[ρ - σ * 0].c = ray_oor;
+  A2(sample, Main);
   return 0;
 }
 
