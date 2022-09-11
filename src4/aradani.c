@@ -3,72 +3,103 @@
 N(Gor) { ο[ρ + 0].c(ο, α, ρ + 3, σ); }
 N(God) { ο[ρ + 1].c(ο, α, ρ + 3, σ); }
 N(Got) { ο[ρ + 2].c(ο, α, ρ + 3, σ); }
+static
 N(Gor2) { ο[ρ + 3].c(ο, α, ρ + 6, σ); }
+static
 N(God2) { ο[ρ + 4].c(ο, α, ρ + 6, σ); }
+static
 N(Got2) { ο[ρ + 5].c(ο, α, ρ + 6, σ); }
+static
 N(Gor3) { ο[ρ + 6].c(ο, α, ρ + 9, σ); }
+static
 N(God3) { ο[ρ + 7].c(ο, α, ρ + 9, σ); }
+static
 N(Got3) { ο[ρ + 8].c(ο, α, ρ + 9, σ); }
+static
 N(Gor4) { ο[ρ + 9].c(ο, α, ρ + 12, σ); }
+static
 N(God4) { ο[ρ + 10].c(ο, α, ρ + 12, σ); }
+static
 N(Got4) { ο[ρ + 11].c(ο, α, ρ + 12, σ); }
+static
 N(Gor5) { ο[ρ + 12].c(ο, α, ρ + 15, σ); }
+static
 N(God5) { ο[ρ + 13].c(ο, α, ρ + 15, σ); }
+static
 N(Got5) { ο[ρ + 14].c(ο, α, ρ + 15, σ); }
+static
 N(Gor6) { ο[ρ + 15].c(ο, α, ρ + 18, σ); }
+static
 N(God6) { ο[ρ + 16].c(ο, α, ρ + 18, σ); }
+static
 N(Got6) { ο[ρ + 17].c(ο, α, ρ + 18, σ); }
+static
 N(Gor7) { ο[ρ + 18].c(ο, α, ρ + 21, σ); }
+static
 N(God7) { ο[ρ + 19].c(ο, α, ρ + 21, σ); }
+static
 N(Got7) { ο[ρ + 20].c(ο, α, ρ + 21, σ); }
+static
 N(Gor8) { ο[ρ + 21].c(ο, α, ρ + 24, σ); }
+static
 N(God8) { ο[ρ + 22].c(ο, α, ρ + 24, σ); }
+static
 N(Got8) { ο[ρ + 23].c(ο, α, ρ + 24, σ); }
+static
 N(unrollGor2) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod2) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot2) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   C(2);
 }
+static
 N(unrollGor3) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod3) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot3) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   C(2);
 }
+static
 N(unrollGor4) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod4) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot4) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   C(2);
 }
+static
 N(unrollGor5) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
@@ -76,6 +107,7 @@ N(unrollGor5) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod5) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
@@ -83,6 +115,7 @@ N(unrollGod5) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot5) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
@@ -90,6 +123,7 @@ N(unrollGot5) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   C(2);
 }
+static
 N(unrollGor6) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
@@ -98,6 +132,7 @@ N(unrollGor6) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod6) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
@@ -106,6 +141,7 @@ N(unrollGod6) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot6) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
@@ -114,6 +150,7 @@ N(unrollGot6) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   C(2);
 }
+static
 N(unrollGor7) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
@@ -123,6 +160,7 @@ N(unrollGor7) {
   ο[α++].v = ο[ρ + 0].v; ρ += 3;
   C(0);
 }
+static
 N(unrollGod7) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
@@ -132,6 +170,7 @@ N(unrollGod7) {
   ο[α++].v = ο[ρ + 1].v; ρ += 3;
   C(1);
 }
+static
 N(unrollGot7) {
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
   ο[α++].v = ο[ρ + 2].v; ρ += 3;
@@ -10638,3 +10677,518 @@ N(ara7da7an7) {
 
   ο[α - 1].c(ο, α - 1, ρ - 24, σ);
 }
+N(dot) { ο[α - 1].c(ο, α - 1, ρ, σ); }
+n_t Τ[01000] = {
+  dot,
+an,
+an2,
+an3,
+an4,
+an5,
+an6,
+an7,
+da,
+daan,
+daan2,
+daan3,
+daan4,
+daan5,
+daan6,
+daan7,
+da2,
+da2an,
+da2an2,
+da2an3,
+da2an4,
+da2an5,
+da2an6,
+da2an7,
+da3,
+da3an,
+da3an2,
+da3an3,
+da3an4,
+da3an5,
+da3an6,
+da3an7,
+da4,
+da4an,
+da4an2,
+da4an3,
+da4an4,
+da4an5,
+da4an6,
+da4an7,
+da5,
+da5an,
+da5an2,
+da5an3,
+da5an4,
+da5an5,
+da5an6,
+da5an7,
+da6,
+da6an,
+da6an2,
+da6an3,
+da6an4,
+da6an5,
+da6an6,
+da6an7,
+da7,
+da7an,
+da7an2,
+da7an3,
+da7an4,
+da7an5,
+da7an6,
+da7an7,
+ara,
+araan,
+araan2,
+araan3,
+araan4,
+araan5,
+araan6,
+araan7,
+arada,
+aradaan,
+aradaan2,
+aradaan3,
+aradaan4,
+aradaan5,
+aradaan6,
+aradaan7,
+arada2,
+arada2an,
+arada2an2,
+arada2an3,
+arada2an4,
+arada2an5,
+arada2an6,
+arada2an7,
+arada3,
+arada3an,
+arada3an2,
+arada3an3,
+arada3an4,
+arada3an5,
+arada3an6,
+arada3an7,
+arada4,
+arada4an,
+arada4an2,
+arada4an3,
+arada4an4,
+arada4an5,
+arada4an6,
+arada4an7,
+arada5,
+arada5an,
+arada5an2,
+arada5an3,
+arada5an4,
+arada5an5,
+arada5an6,
+arada5an7,
+arada6,
+arada6an,
+arada6an2,
+arada6an3,
+arada6an4,
+arada6an5,
+arada6an6,
+arada6an7,
+arada7,
+arada7an,
+arada7an2,
+arada7an3,
+arada7an4,
+arada7an5,
+arada7an6,
+arada7an7,
+ara2,
+ara2an,
+ara2an2,
+ara2an3,
+ara2an4,
+ara2an5,
+ara2an6,
+ara2an7,
+ara2da,
+ara2daan,
+ara2daan2,
+ara2daan3,
+ara2daan4,
+ara2daan5,
+ara2daan6,
+ara2daan7,
+ara2da2,
+ara2da2an,
+ara2da2an2,
+ara2da2an3,
+ara2da2an4,
+ara2da2an5,
+ara2da2an6,
+ara2da2an7,
+ara2da3,
+ara2da3an,
+ara2da3an2,
+ara2da3an3,
+ara2da3an4,
+ara2da3an5,
+ara2da3an6,
+ara2da3an7,
+ara2da4,
+ara2da4an,
+ara2da4an2,
+ara2da4an3,
+ara2da4an4,
+ara2da4an5,
+ara2da4an6,
+ara2da4an7,
+ara2da5,
+ara2da5an,
+ara2da5an2,
+ara2da5an3,
+ara2da5an4,
+ara2da5an5,
+ara2da5an6,
+ara2da5an7,
+ara2da6,
+ara2da6an,
+ara2da6an2,
+ara2da6an3,
+ara2da6an4,
+ara2da6an5,
+ara2da6an6,
+ara2da6an7,
+ara2da7,
+ara2da7an,
+ara2da7an2,
+ara2da7an3,
+ara2da7an4,
+ara2da7an5,
+ara2da7an6,
+ara2da7an7,
+ara3,
+ara3an,
+ara3an2,
+ara3an3,
+ara3an4,
+ara3an5,
+ara3an6,
+ara3an7,
+ara3da,
+ara3daan,
+ara3daan2,
+ara3daan3,
+ara3daan4,
+ara3daan5,
+ara3daan6,
+ara3daan7,
+ara3da2,
+ara3da2an,
+ara3da2an2,
+ara3da2an3,
+ara3da2an4,
+ara3da2an5,
+ara3da2an6,
+ara3da2an7,
+ara3da3,
+ara3da3an,
+ara3da3an2,
+ara3da3an3,
+ara3da3an4,
+ara3da3an5,
+ara3da3an6,
+ara3da3an7,
+ara3da4,
+ara3da4an,
+ara3da4an2,
+ara3da4an3,
+ara3da4an4,
+ara3da4an5,
+ara3da4an6,
+ara3da4an7,
+ara3da5,
+ara3da5an,
+ara3da5an2,
+ara3da5an3,
+ara3da5an4,
+ara3da5an5,
+ara3da5an6,
+ara3da5an7,
+ara3da6,
+ara3da6an,
+ara3da6an2,
+ara3da6an3,
+ara3da6an4,
+ara3da6an5,
+ara3da6an6,
+ara3da6an7,
+ara3da7,
+ara3da7an,
+ara3da7an2,
+ara3da7an3,
+ara3da7an4,
+ara3da7an5,
+ara3da7an6,
+ara3da7an7,
+ara4,
+ara4an,
+ara4an2,
+ara4an3,
+ara4an4,
+ara4an5,
+ara4an6,
+ara4an7,
+ara4da,
+ara4daan,
+ara4daan2,
+ara4daan3,
+ara4daan4,
+ara4daan5,
+ara4daan6,
+ara4daan7,
+ara4da2,
+ara4da2an,
+ara4da2an2,
+ara4da2an3,
+ara4da2an4,
+ara4da2an5,
+ara4da2an6,
+ara4da2an7,
+ara4da3,
+ara4da3an,
+ara4da3an2,
+ara4da3an3,
+ara4da3an4,
+ara4da3an5,
+ara4da3an6,
+ara4da3an7,
+ara4da4,
+ara4da4an,
+ara4da4an2,
+ara4da4an3,
+ara4da4an4,
+ara4da4an5,
+ara4da4an6,
+ara4da4an7,
+ara4da5,
+ara4da5an,
+ara4da5an2,
+ara4da5an3,
+ara4da5an4,
+ara4da5an5,
+ara4da5an6,
+ara4da5an7,
+ara4da6,
+ara4da6an,
+ara4da6an2,
+ara4da6an3,
+ara4da6an4,
+ara4da6an5,
+ara4da6an6,
+ara4da6an7,
+ara4da7,
+ara4da7an,
+ara4da7an2,
+ara4da7an3,
+ara4da7an4,
+ara4da7an5,
+ara4da7an6,
+ara4da7an7,
+ara5,
+ara5an,
+ara5an2,
+ara5an3,
+ara5an4,
+ara5an5,
+ara5an6,
+ara5an7,
+ara5da,
+ara5daan,
+ara5daan2,
+ara5daan3,
+ara5daan4,
+ara5daan5,
+ara5daan6,
+ara5daan7,
+ara5da2,
+ara5da2an,
+ara5da2an2,
+ara5da2an3,
+ara5da2an4,
+ara5da2an5,
+ara5da2an6,
+ara5da2an7,
+ara5da3,
+ara5da3an,
+ara5da3an2,
+ara5da3an3,
+ara5da3an4,
+ara5da3an5,
+ara5da3an6,
+ara5da3an7,
+ara5da4,
+ara5da4an,
+ara5da4an2,
+ara5da4an3,
+ara5da4an4,
+ara5da4an5,
+ara5da4an6,
+ara5da4an7,
+ara5da5,
+ara5da5an,
+ara5da5an2,
+ara5da5an3,
+ara5da5an4,
+ara5da5an5,
+ara5da5an6,
+ara5da5an7,
+ara5da6,
+ara5da6an,
+ara5da6an2,
+ara5da6an3,
+ara5da6an4,
+ara5da6an5,
+ara5da6an6,
+ara5da6an7,
+ara5da7,
+ara5da7an,
+ara5da7an2,
+ara5da7an3,
+ara5da7an4,
+ara5da7an5,
+ara5da7an6,
+ara5da7an7,
+ara6,
+ara6an,
+ara6an2,
+ara6an3,
+ara6an4,
+ara6an5,
+ara6an6,
+ara6an7,
+ara6da,
+ara6daan,
+ara6daan2,
+ara6daan3,
+ara6daan4,
+ara6daan5,
+ara6daan6,
+ara6daan7,
+ara6da2,
+ara6da2an,
+ara6da2an2,
+ara6da2an3,
+ara6da2an4,
+ara6da2an5,
+ara6da2an6,
+ara6da2an7,
+ara6da3,
+ara6da3an,
+ara6da3an2,
+ara6da3an3,
+ara6da3an4,
+ara6da3an5,
+ara6da3an6,
+ara6da3an7,
+ara6da4,
+ara6da4an,
+ara6da4an2,
+ara6da4an3,
+ara6da4an4,
+ara6da4an5,
+ara6da4an6,
+ara6da4an7,
+ara6da5,
+ara6da5an,
+ara6da5an2,
+ara6da5an3,
+ara6da5an4,
+ara6da5an5,
+ara6da5an6,
+ara6da5an7,
+ara6da6,
+ara6da6an,
+ara6da6an2,
+ara6da6an3,
+ara6da6an4,
+ara6da6an5,
+ara6da6an6,
+ara6da6an7,
+ara6da7,
+ara6da7an,
+ara6da7an2,
+ara6da7an3,
+ara6da7an4,
+ara6da7an5,
+ara6da7an6,
+ara6da7an7,
+ara7,
+ara7an,
+ara7an2,
+ara7an3,
+ara7an4,
+ara7an5,
+ara7an6,
+ara7an7,
+ara7da,
+ara7daan,
+ara7daan2,
+ara7daan3,
+ara7daan4,
+ara7daan5,
+ara7daan6,
+ara7daan7,
+ara7da2,
+ara7da2an,
+ara7da2an2,
+ara7da2an3,
+ara7da2an4,
+ara7da2an5,
+ara7da2an6,
+ara7da2an7,
+ara7da3,
+ara7da3an,
+ara7da3an2,
+ara7da3an3,
+ara7da3an4,
+ara7da3an5,
+ara7da3an6,
+ara7da3an7,
+ara7da4,
+ara7da4an,
+ara7da4an2,
+ara7da4an3,
+ara7da4an4,
+ara7da4an5,
+ara7da4an6,
+ara7da4an7,
+ara7da5,
+ara7da5an,
+ara7da5an2,
+ara7da5an3,
+ara7da5an4,
+ara7da5an5,
+ara7da5an6,
+ara7da5an7,
+ara7da6,
+ara7da6an,
+ara7da6an2,
+ara7da6an3,
+ara7da6an4,
+ara7da6an5,
+ara7da6an6,
+ara7da6an7,
+ara7da7,
+ara7da7an,
+ara7da7an2,
+ara7da7an3,
+ara7da7an4,
+ara7da7an5,
+ara7da7an6,
+ara7da7an7,
+};

@@ -36,16 +36,13 @@ N(setray) {
   RN(Q_t *, rayp);
   A7(rayp, setray_ara, rayp, setray_da, rayp, setray_an, ara2da2an2);
 }
-void aradaan(OARS);
-void ara3da3an3(OARS);
-void an(OARS);
-void ara(OARS);
+extern n_t Τ[01000];
 // clang-format off
 N(Main) {
-  A11(Got,
-      Got, Got, ara,
+  A12(Gor, Τ[0],
+      Got, Got, Τ[0100],
       God, God, da,
-      Gor, Gor, an, ara3da3an3);
+      Gor, Gor, Τ[0001], Τ[0333]);
   // A10(Gor, one, da, one, da,  add, da, 1, add, da2);
 }
 N(Setup) {
