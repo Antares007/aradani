@@ -39,9 +39,9 @@ N(setray) {
 extern n_t Τ[01000];
 // clang-format off
 N(Main) {
-  A12(Gor, Τ[0],
+  A12(God, Τ[0],
       Got, Got, Τ[0100],
-      God, God, da,
+      God, God, Τ[0010],
       Gor, Gor, Τ[0001], Τ[0333]);
   // A10(Gor, one, da, one, da,  add, da, 1, add, da2);
 }
