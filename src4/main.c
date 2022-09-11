@@ -52,8 +52,8 @@ N(Setup) {
   Main(T);
 }
 int main() {
-  p_t ο[4096];
-  Q_t α = 0, ρ = sizeof(ο) / sizeof(*ο), σ = ρ / 4;
+  p_t ο[0x1000]; Q_t α = 0;
+  p_t σ[0x1000]; Q_t ρ = sizeof(σ) / sizeof(*σ);
   Setup(T);
   return 0;
 }

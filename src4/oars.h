@@ -11,22 +11,22 @@ typedef unsigned long   Q_t;
 typedef struct p_t {
   union {
     struct p_t *p;
-    void (*c)(struct p_t *ο, Q_t α, Q_t ρ, Q_t σ);
+    void (*c)(struct p_t *ο, Q_t α, Q_t ρ, struct p_t *σ);
     void *v;
     const char *cs;
     b_t b; w_t w; d_t d; q_t q;
     B_t B; W_t W; D_t D; Q_t Q;
   };
 } p_t;
-#define OARS p_t *ο, Q_t α, Q_t ρ, Q_t σ 
+#define OARS p_t *ο, Q_t α, Q_t ρ, p_t *σ 
 typedef void (*n_t)(OARS);
 #define T ο, α, ρ, σ 
 
 #define N(n) void n(OARS)
-#define A(vs) ο[α++].v = (void *)(vs),
-#define R ο[--α]
+#define A(vs) σ[α++].v = (void *)(vs),
+#define R σ[--α]
 #define G(Ray) ο[ρ + Ray].c(ο, α, ρ + 3, σ)
-#define O ο[α - 1].c(ο, α - 1, ρ, σ)
+#define O σ[α - 1].c(ο, α - 1, ρ, σ)
 
 #define C G
 
