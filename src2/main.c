@@ -68,7 +68,7 @@ N(Main_n) {
 N(MM) {
   A(mapfile, Main_n, and) O;
 }
-N(Main) { A("src2/a_rsi3.tarsi", qvemdebare, MM) O; }
+N(Main) { A("src2/a_rsi3.pith", qvemdebare, MM) O; }
 N(not_ray) {LOG; printf("\n"); }
 N(and_ray) {LOG; printf("%lu\n", R.Q); }
 N(oor_ray) {LOG; printf("\n"); }

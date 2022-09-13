@@ -4,8 +4,8 @@ CFLAGS+=-std=gnu99 -Wall
 #-Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: src4/main
-	./src4/main
+run: src4/main.out
+	./src4/main.out
 src/a_a.arsi:       \
 	src/a_a.oars      \
 	src/a_7.arsi
@@ -52,44 +52,44 @@ src/os.arsi:                 \
 	src/goto.bin
 	cat $^ > $@
 
-src/os_run:                  \
-	src/os_run.c               \
-	src/os_cycle.o             \
-	src/os_hrtime.o            \
-	src/os_bark.o              \
-	src/os_wordump.o           \
-	src/os/nar.o               \
-	src/os/soll.o              \
-	src/os/call.o              \
-	src/os/debugger.o          \
-	src/os/new.o               \
-	src/os/next.o              \
-	src/os/page.o              \
+src/os_run.out:			\
+	src/os_run.c			\
+	src/os_cycle.o		\
+	src/os_hrtime.o		\
+	src/os_bark.o			\
+	src/os_wordump.o	\
+	src/os/nar.o			\
+	src/os/soll.o			\
+	src/os/call.o			\
+	src/os/debugger.o	\
+	src/os/new.o			\
+	src/os/next.o			\
+	src/os/page.o			\
 	src/os_epoll.o             
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src/gui/ui: src/gui/ui.c
+src/gui/ui.out: src/gui/ui.c
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src3/gui: src3/gui.c src3/aradani.o
+src3/gui.out: src3/gui.c src3/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src2/a_rsi3.tarsi:		\
+src2/a_rsi3.pith:		\
 	src2/a_rsi3.oars		\
 	src2/a_rsi2.oars		\
 	src/goto.bin
 	cat $^ > $@
 
-src2/main:						\
+src2/main.out:				\
 	src2/main.c					\
 	src2/map.o					\
 	src2/notandor.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src3/main: src3/main.c src3/aradani.o
+src3/main.out: src3/main.c src3/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
-src4/main: src4/main.c src4/aradani.o
+src4/main.out: src4/main.c src4/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 
 %.o: %.c
@@ -113,28 +113,9 @@ src4/main: src4/main.c src4/aradani.o
 src/a_%.arsi: src/a_%.oars src/os.arsi
 	cat $^ > $@
 
-%.tarsi: %.oars src/goto.bin
+%.pith: %.oars src/goto.bin
 	cat $^ > $@
 
 clean:
-	rm -f                   \
-		src/*.bin             \
-		src/*.oars            \
-		src/*.o               \
-		src/*.arsi            \
-		src/*.tarsi           \
-		src/os/*.o            \
-		src/os_run            \
-		src4/*.bin            \
-		src4/*.oars           \
-		src4/*.o              \
-		src4/*.arsi           \
-		src4/*.tarsi          \
-		src4/main							\
-		src4/gui							\
-		src/etc/epoll_client  \
-		src/etc/epoll_server  \
-		src/etc/epoll_stdin   \
-		src/etc/epoll_server_oneshot   \
-		src/gui/ui
+	rm -f **/*.bin **/*.oars **/*.o **/*.arsi **/*.pith **/*.out						
 .PHONY: clean run
