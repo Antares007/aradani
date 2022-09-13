@@ -19,7 +19,7 @@ void da(OARS);
 void da2(OARS);
 void da4(OARS);
 void ara2da2an2(OARS);
-N(three) { A2(3, God); }
+N(three) { A2(3, God) O; }
 N(setray_ara) {
   RN(Q_t *, rayp);
   *rayp = 2, C(*rayp);
@@ -34,7 +34,7 @@ N(setray_an) {
 }
 N(setray) {
   RN(Q_t *, rayp);
-  A7(rayp, setray_ara, rayp, setray_da, rayp, setray_an, ara2da2an2);
+  A7(rayp, setray_ara, rayp, setray_da, rayp, setray_an, ara2da2an2) O;
 }
 extern n_t Τ[01000];
 // clang-format off
@@ -42,7 +42,7 @@ N(Main) {
   A12(God, Τ[0],
       Got, Got, Τ[0100],
       God, God, Τ[0010],
-      Gor, Gor, Τ[0001], Τ[0333]);
+      Gor, Gor, Τ[0001], Τ[0333]) O;
   // A10(Gor, one, da, one, da,  add, da, 1, add, da2);
 }
 N(Setup) {
