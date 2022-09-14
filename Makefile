@@ -6,92 +6,8 @@ OBJCOPY=objcopy
 
 run: src4/main.out
 	./src4/main.out
-src/a_a.arsi:       \
-	src/a_a.oars      \
-	src/a_7.arsi
-	cat $^ > $@
-
-src/a_7.arsi:       \
-	src/a_7.oars      \
-	src/a_g.oars      \
-	src/os.arsi
-	cat $^ > $@
-
-src/a_pp.arsi:       \
-	src/a_pp.oars      \
-	src/a_parsers.arsi
-	cat $^ > $@
-
-src/a_stdio.arsi:            \
-	src/a_stdio.oars           \
-	src/a_stdout.oars          \
-	src/a_stdin.oars           \
-	src/a_stream.oars          \
-	src/a_epoll.oars           \
-	src/os.arsi                
-	cat $^ > $@
-
-src/a_parse_tok.arsi:                   \
-	src/a_parse_tok.oars           \
-	src/a_parse_u8cp.arsi
-	cat $^ > $@
-src/a_parse_u8cp.arsi:              \
-	src/a_parse_u8cp.oars      \
-	src/os.arsi
-	cat $^ > $@
-
-src/a_stream.arsi:                  \
-	src/a_stream.oars          \
-	src/a_epoll.oars           \
-	src/os.arsi
-	cat $^ > $@
-
-src/os.arsi:                 \
-	src/a_queue.oars           \
-	src/a_junctions.oars       \
-	src/goto.bin
-	cat $^ > $@
-
-src/os_run.out:			\
-	src/os_run.c			\
-	src/os_cycle.o		\
-	src/os_hrtime.o		\
-	src/os_bark.o			\
-	src/os_wordump.o	\
-	src/os/nar.o			\
-	src/os/soll.o			\
-	src/os/call.o			\
-	src/os/debugger.o	\
-	src/os/new.o			\
-	src/os/next.o			\
-	src/os/page.o			\
-	src/os_epoll.o             
-	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
-src/gui/ui.out: src/gui/ui.c
-	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
-src3/gui.out: src3/gui.c src3/aradani.o
-	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
-src2/a_rsi3.pith:		\
-	src2/a_rsi3.oars		\
-	src2/a_rsi2.oars		\
-	src/goto.bin
-	cat $^ > $@
-
-src2/main.out:				\
-	src2/main.c					\
-	src2/map.o					\
-	src2/notandor.o
-	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
-src3/main.out: src3/main.c src3/aradani.o
-	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
 src4/main.out: src4/main.c src4/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
@@ -109,13 +25,8 @@ src4/main.out: src4/main.c src4/aradani.o
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
-
-src/a_%.arsi: src/a_%.oars src/os.arsi
-	cat $^ > $@
-
 %.pith: %.oars src/goto.bin
 	cat $^ > $@
-
 clean:
 	rm -f **/*.bin **/*.oars **/*.o **/*.arsi **/*.pith **/*.out						
 .PHONY: clean run
