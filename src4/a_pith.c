@@ -1,18 +1,14 @@
 #include "arsi.h"
 // clang-format off
                     IN(Gor,
-nar2,             L)IN(L,
-nar3,             L)IO(L,
-on_draw,          L)IO(L,
-on_init,          L)IO(L,
-on_stdin,         L)IO(L,
-on_tick,    imports);
+God,              L)IN(L,
+Got,        imports);
 // clang-format on
 
-N(on_tick) { inner_on_tick(T); }
-N(on_stdin) { inner_on_stdin(T); }
-N(on_init) { inner_on_init(T); }
-N(on_draw) { inner_on_draw(T); }
+N(on_tick ) { C(1); }
+N(on_stdin) { C(1); }
+N(on_init ) { C(1); }
+N(on_draw ) { C(1); }
 
 // clang-format off
                     EN(Tail,
