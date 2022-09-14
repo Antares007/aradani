@@ -2,13 +2,13 @@
 #include "arsi_ie.h"
 static N(imports);
 static N(exports);
+static n_t tail;
+static N(Gor) { C(0); }
 
 N(Tail) __attribute__((section(".text.end")));
 N(Tail){};
 N(Head) __attribute__((section(".text.begin")));
 N(Head) {
-  n_t I = R.c;
-  n_t *Τ = R.v;
-  A7(Τ, I, Tail, imports, exports, I, Τ[030]) O;
+  n_t impexp = R.c;
+  A5(exports, imports, &tail, Tail, impexp) O;
 }
-static N(Gor) { C(0); }

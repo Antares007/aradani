@@ -33,39 +33,59 @@ N(import_n) {
 N(import) {
   RN(n_t, exps);
   RN(n_t, imps);
-  A6(imps, exps, import_n, Τ[010],
-           God,                    Τ[031]) O;
+  A6(imps, exps, import_n, Τ[010], God, Τ[031]) O;
 }
-
+N(U) { C(1); }
+N(V) { C(1); }
+N(W) { C(1); }
+N(X) { C(1); }
+N(Y) { C(1); }
+N(Z) { C(1); }
 // clang-format off
                   EN(Got,
 God,            L)EN(L,
 Gor,            L)EN(L,
-Got,      exports);
+Got,            L)EN(L,
+U,              L)EN(L,
+V,              L)EN(L,
+W,              L)EN(L,
+X,              L)EN(L,
+Y,              L)EN(L,
+Z,        exports);
 // clang-format on
 
-N(root) {
-  α -= 2;
-  A1(exports) C(1);
+N(root) { α--, A1(exports) C(1); }
+N(impexp_n) {
+  RN(n_t, export);
+  RN(n_t *, tail);
+  RN(n_t, imports);
+  RN(n_t, exports);
+  *tail = export;
+  A4(exports, imports, export, import) O;
 }
 N(impexp) {
-  RN(n_t, exports_);
-  RN(n_t, impr);
-  RN(n_t, tail);
-  A5(impr, tail, import, exports_, Τ[010]) O;
+  RN(n_t, Tail);
+  RN(n_t *, tail);
+  RN(n_t, imports);
+  RN(n_t, exports);
+  if (*tail)
+    A1(exports) C(1);
+  else
+    A7(exports, imports, tail, impexp, Tail, impexp_n, da) O;
 }
+//  A5(exports, imports, &tail, Tail, impexp) O;
 N(LoadPith_n_n) {
-  RN(n_t, exp_next);
+  RN(n_t, exp);
   RN(n_t, nar);
   RN(const char *, name);
-  printf("%s %p %p\n", name, nar, exp_next);
-  A3(exp_next, LoadPith_n_n, da) O;
+  printf("%s %p %p\n", name, nar, exp);
+  A3(exp, LoadPith_n_n, da) O;
 }
 N(LoadPith_n) {
   RN(n_t, nar);
-  A5(Τ, impexp, nar, LoadPith_n_n, da) O;
+  A6(impexp, nar, Τ[0], da, LoadPith_n_n, da) O;
 }
-N(LoadPith) { A5("src4/a_pith.pith", root, map_pith, LoadPith_n, da) O; }
+N(LoadPith) { A5("src4/a_pith2.pith", root, map_pith, LoadPith_n, da) O; }
 // clang-format on
 
 N(seven) { A(7) C(1); }
