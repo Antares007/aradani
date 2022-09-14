@@ -6,54 +6,39 @@ void Got(OARS);
 void God(OARS);
 void Gor(OARS);
 
-N(one) { A(7) C(1); }
+N(seven) { A(7) C(1); }
 N(add) {
   q_t r = R.q;
   q_t l = R.q;
   A(l + r) C(1);
 }
-N(ray_not) {}
-N(ray_and) { printf("%lu\n", ο[--α].q); }
-N(ray_oor) {}
+
 void da(OARS);
-void da2(OARS);
-void da4(OARS);
-void ara2da2an2(OARS);
-N(three) { A2(3, God) O; }
-N(setray_ara) {
-  RN(Q_t *, rayp);
-  *rayp = 2, C(*rayp);
-}
-N(setray_da) {
-  RN(Q_t *, rayp);
-  *rayp = 1, C(*rayp);
-}
-N(setray_an) {
-  RN(Q_t *, rayp);
-  *rayp = 0, C(*rayp);
-}
-N(setray) {
-  RN(Q_t *, rayp);
-  A7(rayp, setray_ara, rayp, setray_da, rayp, setray_an, ara2da2an2) O;
-}
 extern n_t Τ[01000];
+N(CountTo14) { A5(seven, seven, da, add, da) O; }
+
 // clang-format off
-N(Main) {
+N(TestAraDaNi) {
   A12(God, Τ[0],
       Got, Got, Τ[0100],
       God, God, Τ[0010],
       Gor, Gor, Τ[0001], Τ[0333]) O;
-  // A10(Gor, one, da, one, da,  add, da, 1, add, da2);
 }
+// clang-format on
+N(ray_not) {}
+N(ray_and) { printf("%lu\n", σ[--α].q); }
+N(ray_oor) {}
 N(Setup) {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  Main(T);
+  CountTo14(T);
 }
 int main() {
-  p_t ο[0x1000]; Q_t α = 0;
-  p_t σ[0x1000]; Q_t ρ = sizeof(σ) / sizeof(*σ);
+  p_t ο[0x1000];
+  Q_t α = 0;
+  p_t σ[0x1000];
+  Q_t ρ = sizeof(σ) / sizeof(*σ);
   Setup(T);
   return 0;
 }
