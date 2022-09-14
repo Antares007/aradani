@@ -33,26 +33,39 @@ N(import_n) {
 N(import) {
   RN(n_t, exps);
   RN(n_t, imps);
-  A6(imps, exps, import_n, Τ[010], God, Τ[031]) O;
+  A6(imps, exps, import_n, Τ[010],
+           God,                    Τ[031]) O;
 }
 
 // clang-format off
                   EN(Got,
 God,            L)EN(L,
 Gor,            L)EN(L,
-Got,      exports)
+Got,      exports);
+// clang-format on
 
-N(root        ) { α -= 2; A1(exports) C(1); }
-N(impexp      ) {
+N(root) {
+  α -= 2;
+  A1(exports) C(1);
+}
+N(impexp) {
   RN(n_t, exports_);
   RN(n_t, impr);
   RN(n_t, tail);
-  A6(impr, tail, import, exports_, God, Τ[020]) O;
+  A5(impr, tail, import, exports_, Τ[010]) O;
 }
-N(LoadPith_n_n_n) { C(2); }
-N(LoadPith_n_n  ) { A2(LoadPith_n_n_n, Τ[010]) O; }
-N(LoadPith_n    ) { RN(n_t, nar); A5(Τ, impexp, nar, LoadPith_n_n, da) O; }
-N(LoadPith      ) { A5("src4/a_pith.pith", root, map_pith, LoadPith_n, da) O; }
+N(LoadPith_n_n) {
+  RN(n_t, exp_next);
+  RN(n_t, nar);
+  RN(const char *, name);
+  printf("%s %p %p\n", name, nar, exp_next);
+  A3(exp_next, LoadPith_n_n, da) O;
+}
+N(LoadPith_n) {
+  RN(n_t, nar);
+  A5(Τ, impexp, nar, LoadPith_n_n, da) O;
+}
+N(LoadPith) { A5("src4/a_pith.pith", root, map_pith, LoadPith_n, da) O; }
 // clang-format on
 
 N(seven) { A(7) C(1); }
