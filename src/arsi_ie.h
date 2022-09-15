@@ -1,19 +1,14 @@
 #pragma once
-#define E(Ta, Na, Ad, He)                                                      \
-  static N(He) { Α(Na, Ad, Ta) C(1); }
-#define I(Ta, Na, Ad, He)                                                      \
-  static N(He) { Α(Na, &Ad, Ta) C(0); }
-#define IBS(Head) IB(πrn) IF(πrn, printf, print, Head, int, const char *, ...)
+#include "oars.h"
 #define L CAT(expimp_, __LINE__)
-#define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
-#define END(Tail, Name, Head)                                                  \
-  N(Name);                                                                     \
-  EN(Tail, Name, Head)
+#define I(Tail, Name, Address, Head)                                           \
+  static N(Head) { A3(Name, &Address, Tail) C(1); }
+#define E(Tail, Name, Address, Head)                                           \
+  static N(Head) { A3(Name, Address, Tail) C(1); }
 #define IN(Tail, Name, Head)                                                   \
   static n_t Name;                                                             \
   I(Tail, #Name, Name, Head)
-#define IF(Tail, IName, Name, Head, Ret, ...)                                  \
-  static Ret (*Name)(__VA_ARGS__);                                             \
-  I(Tail, #IName, Name, Head)
-#define IFN(Tail, Name, Head, Ret, ...)                                        \
-  IF(Tail, Name, Name, Head, Ret, __VA_ARGS__)
+#define IO(Tail, Name, Head)                                                   \
+  static n_t inner_##Name;                                                             \
+  I(Tail, #Name, inner_##Name, Head)
+#define EN(Tail, Name, Head) E(Tail, #Name, Name, Head)
