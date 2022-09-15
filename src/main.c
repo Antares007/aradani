@@ -37,6 +37,6 @@ int main() {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  A3("src4/a_pith2.pith", root, load_pith) O;
+  A3("src/a_pith2.pith", root, load_pith) O;
   return 0;
 }

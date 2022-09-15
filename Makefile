@@ -4,15 +4,15 @@ CFLAGS+=-std=gnu99 -Wall
 #-Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: src4/main.out src4/a_pith2.pith
-	./src4/main.out
-src4/main.out: src4/main.c src4/aradani.o src4/map_pith.o src4/load_pith.o
+run: src/main.out src/a_pith2.pith
+	./src/main.out
+src/main.out: src/main.c src/aradani.o src/map_pith.o src/load_pith.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-src4/show_aradani.out: src4/show_aradani.c src4/aradani.o
+src/show_aradani.out: src/show_aradani.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS}
-src4/gui.out: src4/gui.c src4/aradani.o
+src/gui.out: src/gui.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-src4/a_pith2.pith: src4/a_pith2.oars src4/a_pith.oars src/goto.bin
+src/a_pith2.pith: src/a_pith2.oars src/a_pith.oars src/goto.bin
 	cat $^ > $@
 
 %.o: %.c
