@@ -9,6 +9,8 @@ run: src4/main.out src4/a_pith2.pith
 src4/main.out: src4/main.c src4/aradani.o src4/map_pith.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 src4/show_aradani.out: src4/show_aradani.c src4/aradani.o
+	${CC} $^ -o $@ ${CFLAGS}
+src4/gui.out: src4/gui.c src4/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 src4/a_pith2.pith: src4/a_pith2.oars src4/a_pith.oars src/goto.bin
 	cat $^ > $@
