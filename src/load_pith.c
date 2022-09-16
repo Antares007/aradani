@@ -45,15 +45,8 @@ N(impexp) {
   else
     A7(exports, imports, tail, impexp, Tail, impexp_n, Τ[010]) O;
 }
-N(load_pith_n_n) {
-  RN(n_t, exp);
-  RN(n_t, nar);
-  RN(const char *, name);
-  printf("%s %p %p\n", name, nar, exp);
-  A3(exp, load_pith_n_n, Τ[010]) O;
-}
 N(load_pith_n) {
   RN(n_t, nar);
-  A4(impexp, nar, Τ[0], Τ[010]) O;
+  A2(impexp, nar) O;
 }
-N(load_pith) { A5(map_pith, load_pith_n, Τ[010], load_pith_n_n, Τ[010]) O; }
+N(load_pith) { A3(map_pith, load_pith_n, Τ[010]) O; }
