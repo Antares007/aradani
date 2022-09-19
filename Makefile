@@ -15,6 +15,8 @@ src/gui.out: src/gui.c src/aradani.o
 src/a_pith2.pith: src/a_pith2.oars src/a_pith.oars src/goto.bin
 	cat $^ > $@
 
+%.out: %.c
+	${CC} $^ -o $@ ${CFLAGS}
 %.o: %.c
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
