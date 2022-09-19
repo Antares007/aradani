@@ -2,7 +2,11 @@
 // clang-format off
                     IN(Gor,
 God,              L)IN(L,
-Got,        imports);
+Got,              L)IO(L,
+on_draw,          L)IO(L,
+on_init,          L)IO(L,
+on_stdin,         L)IO(L,
+on_tick,    imports);
 // clang-format on
 
 N(on_tick) { C(1); }

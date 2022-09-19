@@ -10,17 +10,10 @@ void load_pith(OARS);
 extern n_t Τ[01000];
 
 // clang-format off
-N(U){C(1);} N(V){C(1);} N(W){C(1);} N(X){C(1);} N(Y){C(1);} N(Z){C(1);}
                   EN(Got,
 God,            L)EN(L,
 Gor,            L)EN(L,
-Got,            L)EN(L,
-U,              L)EN(L,
-V,              L)EN(L,
-W,              L)EN(L,
-X,              L)EN(L,
-Y,              L)EN(L,
-Z,        exports);
+Got,      exports);
 // clang-format on
 
 N(root) { α--, A1(exports) C(1); }
@@ -32,9 +25,9 @@ N(ray_oor) {}
 N(ls_exports) {
   RN(const char *, fname);
   RN(n_t, exp);
-  RN(n_t, nar);
+  RN(n_t, nar); (void)nar;
   RN(const char *, name);
-  printf("%s:%s %p %p\n", fname, name, nar, exp);
+  printf("%s:%s\n", fname, name);
   A3(exp, ls_exports, Τ[010]) O;
 }
 
