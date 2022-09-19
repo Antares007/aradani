@@ -38,7 +38,7 @@ int total_len = 0, send_len;
 
 void get_eth_index() {
   memset(&ifreq_i, 0, sizeof(ifreq_i));
-  strncpy(ifreq_i.ifr_name, "wlan0", IFNAMSIZ - 1);
+  strncpy(ifreq_i.ifr_name, "wlp2s0", IFNAMSIZ - 1);
 
   if ((ioctl(sock_raw, SIOCGIFINDEX, &ifreq_i)) < 0)
     printf("error in index ioctl reading");
@@ -119,7 +119,7 @@ unsigned short checksum(unsigned short *buff, int _16bitword) {
 
 void get_ip() {
   memset(&ifreq_ip, 0, sizeof(ifreq_ip));
-  strncpy(ifreq_ip.ifr_name, "wlan0", IFNAMSIZ - 1);
+  strncpy(ifreq_ip.ifr_name, "wlp2s0", IFNAMSIZ - 1);
   if (ioctl(sock_raw, SIOCGIFADDR, &ifreq_ip) < 0) {
     printf("error in SIOCGIFADDR \n");
   }

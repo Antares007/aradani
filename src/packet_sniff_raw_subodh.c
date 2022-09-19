@@ -190,7 +190,6 @@ int main() {
     fflush(log_txt);
     data_process(buffer, buflen);
   }
-
   close(sock_r); // use signals to close socket
   printf("DONE!!!!\n");
 }
