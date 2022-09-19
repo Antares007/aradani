@@ -4,7 +4,7 @@
 #define I(Tail, Name, Address, Head)                                           \
   static N(Head) { A3(Name, &Address, Tail) C(1); }
 #define E(Tail, Name, Address, Head)                                           \
-  static N(Head) { A3(Name, Address, Tail) C(1); }
+  static N(Head) { A4(Name, Address, Tail, __FILE__) C(1); }
 #define IN(Tail, Name, Head)                                                   \
   static n_t Name;                                                             \
   I(Tail, #Name, Name, Head)

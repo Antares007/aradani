@@ -11,6 +11,7 @@ static int cmp(const char *s1, const char *s2) {
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
 N(import_n) {
+  RN(const char *, efname);(void)efname;
   RN(n_t, exps);
   RN(n_t, eaddr);
   RN(const char *, ename);

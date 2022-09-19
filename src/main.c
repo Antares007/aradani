@@ -30,10 +30,11 @@ N(ray_and) { printf("%lu\n", σ[--α].q); }
 N(ray_oor) {}
 
 N(ls_exports) {
+  RN(const char *, fname);
   RN(n_t, exp);
   RN(n_t, nar);
   RN(const char *, name);
-  printf("%s %p %p\n", name, nar, exp);
+  printf("%s:%s %p %p\n", fname, name, nar, exp);
   A3(exp, ls_exports, Τ[010]) O;
 }
 
