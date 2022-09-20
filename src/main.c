@@ -25,10 +25,17 @@ N(ray_oor) {}
 N(ls_exports) {
   RN(const char *, fname);
   RN(n_t, exp);
-  RN(n_t, nar); (void)nar;
+  RN(n_t, nar);
+  (void)nar;
   RN(const char *, name);
   printf("%s:%s\n", fname, name);
   A3(exp, ls_exports, Τ[010]) O;
+}
+N(run_epoll) {
+  α -= 2;
+  RN(n_t, nar);
+  α -= 1;
+  nar(T);
 }
 
 int main() {
@@ -39,6 +46,6 @@ int main() {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  A7("src/a_pith2.pith", root, load_pith, Τ[0], Τ[010], ls_exports, Τ[010]) O;
+  A7("src/a_show.pith", root, load_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
   return 0;
 }

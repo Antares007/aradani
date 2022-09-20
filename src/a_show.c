@@ -2,14 +2,13 @@
 // clang-format off
                     IN(Gor,
 God,              L)IN(L,
-Got,              L)IN(L,
-load_pith,  imports);
+Got,        imports);
 // clang-format on
 
 N(on_tick2) { A(God) O; }
-N(on_tick) { C(1); }
+N(on_tick) { A(9) C(1); }
 N(on_stdin) { C(1); }
-N(on_init) { A3("pith", Tail, load_pith) O; }
+N(on_init) { C(1); }
 N(on_draw) { C(1); }
 
 // clang-format off
