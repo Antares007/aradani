@@ -6,7 +6,7 @@
 void Got(OARS);
 void God(OARS);
 void Gor(OARS);
-void load_pith(OARS);
+void map_pith(OARS);
 extern n_t Τ[01000];
 
 // clang-format off
@@ -37,7 +37,6 @@ N(run_epoll) {
   α -= 1;
   nar(T);
 }
-
 int main() {
   p_t ο[0x1000];
   Q_t α = 0;
@@ -46,6 +45,6 @@ int main() {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  A7("src/a_show.pith", root, load_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
+  A7("src/a_show.pith", root, map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
   return 0;
 }

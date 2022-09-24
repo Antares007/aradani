@@ -9,7 +9,7 @@ on_stdin,         L)IO(L,
 on_tick,    imports);
 // clang-format on
 
-N(on_tick) { C(1); }
+N(on_tick) { A(7) C(1); }
 N(on_stdin) { C(1); }
 N(on_init) { C(1); }
 N(on_draw) { C(1); }

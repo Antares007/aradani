@@ -4,15 +4,17 @@ CFLAGS+=-std=gnu99 -Wall
 #-Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: src/main.out src/a_pith2.pith src/a_show.pith
+run: src/main.out src/a_show.pith
 	./src/main.out
-src/main.out: src/main.c src/aradani.o src/map_pith.o src/load_pith.o
+src/main.out: src/main.c src/aradani.o src/map_pith.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 src/show_aradani.out: src/show_aradani.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS}
 src/gui.out: src/gui.c src/aradani.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
-src/a_pith2.pith: src/a_pith2.oars src/a_pith.oars src/goto.bin
+src/a_show.pith: src/bark.ring src/a_show.ring src/goto.bin
+	cat $^ > $@
+src/a_pith2.pith: src/bark.ring src/a_pith2.ring src/a_pith.ring src/goto.bin
 	cat $^ > $@
 
 %.out: %.c
@@ -21,7 +23,7 @@ src/a_pith2.pith: src/a_pith2.oars src/a_pith.oars src/goto.bin
 	${CC} -c $^ -o $@ ${CFLAGS}
 %.bin: %.asm
 	nasm -f bin $^ -o $@
-%.oars: %.c
+%.ring: %.c
 	@#compile as whole
 	${CC} -c $^ -o $@ ${CFLAGS} -DARSI -ffreestanding -O3
 	@# use linker script to place
@@ -34,8 +36,8 @@ src/a_pith2.pith: src/a_pith2.oars src/a_pith.oars src/goto.bin
 	@head -c -1 $@.binp > $@
 	@# delete trush.
 	@rm $@.binp $@.elf 
-%.pith: %.oars src/goto.bin
+%.pith: %.ring src/goto.bin
 	cat $^ > $@
 clean:
-	rm -f **/*.bin **/*.oars **/*.o **/*.arsi **/*.pith **/*.out						
+	rm -f **/*.bin **/*.ring **/*.o **/*.arsi **/*.pith **/*.out						
 .PHONY: clean run
