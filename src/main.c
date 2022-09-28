@@ -32,10 +32,15 @@ N(ls_exports) {
   A3(exp, ls_exports, Τ[010]) O;
 }
 N(run_epoll) {
-  α -= 2;
-  RN(n_t, nar);
   α -= 1;
-  nar(T);
+  RN(n_t, export);
+  RN(n_t, nar);
+  RN(const char *, name);
+  if (name[0] == '_') {
+    printf(">%s %lu\n", name, α);
+    A3(export, run_epoll, Τ[010]) O;
+  } else
+    nar(T);
 }
 int main() {
   p_t ο[0x1000];
