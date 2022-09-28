@@ -873,7 +873,7 @@ typedef struct rayfun_s {
   void (*SetWindowMinSize)(int width, int height);               // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
   void (*SetWindowSize)(int width, int height);                  // Set window dimensions
   void (*SetWindowOpacity)(float opacity);                       // Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
-  void (**GetWindowHandle)(void);                                // Get native window handle
+  void *(*GetWindowHandle)(void);                                // Get native window handle
   int (*GetScreenWidth)(void);                                   // Get current screen width
   int (*GetScreenHeight)(void);                                  // Get current screen height
   int (*GetRenderWidth)(void);                                   // Get current render width (it considers HiDPI)
@@ -888,9 +888,9 @@ typedef struct rayfun_s {
   int (*GetMonitorRefreshRate)(int monitor);                     // Get specified monitor refresh rate
   Vector2 (*GetWindowPosition)(void);                            // Get window position XY on monitor
   Vector2 (*GetWindowScaleDPI)(void);                            // Get window scale DPI factor
-  const char (**GetMonitorName)(int monitor);                    // Get the human-readable, UTF-8 encoded name of the primary monitor
+  const char *(*GetMonitorName)(int monitor);                    // Get the human-readable, UTF-8 encoded name of the primary monitor
   void (*SetClipboardText)(const char *text);                    // Set clipboard text content
-  const char (**GetClipboardText)(void);                         // Get clipboard text content
+  const char *(*GetClipboardText)(void);                         // Get clipboard text content
   void (*EnableEventWaiting)(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
   void (*DisableEventWaiting)(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
   
@@ -968,8 +968,8 @@ typedef struct rayfun_s {
   
   void (*TraceLog)(int logLevel, const char *text, ...);         // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
   void (*SetTraceLogLevel)(int logLevel);                        // Set the current threshold (minimum) log level
-  void (**MemAlloc)(int size);                                   // Internal memory allocator
-  void (**MemRealloc)(void *ptr, int size);                      // Internal memory reallocator
+  void *(*MemAlloc)(int size);                                   // Internal memory allocator
+  void *(*MemRealloc)(void *ptr, int size);                      // Internal memory reallocator
   void (*MemFree)(void *ptr);                                    // Internal memory free
   
   void (*OpenURL)(const char *url);                              // Open URL with default system browser (if available)
@@ -983,24 +983,24 @@ typedef struct rayfun_s {
   void (*SetSaveFileTextCallback)(SaveFileTextCallback callback); // Set custom file text data saver
   
   // Files management functions
-  unsigned char (**LoadFileData)(const char *fileName, unsigned int *bytesRead);       // Load file data as byte array (read)
+  unsigned char *(*LoadFileData)(const char *fileName, unsigned int *bytesRead);       // Load file data as byte array (read)
   void (*UnloadFileData)(unsigned char *data);                   // Unload file data allocated by LoadFileData()
   bool (*SaveFileData)(const char *fileName, void *data, unsigned int bytesToWrite);   // Save data to file from byte array (write), returns true on success
   bool (*ExportDataAsCode)(const char *data, unsigned int size, const char *fileName); // Export data to code (.h), returns true on success
-  char (**LoadFileText)(const char *fileName);                   // Load text data from file (read), returns a ' ' terminated string
+  char *(*LoadFileText)(const char *fileName);                   // Load text data from file (read), returns a ' ' terminated string
   void (*UnloadFileText)(char *text);                            // Unload file text data allocated by LoadFileText()
   bool (*SaveFileText)(const char *fileName, char *text);        // Save text data to file (write), string must be ' ' terminated, returns true on success
   bool (*FileExists)(const char *fileName);                      // Check if file exists
   bool (*DirectoryExists)(const char *dirPath);                  // Check if a directory path exists
   bool (*IsFileExtension)(const char *fileName, const char *ext); // Check file extension (including point: .png, .wav)
   int (*GetFileLength)(const char *fileName);                    // Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
-  const char (**GetFileExtension)(const char *fileName);         // Get pointer to extension for a filename string (includes dot: '.png')
-  const char (**GetFileName)(const char *filePath);              // Get pointer to filename for a path string
-  const char (**GetFileNameWithoutExt)(const char *filePath);    // Get filename string without extension (uses static string)
-  const char (**GetDirectoryPath)(const char *filePath);         // Get full path for a given fileName with path (uses static string)
-  const char (**GetPrevDirectoryPath)(const char *dirPath);      // Get previous directory path for a given path (uses static string)
-  const char (**GetWorkingDirectory)(void);                      // Get current working directory (uses static string)
-  const char (**GetApplicationDirectory)(void);                  // Get the directory if the running application (uses static string)
+  const char *(*GetFileExtension)(const char *fileName);         // Get pointer to extension for a filename string (includes dot: '.png')
+  const char *(*GetFileName)(const char *filePath);              // Get pointer to filename for a path string
+  const char *(*GetFileNameWithoutExt)(const char *filePath);    // Get filename string without extension (uses static string)
+  const char *(*GetDirectoryPath)(const char *filePath);         // Get full path for a given fileName with path (uses static string)
+  const char *(*GetPrevDirectoryPath)(const char *dirPath);      // Get previous directory path for a given path (uses static string)
+  const char *(*GetWorkingDirectory)(void);                      // Get current working directory (uses static string)
+  const char *(*GetApplicationDirectory)(void);                  // Get the directory if the running application (uses static string)
   bool (*ChangeDirectory)(const char *dir);                      // Change working directory, return true on success
   bool (*IsPathFile)(const char *path);                          // Check if a given path is a file or a directory
   FilePathList (*LoadDirectoryFiles)(const char *dirPath);       // Load directory filepaths
@@ -1012,10 +1012,10 @@ typedef struct rayfun_s {
   long (*GetFileModTime)(const char *fileName);                  // Get file modification time (last write time)
   
   // Compression/Encoding functionality
-  unsigned char (**CompressData)(const unsigned char *data, int dataSize, int *compDataSize);        // Compress data (DEFLATE algorithm), memory must be MemFree()
-  unsigned char (**DecompressData)(const unsigned char *compData, int compDataSize, int *dataSize);  // Decompress data (DEFLATE algorithm), memory must be MemFree()
-  char (**EncodeDataBase64)(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string, memory must be MemFree()
-  unsigned char (**DecodeDataBase64)(const unsigned char *data, int *outputSize);                    // Decode Base64 string data, memory must be MemFree()
+  unsigned char *(*CompressData)(const unsigned char *data, int dataSize, int *compDataSize);        // Compress data (DEFLATE algorithm), memory must be MemFree()
+  unsigned char *(*DecompressData)(const unsigned char *compData, int compDataSize, int *dataSize);  // Decompress data (DEFLATE algorithm), memory must be MemFree()
+  char *(*EncodeDataBase64)(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string, memory must be MemFree()
+  unsigned char *(*DecodeDataBase64)(const unsigned char *data, int *outputSize);                    // Decode Base64 string data, memory must be MemFree()
   
   //------------------------------------------------------------------------------------
   // Input Handling Functions (Module: core)
@@ -1032,7 +1032,7 @@ typedef struct rayfun_s {
   
   // Input-related functions: gamepads
   bool (*IsGamepadAvailable)(int gamepad);                   // Check if a gamepad is available
-  const char (**GetGamepadName)(int gamepad);                // Get gamepad internal name id
+  const char *(*GetGamepadName)(int gamepad);                // Get gamepad internal name id
   bool (*IsGamepadButtonPressed)(int gamepad, int button);   // Check if a gamepad button has been pressed once
   bool (*IsGamepadButtonDown)(int gamepad, int button);      // Check if a gamepad button is being pressed
   bool (*IsGamepadButtonReleased)(int gamepad, int button);  // Check if a gamepad button has been released once
@@ -1198,8 +1198,8 @@ typedef struct rayfun_s {
   void (*ImageColorContrast)(Image *image, float contrast);                                             // Modify image color: contrast (-100 to 100)
   void (*ImageColorBrightness)(Image *image, int brightness);                                           // Modify image color: brightness (-255 to 255)
   void (*ImageColorReplace)(Image *image, Color color, Color replace);                                  // Modify image color: replace color
-  Color (**LoadImageColors)(Image image);                                                               // Load color data from image as a Color array (RGBA - 32bit)
-  Color (**LoadImagePalette)(Image image, int maxPaletteSize, int *colorCount);                         // Load colors palette from image as a Color array (RGBA - 32bit)
+  Color *(*LoadImageColors)(Image image);                                                               // Load color data from image as a Color array (RGBA - 32bit)
+  Color *(*LoadImagePalette)(Image image, int maxPaletteSize, int *colorCount);                         // Load colors palette from image as a Color array (RGBA - 32bit)
   void (*UnloadImageColors)(Color *colors);                                                             // Unload color data loaded with LoadImageColors()
   void (*UnloadImagePalette)(Color *colors);                                                            // Unload colors palette loaded with LoadImagePalette()
   Rectangle (*GetImageAlphaBorder)(Image image, float threshold);                                       // Get image alpha border rectangle
@@ -1273,7 +1273,7 @@ typedef struct rayfun_s {
   Font (*LoadFontEx)(const char *fileName, int fontSize, int *fontChars, int glyphCount);  // Load font from file with extended parameters, use NULL for fontChars and 0 for glyphCount to load the default character set
   Font (*LoadFontFromImage)(Image image, Color key, int firstChar);                        // Load font from Image (XNA style)
   Font (*LoadFontFromMemory)(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount); // Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
-  GlyphInfo (**LoadFontData)(const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount, int type); // Load font data for further use
+  GlyphInfo *(*LoadFontData)(const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount, int type); // Load font data for further use
   Image (*GenImageFontAtlas)(const GlyphInfo *chars, Rectangle **recs, int glyphCount, int fontSize, int padding, int packMethod); // Generate image font atlas using chars info
   void (*UnloadFontData)(GlyphInfo *chars, int glyphCount);                                // Unload font chars info data (RAM)
   void (*UnloadFont)(Font font);                                                           // Unload font from GPU memory (VRAM)
@@ -1295,29 +1295,29 @@ typedef struct rayfun_s {
   Rectangle (*GetGlyphAtlasRec)(Font font, int codepoint);                                 // Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found
   
   // Text codepoints management functions (unicode characters)
-  int (**LoadCodepoints)(const char *text, int *count);              // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
+  int *(*LoadCodepoints)(const char *text, int *count);              // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
   void (*UnloadCodepoints)(int *codepoints);                         // Unload codepoints data from memory
   int (*GetCodepointCount)(const char *text);                        // Get total number of codepoints in a UTF-8 encoded string
   int (*GetCodepoint)(const char *text, int *bytesProcessed);        // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
-  const char (**CodepointToUTF8)(int codepoint, int *byteSize);      // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
-  char (**TextCodepointsToUTF8)(const int *codepoints, int length);  // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
+  const char *(*CodepointToUTF8)(int codepoint, int *byteSize);      // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
+  char *(*TextCodepointsToUTF8)(const int *codepoints, int length);  // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
   
   // Text strings management functions (no UTF-8 strings, only byte chars)
   // NOTE: Some strings allocate memory internally for returned strings, just be careful!
   int (*TextCopy)(char *dst, const char *src);                                             // Copy one string to another, returns bytes copied
   bool (*TextIsEqual)(const char *text1, const char *text2);                               // Check if two text string are equal
   unsigned int (*TextLength)(const char *text);                                            // Get text length, checks for ' ' ending
-  const char (**TextFormat)(const char *text, ...);                                        // Text formatting with variables (sprintf() style)
-  const char (**TextSubtext)(const char *text, int position, int length);                  // Get a piece of a text string
-  char (**TextReplace)(char *text, const char *replace, const char *by);                   // Replace text string (WARNING: memory must be freed!)
-  char (**TextInsert)(const char *text, const char *insert, int position);                 // Insert text in a position (WARNING: memory must be freed!)
-  const char (**TextJoin)(const char **textList, int count, const char *delimiter);        // Join text strings with delimiter
-  const char (***TextSplit)(const char *text, char delimiter, int *count);                 // Split text into multiple strings
+  const char *(*TextFormat)(const char *text, ...);                                        // Text formatting with variables (sprintf() style)
+  const char *(*TextSubtext)(const char *text, int position, int length);                  // Get a piece of a text string
+  char *(*TextReplace)(char *text, const char *replace, const char *by);                   // Replace text string (WARNING: memory must be freed!)
+  char *(*TextInsert)(const char *text, const char *insert, int position);                 // Insert text in a position (WARNING: memory must be freed!)
+  const char *(*TextJoin)(const char **textList, int count, const char *delimiter);        // Join text strings with delimiter
+  const char **(*TextSplit)(const char *text, char delimiter, int *count);                 // Split text into multiple strings
   void (*TextAppend)(char *text, const char *append, int *position);                       // Append text at specific position and move cursor!
   int (*TextFindIndex)(const char *text, const char *find);                                // Find first text occurrence within a string
-  const char (**TextToUpper)(const char *text);                      // Get upper case version of provided string
-  const char (**TextToLower)(const char *text);                      // Get lower case version of provided string
-  const char (**TextToPascal)(const char *text);                     // Get Pascal case notation version of provided string
+  const char *(*TextToUpper)(const char *text);                      // Get upper case version of provided string
+  const char *(*TextToLower)(const char *text);                      // Get lower case version of provided string
+  const char *(*TextToPascal)(const char *text);                     // Get Pascal case notation version of provided string
   int (*TextToInteger)(const char *text);                            // Get integer value from text (negative values not supported)
   
   //------------------------------------------------------------------------------------
@@ -1392,14 +1392,14 @@ typedef struct rayfun_s {
   Mesh (*GenMeshCubicmap)(Image cubicmap, Vector3 cubeSize);                               // Generate cubes-based map mesh from image data
   
   // Material loading/unloading functions
-  Material (**LoadMaterials)(const char *fileName, int *materialCount);                    // Load materials from model file
+  Material *(*LoadMaterials)(const char *fileName, int *materialCount);                    // Load materials from model file
   Material (*LoadMaterialDefault)(void);                                                   // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
   void (*UnloadMaterial)(Material material);                                               // Unload material from GPU memory (VRAM)
   void (*SetMaterialTexture)(Material *material, int mapType, Texture2D texture);          // Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...)
   void (*SetModelMeshMaterial)(Model *model, int meshId, int materialId);                  // Set material for a mesh
   
   // Model animations loading/unloading functions
-  ModelAnimation (**LoadModelAnimations)(const char *fileName, unsigned int *animCount);   // Load model animations from file
+  ModelAnimation *(*LoadModelAnimations)(const char *fileName, unsigned int *animCount);   // Load model animations from file
   void (*UpdateModelAnimation)(Model model, ModelAnimation anim, int frame);               // Update model animation pose
   void (*UnloadModelAnimation)(ModelAnimation anim);                                       // Unload animation data
   void (*UnloadModelAnimations)(ModelAnimation *animations, unsigned int count);           // Unload animation array data
@@ -1447,7 +1447,7 @@ typedef struct rayfun_s {
   Wave (*WaveCopy)(Wave wave);                                       // Copy a wave to a new wave
   void (*WaveCrop)(Wave *wave, int initSample, int finalSample);     // Crop a wave to defined samples range
   void (*WaveFormat)(Wave *wave, int sampleRate, int sampleSize, int channels); // Convert wave data to desired format
-  float (**LoadWaveSamples)(Wave wave);                              // Load samples data from wave as a 32bit float data array
+  float *(*LoadWaveSamples)(Wave wave);                              // Load samples data from wave as a 32bit float data array
   void (*UnloadWaveSamples)(float *samples);                         // Unload samples data loaded with LoadWaveSamples()
   
   // Music management functions
