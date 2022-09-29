@@ -8,7 +8,7 @@ void God(OARS);
 void Gor(OARS);
 void map_pith(OARS);
 extern n_t Τ[];
-extern void* raylib_fun[];
+extern void *raylib_fun[];
 
 // clang-format off
                     EN(Got,
@@ -44,6 +44,7 @@ N(run_epoll) {
   } else
     nar(T);
 }
+#include "raylib.h"
 int main() {
   p_t ο[0x1000];
   Q_t α = 0;
@@ -53,5 +54,18 @@ int main() {
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
   A7("src/a_show.pith", root, map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
+
+  const int screenWidth = 800;
+  const int screenHeight = 450;
+  InitWindow(screenWidth, screenHeight, "gui example");
+  SetTargetFPS(0);
+  while (!WindowShouldClose()){
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, GRAY);
+
+    EndDrawing();
+  }
   return 0;
 }
