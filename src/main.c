@@ -18,7 +18,7 @@ Got,              L)EN(L,
 raylib_fun, exports);
 // clang-format on
 
-N(root) { α--, A1(exports) C(1); }
+N(root) { A1(exports) C(1); }
 
 N(ray_not) {}
 N(ray_and) { printf("%lu\n", σ[--α].q); }
