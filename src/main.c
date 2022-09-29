@@ -8,21 +8,22 @@ void God(OARS);
 void Gor(OARS);
 void map_pith(OARS);
 extern n_t Τ[];
-extern void *raylib_fun[];
-
+extern void *raylibfun[];
+extern void *stdiofun[];
 // clang-format off
-                    EN(Got,
-God,              L)EN(L,
-Gor,              L)EN(L,
-Got,              L)EN(L,
-raylib_fun, exports);
+                                    EN(Got,
+God,                              L)EN(L,
+Gor,                              L)EN(L,
+Got,                              L)E(L,
+"raylibfun", &raylibfun,          L)E(L,
+"stdiofun", &stdiofun,      exports);
 // clang-format on
 
-N(root) { A1(exports) C(1); }
+N(root    ) { A1(exports) C(1); }
 
-N(ray_not) {}
-N(ray_and) { printf("%lu\n", σ[--α].q); }
-N(ray_oor) {}
+N(ray_not ) {}
+N(ray_and ) { printf("%lu\n", σ[--α].q); }
+N(ray_oor ) {}
 
 N(ls_exports) {
   RN(const char *, fname);
@@ -66,7 +67,7 @@ int main() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-    DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, GRAY);
+    DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
 
     EndDrawing();
   }
