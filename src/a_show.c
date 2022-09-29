@@ -1,7 +1,7 @@
 #include "arsi.h"
 #include "raylibfun.h"
 #include "stdiofun.h"
-rayfun_t r;
+rayfun_t *r;
 stdiofun_t *s;
 // clang-format off
                           IN(Gor,
@@ -14,8 +14,7 @@ Got,                    L)I(L,
 N(on_tick2) { A(God) O; }
 N(_c      ) { A(5) C(1); }
 N(on_draw ) { 
-  s->printf("soplikuna\n");
-  s->puts("kargi gogoa\n");
+  s->printf("5\n");
   A(7) C(1);
 }
 

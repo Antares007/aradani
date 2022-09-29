@@ -57,19 +57,22 @@ int main() {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  A3("src/a_show.pith", root, run_pith) O;
+  A7(
+      "src/a_show.pith", root, run_pith, 
+      "src/a_pith2.pith", root, run_pith, Τ[030]
+     ) O;
 
-  const int screenWidth = 800;
-  const int screenHeight = 450;
-  InitWindow(screenWidth, screenHeight, "GUI Example!");
-  SetTargetFPS(0);
-  while (!WindowShouldClose()) {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
+  //const int screenWidth = 800;
+  //const int screenHeight = 450;
+  //InitWindow(screenWidth, screenHeight, "GUI Example!");
+  //SetTargetFPS(0);
+  //while (!WindowShouldClose()) {
+  //  BeginDrawing();
+  //  ClearBackground(RAYWHITE);
 
-    DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
+  //  DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
 
-    EndDrawing();
-  }
+  //  EndDrawing();
+  //}
   return 0;
 }
