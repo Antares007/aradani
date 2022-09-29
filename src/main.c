@@ -44,6 +44,9 @@ N(run_epoll) {
   } else
     nar(T);
 }
+N(run_pith) {
+  A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
+}
 #include "raylib.h"
 int main() {
   p_t ο[0x1000];
@@ -53,13 +56,13 @@ int main() {
   ο[--ρ].v = ray_not;
   ο[--ρ].v = ray_and;
   ο[--ρ].v = ray_oor;
-  A7("src/a_show.pith", root, map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O;
+  A3("src/a_show.pith", root, run_pith) O;
 
   const int screenWidth = 800;
   const int screenHeight = 450;
-  InitWindow(screenWidth, screenHeight, "gui example");
+  InitWindow(screenWidth, screenHeight, "GUI Example!");
   SetTargetFPS(0);
-  while (!WindowShouldClose()){
+  while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
