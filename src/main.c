@@ -7,13 +7,15 @@ void Got(OARS);
 void God(OARS);
 void Gor(OARS);
 void map_pith(OARS);
-extern n_t Τ[01000];
+extern n_t Τ[];
+extern void* raylib_fun[];
 
 // clang-format off
-                  EN(Got,
-God,            L)EN(L,
-Gor,            L)EN(L,
-Got,      exports);
+                    EN(Got,
+God,              L)EN(L,
+Gor,              L)EN(L,
+Got,              L)EN(L,
+raylib_fun, exports);
 // clang-format on
 
 N(root) { α--, A1(exports) C(1); }
