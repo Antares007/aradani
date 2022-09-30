@@ -45,41 +45,8 @@ N(run_epoll) {
     nar(T);
 }
 N(run_bark) { A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O; }
-// Ο
-//Ν Τ
-// Α
-// Otar
-// Nino
-// Nika
-// Nargo
-// Tina
-// Andria
-// Achiko
-#define QPSize 64
-p_t qp[QPSize][32];
-W_t qw = 0, qr = 0;
-N(unroll1) {
-  p_t *p = qp[qr];
-  qr = (qr + 1) % QPSize;
-  ν[τ + 0].v = p[1 + 0].v;
-  τ += 1;
-  O;
-}
-N(queue1) {
-  p_t *p = qp[qw];
-  qw = (qw + 1) % QPSize;
-  p[0].v = unroll1;
-  τ -= 1;
-  p[1 + 0].v = ν[τ + 0].v;
-  O;
-}
-N(next) { qp[qr][0].c(T); }
-
 #include "raylib.h"
-N(pint_qps) {
-  printf("%d %d\n", qw ,qr);
-  O;
-}
+extern n_t Ψ[32];
 int main() {
   p_t ο[0x1000];
   Q_t α = sizeof(ο) / sizeof(*ο);
@@ -88,7 +55,7 @@ int main() {
   ο[--α].v = ray_not;
   ο[--α].v = ray_and;
   ο[--α].v = ray_oor;
-  A5(next, pint_qps, Gor, queue1, pint_qps) O;
+  A7(Ψ[0], Ψ[0], Gor, God, Τ[0001], Ψ[3], Ψ[5]) O;
   //A7(
   //  "src/a_show.pith",  root, run_bark,
   //  "src/a_pith2.pith",  root, run_bark, Τ[030]
