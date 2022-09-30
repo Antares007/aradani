@@ -3,25 +3,25 @@
 #define QPS 64
 p_t qp[QPS][32];
 W_t qw = 0, qr = 0;
-static N(Ψ0) { qp[qr][0].c(T); }
+static N(ο0) { qp[qr][0].c(T); }
 
-static N(unΨ1) {
+static N(unο1) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
   τ += 1;
   O;
 }
-static N(Ψ1) {
+static N(ο1) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ1;
+  p[0].v = unο1;
   τ -= 1;
   p[1].v = ν[τ + 0].v;
   O;
 }
 
-static N(unΨ2) {
+static N(unο2) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -29,17 +29,17 @@ static N(unΨ2) {
   τ += 2;
   O;
 }
-static N(Ψ2) {
+static N(ο2) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ2;
+  p[0].v = unο2;
   τ -= 2;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
   O;
 }
 
-static N(unΨ3) {
+static N(unο3) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -48,10 +48,10 @@ static N(unΨ3) {
   τ += 3;
   O;
 }
-static N(Ψ3) {
+static N(ο3) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ3;
+  p[0].v = unο3;
   τ -= 3;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -59,7 +59,7 @@ static N(Ψ3) {
   O;
 }
 
-static N(unΨ4) {
+static N(unο4) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -69,10 +69,10 @@ static N(unΨ4) {
   τ += 4;
   O;
 }
-static N(Ψ4) {
+static N(ο4) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ4;
+  p[0].v = unο4;
   τ -= 4;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -81,7 +81,7 @@ static N(Ψ4) {
   O;
 }
 
-static N(unΨ5) {
+static N(unο5) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -92,10 +92,10 @@ static N(unΨ5) {
   τ += 5;
   O;
 }
-static N(Ψ5) {
+static N(ο5) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ5;
+  p[0].v = unο5;
   τ -= 5;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -105,7 +105,7 @@ static N(Ψ5) {
   O;
 }
 
-static N(unΨ6) {
+static N(unο6) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -117,10 +117,10 @@ static N(unΨ6) {
   τ += 6;
   O;
 }
-static N(Ψ6) {
+static N(ο6) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ6;
+  p[0].v = unο6;
   τ -= 6;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -131,7 +131,7 @@ static N(Ψ6) {
   O;
 }
 
-static N(unΨ7) {
+static N(unο7) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -144,10 +144,10 @@ static N(unΨ7) {
   τ += 7;
   O;
 }
-static N(Ψ7) {
+static N(ο7) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ7;
+  p[0].v = unο7;
   τ -= 7;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -159,7 +159,7 @@ static N(Ψ7) {
   O;
 }
 
-static N(unΨ8) {
+static N(unο8) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -173,10 +173,10 @@ static N(unΨ8) {
   τ += 8;
   O;
 }
-static N(Ψ8) {
+static N(ο8) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ8;
+  p[0].v = unο8;
   τ -= 8;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -189,7 +189,7 @@ static N(Ψ8) {
   O;
 }
 
-static N(unΨ9) {
+static N(unο9) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -204,10 +204,10 @@ static N(unΨ9) {
   τ += 9;
   O;
 }
-static N(Ψ9) {
+static N(ο9) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ9;
+  p[0].v = unο9;
   τ -= 9;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -221,7 +221,7 @@ static N(Ψ9) {
   O;
 }
 
-static N(unΨ10) {
+static N(unο10) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -237,10 +237,10 @@ static N(unΨ10) {
   τ += 10;
   O;
 }
-static N(Ψ10) {
+static N(ο10) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ10;
+  p[0].v = unο10;
   τ -= 10;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -255,7 +255,7 @@ static N(Ψ10) {
   O;
 }
 
-static N(unΨ11) {
+static N(unο11) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -272,10 +272,10 @@ static N(unΨ11) {
   τ += 11;
   O;
 }
-static N(Ψ11) {
+static N(ο11) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ11;
+  p[0].v = unο11;
   τ -= 11;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -291,7 +291,7 @@ static N(Ψ11) {
   O;
 }
 
-static N(unΨ12) {
+static N(unο12) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -309,10 +309,10 @@ static N(unΨ12) {
   τ += 12;
   O;
 }
-static N(Ψ12) {
+static N(ο12) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ12;
+  p[0].v = unο12;
   τ -= 12;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -329,7 +329,7 @@ static N(Ψ12) {
   O;
 }
 
-static N(unΨ13) {
+static N(unο13) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -348,10 +348,10 @@ static N(unΨ13) {
   τ += 13;
   O;
 }
-static N(Ψ13) {
+static N(ο13) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ13;
+  p[0].v = unο13;
   τ -= 13;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -369,7 +369,7 @@ static N(Ψ13) {
   O;
 }
 
-static N(unΨ14) {
+static N(unο14) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -389,10 +389,10 @@ static N(unΨ14) {
   τ += 14;
   O;
 }
-static N(Ψ14) {
+static N(ο14) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ14;
+  p[0].v = unο14;
   τ -= 14;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -411,7 +411,7 @@ static N(Ψ14) {
   O;
 }
 
-static N(unΨ15) {
+static N(unο15) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -432,10 +432,10 @@ static N(unΨ15) {
   τ += 15;
   O;
 }
-static N(Ψ15) {
+static N(ο15) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ15;
+  p[0].v = unο15;
   τ -= 15;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -455,7 +455,7 @@ static N(Ψ15) {
   O;
 }
 
-static N(unΨ16) {
+static N(unο16) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -477,10 +477,10 @@ static N(unΨ16) {
   τ += 16;
   O;
 }
-static N(Ψ16) {
+static N(ο16) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ16;
+  p[0].v = unο16;
   τ -= 16;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -501,7 +501,7 @@ static N(Ψ16) {
   O;
 }
 
-static N(unΨ17) {
+static N(unο17) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -524,10 +524,10 @@ static N(unΨ17) {
   τ += 17;
   O;
 }
-static N(Ψ17) {
+static N(ο17) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ17;
+  p[0].v = unο17;
   τ -= 17;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -549,7 +549,7 @@ static N(Ψ17) {
   O;
 }
 
-static N(unΨ18) {
+static N(unο18) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -573,10 +573,10 @@ static N(unΨ18) {
   τ += 18;
   O;
 }
-static N(Ψ18) {
+static N(ο18) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ18;
+  p[0].v = unο18;
   τ -= 18;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -599,7 +599,7 @@ static N(Ψ18) {
   O;
 }
 
-static N(unΨ19) {
+static N(unο19) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -624,10 +624,10 @@ static N(unΨ19) {
   τ += 19;
   O;
 }
-static N(Ψ19) {
+static N(ο19) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ19;
+  p[0].v = unο19;
   τ -= 19;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -651,7 +651,7 @@ static N(Ψ19) {
   O;
 }
 
-static N(unΨ20) {
+static N(unο20) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -677,10 +677,10 @@ static N(unΨ20) {
   τ += 20;
   O;
 }
-static N(Ψ20) {
+static N(ο20) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ20;
+  p[0].v = unο20;
   τ -= 20;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -705,7 +705,7 @@ static N(Ψ20) {
   O;
 }
 
-static N(unΨ21) {
+static N(unο21) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -732,10 +732,10 @@ static N(unΨ21) {
   τ += 21;
   O;
 }
-static N(Ψ21) {
+static N(ο21) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ21;
+  p[0].v = unο21;
   τ -= 21;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -761,7 +761,7 @@ static N(Ψ21) {
   O;
 }
 
-static N(unΨ22) {
+static N(unο22) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -789,10 +789,10 @@ static N(unΨ22) {
   τ += 22;
   O;
 }
-static N(Ψ22) {
+static N(ο22) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ22;
+  p[0].v = unο22;
   τ -= 22;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -819,7 +819,7 @@ static N(Ψ22) {
   O;
 }
 
-static N(unΨ23) {
+static N(unο23) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -848,10 +848,10 @@ static N(unΨ23) {
   τ += 23;
   O;
 }
-static N(Ψ23) {
+static N(ο23) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ23;
+  p[0].v = unο23;
   τ -= 23;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -879,7 +879,7 @@ static N(Ψ23) {
   O;
 }
 
-static N(unΨ24) {
+static N(unο24) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -909,10 +909,10 @@ static N(unΨ24) {
   τ += 24;
   O;
 }
-static N(Ψ24) {
+static N(ο24) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ24;
+  p[0].v = unο24;
   τ -= 24;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -941,7 +941,7 @@ static N(Ψ24) {
   O;
 }
 
-static N(unΨ25) {
+static N(unο25) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -972,10 +972,10 @@ static N(unΨ25) {
   τ += 25;
   O;
 }
-static N(Ψ25) {
+static N(ο25) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ25;
+  p[0].v = unο25;
   τ -= 25;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1005,7 +1005,7 @@ static N(Ψ25) {
   O;
 }
 
-static N(unΨ26) {
+static N(unο26) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1037,10 +1037,10 @@ static N(unΨ26) {
   τ += 26;
   O;
 }
-static N(Ψ26) {
+static N(ο26) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ26;
+  p[0].v = unο26;
   τ -= 26;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1071,7 +1071,7 @@ static N(Ψ26) {
   O;
 }
 
-static N(unΨ27) {
+static N(unο27) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1104,10 +1104,10 @@ static N(unΨ27) {
   τ += 27;
   O;
 }
-static N(Ψ27) {
+static N(ο27) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ27;
+  p[0].v = unο27;
   τ -= 27;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1139,7 +1139,7 @@ static N(Ψ27) {
   O;
 }
 
-static N(unΨ28) {
+static N(unο28) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1173,10 +1173,10 @@ static N(unΨ28) {
   τ += 28;
   O;
 }
-static N(Ψ28) {
+static N(ο28) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ28;
+  p[0].v = unο28;
   τ -= 28;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1209,7 +1209,7 @@ static N(Ψ28) {
   O;
 }
 
-static N(unΨ29) {
+static N(unο29) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1244,10 +1244,10 @@ static N(unΨ29) {
   τ += 29;
   O;
 }
-static N(Ψ29) {
+static N(ο29) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ29;
+  p[0].v = unο29;
   τ -= 29;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1281,7 +1281,7 @@ static N(Ψ29) {
   O;
 }
 
-static N(unΨ30) {
+static N(unο30) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1317,10 +1317,10 @@ static N(unΨ30) {
   τ += 30;
   O;
 }
-static N(Ψ30) {
+static N(ο30) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ30;
+  p[0].v = unο30;
   τ -= 30;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1355,7 +1355,7 @@ static N(Ψ30) {
   O;
 }
 
-static N(unΨ31) {
+static N(unο31) {
   p_t *p = qp[qr];
   qr = (qr + 1) % QPS;
   ν[τ + 0].v = p[1].v;
@@ -1392,10 +1392,10 @@ static N(unΨ31) {
   τ += 31;
   O;
 }
-static N(Ψ31) {
+static N(ο31) {
   p_t *p = qp[qw];
   qw = (qw + 1) % QPS;
-  p[0].v = unΨ31;
+  p[0].v = unο31;
   τ -= 31;
   p[1].v = ν[τ + 0].v;
   p[2].v = ν[τ + 1].v;
@@ -1431,37 +1431,37 @@ static N(Ψ31) {
   O;
 }
 
-n_t Ψ[32] = {
-  Ψ0,
-  Ψ1,
-  Ψ2,
-  Ψ3,
-  Ψ4,
-  Ψ5,
-  Ψ6,
-  Ψ7,
-  Ψ8,
-  Ψ9,
-  Ψ10,
-  Ψ11,
-  Ψ12,
-  Ψ13,
-  Ψ14,
-  Ψ15,
-  Ψ16,
-  Ψ17,
-  Ψ18,
-  Ψ19,
-  Ψ20,
-  Ψ21,
-  Ψ22,
-  Ψ23,
-  Ψ24,
-  Ψ25,
-  Ψ26,
-  Ψ27,
-  Ψ28,
-  Ψ29,
-  Ψ30,
-  Ψ31,
+n_t ο[32] = {
+  ο0,
+  ο1,
+  ο2,
+  ο3,
+  ο4,
+  ο5,
+  ο6,
+  ο7,
+  ο8,
+  ο9,
+  ο10,
+  ο11,
+  ο12,
+  ο13,
+  ο14,
+  ο15,
+  ο16,
+  ο17,
+  ο18,
+  ο19,
+  ο20,
+  ο21,
+  ο22,
+  ο23,
+  ο24,
+  ο25,
+  ο26,
+  ο27,
+  ο28,
+  ο29,
+  ο30,
+  ο31,
 };

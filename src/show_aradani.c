@@ -1,5 +1,5 @@
-#include "oars.h"
-#include "oars_logn.h"
+#include "oant.h"
+#include "oant_logn.h"
 #include <stdio.h>
 
 N(seven) { A(7) C(1); }
@@ -9,32 +9,32 @@ N(add) {
   A(l + r) C(1);
 }
 
-void da(OARS);
+void da(OANT);
 N(CountTo14) { A5(seven, seven, da, add, da) O; }
 
-void Got(OARS);
-void God(OARS);
-void Gor(OARS);
-extern n_t Τ[01000];
+void Got(OANT);
+void God(OANT);
+void Gor(OANT);
+extern n_t ψ[01000];
 // clang-format off
 N(TestAraDaNi) {
-  A13(7,   God, Τ[0],
-      Got, Got, Τ[0100],
-      God, God, Τ[0010],
-      Gor, Gor, Τ[0001], Τ[0333]) O;
+  A13(7,   God, ψ[0],
+      Got, Got, ψ[0100],
+      God, God, ψ[0010],
+      Gor, Gor, ψ[0001], ψ[0333]) O;
 }
 // clang-format on
 N(ray_not) {}
-N(ray_and) { printf("%lu\n", σ[--α].q); }
+N(ray_and) { printf("%lu\n", ν[--τ].q); }
 N(ray_oor) {}
 int main() {
-  p_t ο[0x1000];
-  Q_t α = 0;
-  p_t σ[0x1000];
-  Q_t ρ = sizeof(σ) / sizeof(*σ);
-  ο[--ρ].v = ray_not;
-  ο[--ρ].v = ray_and;
-  ο[--ρ].v = ray_oor;
+  p_t ω[0x1000];
+  Q_t α = sizeof(ω) / sizeof(*ω);
+  p_t ν[0x1000];
+  Q_t τ = 0;
+  ω[--α].v = ray_not;
+  ω[--α].v = ray_and;
+  ω[--α].v = ray_oor;
   TestAraDaNi(T);
   CountTo14(T);
   return 0;

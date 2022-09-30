@@ -7,7 +7,7 @@ void Got(OANT);
 void God(OANT);
 void Gor(OANT);
 void map_pith(OANT);
-extern n_t Τ[];
+extern n_t ψ[];
 extern void *raylibfun[];
 extern void *stdiofun[];
 // clang-format off
@@ -29,7 +29,7 @@ N(ls_exports) {
   (void)nar;
   RN(const char *, name);
   printf("%s:%s\n", fname, name);
-  A3(exp, ls_exports, Τ[010]) O;
+  A3(exp, ls_exports, ψ[010]) O;
 }
 N(run_epoll) {
   τ -= 1;
@@ -37,42 +37,41 @@ N(run_epoll) {
   RN(n_t, nar);
   RN(const char *, name);
   if (name[0] == '_')
-    printf(">>> %s %lu\n", name, τ), A3(export, run_epoll, Τ[010]) O;
+    printf(">>> %s %lu\n", name, τ), A3(export, run_epoll, ψ[010]) O;
   else
     nar(T);
 }
-N(run_bark) { A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O; }
+N(run_bark) { A5(map_pith, ψ[0], ψ[010], run_epoll, ψ[010]) O; }
 #include "raylib.h"
-extern n_t Ψ[32];
-//extern n_t δ[32];
+extern n_t ο[32];
 N(ray_not) {}
 N(ray_and) { printf("%lu\n", ν[--τ].q); }
 N(ray_oor) {}
 int main() {
-  p_t ο[0x1000];
-  Q_t α = sizeof(ο) / sizeof(*ο);
+  p_t ω[0x1000];
+  Q_t α = sizeof(ω) / sizeof(*ω);
   p_t ν[0x1000];
   Q_t τ = 0;
-  ο[--α].v = ray_not;
-  ο[--α].v = ray_and;
-  ο[--α].v = ray_oor;
-  //A13(δ[0], Gor, God, ψ[01], δ[3], God, God, ψ[010], δ[3], Got, God, ψ[0100], δ[3]) O;
+  ω[--α].v = ray_not;
+  ω[--α].v = ray_and;
+  ω[--α].v = ray_oor;
+  //A13(ο[0], Gor, God, ψ[01], ο[3], God, God, ψ[010], ο[3], Got, God, ψ[0100], ο[3]) O;
   //A17(
-  //  δ[0],
-  //    δ[0],
-  //      Gor, God, Τ[0001],
-  //    δ[3],
-  //  δ[5],
-  //    δ[0],
-  //      God, God, Τ[0010],
-  //    δ[3],
-  //      Got, God, Τ[0100],
-  //    δ[3],
-  //  δ[9]
+  //  ο[0],
+  //    ο[0],
+  //      Gor, God, ψ[0001],
+  //    ο[3],
+  //  ο[5],
+  //    ο[0],
+  //      God, God, ψ[0010],
+  //    ο[3],
+  //      Got, God, ψ[0100],
+  //    ο[3],
+  //  ο[9]
   //) O;
   A7(
     "src/a_show.pith",  root, run_bark,
-    "src/a_pith2.pith",  root, run_bark, Τ[030]
+    "src/a_pith2.pith",  root, run_bark, ψ[030]
   ) O;
   // const int screenWidth = 800;
   // const int screenHeight = 450;
