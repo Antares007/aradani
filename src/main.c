@@ -45,8 +45,21 @@ N(run_epoll) {
     nar(T);
 }
 N(run_bark) { A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O; }
+
 #include "raylib.h"
+
+p_t qp[3][5];
+W_t qw = 0, qr = 0;
+N(queue) {
+  qp[qw][4].v = 0;
+  qw = (qw + 1) % sizeof(qp) / sizeof(*qp);
+  ρ[--σ].v = ο[--α].v;
+}
+N(next) {}
+
 int main() {
+  printf("%lu\n", sizeof(qp) / sizeof(*qp));
+  return 0;
   p_t ο[0x1000];
   Q_t α = 0;
   p_t σ[0x1000];
