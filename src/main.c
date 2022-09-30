@@ -1,12 +1,12 @@
 #include "arsi_ie.h"
-#include "oars.h"
-#include "oars_logn.h"
+#include "oant.h"
+#include "oant_logn.h"
 #include <stdio.h>
 
-void Got(OARS);
-void God(OARS);
-void Gor(OARS);
-void map_pith(OARS);
+void Got(OANT);
+void God(OANT);
+void Gor(OANT);
+void map_pith(OANT);
 extern n_t Τ[];
 extern void *raylibfun[];
 extern void *stdiofun[];
@@ -22,7 +22,7 @@ Got,                              L)E(L,
 N(root) { A1(exports) C(1); }
 
 N(ray_not) {}
-N(ray_and) { printf("%lu\n", σ[--α].q); }
+N(ray_and) { printf("%lu\n", ν[--τ].q); }
 N(ray_oor) {}
 
 N(ls_exports) {
@@ -35,42 +35,64 @@ N(ls_exports) {
   A3(exp, ls_exports, Τ[010]) O;
 }
 N(run_epoll) {
-  α -= 1;
+  τ -= 1;
   RN(n_t, export);
   RN(n_t, nar);
   RN(const char *, name);
   if (name[0] == '_')
-    printf(">>> %s %lu\n", name, α), A3(export, run_epoll, Τ[010]) O;
+    printf(">>> %s %lu\n", name, τ), A3(export, run_epoll, Τ[010]) O;
   else
     nar(T);
 }
 N(run_bark) { A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O; }
+// Ο
+//Ν Τ
+// Α
+// Otar
+// Nino
+// Nika
+// Nargo
+// Tina
+// Andria
+// Achiko
+#define QPSize 64
+p_t qp[QPSize][32];
+W_t qw = 0, qr = 0;
+N(unroll1) {
+  p_t *p = qp[qr];
+  qr = (qr + 1) % QPSize;
+  ν[τ + 0].v = p[1 + 0].v;
+  τ += 1;
+  O;
+}
+N(queue1) {
+  p_t *p = qp[qw];
+  qw = (qw + 1) % QPSize;
+  p[0].v = unroll1;
+  τ -= 1;
+  p[1 + 0].v = ν[τ + 0].v;
+  O;
+}
+N(next) { qp[qr][0].c(T); }
 
 #include "raylib.h"
-
-p_t qp[3][5];
-W_t qw = 0, qr = 0;
-N(queue) {
-  qp[qw][4].v = 0;
-  qw = (qw + 1) % sizeof(qp) / sizeof(*qp);
-  ρ[--σ].v = ο[--α].v;
-}
-N(next) {}
-
-int main() {
-  printf("%lu\n", sizeof(qp) / sizeof(*qp));
-  return 0;
-  p_t ο[0x1000];
-  Q_t α = 0;
-  p_t σ[0x1000];
-  Q_t ρ = sizeof(σ) / sizeof(*σ);
-  ο[--ρ].v = ray_not;
-  ο[--ρ].v = ray_and;
-  ο[--ρ].v = ray_oor;
-  A7("src/a_show.pith", root, run_bark, "src/a_pith2.pith", root, run_bark,
-     Τ[030])
+N(pint_qps) {
+  printf("%d %d\n", qw ,qr);
   O;
-
+}
+int main() {
+  p_t ο[0x1000];
+  Q_t α = sizeof(ο) / sizeof(*ο);
+  p_t ν[0x1000];
+  Q_t τ = 0;
+  ο[--α].v = ray_not;
+  ο[--α].v = ray_and;
+  ο[--α].v = ray_oor;
+  A5(next, pint_qps, Gor, queue1, pint_qps) O;
+  //A7(
+  //  "src/a_show.pith",  root, run_bark,
+  //  "src/a_pith2.pith",  root, run_bark, Τ[030]
+  //) O;
   // const int screenWidth = 800;
   // const int screenHeight = 450;
   // InitWindow(screenWidth, screenHeight, "GUI Example!");
@@ -78,9 +100,7 @@ int main() {
   // while (!WindowShouldClose()) {
   //   BeginDrawing();
   //   ClearBackground(RAYWHITE);
-
   //  DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
-
   //  EndDrawing();
   //}
   return 0;

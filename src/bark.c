@@ -1,36 +1,36 @@
-#include "oars.h"
-static void dot(OARS) { O; }
-static void Got(OARS) { C(2); }
-static void God(OARS) { C(1); }
-static void Gor(OARS) { C(0); }
-static void import(OARS);
+#include "oant.h"
+static void dot(OANT) { O; }
+static void Got(OANT) { C(2); }
+static void God(OANT) { C(1); }
+static void Gor(OANT) { C(0); }
+static void import(OANT);
 static N(da) {
-  ο[ρ - 3].v = Gor;
-  ο[ρ - 2].v = σ[--α].v;
-  ο[ρ - 1].v = Got;
-  σ[α - 1].c(ο, α - 1, ρ - 3, σ);
+  ο[α - 3].v = Gor;
+  ο[α - 2].v = ν[--τ].v;
+  ο[α - 1].v = Got;
+  ν[τ - 1].c(ο, α - 3, ν, τ - 1);
 }
-static N(Gor3) { ο[ρ + 6].c(ο, α, ρ + 9, σ); }
-static N(Got4) { ο[ρ + 11].c(ο, α, ρ + 12, σ); }
+static N(Gor3) { ο[α + 6].c(ο, α + 9, ν, τ); }
+static N(Got4) { ο[α + 11].c(ο, α + 12, ν, τ); }
 static N(unrollGod3) {
-  σ[α++].v = ο[ρ + 1].v;
-  ρ += 3;
-  σ[α++].v = ο[ρ + 1].v;
-  ρ += 3;
+  ν[τ++].v = ο[α + 1].v;
+  α += 3;
+  ν[τ++].v = ο[α + 1].v;
+  α += 3;
   C(1);
 }
 static N(da3an) {
-  ο[ρ - 3].v = σ[--α].v;
-  ο[ρ - 12].v = Gor3;
+  ο[α - 3].v = ν[--τ].v;
+  ο[α - 12].v = Gor3;
 
-  ο[ρ - 2].v = σ[--α].v;
-  ο[ρ - 5].v = σ[--α].v;
-  ο[ρ - 8].v = σ[--α].v;
-  ο[ρ - 11].v = unrollGod3;
+  ο[α - 2].v = ν[--τ].v;
+  ο[α - 5].v = ν[--τ].v;
+  ο[α - 8].v = ν[--τ].v;
+  ο[α - 11].v = unrollGod3;
 
-  ο[ρ - 10].v = Got4;
+  ο[α - 10].v = Got4;
 
-  σ[α - 1].c(ο, α - 1, ρ - 12, σ);
+  ν[τ - 1].c(ο, α - 12, ν, τ - 1);
 }
 static int cmp(const char *s1, const char *s2) {
   while (*s1 == *s2++)
