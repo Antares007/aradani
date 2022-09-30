@@ -21,9 +21,6 @@ Got,                              L)E(L,
 
 N(root) { A1(exports) C(1); }
 
-N(ray_not) {}
-N(ray_and) { printf("%lu\n", ν[--τ].q); }
-N(ray_oor) {}
 
 N(ls_exports) {
   RN(const char *, fname);
@@ -47,6 +44,10 @@ N(run_epoll) {
 N(run_bark) { A5(map_pith, Τ[0], Τ[010], run_epoll, Τ[010]) O; }
 #include "raylib.h"
 extern n_t Ψ[32];
+//extern n_t δ[32];
+N(ray_not) {}
+N(ray_and) { printf("%lu\n", ν[--τ].q); }
+N(ray_oor) {}
 int main() {
   p_t ο[0x1000];
   Q_t α = sizeof(ο) / sizeof(*ο);
@@ -55,11 +56,24 @@ int main() {
   ο[--α].v = ray_not;
   ο[--α].v = ray_and;
   ο[--α].v = ray_oor;
-  A7(Ψ[0], Ψ[0], Gor, God, Τ[0001], Ψ[3], Ψ[5]) O;
-  //A7(
-  //  "src/a_show.pith",  root, run_bark,
-  //  "src/a_pith2.pith",  root, run_bark, Τ[030]
+  //A13(δ[0], Gor, God, ψ[01], δ[3], God, God, ψ[010], δ[3], Got, God, ψ[0100], δ[3]) O;
+  //A17(
+  //  δ[0],
+  //    δ[0],
+  //      Gor, God, Τ[0001],
+  //    δ[3],
+  //  δ[5],
+  //    δ[0],
+  //      God, God, Τ[0010],
+  //    δ[3],
+  //      Got, God, Τ[0100],
+  //    δ[3],
+  //  δ[9]
   //) O;
+  A7(
+    "src/a_show.pith",  root, run_bark,
+    "src/a_pith2.pith",  root, run_bark, Τ[030]
+  ) O;
   // const int screenWidth = 800;
   // const int screenHeight = 450;
   // InitWindow(screenWidth, screenHeight, "GUI Example!");
