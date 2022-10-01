@@ -1,3 +1,4 @@
+/*
 const unroll = (i) =>
   Array(i)
     .fill(0)
@@ -39,3 +40,4 @@ for (let i = 0; i < 31; i++) {
   console.log(`  ο${i + 1},`)
 }
 console.log(`};`);
+*/
