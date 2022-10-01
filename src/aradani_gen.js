@@ -13,7 +13,7 @@ for (let g = 01; g < 01000; g++) {
   const ac = (g >> 3) & 7;
   const oc = (g >> 0) & 7;
   const mc = ac < nc ? (nc < oc ? oc : nc) : ac < oc ? oc : ac;
-  log(`N(ψ${g.toString(8).padStart(4, "0")}) {`);
+  log(`N(ψ${g.toString(8)}) {`);
   if (mc === 1) {
     roll1(0, oc);
     roll1(1, ac);
@@ -27,20 +27,20 @@ for (let g = 01; g < 01000; g++) {
   }
   log(`}`);
 }
-log(`N(ψ0000) { ν[τ - 1].c(ω, α, ν, τ - 1); }
+log(`N(ψ0) { ν[τ - 1].c(ω, α, ν, τ - 1); }
 n_t ψ[01000] = {
-  ψ0000,`);
+  ψ0,`);
 for (let g = 01; g < 01000; g++) {
   const nc = (g >> 6) & 7;
   const ac = (g >> 3) & 7;
   const oc = (g >> 0) & 7;
-  log(`  ψ${g.toString(8).padStart(4, "0")},`);
+  log(`  ψ${g.toString(8)},`);
 }
 log(`};`);
 function roll(ray, xc, mc) {
   let i = 0;
   for (; i < xc; i++) log(`  ω[α - ${(i + 1) * 3 - ray}].v = ν[--τ].v;`);
-  if (i > 1) log(`  ω[α - ${(i + 1) * 3 - ray}].v = unroll${rni(ray, xc)};`);
+  if (i > 1) log(`  ω[α - ${(i + 1) * 3 - ray}].v = un${rni(ray, xc)};`);
   else i--;
   if (mc - i) log(`  ω[α - ${(mc + 1) * 3 - ray}].v = ${rni(ray, mc - i)};`);
   log();
@@ -62,7 +62,7 @@ function GoNar(i, ray, name) {
 }
 function UnrollNar(c, ray) {
   log("static");
-  log(`N(unroll${rni(ray, c)}) {`);
+  log(`N(un${rni(ray, c)}) {`);
   for (let i = 0; i < c - 1; i++) log(`  ν[τ++].v = ω[α + ${ray}].v; α += 3;`);
   log(`  C(${ray});`);
   log(`}`);

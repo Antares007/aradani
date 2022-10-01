@@ -2,9 +2,9 @@
 #include "oant.h"
 #define L CAT(λ, __LINE__)
 #define I(Tail, Name, Address, Head)                                           \
-  static N(Head) { A3(Name, &Address, Tail) C(1); }
+  static void Head(OANT) { A3(Name, &Address, Tail) C(1); }
 #define E(Tail, Name, Address, Head)                                           \
-  static N(Head) { A4(Name, Address, Tail, __FILE__) C(1); }
+  static void Head(OANT) { A4(Name, Address, Tail, __FILE__) C(1); }
 #define IN(Tail, Name, Head)                                                   \
   static n_t Name;                                                             \
   I(Tail, #Name, Name, Head)
