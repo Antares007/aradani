@@ -1,9 +1,11 @@
 #include "oant.h"
 #include "oant_logn.h"
 #define QPS 64
-p_t qp[QPS][32];
-W_t qw = 0, qr = 0;
-static N(ο0) { qp[qr][0].c(T); }
+
+p_t*queue[QPS];
+p_t queue_papers[QPS][32];
+Q_t queue_papers_end = 0, queue_papers_begin = 0;
+static N(ο0) { queue_papers[queue_papers_begin][0].c(T); }
 
 static N(unο1) {
   p_t *p = qp[qr];

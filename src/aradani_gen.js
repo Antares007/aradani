@@ -13,11 +13,7 @@ for (let g = 01; g < 01000; g++) {
   const ac = (g >> 3) & 7;
   const oc = (g >> 0) & 7;
   const mc = ac < nc ? (nc < oc ? oc : nc) : ac < oc ? oc : ac;
-  log(
-    `N(${nc ? "ara" + (nc > 1 ? nc : "") : ""}${
-      ac ? "da" + (ac > 1 ? ac : "") : ""
-    }${oc ? "an" + (oc > 1 ? oc : "") : ""}) {`
-  );
+  log(`N(ψ${g.toString(8).padStart(4, "0")}) {`);
   if (mc === 1) {
     roll1(0, oc);
     roll1(1, ac);
@@ -31,18 +27,14 @@ for (let g = 01; g < 01000; g++) {
   }
   log(`}`);
 }
-log(`N(dot) { ν[τ - 1].c(ω, α, ν, τ - 1); }
+log(`N(ψ0000) { ν[τ - 1].c(ω, α, ν, τ - 1); }
 n_t ψ[01000] = {
-  dot,`);
+  ψ0000,`);
 for (let g = 01; g < 01000; g++) {
   const nc = (g >> 6) & 7;
   const ac = (g >> 3) & 7;
   const oc = (g >> 0) & 7;
-  log(
-    `${nc ? "ara" + (nc > 1 ? nc : "") : ""}${
-      ac ? "da" + (ac > 1 ? ac : "") : ""
-    }${oc ? "an" + (oc > 1 ? oc : "") : ""},`
-  );
+  log(`  ψ${g.toString(8).padStart(4, "0")},`);
 }
 log(`};`);
 function roll(ray, xc, mc) {

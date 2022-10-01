@@ -1,6 +1,6 @@
 #pragma once
 #include "oant.h"
-#define L CAT(expimp_, __LINE__)
+#define L CAT(λ, __LINE__)
 #define I(Tail, Name, Address, Head)                                           \
   static N(Head) { A3(Name, &Address, Tail) C(1); }
 #define E(Tail, Name, Address, Head)                                           \
