@@ -34,13 +34,13 @@ static N(ο0) {
   QUEUE_INIT(&temp_queue);
   C(1);
 }
-static N(οn) {
+static void οn(OANT) {
   RN(Q_t, wc);
   p_t *p = qp[i];
   i = (i + 1) % QPS;
   τ -= wc;
   p[wc + 2].Q = wc;
-  QUEUE_INSERT_TAIL(&temp_queue, (QUEUE *)&p[wc]);
+  QUEUE_INSERT_HEAD(&temp_queue, (QUEUE *)&p[wc]);
   for (Q_t i = 0; i < wc; i++)
     p[i].v = ν[τ + i].v;
   O;
