@@ -19,7 +19,7 @@ N(on_tick2) { A(God) O; }
 N(_c      ) { A(5) C(1); }
 N(one) { σ->printf("1\n"), C(0); }
 N(on_draw) { σ->printf("5\n"), A(7) C(1); }
-N(show1) {
+N(show) {
   A17(
     ο[0],
       ο[0],
@@ -41,7 +41,7 @@ N(show1) {
   // while (!WindowShouldClose()) {
   //   BeginDrawing();
   //   ClearBackground(RAYWHITE);
-  //  DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
+  //  DrawText("aba mamao!", 240, 140, 20, GRAY);
   //  EndDrawing();
   // }
 
@@ -53,7 +53,7 @@ N(_b) { A2("a", term) O; }
 // clang-format off
                           EN(tail,
 on_draw,                L)EN(L,
-show1,                  L)EN(L,
+show,                   L)EN(L,
 _c,                     L)EN(L,
 _b,                     L)EN(L,
 _a,               exports);
