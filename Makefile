@@ -4,8 +4,8 @@ CFLAGS+=-std=gnu99 -Wall
 #-Wno-multichar -fno-stack-clash-protection -fno-stack-protector
 OBJCOPY=objcopy
 
-run: src/main.out src/a_show.pith src/a_pith2.pith
-	./src/main.out
+run: src/main.out src/a_show.pith
+	./src/main.out src/a_show.pith
 src/main.out: src/main.c src/aradani.o src/map_pith.o src/raylibfun.o src/stdiofun.o src/queuenext.o
 	${CC} $^ -o $@ ${CFLAGS} -lraylib
 src/show_aradani.out: src/show_aradani.c src/aradani.o

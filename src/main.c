@@ -52,7 +52,9 @@ void next(OANT);
 N(ray_not) {}
 N(ray_and) { if (τ) printf("%lu\n", ν[τ - 1].q); else printf("\n"); α -= 3, next(T); }
 N(ray_oor) {}
-int main() {
+int main(int argc, char **argv) {
+  if (argc < 2)
+    return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   queue_init();
   p_t ω[0x1000];
   Q_t α = sizeof(ω) / sizeof(*ω);
@@ -61,19 +63,6 @@ int main() {
   ω[--α].v = ray_not;
   ω[--α].v = ray_and;
   ω[--α].v = ray_oor;
-  A3(
-    "src/a_show.pith",  root, run_bark
-//    "src/a_pith2.pith",  root, run_bark, ψ[030]
-  ) O;
-  // const int screenWidth = 800;
-  // const int screenHeight = 450;
-  // InitWindow(screenWidth, screenHeight, "GUI Example!");
-  // SetTargetFPS(0);
-  // while (!WindowShouldClose()) {
-  //   BeginDrawing();
-  //   ClearBackground(RAYWHITE);
-  //  DrawText("Sopo kargi gogoa", 240, 140, 20, GRAY);
-  //  EndDrawing();
-  //}
+  A3(argv[1], root, run_bark) O;
   return 0;
 }
