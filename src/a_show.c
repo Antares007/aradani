@@ -1,25 +1,26 @@
 #include "arsi.h"
 #include "raylibfun.h"
 #include "stdiofun.h"
-rayfun_t *r;
-stdiofun_t *s;
+rayfun_t *ρ;
+stdiofun_t *σ;
 n_t *ψ;
 n_t *ο, Got, God;
 // clang-format off
                           I(Gor,
 "God", God,             L)I(L,
 "Got", Got,             L)I(L,
-"raylibfun", r,         L)I(L,
-"stdiofun", s,          L)I(L,
 "ο", ο,                 L)I(L,
+"ρ", ρ,                 L)I(L,
+"σ", σ,                 L)I(L,
 "ψ", ψ,           imports);
 // clang-format on
 
 N(on_tick2) { A(God) O; }
 N(_c      ) { A(5) C(1); }
-N(one) { s->printf("1\n"), C(0); }
-N(on_draw ) { s->printf("5\n"), A(7) C(1); }
+N(one) { σ->printf("1\n"), C(0); }
+N(on_draw ) { σ->printf("5\n"), A(7) C(1); }
 N(show1) {
+  σ->puts("aaaaaabbbbb");
   A17(
     ο[0],
       ο[0],

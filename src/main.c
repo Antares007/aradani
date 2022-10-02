@@ -9,17 +9,17 @@ void Gor(OANT);
 void map_pith(OANT);
 extern n_t ψ[01000];
 extern n_t ο[32];
-extern void *raylibfun[];
-extern void *stdiofun[];
+extern void *ρ[];
+extern void *σ[];
 // clang-format off
-                                    E(Got,
-"God", God,                       L)E(L,
-"Gor", Gor,                       L)E(L,
-"Got", Got,                       L)E(L,
-"raylibfun", &raylibfun,          L)E(L,
-"stdiofun", &stdiofun,            L)E(L,
-"ο", &ο,                          L)E(L,
-"ψ", &ψ,                    exports);
+                      E(Got,
+"God", God,         L)E(L,
+"Gor", Gor,         L)E(L,
+"Got", Got,         L)E(L,
+"ο", &ο,            L)E(L,
+"ρ", &ρ,            L)E(L,
+"σ", &σ,            L)E(L,
+"ψ", &ψ,      exports);
 // clang-format on
 
 N(root) { A1(exports) C(1); }

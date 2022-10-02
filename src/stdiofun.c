@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void* stdiofun[] = {
+void* σ[] = {
   printf,
   puts,
 };
