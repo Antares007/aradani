@@ -31,22 +31,22 @@ typedef unsigned long   Q_t;
 typedef struct p_t {
   union {
     struct p_t *p;
-    void (*c)(struct p_t *ο, Q_t α, struct p_t *ν, Q_t τ);
+    void (*c)(struct p_t *ο, Q_t α, struct p_t *ν, Q_t τ, struct p_t *ψ, struct p_t *δ);
     void *v;
     const char *cs;
     b_t b; w_t w; d_t d; q_t q;
     B_t B; W_t W; D_t D; Q_t Q;
   };
 } p_t;
-#define OANT p_t *ο, Q_t α, p_t *ν, Q_t τ 
+#define OANT p_t *ο, Q_t α, p_t *ν, Q_t τ, p_t *ψ, p_t *δ
 typedef void (*n_t)(OANT);
-#define T ο, α, ν, τ 
+#define T ο, α, ν, τ, ψ, δ 
 
 #define N(n) void n(OANT)
 #define A(vs) ν[τ++].v = (void *)(vs),
 #define R ν[--τ]
-#define G(Ray) ο[α + Ray].c(ο, α + 3, ν, τ)
-#define O ν[τ - 1].c(ο, α, ν, τ - 1)
+#define G(Ray) ο[α + Ray].c(ο, α + 3, ν, τ, ψ, δ)
+#define O ν[τ - 1].c(ο, α, ν, τ - 1, ψ, δ)
 
 #define C G
 
