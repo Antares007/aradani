@@ -3,11 +3,11 @@
                init           .           next
         .............................................
           ν      ○ ← ο        .            ○ ← ο
-          ↓      ○            .            ○
+          ↓     \○/           .            ○
           nnn○○○○○○○○○○○○     .     ν      ○
-             ↑   ○            .     ↓      ○
+             ↑  /○\           .     ↓     \○/
            ν[τ]  ○            .     nnn○○○○○○○○○○○○
-                 o ← ο[α]     .        ↑   o ← ο[α]
+                 o ← ο[α]     .        ↑  /o\ ← ο[α]
                  a            .      ν[τ]  a
                  n            .            n
                               .
@@ -31,14 +31,14 @@ typedef unsigned long   Q_t;
 typedef struct p_t {
   union {
     struct p_t *p;
-    void (*c)(struct p_t *ο, Q_t α, struct p_t *ν, Q_t τ, struct p_t *ψ, struct p_t *δ);
+    void (*c)(struct p_t *ο, Q_t α, struct p_t *ν, Q_t τ, void **ψ, void **δ);
     void *v;
     const char *cs;
     b_t b; w_t w; d_t d; q_t q;
     B_t B; W_t W; D_t D; Q_t Q;
   };
 } p_t;
-#define OANT p_t *ο, Q_t α, p_t *ν, Q_t τ, p_t *ψ, p_t *δ
+#define OANT p_t *ο, Q_t α, p_t *ν, Q_t τ, void **ψ, void **δ
 typedef void (*n_t)(OANT);
 #define T ο, α, ν, τ, ψ, δ 
 

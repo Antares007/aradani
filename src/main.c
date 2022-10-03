@@ -7,8 +7,8 @@ void Got(OANT);
 void God(OANT);
 void Gor(OANT);
 void map_pith(OANT);
-extern p_t ψ[01000];
-extern p_t δ[32];
+extern void* ψ[01000];
+extern void* δ[32];
 extern void *ρ[];
 extern void *σ[];
 // clang-format off
@@ -29,7 +29,7 @@ N(ls_exports) {
   (void)nar;
   RN(const char *, name);
   printf("%s:%s\n", fname, name);
-  A3(exp, ls_exports, ψ[010].c) O;
+  A3(exp, ls_exports, ψ[010]) O;
 }
 N(run_epoll) {
   τ -= 1;
@@ -37,11 +37,11 @@ N(run_epoll) {
   RN(n_t, nar);
   RN(const char *, name);
   if (name[0] == '_')
-    printf(">>> %s %lu\n", name, τ), A3(export, run_epoll, ψ[010].c) O;
+    printf(">>> %s %lu\n", name, τ), A3(export, run_epoll, ψ[010]) O;
   else
     nar(T);
 }
-N(grow) { A3(map_pith, ψ[0].c, ψ[010].c) O; }
+N(grow) { A3(map_pith, ψ[0], ψ[010]) O; }
 #include "raylib.h"
 
 void queue_init();

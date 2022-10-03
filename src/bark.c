@@ -18,14 +18,14 @@ static N(import_n) {
   RN(n_t *, iaddr);
   RN(const char *, iname);
   if (cmp(iname, ename))
-    A6(iname, iaddr, imps, exps, import_n, ψ[010].c) O;
+    A6(iname, iaddr, imps, exps, import_n, ψ[010]) O;
   else
     *iaddr = eaddr, A3(imps, exps, import) O;
 }
 static N(import) {
   RN(n_t, exps);
   RN(n_t, imps);
-  A6(imps, exps, import_n, ψ[010].c, God, ψ[031].c) O;
+  A6(imps, exps, import_n, ψ[010], God, ψ[031]) O;
 }
 static N(impexp_n) {
   RN(n_t, export);
@@ -43,7 +43,7 @@ static N(impexp) {
   if (*ζ)
     A1(ε) C(1);
   else
-    A7(ε, ι, ζ, impexp, Tail, impexp_n, ψ[010].c) O;
+    A7(ε, ι, ζ, impexp, Tail, impexp_n, ψ[010]) O;
 }
 N(run) {
   τ -= 2;
@@ -56,5 +56,5 @@ N(Tail){};
 N(Head) __attribute__((section(".text.begin")));
 N(Head) {
   volatile n_t t = Tail;
-  A6(impexp, t, dot, ψ[010].c, run, ψ[010].c) O;
+  A6(impexp, t, dot, ψ[010], run, ψ[010]) O;
 }
