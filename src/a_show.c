@@ -53,7 +53,7 @@ N(_b) { A2("a", term) O; }
 // clang-format off
                           EN(ζ,
 on_draw,                L)EN(L,
-show,                   L)EN(L,
+_a,                     L)EN(L,
 _c,                     L)EN(L,
 _b,                     L)EN(L,
-_a,                     ε);
+show,                   ε);

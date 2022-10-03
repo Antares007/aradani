@@ -43,7 +43,7 @@ N(run_epoll) {
   else
     nar(T);
 }
-N(run_bark) { A5(map_pith, ψ[0], ψ[010], run_epoll, ψ[010]) O; }
+N(grow) { A3(map_pith, ψ[0], ψ[010]) O; }
 #include "raylib.h"
 
 void queue_init();
@@ -63,6 +63,6 @@ int main(int argc, char **argv) {
   ο[--α].v = ray_not;
   ο[--α].v = ray_and;
   ο[--α].v = ray_oor;
-  A3(argv[1], root, run_bark) O;
+  A3(argv[1], root, grow) O;
   return 0;
 }

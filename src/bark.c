@@ -38,7 +38,7 @@ static int cmp(const char *s1, const char *s2) {
       return (0);
   return (*(unsigned char *)s1 - *(unsigned char *)--s2);
 }
-N(import_n) {
+static N(import_n) {
   RN(const char *, efname);
   (void)efname;
   RN(n_t, exps);
@@ -52,12 +52,12 @@ N(import_n) {
   else
     *iaddr = eaddr, A3(imps, exps, import) O;
 }
-N(import) {
+static N(import) {
   RN(n_t, exps);
   RN(n_t, imps);
   A6(imps, exps, import_n, da, God, da3an) O;
 }
-N(impexp_n) {
+static N(impexp_n) {
   RN(n_t, export);
   RN(n_t *, ζ);
   RN(n_t, ι);
@@ -65,7 +65,7 @@ N(impexp_n) {
   *ζ = export;
   A4(ε, ι, export, import) O;
 }
-N(impexp) {
+static N(impexp) {
   RN(n_t, Tail);
   RN(n_t *, ζ);
   RN(n_t, ι);
@@ -75,10 +75,16 @@ N(impexp) {
   else
     A7(ε, ι, ζ, impexp, Tail, impexp_n, da) O;
 }
+N(run) {
+  τ -= 2;
+  RN(n_t, nar);
+  τ--;
+  nar(T);
+}
 N(Tail) __attribute__((section(".text.end")));
 N(Tail){};
 N(Head) __attribute__((section(".text.begin")));
 N(Head) {
   volatile n_t t = Tail;
-  A4(impexp, t, dot, da) O;
+  A6(impexp, t, dot, da, run, da) O;
 }
