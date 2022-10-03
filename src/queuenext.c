@@ -25,7 +25,7 @@ N(next) {
   τ += wc;
   O;
 }
-static N(ο0) {
+static N(δ0) {
   QUEUE *q = QUEUE_NEXT(&temp_queue);
   QUEUE_PREV(q) = QUEUE_PREV(&main_queue);
   QUEUE_PREV_NEXT(&temp_queue) = &main_queue;
@@ -34,7 +34,7 @@ static N(ο0) {
   QUEUE_INIT(&temp_queue);
   C(1);
 }
-static void οn(OANT) {
+static void δn(OANT) {
   RN(Q_t, wc);
   p_t *p = qp[i];
   i = (i + 1) % QPS;
@@ -45,39 +45,39 @@ static void οn(OANT) {
     p[i].v = ν[τ + i].v;
   O;
 }
-static N(ο1) { A(1) οn(T); }
-static N(ο2) { A(2) οn(T); }
-static N(ο3) { A(3) οn(T); }
-static N(ο4) { A(4) οn(T); }
-static N(ο5) { A(5) οn(T); }
-static N(ο6) { A(6) οn(T); }
-static N(ο7) { A(7) οn(T); }
-static N(ο8) { A(8) οn(T); }
-static N(ο9) { A(9) οn(T); }
-static N(ο10) { A(10) οn(T); }
-static N(ο11) { A(11) οn(T); }
-static N(ο12) { A(12) οn(T); }
-static N(ο13) { A(13) οn(T); }
-static N(ο14) { A(14) οn(T); }
-static N(ο15) { A(15) οn(T); }
-static N(ο16) { A(16) οn(T); }
-static N(ο17) { A(17) οn(T); }
-static N(ο18) { A(18) οn(T); }
-static N(ο19) { A(19) οn(T); }
-static N(ο20) { A(20) οn(T); }
-static N(ο21) { A(21) οn(T); }
-static N(ο22) { A(22) οn(T); }
-static N(ο23) { A(23) οn(T); }
-static N(ο24) { A(24) οn(T); }
-static N(ο25) { A(25) οn(T); }
-static N(ο26) { A(26) οn(T); }
-static N(ο27) { A(27) οn(T); }
-static N(ο28) { A(28) οn(T); }
-static N(ο29) { A(29) οn(T); }
-static N(ο30) { A(30) οn(T); }
-static N(ο31) { A(31) οn(T); }
-n_t ο[32] = {
-    ο0,  ο1,  ο2,  ο3,  ο4,  ο5,  ο6,  ο7,  ο8,  ο9,  ο10,
-    ο11, ο12, ο13, ο14, ο15, ο16, ο17, ο18, ο19, ο20, ο21,
-    ο22, ο23, ο24, ο25, ο26, ο27, ο28, ο29, ο30, ο31,
+static N(δ1) { A(1) δn(T); }
+static N(δ2) { A(2) δn(T); }
+static N(δ3) { A(3) δn(T); }
+static N(δ4) { A(4) δn(T); }
+static N(δ5) { A(5) δn(T); }
+static N(δ6) { A(6) δn(T); }
+static N(δ7) { A(7) δn(T); }
+static N(δ8) { A(8) δn(T); }
+static N(δ9) { A(9) δn(T); }
+static N(δ10) { A(10) δn(T); }
+static N(δ11) { A(11) δn(T); }
+static N(δ12) { A(12) δn(T); }
+static N(δ13) { A(13) δn(T); }
+static N(δ14) { A(14) δn(T); }
+static N(δ15) { A(15) δn(T); }
+static N(δ16) { A(16) δn(T); }
+static N(δ17) { A(17) δn(T); }
+static N(δ18) { A(18) δn(T); }
+static N(δ19) { A(19) δn(T); }
+static N(δ20) { A(20) δn(T); }
+static N(δ21) { A(21) δn(T); }
+static N(δ22) { A(22) δn(T); }
+static N(δ23) { A(23) δn(T); }
+static N(δ24) { A(24) δn(T); }
+static N(δ25) { A(25) δn(T); }
+static N(δ26) { A(26) δn(T); }
+static N(δ27) { A(27) δn(T); }
+static N(δ28) { A(28) δn(T); }
+static N(δ29) { A(29) δn(T); }
+static N(δ30) { A(30) δn(T); }
+static N(δ31) { A(31) δn(T); }
+n_t δ[32] = {
+    δ0,  δ1,  δ2,  δ3,  δ4,  δ5,  δ6,  δ7,  δ8,  δ9,  δ10,
+    δ11, δ12, δ13, δ14, δ15, δ16, δ17, δ18, δ19, δ20, δ21,
+    δ22, δ23, δ24, δ25, δ26, δ27, δ28, δ29, δ30, δ31,
 };

@@ -18,16 +18,16 @@ for (let g = 01; g < 01000; g++) {
     roll1(0, oc);
     roll1(1, ac);
     roll1(2, nc);
-    log(`  ν[τ - 1].c(ω, α - 3, ν, τ - 1);`);
+    log(`  ν[τ - 1].c(ο, α - 3, ν, τ - 1);`);
   } else {
     roll(0, oc, mc);
     roll(1, ac, mc);
     roll(2, nc, mc);
-    log(`  ν[τ - 1].c(ω, α - ${(mc + 1) * 3}, ν, τ - 1);`);
+    log(`  ν[τ - 1].c(ο, α - ${(mc + 1) * 3}, ν, τ - 1);`);
   }
   log(`}`);
 }
-log(`N(ψ0) { ν[τ - 1].c(ω, α, ν, τ - 1); }
+log(`N(ψ0) { ν[τ - 1].c(ο, α, ν, τ - 1); }
 n_t ψ[01000] = {
   ψ0,`);
 for (let g = 01; g < 01000; g++) {
@@ -39,14 +39,14 @@ for (let g = 01; g < 01000; g++) {
 log(`};`);
 function roll(ray, xc, mc) {
   let i = 0;
-  for (; i < xc; i++) log(`  ω[α - ${(i + 1) * 3 - ray}].v = ν[--τ].v;`);
-  if (i > 1) log(`  ω[α - ${(i + 1) * 3 - ray}].v = un${rni(ray, xc)};`);
+  for (; i < xc; i++) log(`  ο[α - ${(i + 1) * 3 - ray}].v = ν[--τ].v;`);
+  if (i > 1) log(`  ο[α - ${(i + 1) * 3 - ray}].v = un${rni(ray, xc)};`);
   else i--;
-  if (mc - i) log(`  ω[α - ${(mc + 1) * 3 - ray}].v = ${rni(ray, mc - i)};`);
+  if (mc - i) log(`  ο[α - ${(mc + 1) * 3 - ray}].v = ${rni(ray, mc - i)};`);
   log();
 }
 function roll1(ray, xc) {
-  log(`  ω[α - ${3 - ray}].v = ${xc ? `ν[--τ].v` : rni(ray, 1)};`);
+  log(`  ο[α - ${3 - ray}].v = ${xc ? `ν[--τ].v` : rni(ray, 1)};`);
 }
 function rni(r, i) {
   const d = ["Gor", "God", "Got"];
@@ -55,7 +55,7 @@ function rni(r, i) {
 function GoNar(i, ray, name) {
   if (i > 1) log("static");
   log(
-    `N(${rni(ray, i)}) { ω[α + ${(i - 1) * 3 + ray}].c(ω, α + ${
+    `N(${rni(ray, i)}) { ο[α + ${(i - 1) * 3 + ray}].c(ο, α + ${
       i * 3
     }, ν, τ); }`
   );
@@ -63,7 +63,7 @@ function GoNar(i, ray, name) {
 function UnrollNar(c, ray) {
   log("static");
   log(`N(un${rni(ray, c)}) {`);
-  for (let i = 0; i < c - 1; i++) log(`  ν[τ++].v = ω[α + ${ray}].v; α += 3;`);
+  for (let i = 0; i < c - 1; i++) log(`  ν[τ++].v = ο[α + ${ray}].v; α += 3;`);
   log(`  C(${ray});`);
   log(`}`);
 }

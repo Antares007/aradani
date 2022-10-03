@@ -8,7 +8,7 @@ void God(OANT);
 void Gor(OANT);
 void map_pith(OANT);
 extern n_t ψ[01000];
-extern n_t ο[32];
+extern n_t δ[32];
 extern void *ρ[];
 extern void *σ[];
 // clang-format off
@@ -16,13 +16,13 @@ extern void *σ[];
 "God", God,         L)E(L,
 "Gor", Gor,         L)E(L,
 "Got", Got,         L)E(L,
-"ο", &ο,            L)E(L,
+"δ", &δ,            L)E(L,
 "ρ", &ρ,            L)E(L,
 "σ", &σ,            L)E(L,
-"ψ", &ψ,      exports);
+"ψ", &ψ,            ε);
 // clang-format on
 
-N(root) { A1(exports) C(1); }
+N(root) { A1(ε) C(1); }
 
 N(ls_exports) {
   RN(const char *, fname);
@@ -56,13 +56,13 @@ int main(int argc, char **argv) {
   if (argc < 2)
     return printf("Would you mind adding the 'file_name' as an argument?\n"), 6;
   queue_init();
-  p_t ω[0x1000];
-  Q_t α = sizeof(ω) / sizeof(*ω);
+  p_t ο[0x1000];
+  Q_t α = sizeof(ο) / sizeof(*ο);
   p_t ν[0x1000];
   Q_t τ = 0;
-  ω[--α].v = ray_not;
-  ω[--α].v = ray_and;
-  ω[--α].v = ray_oor;
+  ο[--α].v = ray_not;
+  ο[--α].v = ray_and;
+  ο[--α].v = ray_oor;
   A3(argv[1], root, run_bark) O;
   return 0;
 }

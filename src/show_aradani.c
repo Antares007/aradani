@@ -28,13 +28,13 @@ N(ray_not) {}
 N(ray_and) { printf("%lu\n", ν[--τ].q); }
 N(ray_oor) {}
 int main() {
-  p_t ω[0x1000];
-  Q_t α = sizeof(ω) / sizeof(*ω);
+  p_t ο[0x1000];
+  Q_t α = sizeof(ο) / sizeof(*ο);
   p_t ν[0x1000];
   Q_t τ = 0;
-  ω[--α].v = ray_not;
-  ω[--α].v = ray_and;
-  ω[--α].v = ray_oor;
+  ο[--α].v = ray_not;
+  ο[--α].v = ray_and;
+  ο[--α].v = ray_oor;
   TestAraDaNi(T);
   CountTo14(T);
   return 0;

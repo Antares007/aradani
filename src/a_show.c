@@ -4,15 +4,15 @@
 rayfun_t *ρ;
 stdiofun_t *σ;
 n_t *ψ;
-n_t *ο, Got, God;
+n_t *δ, Got, God;
 // clang-format off
-                          I(Gor,
-"God", God,             L)I(L,
-"Got", Got,             L)I(L,
-"ο", ο,                 L)I(L,
-"ρ", ρ,                 L)I(L,
-"σ", σ,                 L)I(L,
-"ψ", ψ,           imports);
+                   I(Gor,
+"God", God,      L)I(L,
+"Got", Got,      L)I(L,
+"δ", δ,          L)I(L,
+"ρ", ρ,          L)I(L,
+"σ", σ,          L)I(L,
+"ψ", ψ,          ι);
 // clang-format on
 
 N(on_tick2) { A(God) O; }
@@ -21,17 +21,17 @@ N(one) { σ->printf("1\n"), C(0); }
 N(on_draw) { σ->printf("5\n"), A(7) C(1); }
 N(show) {
   A17(
-    ο[0],
-      ο[0],
+    δ[0],
+      δ[0],
         one, God, ψ[0001],
-      ο[3],
-    ο[5],
-      ο[0],
+      δ[3],
+    δ[5],
+      δ[0],
         God, God, ψ[0010],
-      ο[3],
+      δ[3],
         Got, God, ψ[0100],
-      ο[3],
-    ο[9]
+      δ[3],
+    δ[9]
   ) O;
 }
   // const int screenWidth = 800;
@@ -51,9 +51,9 @@ N(_a) { A2("b", term) O; }
 N(_b) { A2("a", term) O; }
 
 // clang-format off
-                          EN(tail,
+                          EN(ζ,
 on_draw,                L)EN(L,
 show,                   L)EN(L,
 _c,                     L)EN(L,
 _b,                     L)EN(L,
-_a,               exports);
+_a,                     ε);
