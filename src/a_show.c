@@ -23,10 +23,15 @@ N(BeginDrawing) { ρ->BeginDrawing(); ρ->ClearBackground(RAYWHITE); C(1); }
 N(EndDrawing) { ρ->EndDrawing(); C(1); }
 N(Draw) { ρ->DrawText("aba mamao!", 240, 140, 44, GRAY); C(1); }
 N(loop) {
-  A9(WindowShouldNotClose, BeginDrawing, ψ[010],
-                                   Draw, ψ[010],
-                             EndDrawing, ψ[010],
-                                   loop, ψ[010]) O;
+  A11(δ[0], 
+      WindowShouldNotClose, BeginDrawing, ψ[010],
+      δ[3],
+      Draw,
+      δ[1],
+      EndDrawing,
+      δ[1],
+      loop,
+      δ[1]) O;
 }
 N(xxx) {
   A3(InitWindow, loop, ψ[010]) O;
