@@ -23,15 +23,11 @@ N(BeginDrawing) { ρ->BeginDrawing(); ρ->ClearBackground(RAYWHITE); C(1); }
 N(EndDrawing) { ρ->EndDrawing(); C(1); }
 N(Draw) { ρ->DrawText("aba mamao!", 240, 140, 44, GRAY); C(1); }
 N(loop) {
-  A11(δ[0], 
-      WindowShouldNotClose, BeginDrawing, ψ[010],
-      δ[3],
-      Draw,
-      δ[1],
-      EndDrawing,
-      δ[1],
-      loop,
-      δ[1]) O;
+  A11(                                            δ[0],
+      WindowShouldNotClose, BeginDrawing, ψ[010], δ[3],
+      Draw,                                       δ[1],
+      EndDrawing,                                 δ[1],
+      loop,                                       δ[1]) O;
 }
 N(xxx) {
   A3(InitWindow, loop, ψ[010]) O;
@@ -68,6 +64,18 @@ N(treeasnumbers) {
     δ[9]
   ) O;
 }
+N(prn) { RN(Q_t, n); for(Q_t i = 0; i < n; i++) σ->printf(" "); σ->printf("%lu\n", n); C(1); }
+N(tree) {
+  RN(Q_t, n);
+  if(n>10) return C(1);
+  A13(              δ[0],
+      n+1, prn,     δ[2],
+      n+2, prn,     δ[2],
+      n+1, tree,    δ[2],
+      n+4, prn,     δ[2]
+  ) O;
+}
+N(show) { A2(0, tree) O; }
 // clang-format off
-           EN(ζ,
-xxx,     ε);
+            EN(ζ,
+show,     ε);
