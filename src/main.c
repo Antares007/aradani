@@ -48,7 +48,7 @@ void queue_init();
 void next(OANT);
 // clang-format off
 N(ray_not) {}
-N(ray_and) { if (τ) printf("RAY_AND: %lu\n", ν[τ - 1].q); α -= 3, next(T); }
+N(ray_and) {LOG; if (τ) printf("\tRAY_AND: %lu\n", ν[τ - 1].q); α -= 3, next(T); }
 N(ray_oor) {}
 int main(int argc, char **argv) {
   if (argc < 2)

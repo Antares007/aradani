@@ -1,6 +1,7 @@
 #include "arsi.h"
 #include "raylibfun.h"
 #include "stdiofun.h"
+#define LOG σ->printf("%s(%lu)\n", __FUNCTION__, τ)
 rayfun_t *ρ;
 stdiofun_t *σ;
 n_t Got, God;
@@ -10,7 +11,7 @@ n_t Got, God;
 "Got", Got,      L)I(L,
 "ρ", ρ,          L)I(L,
 "σ", σ,          ι);
-// clang-format on
+// clang-format off
 N(InitWindow) {
   const int screenWidth = 800;
   const int screenHeight = 450;
@@ -65,42 +66,47 @@ N(treeasnumbers) {
   ) O;
 }
 N(prn) { RN(Q_t, n); for(Q_t i = 0; i < n; i++) σ->printf(" "); σ->printf("%lu\n", n); C(1); }
-N(term) {
+//N(Baaax) { A9(                                            δ[0],
+//              "b", term, Sa, ψ[010], "x", term, ψ[020],  δ[7]) O; }
+N(term) {LOG;
   RN(const char*, str);
   RN(Q_t,         pos);
   RN(Q_t,         len);
   RN(const char*, in);
-  if (pos < len && in[pos] == str[0]) 
-    (in, len, pos + 1) O;
-  else
-    () O;
-}
-N(Aaa) {
-  A6(           δ[0],
-    "a", term,  δ[2],
-    Aaa,        δ[2]) O; }
-N(Baaax) {
-  A9(                                          δ[0],
-    "b", term, Aaa, ψ[010], "x", term, ψ[020], δ[7]) O; }
-N(show) { A2("aaaa", 4, 0, Baaax) O; }
-// ამომცნობი, რომელიც შეესაბამება p |-ს კონსტრუქციას q გრამატიკაში
-// აგებულია p-ისა და q-ის ამომცნობიების კომბინაციით, პარსერის კომბინატორის
-// "orelse" გამოყენებით.
+  if (pos < len && in[pos] == str[0])
+        σ->printf("aTerm %lu\n", pos + 1), A3(in, len, pos + 1) C(1);
+  else  σ->printf("bTerm %lu\n", pos    ), A3(in, len, pos    ) C(2); }
+Q_t i = 0;
+N(redu) {LOG; RN(Q_t, pos); τ -= 2; σ->printf("R:%lu\n", pos); C(1); }
+N(da2 ) {LOG; ((n_t)ψ[020])(T); }
+N(Sa  ) {LOG; if(i++ > 10) return;
+  RN(Q_t,         pos);
+  RN(Q_t,         len);
+  RN(const char*, in );
+  σ->printf("%s %lu %lu\n", in, len, pos);
+  A15(                                δ[0],
+    in, len, pos,     "a", term,      δ[5],
+    in, len, pos, Sa, "a", term, da2, δ[7]) O; }
+N(show) {LOG; 
+  A4("aaaa", 4, 0, Sa) O; }
 // როდესაც კომპოზიტური ამომცნობი გამოიყენება j ინდექსზე, ის ვრცელდება
 // p-ზე j-ზე, შემდეგ გამოიყენება q-ზე j-ზე და შემდგომში
 // აერთიანებს მიღებულ სიმრავლეს.:
 //    (p ‘orelse‘ q) j = unite (p j) (q j)
 //    e.g, assuming that the input is "ssss", then
 //    (empty ‘orelse‘ term_s) 2 => {2, 3}
-// კომპოზიტური ამომცნობი, რომელიც შეესაბამება ამომცნობთა თანმიმდევრობას
-// p q გრამატიკული წესის მარჯვენა მხარეს, აგებულია ამ ამომცნობთა კომბინაციით
-// პარსერის კომბინატორის "thenS" გამოყენებით.
 // როდესაც კომპოზიტური ამომცნობი გამოიყენება j ინდექსზე, ის ჯერ მიმართავს
-// p-ს j-ს, შემდეგ ის მიმართავს q თითოეულ ინდექსს p-ით დაბრუნებული
-// შედეგების სიმრავლეში. ის აბრუნებს q-ის ამ აპლიკაციების გაერთიანებას.
+// p-ს j ინდექსისთვის, შემდეგ ის მიმართავს q თითოეული p-თი დაბრუნებული ინდექსისათვის
+// შედეგების სიმრავლეში. ის q-სთვის აბრუნებს ამ აპლიკაციების გაერთიანებას.
 //    (p ‘thenS‘ q) j = union (map q (p j))
 //    e.g., assuming that the input is "ssss", then
 //    (term_s ‘thenS‘ term_s) 1 => {3}
+//  არადანში ყველაფერი განისაზღვრება სიტყვების საშუალებით
+//  ჩვენ შემთხვევაში orelse ამომცნობი არის δ სიტყვით გამოხატული.
+//  δ ისტყვა ამოახვევს სიგმადან წინადადების q მხარეს
+//
+//  σ განზომილება. ο განზომილება.
+//  
 
 // clang-format off
             EN(ζ,
