@@ -50,21 +50,36 @@ N(counter) {
   //  Σ.aba
   //) O;
 }
-N(treeasnumbers) {
-  A17(
+N(Zro) { σ->printf("0\n"); C(0); }
+N(One) { σ->printf("1\n"); C(1); }
+N(Two) { σ->printf("2\n"); C(2); }
+N(treeasnumbers_0) {
+  A13(
+    God,
+      God,
+        Zro, One, ψ[0001],
+      ψ[0030],
+    ψ[0050],
+      God,
+        One, One, ψ[0010],
+      ψ[0030],
+    ψ[0050]
+  ) O;
+}
+N(treeasnumbers_1) {
+  A13(
     δ[0],
       δ[0],
-        God, God, ψ[0001],
+        Zro, One, ψ[0001],
       δ[3],
     δ[5],
       δ[0],
-        God, God, ψ[0010],
+        One, One, ψ[0010],
       δ[3],
-        Got, treeasnumbers, ψ[0100],
-      δ[3],
-    δ[9]
+    δ[5]
   ) O;
 }
+N(treeasnumbers) { treeasnumbers_0(T); }
 N(prn) { RN(Q_t, n); for(Q_t i = 0; i < n; i++) σ->printf(" "); σ->printf("%lu\n", n); C(1); }
 //N(Baaax) { A9(                                            δ[0],
 //              "b", term, Sa, ψ[010], "x", term, ψ[020],  δ[7]) O; }
@@ -89,8 +104,8 @@ N(Sa  ) {LOG; if(i++ > 10) return;
     in, len, pos, Sa, "a", term, da2, δ[7]) O; }
 N(show) {LOG; 
   A4("aaaa", 4, 0, Sa) O; }
-// როდესაც კომპოზიტური ამომცნობი გამოიყენება j ინდექსზე, ის ვრცელდება
-// p-ზე j-ზე, შემდეგ გამოიყენება q-ზე j-ზე და შემდგომში
+// როდესაც კომპოზიტური ამომცნობი გამოიყენება j ინდექსისთვის,
+// ის ვრცელდება p-ზე j-თი, შემდეგ გამოიყენება q-ზე j-თი და შემდგომში
 // აერთიანებს მიღებულ სიმრავლეს.:
 //    (p ‘orelse‘ q) j = unite (p j) (q j)
 //    e.g, assuming that the input is "ssss", then
@@ -110,4 +125,4 @@ N(show) {LOG;
 
 // clang-format off
             EN(ζ,
-show,     ε);
+treeasnumbers,     ε);
